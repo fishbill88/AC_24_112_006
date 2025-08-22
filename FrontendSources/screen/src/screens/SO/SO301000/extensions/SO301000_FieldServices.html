@@ -1,0 +1,18 @@
+<template>
+	<qp-panel after="#copyparamfilter" id="CreateServiceOrderFilter" caption="Create Service Order" auto-repaint="true">
+		<qp-template name="1" id="createServiceOrderTemplate">
+			<qp-fieldset slot="A" id="formCreateServiceOrder" wg-container view.bind="CreateServiceOrderFilter">
+				<field name="SrvOrdType" config.bind="{allowEdit: true, displayMode: Text}"></field>
+				<field name="AssignedEmpID" config.bind="{allowEdit: true, displayMode: Text}"></field>
+				<field name="SLAETA_Date"></field>
+				<field name="SLAETA_Time" config.bind="{timeMode: true}"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,12 @@
+<template>
+	<qp-template id="formFilter" wg-container="Filter_form" name="1-1-1">
+		<qp-fieldset id="first" view.bind="Filter" slot="A">
+			<field name="CarrierID"></field>
+			<field name="ShipDate"></field>
+			<field name="PrintWithDeviceHub"></field>
+			<field name="PrinterID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid view.bind="ShipmentList">
+	</qp-grid>
+</template>

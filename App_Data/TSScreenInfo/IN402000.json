@@ -1,0 +1,2054 @@
+{
+	"name": "IN402000",
+	"graphName": "PX.Objects.IN.InventoryAllocDetEnq",
+	"primaryView": "Filter",
+	"pageLoadBehavior": "PopulateSavedValues",
+	"hideFilesIndicator": true,
+	"hideNotesIndicator": true,
+	"featureInstalled": [],
+	"actions": [],
+	"views": [
+		{
+			"name": "Filter",
+			"dacClassName": null,
+			"displayName": "Selection",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "InventoryID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "SiteID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "LocationID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "SubItemCD",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "LotSerialNbr",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "BaseUnit",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyOnHand",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyTotalAddition",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyTotalDeduction",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyAvail",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyHardAvail",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyActual",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyNotAvail",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyExpired",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyPOPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOOrders",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyPOOrders",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyPOReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyINReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyINReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyInTransit",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyInTransit",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyInTransitToSO",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyINAssemblySupply",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyINAssemblySupply",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOFixedPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOFixedOrders",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOFixedReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPODropShipPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPODropShipOrders",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPODropShipReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOFixedFSSrvOrdPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOFixedFSSrvOrd",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyPOFixedFSSrvOrdReceipts",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySOPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtySOPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySOBooked",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtySOBooked",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySOShipping",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtySOShipping",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySOShipped",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtySOShipped",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySOBackOrdered",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtySOBackOrdered",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyINIssues",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyINIssues",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyINAssemblyDemand",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyINAssemblyDemand",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyFSSrvOrdPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyFSSrvOrdPrepared",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyFSSrvOrdBooked",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyFSSrvOrdBooked",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyFSSrvOrdAllocated",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "InclQtyFSSrvOrdAllocated",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySOFixed",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtySODropShip",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "QtyFixedFSSrvOrd",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "Label",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "Label2",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Selection"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "ResultRecords",
+			"dacClassName": null,
+			"displayName": "Allocation Details",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "GridLineNbr",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Module",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "AllocationType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PlanDate",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "QADocType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "RefNbr",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SubItemID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SiteID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "LocationID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "LotSerialNbr",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PlanQty",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CostLayerType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "BAccountID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "AcctName",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "LocNotAvailable",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Expired",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Allocation Details"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"preset": "PrimaryInquiry",
+							"allowUpdate": false
+						}
+					]
+				}
+			],
+			"actions": [
+				{
+					"name": "ViewDocument",
+					"decorators": []
+				}
+			],
+			"mergeToolbarWith": "ScreenToolbar",
+			"allowUpdate": false,
+			"allowDelete": false,
+			"allowInsert": false
+		},
+		{
+			"name": "Addition",
+			"dacClassName": null,
+			"displayName": "Addition",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PlanType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Qty",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Included",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "IsTotal",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Addition"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"preset": "Inquiry",
+							"syncPosition": true,
+							"allowUpdate": false,
+							"adjustPageSize": true
+						}
+					]
+				}
+			],
+			"actions": [],
+			"allowUpdate": false,
+			"allowDelete": false,
+			"allowInsert": false
+		},
+		{
+			"name": "Deduction",
+			"dacClassName": null,
+			"displayName": "Deduction",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PlanType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Qty",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Included",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "IsTotal",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Deduction"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"preset": "Inquiry",
+							"syncPosition": true,
+							"allowUpdate": false,
+							"adjustPageSize": true
+						}
+					]
+				}
+			],
+			"actions": [],
+			"allowUpdate": false,
+			"allowDelete": false,
+			"allowInsert": false
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.Objects.IN.InventoryAllocDetEnq",
+					"primaryView": "Filter",
+					"pageLoadBehavior": "PopulateSavedValues",
+					"hideFilesIndicator": true,
+					"hideNotesIndicator": true
+				}
+			]
+		}
+	]
+}

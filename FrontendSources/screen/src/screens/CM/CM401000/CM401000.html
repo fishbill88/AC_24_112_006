@@ -1,0 +1,15 @@
+<template>
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="TranslDefId"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="Unreleased"></field>
+			<field name="Released"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridTranslationHistory" view.bind="TranslationHistoryRecords" wg-container="TranslationHistoryRecords_grid"> </qp-grid>
+
+</template>

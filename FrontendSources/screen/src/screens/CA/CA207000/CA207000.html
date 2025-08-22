@@ -1,0 +1,11 @@
+﻿<template>
+    <qp-template name="17-17-14" class="equal-height" id="formFilter" wg-container="filter_form">
+        <qp-fieldset slot="A" id="columnFirst" view.bind="filter">
+            <field name="OldPaymentMethodID"></field>
+            <field name="OldCCProcessingCenterID"></field>
+            <field name="NewCCProcessingCenterID"></field>
+            <field name="ProcessExpiredCards"></field>
+        </qp-fieldset>
+    </qp-template>
+    <qp-grid id="grid" view.bind="CustomerPaymentMethodList"></qp-grid>
+</template>

@@ -1,0 +1,24 @@
+<template>
+	<qp-panel id="Document" caption="CC Payment Data">
+		<qp-template name="1" id="formCreditCardPaymentInfo" wg-container="ccPaymentInfo_frmCCPaymentInfo">
+			<qp-fieldset id="columnFirst-CreditCardPaymentInfo" view.bind="ccPaymentInfo">
+				<field name="PCTranNumber"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-Document" caption="Save" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-Document" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ccPaymentInfo" caption="CC Payment with External Authorization" auto-repaint="true">
+		<qp-template name="1" id="formCCPaymentInfoExternalAuthorization" wg-container="ccPaymentInfo_frmCCPaymentInfo1">
+			<qp-fieldset id="columnFirst-CreditCardPaymentExternalAuthorization" view.bind="ccPaymentInfo">
+				<field name="AuthNumber"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-ccPaymentInfo" caption="Save" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ccPaymentInfo" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

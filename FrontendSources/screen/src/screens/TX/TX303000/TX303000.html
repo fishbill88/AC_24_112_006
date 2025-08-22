@@ -1,0 +1,77 @@
+<template>
+	<qp-template id="formDocument" name="7-10-7" wg-container="Document_form" class="equal-height">
+		<qp-fieldset id="columnFirstDocument" view.bind="Document" slot="A">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="DocDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="InvoiceNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondDocument" view.bind="Document" slot="B">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="currencyinfo"></field>
+			<field name="TermsID"></field>
+			<field name="DueDate"></field>
+			<field name="DiscDate"></field>
+			<field name="DocDesc" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdDocument" view.bind="Document" slot="C" class="highlights-section">
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryDocBal"></field>
+			<field name="CuryOrigDocAmt"></field>
+			<field name="CuryTaxAmt"></field>
+			<field name="CuryOrigDiscAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabApplyTaxTo" caption="Apply Tax To">
+			<qp-grid id="gridTaxes" view.bind="Taxes" wg-container="Taxes_grid1"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template name="1-1" id="formFinancial" wg-container="CurrentDocument_form2">
+				<div slot="A">
+					<qp-fieldset id="groupLinkToGL" view.bind="CurrentDocument" caption="Link to GL">
+						<field name="BatchNbr" config-allow-edit.bind="true"></field>
+						<field name="BranchID"></field>
+						<field name="APAccountID"></field>
+						<field name="APSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDefaultPaymentInfo" view.bind="CurrentDocument" caption="Default Payment Info">
+						<field name="SeparateCheck"></field>
+						<field name="PaySel"></field>
+						<field name="PayDate"></field>
+						<field name="PayLocationID"></field>
+						<field name="PayTypeID"></field>
+						<field name="PayAccountID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApplications" caption="Applications">
+			<qp-grid id="gridApplication" view.bind="Adjustments" wg-container="Adjustments_detgrid"> </qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel caption="Add Documents" id="DocumentList" width="60vw" auto-repaint="true">
+		<qp-template name="1-1" id="formDocumentList" wg-container="BillFilter_form1" class="equal-height">
+			<qp-fieldset id="columnFirstDocumentList" slot="A" view.bind="BillFilter">
+				<field name="TaxID"></field>
+				<field name="VendorID"></field>
+				<field name="InvoiceNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecondDocumentList" view.bind="BillFilter">
+				<field name="StartDate"></field>
+				<field name="EndDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid ID="gridDocumentList" view.bind="DocumentList" wg-container="DocumentList_grid4"></qp-grid>
+		<footer>
+			<qp-button id="buttonAdd-DocumentList" state.bind="AddInvoicesOK" caption="Add"></qp-button>
+			<qp-button id="buttonOK-DocumentList" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-DocumentList" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

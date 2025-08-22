@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="Filter_10" slot="A" view.bind="Filter" caption="Filters Options">
+			<field name="RouteID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_20" slot="B" view.bind="Filter" caption="Generation Options">
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="schedulesTab" caption="Schedules">
+			<qp-grid id="gridServiceContracts" view.bind="RouteContractSchedules">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="runHistoryTab" caption="Run History">
+			<qp-grid id="GridContractGenerationHistory" view.bind="ContractHistoryRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="generationErrorLogTab" caption="Generation Error Log">
+			<qp-grid id="gridGenerationLogError" view.bind="ErrorMessageRecords">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

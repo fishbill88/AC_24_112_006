@@ -1,0 +1,59 @@
+<template>
+	<qp-tabbar id='Events_tabMain'>
+		<qp-tab id='Events_tab' caption='Details' wg-container>		 
+			<qp-template id='Details_template' name='1-1'> 
+				<qp-fieldset id='Details_formLeft' view.bind='Events' slot='A'>
+					<field name="Subject"></field>
+					<field name="Location"></field>
+					<field name="UIStatus"></field>
+					<field name="Priority"></field>
+					<field name="TimeZone"></field>
+					<field name="StartDate_Date">
+						<qp-field
+							control-state.bind="Events.StartDate_Time"
+							class="no-label"
+							config-time-mode.bind="true"
+							>
+						</qp-field>
+					</field>
+					<field name="EndDate_Date">
+						<qp-field
+							control-state.bind="Events.EndDate_Time"
+							class="no-label"
+							config-time-mode.bind="true"
+							>
+						</qp-field>
+					</field>
+					<field name="AllDay"></field>
+					<field name="ShowAsID"></field>
+					<field name="Reminder.IsReminderOn"></field>
+					<field name="Reminder.RemindAt"></field>
+					<field name="IsPrivate"></field>
+					<field name="ProvidesCaseSolution"></field>
+					<field name="OwnerID"></field>
+					<field name="RefNoteIDType"></field>
+					<field name="RefNoteID" config-allow-edit.bind='true'></field>
+					<field name="CategoryID"></field>
+				</qp-fieldset>
+				<qp-fieldset id='Details_formRight' view.bind='Events' slot='B' class="highlights-section">
+					<field name="TimeActivity.TimeSpent"></field>
+					<field name="TimeActivity.OvertimeSpent"></field>
+					<field name="TimeActivity.TimeBillable"></field>
+					<field name="TimeActivity.OvertimeBillable"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-rich-text-editor
+				id="edEventsBody"
+				state.bind="Events.Body"
+				wg-field
+				value.bind="Events.Body.value">
+			</qp-rich-text-editor>		
+		</qp-tab>
+		<qp-tab id='Attendees_tab' caption='Attendees'>
+			<qp-grid id='grdAttendees' view.bind="Attendees"></qp-grid>
+		</qp-tab>
+		<qp-tab id='Activities_tab' caption='Activities'>
+			<qp-grid id='gridReferencedActivities' view.bind="Activities"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

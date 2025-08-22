@@ -1,0 +1,567 @@
+{
+	"name": "SM201005",
+	"graphName": "PX.SM.RoleAccess",
+	"primaryView": "Roles",
+	"hideFilesIndicator": true,
+	"hideNotesIndicator": true,
+	"featureInstalled": [],
+	"actions": [],
+	"views": [
+		{
+			"name": "Roles",
+			"dacClassName": null,
+			"displayName": "Role Information",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Rolename",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Descr",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "Guest",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Role Information"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "UsersByRole",
+			"dacClassName": null,
+			"displayName": "Membership",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "Username",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ApplicationName",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false,
+									"allowShowHide": "False"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Rolename",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false,
+									"allowShowHide": "False"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "DisplayName",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "State",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Domain",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Comment",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Inherited",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Membership"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"adjustPageSize": true
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "ActiveDirectoryMap",
+			"dacClassName": null,
+			"displayName": "Active Directory",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "GroupID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "GroupDomain",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "GroupDescription",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Active Directory"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"adjustPageSize": true
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "ClaimsMap",
+			"dacClassName": null,
+			"displayName": "Claims",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "GroupID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Claims"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"adjustPageSize": true
+						}
+					]
+				}
+			],
+			"actions": []
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.SM.RoleAccess",
+					"primaryView": "Roles",
+					"hideFilesIndicator": true,
+					"hideNotesIndicator": true
+				}
+			]
+		}
+	]
+}

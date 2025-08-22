@@ -1,0 +1,1041 @@
+{
+	"name": "SM206035",
+	"graphName": "PX.Api.SYImportProcess",
+	"primaryView": "Operation",
+	"featureInstalled": [],
+	"actions": [
+		{
+			"name": "viewReplacement",
+			"decorators": []
+		},
+		{
+			"name": "addSubstitutions",
+			"decorators": []
+		},
+		{
+			"name": "viewHistory",
+			"decorators": []
+		},
+		{
+			"name": "viewPreparedData",
+			"decorators": []
+		},
+		{
+			"name": "savePreparedData",
+			"decorators": []
+		},
+		{
+			"name": "replaceOneValue",
+			"decorators": []
+		},
+		{
+			"name": "replaceAllValues",
+			"decorators": []
+		},
+		{
+			"name": "saveSubstitutions",
+			"decorators": []
+		},
+		{
+			"name": "closeSubstitutions",
+			"decorators": []
+		}
+	],
+	"views": [
+		{
+			"name": "Operation",
+			"dacClassName": null,
+			"displayName": "Parameters",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "Operation",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "BreakOnError",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "BreakOnTarget",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SkipHeaders",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "Validate",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ValidateAndSave",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Parameters"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "Mappings",
+			"dacClassName": null,
+			"displayName": "Scenarios",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Selected",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowCheckAll": true,
+									"width": 20
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Name",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ScreenDescription",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ProviderID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SyncType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Status",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "NbrRecords",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PreparedOn",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CompletedOn",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Scenarios"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"adjustPageSize": true,
+							"autoAdjustColumns": true,
+							"mergeToolbarWith": "ScreenToolbar",
+							"syncPosition": true
+						}
+					]
+				}
+			],
+			"actions": [
+				{
+					"name": "viewHistory",
+					"decorators": []
+				},
+				{
+					"name": "viewPreparedData",
+					"decorators": []
+				}
+			],
+			"mergeToolbarWith": "ScreenToolbar"
+		},
+		{
+			"name": "History",
+			"dacClassName": null,
+			"displayName": "History",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "StatusDate",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Status",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "NbrRecords",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ImportTimeStamp",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "History"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"allowDelete": false,
+							"allowInsert": false
+						}
+					]
+				}
+			],
+			"actions": [],
+			"allowDelete": false,
+			"allowInsert": false
+		},
+		{
+			"name": "PreparedData",
+			"dacClassName": null,
+			"displayName": "Prepared Data",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "LineNbr",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "IsActive",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ErrorMessage",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "IsProcessed",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "CanAddSubstitutions",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowShowHide": "False"
+								}
+							]
+						}
+					],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Prepared Data"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"allowDelete": false,
+							"allowInsert": false,
+							"generateColumns": "AppendDynamic",
+							"syncPosition": true
+						}
+					]
+				}
+			],
+			"actions": [
+				{
+					"name": "viewReplacement",
+					"decorators": []
+				},
+				{
+					"name": "addSubstitutions",
+					"decorators": []
+				}
+			],
+			"allowDelete": false,
+			"allowInsert": false,
+			"generateColumns": "AppendDynamic"
+		},
+		{
+			"name": "ReplacementProperties",
+			"dacClassName": null,
+			"displayName": "Replace",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "ColumnIndex",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "SearchValue",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "ReplaceValue",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "MatchCase",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ReplaceResult",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Replace"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "SubstitutionInfo",
+			"dacClassName": null,
+			"displayName": "Add Substitution",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SubstitutionID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "TableName",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "FieldName",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "OriginalValue",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SubstitutedValue",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Add Substitution"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"allowDelete": false,
+							"allowInsert": false
+						}
+					]
+				}
+			],
+			"actions": [],
+			"allowDelete": false,
+			"allowInsert": false
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.Api.SYImportProcess",
+					"primaryView": "Operation"
+				}
+			]
+		}
+	]
+}

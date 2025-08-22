@@ -1,0 +1,127 @@
+<template>
+	<qp-template name="7-10-7" class="equal-height" id="DailyFieldReport_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="DailyFieldReport">
+			<field name="DailyFieldReportCd"></field>
+			<field name="Status"></field>
+			<field name="Date"></field>
+			<field name="ProjectId" config-allow-edit.bind="true"></field>
+			<field name="ProjectManagerId" config-allow-edit.bind="true"></field>
+			<field name="CreatedById"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="DailyFieldReport">
+			<field name="SiteAddress"></field>
+			<field name="City"></field>
+			<field name="CountryId"></field>
+			<field name="State"></field>
+			<field name="PostalCode">
+				<qp-address-lookup view.bind="DailyFieldReport"></qp-address-lookup>
+			</field>
+			<field name="Latitude"></field>
+			<field name="Longitude"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form03" view.bind="DailyFieldReport">
+			<field name="TemperatureLevel"></field>
+			<field name="Humidity"></field>
+			<field name="TimeObserved_Time" config-time-mode.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="LaborTimeAndActivitiesTab" caption="Labor Time And Activities">
+			<qp-grid id="gridEmployeeActivities" view.bind="EmployeeActivities"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ProgressWorksheetsTab" caption="Progress Worksheets">
+			<qp-grid id="ProgressWorksheetLines_ProgressWorksheetLinesGrid" view.bind="ProgressWorksheetLines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ChangeRequestsTab" caption="Change Requests">
+			<qp-grid id="gridChangeRequests" view.bind="ChangeRequests"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ChangeOrdersTab" caption="Change Orders">
+			<qp-grid id="gridChangeOrders" view.bind="ChangeOrders"></qp-grid>
+		</qp-tab>
+		<qp-tab id="SubcontractorsTab" caption="Subcontractors">
+			<qp-grid id="gridSubcontractors" view.bind="Subcontractors"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ProjectIssuesTab" caption="Project Issues">
+			<qp-grid id="gridProjectIssues" view.bind="ProjectIssues"></qp-grid>
+		</qp-tab>
+		<qp-tab id="PhotoLogsTab" caption="Photo Logs">
+			<qp-splitter id="splitterId"
+				split="width"
+				initial-split="50%"
+				state="normal"
+			>
+				<split-pane>
+					<qp-grid id="gridPhotoLogs" view.bind="PhotoLogs"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-fieldset id="mainPhoto" view.bind="MainPhoto" caption="Photo Logs">
+						<field name="ImageUrl" control-type="qp-image-view"></field>
+					</qp-fieldset>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="NotesTab" caption="Notes">
+			<qp-grid id="gridNotes" view.bind="Notes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="MaterialsTab" caption="Materials">
+			<qp-grid id="gridMaterials" view.bind="PurchaseReceipts"></qp-grid>
+		</qp-tab>
+		<qp-tab id="EquipmentTab" caption="Equipment">
+			<qp-grid id="gridEquipment" view.bind="Equipment"></qp-grid>
+		</qp-tab>
+		<qp-tab id="WeatherTab" caption="Weather">
+			<qp-grid id="gridWeather" view.bind="Weather"></qp-grid>
+		</qp-tab>
+		<qp-tab id="VisitorsTab" caption="Visitors">
+			<qp-grid id="gridVisitors" view.bind="Visitors"></qp-grid>
+		</qp-tab>
+		<qp-tab id="EmployeeExpensesTab" caption="Employee Expenses">
+			<qp-grid id="gridEmployeeExpenses" view.bind="EmployeeExpenses"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ApprovalsTab" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="HistoryTab" caption="History">
+			<qp-grid id="gridHistory" view.bind="History"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CostBudgets" caption="Select Budget Lines" auto-repaint="true" width="80vw">
+		<qp-template name="1-1-1" id="costBudgetfilter_formSelectBudgetLines" wg-container>
+			<qp-fieldset slot="A" id="formSelectBudgetLines01" view.bind="costBudgetfilter">
+				<field name="TaskID"></field>
+				<field name="AccountGroupID"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="formSelectBudgetLines02" view.bind="costBudgetfilter">
+				<field name="CostCodeFrom"></field>
+				<field name="CostCodeTo"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridCostBudgetLines" view.bind="costBudgets">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton6" state.bind="AddSelectedBudgetLines"></qp-button>
+			<qp-button id="PXButton7" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton8" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field id="edNewApprover" name="NewApprover"></field>
+			<field id="chkIgnoreApproversDelegations" name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="btnReassignApprovalCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

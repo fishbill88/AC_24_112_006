@@ -1,0 +1,37 @@
+<template>
+	<qp-template id="form_0" name="1-1" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="form_left" view.bind="Filter" slot="A">
+			<field name="DocName"></field>
+			<field name="AddedBy"></field>
+			<field name="CheckedOutBy"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_right" view.bind="Filter" slot="B">
+			<field name="DateCreatedFrom"></field>
+			<field name="DateCreatedTo"></field>
+			<field name="ScreenID"></field>
+			<field name="ShowUnassignedFiles"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-panel id="ClearingFilter" caption="Choose date">
+		<div class="v-stack" id="frmDate_0_vStack">
+			<qp-fieldset id="frmDate_0" view.bind="ClearingFilter">
+				<field name="Till"></field>
+			</qp-fieldset>
+			<div class="h-stack">
+				<qp-button id="PXButton1" caption="OK"></qp-button>
+				<qp-button id="PXButton2" caption="Close"></qp-button>
+			</div>
+		</div>
+	</qp-panel>
+	<qp-panel id="GetFileLinkFilter" caption="File Link">
+		<qp-template id="PXLayoutRule1_0" name="1" wg-container="GetFileLinkFilter_frmGetLink">
+			<qp-fieldset id="PXLayoutRule1" view.bind="GetFileLinkFilter" slot="A">
+				<field name="WikiLink"></field>
+			</qp-fieldset>
+		</qp-template>
+		<div class="h-stack">
+			<qp-button id="PXButton1" caption="Close"></qp-button>
+		</div>
+	</qp-panel>
+	<qp-grid id="gridSearchFiles" view.bind="Files" wg-container="Files_grid"></qp-grid>
+</template>

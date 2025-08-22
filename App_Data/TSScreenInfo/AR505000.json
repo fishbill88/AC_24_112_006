@@ -1,0 +1,718 @@
+{
+	"name": "AR505000",
+	"graphName": "PX.Objects.AR.ARCreateWriteOff",
+	"primaryView": "Filter",
+	"pageLoadBehavior": "PopulateSavedValues",
+	"featureInstalled": [],
+	"actions": [
+		{
+			"name": "showCustomer",
+			"decorators": []
+		},
+		{
+			"name": "editDetail",
+			"decorators": []
+		},
+		{
+			"name": "editCustomer",
+			"decorators": []
+		}
+	],
+	"views": [
+		{
+			"name": "Filter",
+			"dacClassName": null,
+			"displayName": "Selection",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "WOType",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "WODate",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "OrgBAccountID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "WOFinPeriodID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "CustomerID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "ReasonCode",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "WOLimit",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						32
+					],
+					"stateType": "default",
+					"name": "SelTotal",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": true,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Selection"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "ARDocumentList",
+			"dacClassName": null,
+			"displayName": "Documents",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Selected",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false,
+									"allowSort": false,
+									"textAlign": "Center",
+									"allowCheckAll": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "BranchID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "DocType",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "RefNbr",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": "editDetail",
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "linkCommand"
+							},
+							"arguments": [
+								"editDetail"
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CustomerID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": "editCustomer",
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "linkCommand"
+							},
+							"arguments": [
+								"editCustomer"
+							]
+						},
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CustomerID_BAccountR_acctName",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "DocDate",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "FinPeriodID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CuryID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"textAlign": "Right",
+									"allowShowHide": "Server",
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CuryDocBal",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"textAlign": "Right",
+									"allowShowHide": "Server"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "DocBal",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowUpdate": false,
+									"textAlign": "Right"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "DocDesc",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ReasonCode",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"hideViewLink": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CuryOrigDocAmt",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"textAlign": "Right",
+									"allowShowHide": "Server"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "OrigDocAmt",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"textAlign": "Right"
+								}
+							]
+						}
+					],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Documents"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"syncPosition": true,
+							"mergeToolbarWith": "ScreenToolbar"
+						}
+					]
+				}
+			],
+			"actions": [],
+			"mergeToolbarWith": "ScreenToolbar"
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.Objects.AR.ARCreateWriteOff",
+					"primaryView": "Filter",
+					"pageLoadBehavior": "PopulateSavedValues"
+				}
+			]
+		}
+	]
+}

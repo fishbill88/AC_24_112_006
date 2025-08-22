@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="ItemInfo" caption="Inventory Lookup" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="ItemFilter_form" name="1-1-1" class="equal-height" wg-container="ItemFilter_formSitesStatus">
+			<qp-fieldset id="ItemFilter_form_column1" view.bind="ItemFilter" slot="A">
+				<field name="Inventory"></field>
+				<field name="BarCode"></field>
+				<field name="OnlyAvailable"></field>
+			</qp-fieldset>
+			<qp-fieldset id="ItemFilter_form_column2" view.bind="ItemFilter" slot="B">
+				<field name="SiteID"></field>
+				<field name="ItemClass"></field>
+				<field name="SubItem"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gripSiteStatus" view.bind="ItemInfo"></qp-grid>
+		<footer>
+			<qp-button id="PXButton6" caption="Add" state.bind="AddSelectedItems"></qp-button>
+			<qp-button id="PXButton7" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton8" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

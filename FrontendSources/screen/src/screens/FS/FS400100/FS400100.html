@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="Filter_PXFormView1" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="Filter_10" slot="A" view.bind="Filter">
+			<field name="BranchID"></field>
+			<field name="BranchLocationID"></field>
+			<field name="CustomerID"></field>
+			<field name="CustomerLocationID"></field>
+			<field name="SORefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_20" slot="B" view.bind="Filter">
+			<field name="ServiceContractID"></field>
+			<field name="ScheduleID"></field>
+			<field name="StaffMemberID"></field>
+			<field name="SMEquipmentID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_30" slot="C" view.bind="Filter">
+			<field name="FromScheduledDate_Date"></field>
+			<field name="ToScheduledDate_Date"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Appointments">
+	</qp-grid>
+</template>

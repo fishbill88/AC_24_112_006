@@ -1,0 +1,420 @@
+{
+	"name": "IN507000",
+	"graphName": "PX.Objects.IN.Turnover.ManageTurnover",
+	"primaryView": "Filter",
+	"pageLoadBehavior": "PopulateSavedValues",
+	"featureInstalled": [],
+	"actions": [],
+	"views": [
+		{
+			"name": "Filter",
+			"dacClassName": null,
+			"displayName": "Selection",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "Action",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "OrgBAccountID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "FromPeriodID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "ToPeriodID",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "NumberOfPeriods",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "CalculateBy",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Selection"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "TurnoverCalcs",
+			"dacClassName": null,
+			"displayName": "Details",
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "Selected",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowCheckAll": true
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "BranchID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowNull": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "FromPeriodID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowNull": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ToPeriodID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowNull": false
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "SiteID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ItemClassID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "InventoryID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CreatedDateTime",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Details"
+						}
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"preset": "PrimaryInquiry"
+						}
+					]
+				}
+			],
+			"actions": [],
+			"mergeToolbarWith": "ScreenToolbar",
+			"allowDelete": false,
+			"allowInsert": false
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.Objects.IN.Turnover.ManageTurnover",
+					"primaryView": "Filter",
+					"pageLoadBehavior": "PopulateSavedValues"
+				}
+			]
+		}
+	]
+}

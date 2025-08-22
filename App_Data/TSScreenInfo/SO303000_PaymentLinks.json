@@ -1,0 +1,98 @@
+{
+	"name": "SO303000_PaymentLinks",
+	"graphName": null,
+	"extendsScreen": "SO303000",
+	"featureInstalled": [
+		"PX.Objects.CS.FeaturesSet+AcumaticaPayments"
+	],
+	"actions": [
+		{
+			"name": "CreateLink",
+			"decorators": []
+		},
+		{
+			"name": "SyncLink",
+			"decorators": []
+		},
+		{
+			"name": "ResendLink",
+			"decorators": []
+		}
+	],
+	"views": [
+		{
+			"name": "PayLink",
+			"dacClassName": null,
+			"displayName": "Payment Links",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Url",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "LinkStatus",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Payment Links"
+						}
+					]
+				}
+			],
+			"actions": []
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "featureInstalled"
+			},
+			"arguments": [
+				"PX.Objects.CS.FeaturesSet+AcumaticaPayments"
+			]
+		}
+	]
+}

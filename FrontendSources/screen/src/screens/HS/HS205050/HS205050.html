@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="17-17-14" id="form" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="Filter_Left" view.bind="Filter">
+			<field name="MarketingListID" config-allow-edit.bind="true"></field>
+			<field name="Action"></field>
+			<field name="DeleteInTarget"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter_Right" view.bind="Filter">
+			<field name="HubSpotListName"></field>
+			<field name="SubscribedOnly"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Records"> </qp-grid>
+</template>

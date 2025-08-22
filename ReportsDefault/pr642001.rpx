@@ -1,0 +1,1252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report version="20211215" Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PREarningDetail.PaymentRefNbr</DataField>
+      <Value>@RefNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PREarningDetail.PaymentDocType</DataField>
+      <Value>@DocType</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>5px, 5px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Margins></Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>SPC</DefaultValue>
+      <Name>DocType</Name>
+      <Prompt>Check Type:</Prompt>
+      <Required>True</Required>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>RefNbr</Name>
+      <Prompt>Ref Number</Prompt>
+      <Required>True</Required>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>EPEarningType</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>TypeCD</ChildField>
+          <ParentField>TypeCD</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PREarningDetail</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PRPaymentFringeBenefit</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>DocType</ChildField>
+          <ParentField>PaymentDocType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>RefNbr</ChildField>
+          <ParentField>PaymentRefNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ProjectID</ChildField>
+          <ParentField>ProjectID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>=isNull([PRPaymentFringeBenefit.ProjectTaskID],-99)</ChildField>
+          <ParentField>=isNull([PREarningDetail.ProjectTaskID],-99)</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>=isNull([PRPaymentFringeBenefit.LaborItemID],-99)</ChildField>
+          <ParentField>=isNull([PREarningDetail.LabourItemID],-99)</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PREarningDetail</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/2022.121.us/</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>EPEarningType.IsPTO</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>EPEarningType.IsAmountBased</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>EPEarningType.IsPiecework</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>EPEarningType.IsOvertime</DataField>
+    </SortExp>
+  </Sorting>
+  <Style>
+    <BackColor>White</BackColor>
+  </Style>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PREarningDetail">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="AccountID_Segment1"></ReportField>
+        <ReportField Name="AllowCopy">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseOvertimeRecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BasePTORecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_BranchWithAddress_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="CertifiedJob">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CostCodeID"></ReportField>
+        <ReportField Name="CostCodeID_description"></ReportField>
+        <ReportField Name="CostCodeID_PMCostCode_description"></ReportField>
+        <ReportField Name="CostCodeID_Segment1"></ReportField>
+        <ReportField Name="CostCodeID_Segment2"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Date">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Date_Day"></ReportField>
+        <ReportField Name="Date_Hour"></ReportField>
+        <ReportField Name="Date_Month"></ReportField>
+        <ReportField Name="Date_Quarter"></ReportField>
+        <ReportField Name="EmployeeAcctCD"></ReportField>
+        <ReportField Name="EmployeeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ExcelRecordID"></ReportField>
+        <ReportField Name="Hours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="IsAmountBased">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsFringeRateEarning">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsOvertime">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPayingCarryover">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPayingSettlement">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPiecework">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsRegularRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsTimeActivityBillable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LabourItemID"></ReportField>
+        <ReportField Name="LabourItemID_Segment1"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="ManualRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PaymentDocType"></ReportField>
+        <ReportField Name="PaymentRefNbr"></ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="ProjectTaskID"></ReportField>
+        <ReportField Name="ProjectTaskID_description"></ReportField>
+        <ReportField Name="ProjectTaskID_PMTask_description"></ReportField>
+        <ReportField Name="ProjectTaskID_Segment1"></ReportField>
+        <ReportField Name="PTODisbursementWithAverageRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PTODisbursementWithFinancialTransaction">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Rate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ShiftID"></ReportField>
+        <ReportField Name="ShiftID_description"></ReportField>
+        <ReportField Name="ShiftID_EPShiftCode_description"></ReportField>
+        <ReportField Name="SortingRecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SourceCommnPeriod"></ReportField>
+        <ReportField Name="SourceNoteID"></ReportField>
+        <ReportField Name="SourceType"></ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Segment1"></ReportField>
+        <ReportField Name="SubID_Segment2"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+        <ReportField Name="TimeCardMinutes">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="TypeCD"></ReportField>
+        <ReportField Name="TypeCD_description"></ReportField>
+        <ReportField Name="TypeCD_EPEarningType_description"></ReportField>
+        <ReportField Name="UnionID"></ReportField>
+        <ReportField Name="Units">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UnitType"></ReportField>
+        <ReportField Name="WorkCodeID"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PREarningDetail</FullName>
+    </ReportTable>
+    <ReportTable Name="EPEarningType">
+      <Fields>
+        <ReportField Name="AccruePTO">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BenefitExpenseAcctID"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID_description"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID_Segment1"></ReportField>
+        <ReportField Name="BenefitExpenseSubID"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_description"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_Segment1"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_Segment2"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="EarningsAcctID"></ReportField>
+        <ReportField Name="EarningsAcctID_Account_description"></ReportField>
+        <ReportField Name="EarningsAcctID_description"></ReportField>
+        <ReportField Name="EarningsAcctID_Segment1"></ReportField>
+        <ReportField Name="EarningsSubID"></ReportField>
+        <ReportField Name="EarningsSubID_description"></ReportField>
+        <ReportField Name="EarningsSubID_Segment1"></ReportField>
+        <ReportField Name="EarningsSubID_Segment2"></ReportField>
+        <ReportField Name="EarningsSubID_Sub_description"></ReportField>
+        <ReportField Name="EarningTypeCategory"></ReportField>
+        <ReportField Name="IncludeType"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAmountBased">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="isBillable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsOvertime">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPiecework">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPTO">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsSupplementalCAN">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsWCCCalculation">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OvertimeMultiplier">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="PTOExpenseAcctID"></ReportField>
+        <ReportField Name="PTOExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="PTOExpenseAcctID_description"></ReportField>
+        <ReportField Name="PTOExpenseAcctID_Segment1"></ReportField>
+        <ReportField Name="PTOExpenseSubID"></ReportField>
+        <ReportField Name="PTOExpenseSubID_description"></ReportField>
+        <ReportField Name="PTOExpenseSubID_Segment1"></ReportField>
+        <ReportField Name="PTOExpenseSubID_Segment2"></ReportField>
+        <ReportField Name="PTOExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="PublicHoliday">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="QuebecReportTypeCAN"></ReportField>
+        <ReportField Name="RegularTypeCD"></ReportField>
+        <ReportField Name="RegularTypeCD_description"></ReportField>
+        <ReportField Name="RegularTypeCD_EPEarningType_description"></ReportField>
+        <ReportField Name="ReportType"></ReportField>
+        <ReportField Name="ReportType_description"></ReportField>
+        <ReportField Name="ReportType_PRDynType_description"></ReportField>
+        <ReportField Name="ReportTypeCAN"></ReportField>
+        <ReportField Name="TaskID"></ReportField>
+        <ReportField Name="TaskID_description"></ReportField>
+        <ReportField Name="TaskID_PMTask_description"></ReportField>
+        <ReportField Name="TaskID_Segment1"></ReportField>
+        <ReportField Name="TaxExpenseAcctID"></ReportField>
+        <ReportField Name="TaxExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="TaxExpenseAcctID_description"></ReportField>
+        <ReportField Name="TaxExpenseAcctID_Segment1"></ReportField>
+        <ReportField Name="TaxExpenseSubID"></ReportField>
+        <ReportField Name="TaxExpenseSubID_description"></ReportField>
+        <ReportField Name="TaxExpenseSubID_Segment1"></ReportField>
+        <ReportField Name="TaxExpenseSubID_Segment2"></ReportField>
+        <ReportField Name="TaxExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="TypeCD"></ReportField>
+        <ReportField Name="WageTypeCD"></ReportField>
+        <ReportField Name="WageTypeCD_description"></ReportField>
+        <ReportField Name="WageTypeCD_PRDynType_description"></ReportField>
+        <ReportField Name="WageTypeCDCAN"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.EP.EPEarningType</FullName>
+    </ReportTable>
+    <ReportTable Name="PRPaymentFringeBenefit">
+      <Fields>
+        <ReportField Name="ApplicableHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CalculatedFringeRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="FringeAmountInBenefit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FringeRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LaborItemID"></ReportField>
+        <ReportField Name="LaborItemID_Segment1"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="PaidFringeAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="ProjectTaskID"></ReportField>
+        <ReportField Name="ProjectTaskID_description"></ReportField>
+        <ReportField Name="ProjectTaskID_PMTask_description"></ReportField>
+        <ReportField Name="ProjectTaskID_Segment1"></ReportField>
+        <ReportField Name="RecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ReducingRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="TStamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRPaymentFringeBenefit</FullName>
+    </ReportTable>
+  </Tables>
+  <Version>20211215</Version>
+  <ViewerFields>
+    <ViewerField Name="PREarningDetail.RecordID"></ViewerField>
+    <ViewerField Name="PREarningDetail.PaymentRefNbr"></ViewerField>
+    <ViewerField Name="PREarningDetail.PaymentDocType"></ViewerField>
+    <ViewerField Name="PREarningDetail.TypeCD_description"></ViewerField>
+    <ViewerField Name="PREarningDetail.Amount"></ViewerField>
+    <ViewerField Name="PREarningDetail.Rate"></ViewerField>
+    <ViewerField Name="PREarningDetail.Hours"></ViewerField>
+    <ViewerField Name="PREarningDetail.IsFringeRateEarning"></ViewerField>
+  </ViewerFields>
+  <ViewerFieldsMode>OnlySpecified</ViewerFieldsMode>
+  <Width>8.19792in</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0in</Height>
+      <Visible>False</Visible>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.16in</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>anyCerifiedProject</Name>
+          <ValueExpr>=IIF([PREarningDetail.CertifiedJob]=1,1,$anyCerifiedProject)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>anyProject</Name>
+          <ValueExpr>=IIF(isNull([PREarningDetail.ProjectID],'')&lt;&gt;'',1,$anyProject)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox18">
+          <Location>730px, 5px</Location>
+          <Size>56px, 16px</Size>
+          <Value>=$anyCerifiedProject</Value>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Location>204px, 0px</Location>
+          <Size>42px, 15px</Size>
+          <Style>
+            <TextAlign>Center</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIf([PREarningDetail.IsFringeRateEarning] , 'Yes', '' )</Value>
+          <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox36">
+          <Location>113px, 0px</Location>
+          <Size>34px, 15px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=SUM([PREarningDetail.Units])</Value>
+          <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <Location>303px, 0px</Location>
+          <Size>58px, 15px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=([PREarningDetail.Amount])</Value>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <Location>246px, 0px</Location>
+          <Size>48px, 15px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=([PREarningDetail.Hours])</Value>
+        </TextBox>
+        <TextBox Name="textBox39">
+          <Format>N</Format>
+          <Location>155px, 0px</Location>
+          <Size>41px, 15px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PREarningDetail.Rate]</Value>
+          <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <Location>563px, 0px</Location>
+          <Size>97px, 15px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PREarningDetail.LabourItemID]</Value>
+          <VisibleExpr>=IIf([PREarningDetail.CertifiedJob] , true, false )</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox41">
+          <Location>466px, 0px</Location>
+          <Size>97px, 15px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PREarningDetail.ProjectTaskID]</Value>
+          <VisibleExpr>=IIf([PREarningDetail.CertifiedJob] , true, false )</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <Location>369px, 0px</Location>
+          <Size>97px, 15px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PREarningDetail.ProjectID]</Value>
+          <VisibleExpr>=IIf([PREarningDetail.CertifiedJob] , true, false )</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <CanGrow>True</CanGrow>
+          <Location>0px, 0px</Location>
+          <Size>113px, 15px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[PREarningDetail.TypeCD] + ' - ' + [PREarningDetail.TypeCD_description]</Value>
+          <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.01in</Height>
+    </PageFooter>
+    <ReportHeader Name="reportHeaderSection1">
+      <Height>0.01in</Height>
+      <PageBreak>Before</PageBreak>
+      <ProcessOrder>Always</ProcessOrder>
+    </ReportHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpAll">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PREarningDetail.Released]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="grpProjType">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PREarningDetail.CertifiedJob]</DataField>
+          <SortOrder>Descending</SortOrder>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection4">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection5">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="grpProj">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PREarningDetail.CertifiedJob]</DataField>
+          <SortOrder>Descending</SortOrder>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=IIF(isNull([PREarningDetail.ProjectID],'')&lt;&gt;'',[PREarningDetail.ProjectID],'2147483640')</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection5">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection6">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="grpProjRate">
+      <Grouping>
+        <GroupExp>
+          <DataField>=IIF(isNull([PREarningDetail.ProjectID],'')&lt;&gt;'',[PREarningDetail.ProjectID],'2147483640')</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=IIF(isNull([PREarningDetail.ProjectTaskID], '')&lt;&gt;'',[PREarningDetail.ProjectTaskID],'2147483640')</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=IIF( isNull([PREarningDetail.LabourItemID],'')&lt;&gt;'', [PREarningDetail.LabourItemID],'2147483640')</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[PREarningDetail.TypeCD]</DataField>
+          <SortOrder>Descending</SortOrder>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[PREarningDetail.Rate]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.16in</Height>
+          <VisibleExpr>=($printed=0)</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox12">
+              <Location>369px, 0px</Location>
+              <Size>97px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Project</Value>
+              <VisibleExpr>=$anyProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox122">
+              <Location>660px, 0px</Location>
+              <Size>66px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>YTD Amt</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <Location>466px, 0px</Location>
+              <Size>97px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Project Task</Value>
+              <VisibleExpr>=$anyProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox16">
+              <Location>563px, 0px</Location>
+              <Size>97px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Labor Item</Value>
+              <VisibleExpr>=$anyProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox19">
+              <Location>0px, 0px</Location>
+              <Size>153px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Earnings</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Location>295px, 0px</Location>
+              <Size>66px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Curr. Amt</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Location>153px, 0px</Location>
+              <Size>42px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Units</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Location>238px, 0px</Location>
+              <Size>57px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Curr. Hrs</Value>
+              <VisibleExpr>=($anyCerifiedProject=0) and ([PREarningDetail.Hours]&gt;0)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Location>195px, 0px</Location>
+              <Size>43px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Rate</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>563px, 0px</Location>
+              <Size>97px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <VisibleExpr>=$anyProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <Location>466px, 0px</Location>
+              <Size>97px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <VisibleExpr>=$anyProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox27">
+              <Location>660px, 0px</Location>
+              <Size>66px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>YTD Amt</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Location>369px, 0px</Location>
+              <Size>97px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <VisibleExpr>=$anyProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox288">
+              <Location>149px, 0px</Location>
+              <Size>47px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Rate</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox289">
+              <Location>246px, 0px</Location>
+              <Size>48px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Curr. Hrs</Value>
+              <VisibleExpr>=($anyCerifiedProject=1) and ([PREarningDetail.Hours]&gt;0)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Location>113px, 0px</Location>
+              <Size>36px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Units</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Location>361px, 0px</Location>
+              <Size>8px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <VisibleExpr>=$anyProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox32">
+              <Location>361px, 0px</Location>
+              <Size>8px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <VisibleExpr>=$anyProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox385">
+              <Location>294px, 0px</Location>
+              <Size>67px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Curr. Amt</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Location>196px, 0px</Location>
+              <Size>50px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Center</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Fringe</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>0px, 0px</Location>
+              <Size>113px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Earnings</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.15in</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>printed</Name>
+              <ValueExpr>=1</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totUnits</Name>
+              <ValueExpr>=$totUnits+SUM([PREarningDetail.Units])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totHrs</Name>
+              <ValueExpr>=$totHrs+SUM([PREarningDetail.Hours])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totAmt</Name>
+              <ValueExpr>=$totAmt+SUM([PREarningDetail.Amount])</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox1">
+              <CanGrow>True</CanGrow>
+              <Location>0px, 0px</Location>
+              <Size>113px, 15px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.TypeCD] + ' - ' + [PREarningDetail.TypeCD_description]</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox10">
+              <Location>216px, 32px</Location>
+              <Size>120px, 16px</Size>
+              <Value>=$totUnits</Value>
+              <Visible>False</Visible>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <CanGrow>True</CanGrow>
+              <Location>369px, 0px</Location>
+              <Size>97px, 15px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.ProjectID]</Value>
+              <VisibleExpr>=[PREarningDetail.ProjectID]&lt;&gt;'X'</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <CanGrow>True</CanGrow>
+              <Location>466px, 0px</Location>
+              <Size>97px, 15px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.ProjectTaskID] </Value>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <CanGrow>True</CanGrow>
+              <Location>563px, 0px</Location>
+              <Size>97px, 15px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.LabourItemID]</Value>
+            </TextBox>
+            <TextBox Name="textBox2">
+              <Format>N</Format>
+              <Location>155px, 0px</Location>
+              <Size>41px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.Rate]</Value>
+              <VisibleExpr>=$anyCerifiedProject=1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <Location>159px, 0px</Location>
+              <Size>34px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM([PREarningDetail.Units])</Value>
+              <VisibleExpr>=IIf(([EPEarningType.IsPiecework]=1) and ($anyCerifiedProject=0), true, false )</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Format>N</Format>
+              <Location>197px, 0px</Location>
+              <Size>41px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.Rate]</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <CanGrow>True</CanGrow>
+              <Location>0px, 0px</Location>
+              <Size>155px, 15px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PREarningDetail.TypeCD] + ' - ' + [PREarningDetail.TypeCD_description]</Value>
+              <VisibleExpr>=$anyCerifiedProject=0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>344px, 32px</Location>
+              <Size>120px, 16px</Size>
+              <Value>=$totHrs</Value>
+              <Visible>False</Visible>
+            </TextBox>
+            <TextBox Name="textBox43">
+              <Location>472px, 32px</Location>
+              <Size>120px, 16px</Size>
+              <Value>=$totAmt</Value>
+              <Visible>False</Visible>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>246px, 0px</Location>
+              <Size>48px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM([PREarningDetail.Hours])</Value>
+              <VisibleExpr>=(SUM([PREarningDetail.Hours])&gt;0)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Location>303px, 0px</Location>
+              <Size>58px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM([PREarningDetail.Amount])</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Location>113px, 0px</Location>
+              <Size>34px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM([PREarningDetail.Units])</Value>
+              <VisibleExpr>=IIf(([EPEarningType.IsPiecework]=1) and ($anyCerifiedProject=1), true, false )</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Location>204px, 0px</Location>
+              <Size>42px, 15px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPaymentFringeBenefit.ReducingRate]</Value>
+              <VisibleExpr>=($anyCerifiedProject=1) and ([PREarningDetail.IsFringeRateEarning]=1)</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

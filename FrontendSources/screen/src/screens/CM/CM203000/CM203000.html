@@ -1,0 +1,21 @@
+<template>
+
+	<qp-template id="formTranslationDefinition" name="1-1" wg-container="TranslDefRecords_form" class="equal-height">
+		<qp-fieldset id="columnFirstTranslationDefinition" view.bind="TranslDefRecords" slot="A">
+			<field name="TranslDefId"></field>
+			<field name="SourceLedgerId"></field>
+			<field name="DestLedgerId"></field>
+			<field name="BranchID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondTranslationDefinition" view.bind="TranslDefRecords" slot="B">
+			<field name="Active"></field>
+			<field name="SourceCuryID"></field>
+			<field name="DestCuryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridTranslationDefinitionDetails" view.bind="TranslDefDetailsRecords" wg-container="TranslDefDetailsRecords_grid">
+	</qp-grid>
+
+</template>

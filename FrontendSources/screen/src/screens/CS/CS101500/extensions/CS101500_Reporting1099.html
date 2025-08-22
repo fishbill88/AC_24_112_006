@@ -1,0 +1,17 @@
+﻿<template>
+
+    <qp-tab after="#tabGLAccounts" id="tab1099Settings" caption="1099 Settings" wg-container="OrganizationView_OrgPart10" if.bind="OrganizationView.Reporting1099.value == true">
+        <qp-template name="1-1" id="form1099Settings">
+            <qp-fieldset slot="A" id="groupEFilingSettings" view.bind="OrganizationView" caption="E-Filing Settings">
+                <field name="TCC"></field>
+                <field name="CFSFiler"></field>
+                <field name="ForeignEntity"></field>
+                <field name="ContactName"></field>
+                <field name="CTelNumber"></field>
+                <field name="CEmail"></field>
+                <field name="NameControl"></field>
+            </qp-fieldset>
+        </qp-template>
+    </qp-tab>
+
+</template>

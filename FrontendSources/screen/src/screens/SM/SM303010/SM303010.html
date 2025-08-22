@@ -1,0 +1,50 @@
+<template>
+	<qp-template name="1-1-1" class="equal-height" id="Clients_form" wg-container>
+		<qp-fieldset slot="A" id="col1" view.bind="Clients">
+			<field name="ClientID"></field>
+			<field name="ClientName"></field>
+			<field name="Enabled"></field>
+			<field name="Flow"></field>
+			<field name="Plugin" config-null-text.bind="'No Plug-In'"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="col2" view.bind="Clients" caption="Refresh Tokens">
+			<field name="RefreshMode"></field>
+			<field name="AbsoluteLifetimeInDays" control-type="qp-text-editor">
+				<qp-field control-state.bind="Clients.InfiniteTokenLifetime" no-label="true"></qp-field>
+			</field>
+			<field name="SlidingLifetimeInDays" control-type="qp-text-editor"> 
+				<div></div><!-- this div for setting same size with AbsoluteLifetimeInDays -->	
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar active-tab-id="clientSecrets" id="tab">
+		<qp-tab id="clientSecretsTab" caption="Secrets">
+			<qp-grid id="clientSecrets" view.bind="ClientSecrets" wg-container="ClientSecrets_clientSecrets">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="redirectUrisTab" caption="Redirect URIs">
+			<qp-grid id="redirectUris" view.bind="RedirectUris" wg-container="RedirectUris_redirectUris">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="claimsTab" caption="Claims">
+			<qp-grid id="claims" view.bind="Claims" wg-container="Claims_claims">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel caption="Add Shared Secret" id="AddSharedSecretView" auto-repaint="true" >
+		<qp-fieldset id="formAddSharedSecret" view.bind="AddSharedSecretView">
+			<field name="Description"></field>
+			<field name="ExpirationUtc"></field>
+			<field name="note" replace-content>
+				<qp-label caption="Copy and save the value of the secret."></qp-label>
+			</field>
+			<field name="Value"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

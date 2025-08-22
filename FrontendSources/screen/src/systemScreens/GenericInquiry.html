@@ -1,0 +1,17 @@
+<template>
+	<style type="text/css">
+		qp-grid.stretch {
+			min-height: 300px;
+		}
+		div.gi-filter {
+			margin-bottom: 5px;
+		}
+	</style>
+
+	<div id="for_form" class="gi-filter" if.bind="layout && layout.fields.length">
+		<qp-fieldset-layout id="form" layout.bind="layout">
+		</qp-fieldset-layout>
+	</div>
+	<qp-grid id="grid" style="height: 100%" view.bind="Results" view-model.ref="gridVM" class="stretch">
+	</qp-grid>
+</template>

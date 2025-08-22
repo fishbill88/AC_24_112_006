@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="LotSerialNbr" config-allow-edit.bind="true"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter">
+			<field name="OrdNbr" config-allow-edit.bind="true"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Filter3" view.bind="Filter">
+			<field name="LevelsToDisplay" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="sp1" split="width" initial-split="20%">
+		<split-pane>
+			<qp-tree id="edTree1" view.bind="Tree"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="gridMatl" view.bind="ProdLotSerialRecs"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

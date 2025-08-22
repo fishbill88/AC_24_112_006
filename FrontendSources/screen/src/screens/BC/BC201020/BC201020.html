@@ -1,0 +1,127 @@
+﻿<template>
+	<qp-template name="17-17-14" id="Bindings_form" wg-container>
+		<qp-fieldset id="summaryFirstColumn" view.bind="Bindings" slot="A">
+			<field name="ConnectorType"></field>
+			<field name="BindingName"></field>
+		</qp-fieldset>
+		<qp-fieldset id="summarySecondColumn" view.bind="Bindings" slot="B" class="no-label">
+			<field name="IsActive"></field>
+			<field name="IsDefault"></field>
+		</qp-fieldset>
+	</qp-template>
+	<!-- Tabs -->
+	<qp-tabbar active-tab-id="tabConnectionSettings" id="CurrentStore_tab" wg-container>
+
+		<qp-tab id="tabConnectionSettings" caption="Connection Settings">
+			<qp-template name="17-17-14" id="tabConnectionSettingsTemplate">
+				<div slot="A">
+					<qp-fieldset id="CurrentBindingAmazon_frmCurrentBindingAmazon"
+								 view.bind="CurrentBindingAmazon"
+								 caption="Settings"
+								 wg-container>
+						<field name="Region"></field>
+						<field name="Marketplace"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBinding_PXFormView1" view.bind="CurrentBinding" caption="System Settings" wg-container>
+						<field name="LocaleName"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBindingAmazon_frmCurrentBindingAmazon2" view.bind="CurrentBindingAmazon" caption="Store Properties" wg-container>
+						<field name="SellerPartnerId"></field>
+					</qp-fieldset>
+				</div>
+
+				<div slot="B" id="CurrentBinding_frmOther" wg-container>
+					<qp-fieldset id="groupStoreAdministratorDetails" view.bind="CurrentBinding" caption="Store Administrator Details">
+						<field name="BindingAdministrator"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupLicenseRestrictions" view.bind="CurrentBinding" caption="License Restrictions">
+						<field name="AllowedStores"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<!--Entity Settings Tab-->
+		<qp-tab id="tabEntitySettings" caption="Entity Settings">
+			<qp-grid id="CstPXGrid60" view.bind="Entities"></qp-grid>
+		</qp-tab>
+
+		<!--Inventory Settings Tab-->
+		<qp-tab id="tabInventorySettings" caption="Inventory Settings">
+			<qp-template name="17-17-14" id="frmInventorySettings">
+				<div slot="A">
+					<qp-fieldset id="groupInventorySettings" view.bind="CurrentStore" caption="Inventory Settings">
+						<field name="AvailabilityCalcRule"></field>
+						<field name="WarehouseMode"></field>
+					</qp-fieldset>
+					<qp-grid id="gridExportLocations"
+							 class="framed-section"
+							 view.bind="ExportLocations"
+							 caption="Warehouse Mapping for Inventory Export">
+						<columns>
+							<column field="SiteID"></column>
+							<column field="LocationID"></column>
+						</columns>
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabOrderSettings" caption="Order Settings">
+			<qp-template name="17-17-14" id="frmOrderSettings">
+				<div slot="A" id="frmOrderSettingsFirstColumn">
+					<qp-fieldset id="CurrentBinding_frmCurrentBinding1" view.bind="CurrentBinding" caption="General" wg-container>
+						<field name="BranchID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBindingAmazon_CurrentBindingAmazon4" view.bind="CurrentBindingAmazon" caption="Order" wg-container>
+						<field name="SellerFulfilledOrderType" config-allow-edit.bind="true"></field>
+						<using view="CurrentStore" wg-container="CurrentStore_tab">
+							<field name="OrderTimeZone"></field>
+							<field name="PostDiscounts"></field>
+							<field name="SyncOrdersFrom"></field>
+							<field name="GiftWrappingItemID"></field>
+						</using>
+					</qp-fieldset>
+
+					<qp-fieldset id="CurrentBindingAmazon_CurrentBindingAmazon1" view.bind="CurrentBindingAmazon" caption="Marketplace-Fulfilled Order" class="label-size-m" wg-container>
+						<field name="ReleaseInvoices"></field>
+						<field name="Warehouse"></field>
+						<field name="LocationID"></field>
+						<field name="ShippingAccount"></field>
+						<field name="ShippingSubAccount"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="frmOrderSettingsSecondColumn">
+					<qp-fieldset id="groupCustomer" view.bind="CurrentStore" caption="Customer">
+						<field name="GuestCustomerID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CstPXLayoutRule117" view.bind="CurrentStore" caption="Taxes">
+						<field name="TaxSynchronization"></field>
+						<field name="DefaultTaxZoneID"></field>
+						<using view="CurrentBindingAmazon" wg-container="CurrentBindingAmazon_CurrentBindingAmazon3">
+							<field name="DefaultTaxID"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBindingAmazon_CurrentBindingAmazon2" view.bind="CurrentBindingAmazon" caption="Substitution Lists" class="label-size-m" wg-container>
+						<field name="ShipViaCodesToCarriers" config-allow-edit.bind="true"></field>
+						<field name="ShipViaCodesToCarrierServices" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabPaymentSettings" caption="Payment Settings">
+			<qp-grid id="PaymentsMethods"
+					 view.bind="PaymentMethods"></qp-grid>
+			<qp-grid id="FeeMappings"
+					 view.bind="FeeMappings"
+					 caption="Amazon Fees"
+					 wg-container="FeeMappings_FeeMappings"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabShippingSettings" caption="Shipping Settings">
+			<qp-grid id="PXGrid1"
+					 view.bind="ShippingMappings"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

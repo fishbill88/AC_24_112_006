@@ -1,0 +1,186 @@
+<template>
+	<qp-template id="RouteRecords_form" wg-container name="17-17-14" class="equal-height" qp-collapsible>
+		<qp-fieldset id="first" slot="A" view.bind="RouteRecords">
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="BranchID"></field>
+			<field name="RouteID" config-allow-edit.bind="true"></field>
+			<field name="TripNbr"></field>
+			<field name="Date">
+				<qp-field control-state.bind="RouteRecords.TimeBegin_Time" config-enabled.bind="false" config-time-mode.bind="true"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset id="second" slot="B" view.bind="RouteRecords">
+			<field name="DriverID" replace-content></field>
+			<field name="actionOpenDriverSelector" unbound>
+				<qp-button id="btnOpenDriverSelector" state.bind="model.viewModel.OpenDriverSelector" class="col-auto"></qp-button>
+			</field>
+			<field name="AdditionalDriverID"></field>
+			<field name="VehicleID" replace-content></field>
+			<field name="actionOpenVehicleSelector" unbound>
+				<qp-button id="btnOpenVehicleSelector" state.bind="model.viewModel.OpenVehicleSelector" class="col-auto"></qp-button>
+			</field>
+			<field name="AdditionalVehicleID1"></field>
+			<field name="AdditionalVehicleID2"></field>
+		</qp-fieldset>
+		<div slot="C">
+			<qp-fieldset id="summary" view.bind="RouteRecords" class="highlights-section">
+				<field name="TotalNumAppointments"></field>
+				<field name="TotalServices"></field>
+				<field name="TotalDistanceFriendly"></field>
+				<field name="TotalServicesDuration"></field>
+				<field name="TotalDuration"></field>
+				<field name="TotalTravelTime"></field>
+				<field name="ApproximateValuesLabel" class="no-label"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="RouteSelected_tab" wg-container>
+		<qp-tab id="appointmentsTab" caption="Appointments">
+			<qp-grid id="gridAppointmentsInRoute" view.bind="AppointmentsInRoute">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="infoTab" caption="Additional Info">
+			<qp-template id="AdditionalTemplate" name="17-17-14">
+				<qp-fieldset id="RouteSelected_10" slot="A" view.bind="RouteSelected">
+					<field name="Miles"></field>
+					<field name="Weight"></field>
+					<field name="FuelQty"></field>
+					<field name="FuelType"></field>
+				</qp-fieldset>
+				<qp-fieldset id="RouteSelected_20" slot="B" view.bind="RouteSelected">
+					<field name="Oil"></field>
+					<field name="AntiFreeze"></field>
+					<field name="DEF"></field>
+					<field name="Propane"></field>
+				</qp-fieldset>
+				<qp-fieldset id="actualTime" slot="C" wg-container="RouteRecords_form" view.bind="RouteRecords" class="highlights-section">
+					<field name="ActualStartTime_Date">
+						<qp-field control-state.bind="RouteRecords.ActualStartTime_Time" config-enabled.bind="false" config-time-mode.bind="true"></qp-field>
+					</field>
+					<field name="ActualEndTime_Date">
+						<qp-field control-state.bind="RouteRecords.ActualEndTime_Time" config-enabled.bind="false" config-time-mode.bind="true"></qp-field>
+					</field>
+					<field name="MemActualDuration"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="attributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="locationTab" caption="Location" class="col-auto">
+			<qp-template id="LocationTemplate" name="17-17-14">
+				<qp-fieldset id="RouteSelected_30" slot="A" view.bind="RouteSelected" caption="Location" class="col-auto">
+					<field name="fake01" unbound>
+						<qp-label caption="GPS Latitude Longitude" slot="label"></qp-label>
+						<qp-field control-state.bind="RouteSelected.GPSLatitudeLongitude" config-enabled.bind="false" class="col-8"></qp-field>
+					</field>
+					<field name="fake02" unbound>
+						<qp-label caption="Start Location" slot="label"></qp-label>
+						<qp-field control-state.bind="RouteSelected.GPSLatitudeStart" config-enabled.bind="false" class="col-4"></qp-field>
+						<qp-field control-state.bind="RouteSelected.GPSLongitudeStart" config-enabled.bind="false" class="col-4"></qp-field>
+						<qp-button id="btnViewCompleteGPSOnMap" state.bind="model.viewModel.ViewStartGPSOnMap" class="col-auto"></qp-button>
+					</field>
+					<field name="fake03" unbound>
+						<qp-label caption="End Location" slot="label"></qp-label>
+						<qp-field control-state.bind="RouteSelected.GPSLatitudeComplete" config-enabled.bind="false" class="col-4"></qp-field>
+						<qp-field control-state.bind="RouteSelected.GPSLongitudeComplete" config-enabled.bind="false" class="col-4"></qp-field>
+						<qp-button id="btnViewCompleteGPSOnMap" state.bind="model.viewModel.ViewCompleteGPSOnMap" class="col-auto"></qp-button>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="DriverRouteSelected" caption="Driver Selector" auto-repaint="true" width="80vw" height="80vh" wg-container="DriverRouteSelected_PXFormView3">
+		<qp-template id="DriverTemplate1" name="1-1" class="equal-height">
+			<qp-fieldset id="DriverRouteSelected_10" slot="A" view.bind="DriverRouteSelected">
+				<field name="RefNbr"></field>
+				<field name="FSRoute__RouteCD"></field>
+				<field name="Date"></field>
+				<using wg-container="DriverFilter_PXFormView8" view="DriverFilter">
+					<field name="ShowUnassignedDrivers"></field>
+				</using>
+			</qp-fieldset>
+			<qp-fieldset id="DriverRouteSelected_30" slot="B" view.bind="DriverRouteSelected" caption="Current Selection">
+				<field name="DriverID"></field>
+				<field name="VehicleID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXGrid1" view.bind="DriverRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" caption="Select Driver" dialog-result="OK"></qp-button>
+			<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="VehicleRouteSelected" caption="Vehicle Selector" auto-repaint="true" width="80vw" height="80vh" wg-container="VehicleRouteSelected_VehicleRouteForm">
+		<qp-template id="VehicleTemplate1" name="1-1" class="equal-height">
+			<qp-fieldset id="VehicleRouteSelected_10" slot="A" view.bind="VehicleRouteSelected">
+				<field name="RefNbr"></field>
+				<field name="FSRoute__RouteCD"></field>
+				<field name="Date"></field>
+				<using wg-container="VehicleFilter_PXFormView1" view="VehicleFilter">
+					<field name="ShowUnassignedVehicles"></field>
+				</using>
+			</qp-fieldset>
+			<qp-fieldset id="VehicleRouteSelected_30" slot="B" view.bind="VehicleRouteSelected" caption="Current Selection">
+				<field name="DriverID"></field>
+				<field name="VehicleID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="VehiclesGrid" view.bind="VehicleRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" caption="Select Vehicle" dialog-result="OK"></qp-button>
+			<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="RouteAppAssignmentFilter" caption="Route Appointment Assignment" auto-repaint="true" width="80vw" height="80vh">
+		<div id="RouteAppAssignmentFilter_PXFormViewRoute" wg-container>
+			<qp-template id="RouteAppAssignmentTemplate1" name="1-1">
+				<qp-fieldset id="RouteAppAssignment_10" slot="A" view.bind="RouteAppAssignmentFilter">
+					<field name="AppRefNbr"></field>
+					<field name="AppSrvOrdType"></field>
+					<field name="CustomerID"></field>
+					<field name="LocationID"></field>
+					<field name="ScheduledDateTimeBegin"></field>
+				</qp-fieldset>
+				<qp-fieldset id="RouteAppAssignment_20" slot="B" view.bind="RouteAppAssignmentFilter">
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="EstimatedDurationTotal"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-template id="RouteAppAssignmentTemplate1" name="1-1">
+				<qp-fieldset id="RouteAppAssignment_30" slot="A" view.bind="RouteAppAssignmentFilter" caption="Filter Options">
+					<field name="RouteDate_Date"></field>
+					<field name="RouteID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="PXGridRouteAvalable" view.bind="RouteAppAssignmentRecords" caption="Available Routes">
+			</qp-grid>
+			<footer>
+				<qp-button id="btnSelect" state.bind="SelectCurrentRoute" dialog-result="OK"></qp-button>
+				<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+			</footer>
+		</div>
+	</qp-panel>
+
+	<qp-panel id="ServiceOrderTypeSelector" caption="Select Service Order Type for New Appointment" auto-repaint="true" width="40vw" height="30vh">
+		<qp-template id="ServiceOrderTypeSelector_ServiceOrderTypeSelectorForm" name="1-1">
+			<qp-fieldset id="ServiceOrderType10" slot="A" view.bind="ServiceOrderTypeSelector">
+				<field name="SrvOrdType"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button caption="Proceed" dialog-result="OK"></qp-button>
+			<qp-button caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

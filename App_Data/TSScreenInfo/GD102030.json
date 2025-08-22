@@ -1,0 +1,256 @@
+{
+	"name": "GD102030",
+	"graphName": "PX.Objects.GDPR.GDPRRestoreProcess",
+	"primaryView": "Filter",
+	"udfTypeField": "",
+	"bpEventsIndicator": false,
+	"featureInstalled": [],
+	"actions": [],
+	"views": [
+		{
+			"name": "Filter",
+			"dacClassName": null,
+			"displayName": "Restore Options",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						16
+					],
+					"stateType": "default",
+					"name": "DeleteNonRestored",
+					"bound": true,
+					"commitChanges": true,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "Restore Options"
+						}
+					]
+				}
+			],
+			"actions": []
+		},
+		{
+			"name": "ObfuscatedItems",
+			"dacClassName": null,
+			"displayName": null,
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "ProcessingStatus",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "ProcessingMessage",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Selected",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowCheckAll": true,
+									"allowShowHide": "False"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "UIKey",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": "OpenContact",
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "linkCommand"
+							},
+							"arguments": [
+								"OpenContact"
+							]
+						},
+						{
+							"name": {
+								"name": "columnConfig"
+							},
+							"arguments": [
+								{
+									"allowShowHide": "False"
+								}
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Content",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "CreatedDateTime",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"preset": "PrimaryInquiry",
+							"allowUpdate": false,
+							"fastFilterByAllFields": false
+						}
+					]
+				}
+			],
+			"actions": [],
+			"mergeToolbarWith": "ScreenToolbar",
+			"allowUpdate": false,
+			"allowDelete": false,
+			"allowInsert": false
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.Objects.GDPR.GDPRRestoreProcess",
+					"primaryView": "Filter",
+					"bpEventsIndicator": false,
+					"udfTypeField": ""
+				}
+			]
+		}
+	]
+}

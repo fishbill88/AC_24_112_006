@@ -1,0 +1,19 @@
+<template>
+
+	<qp-template id="formDocument" name="7-10-7" wg-container="Document_form" class="equal-height">
+		<qp-fieldset id="columnFirstDocument" view.bind="Document" slot="A">
+			<field name="RefNbr"></field>
+			<field name="DocDate"></field>
+			<field name="Status"></field>
+			<field name="Origin"></field>
+			<field name="Reason"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondDocument" view.bind="Document" slot="B">
+			<field name="TranAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridTrans" view.bind="Trans"></qp-grid>
+
+</template>

@@ -1,0 +1,70 @@
+<template>
+	<qp-template name="7-10-7" class="equal-height" id="Header">
+		<qp-fieldset id="PIHeader_form_column1" view.bind="PIHeader" slot="A" wg-container="PIHeader_form">
+			<field name="PIID"></field>
+			<field name="Status"></field>
+			<field name="CountDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="PIHeader_form_column2" view.bind="PIHeader" slot="B" wg-container="PIHeader_form">
+			<field name="SiteID"></field>
+			<field name="Descr" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset id="PIHeader_form_column3" view.bind="PIHeaderInfo" slot="C" class="highlights-section" wg-container="PIHeaderInfo_formDetail">
+			<field name="TotalPhysicalQty"></field>
+			<field name="TotalVarQty"></field>
+			<field name="TotalVarCost"></field>
+			<field name="BaseCuryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab" >
+		<qp-tab id="PhysicalInventoryDetails_tab" caption="Physical Inventory Details">
+			<qp-grid id="grid" view.bind="PIDetail" syncPosition="True">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="AdjustmentInfo_tab" caption="Adjustment Info">
+			<qp-template name="17-17-14" id="AdjustmentInfoForm" wg-container="PIHeaderInfo_form2">
+				<qp-fieldset id="AdjustmentInfoForm_column1" view.bind="PIHeaderInfo" slot="A">
+					<field name="PIAdjRefNbr" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="GeneratorSettings" caption="Generate Physical Count" auto-repaint="true">
+		<qp-template name="1" id="GeneratorSettings_template" wg-container="GeneratorSettings_insPanel" class="equal-height">
+			<qp-fieldset slot="A" id="GeneratorSettings_column1" view.bind="GeneratorSettings">
+				<field name="PIClassID"></field>
+				<field name="Descr"></field>
+				<field name="SiteID"></field>
+				<field name="Method"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonAddClose-GeneratorSettings" wg-name="PXButton4" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-GeneratorSettings" wg-name="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddByBarCode" caption="Add Line" auto-repaint="true">
+		<qp-template name="1" id="AddByBarCode_template" wg-container="AddByBarCode_frmBarCode" class="equal-height">
+			<qp-fieldset slot="A" id="AddByBarCode_column1" view.bind="AddByBarCode">
+				<field name="BarCode"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItemID"></field>
+				<field name="UOM"></field>
+				<field name="LocationID"></field>
+				<field name="Qty"></field>
+				<field name="LotSerialNbr"></field>
+				<field name="ExpireDate"></field>
+				<field name="ByOne"></field>
+				<field name="AutoAddLine"></field>
+				<field name="Description" no-label="true"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonAddClose-GeneratorSettings" wg-name="PXButton7" state.bind="AddLine2"></qp-button>
+			<qp-button id="buttonAddClose-GeneratorSettings" wg-name="PXButton5" caption="Add &amp; Close" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-GeneratorSettings" wg-name="PXButton1" caption="Close" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,78 @@
+<template>
+	<qp-template id="Document_form" wg-container name="7-10-7"  class="equal-height">
+		<qp-fieldset slot="A" id="Document1" view.bind="Document">
+			<field name="BatchNbr"></field>
+			<field name="TranType"></field>
+			<field name="Date"></field>
+			<field name="FinPeriodID">
+				<!-- This empty div is used to align the right side of the field with the right side of the other fields in that fieldset -->
+				<div></div>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Document2" view.bind="Document">
+			<field name="Status">
+				<qp-field id="HoldField" control-state.bind="Document.Hold"></qp-field>
+			</field>
+			<field name="Description" config-type.bind="1" config-rows.bind="3"></field>
+			<field name="OrderType" config-allow-edit.bind="true"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Document3" view.bind="Document">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" config-allow-edit.bind="true"></field>
+			<field name="UOM"></field>
+			<field name="Qty"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabMaterial" caption="Material">
+			<qp-grid id="gridMaterial" view.bind="MaterialTransactionRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="TransactionAttributes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLineDetails" caption="Line Details">
+			<qp-template id="AMDisassembleMasterTranLineSplittingExtension_LotSerOptions_lsoptform" wg-container name="17-17-14">
+				<qp-fieldset slot="A" id="AMDisassembleMasterTranLineSplittingExtension_LotSerOptions1" view.bind="AMDisassembleMasterTranLineSplittingExtension_LotSerOptions">
+					<field name="UnassignedQty"></field>
+					<field name="Qty"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="AMDisassembleMasterTranLineSplittingExtension_LotSerOptions2" view.bind="AMDisassembleMasterTranLineSplittingExtension_LotSerOptions">
+					<field name="StartNumVal">
+						<qp-button id="btnGenerate2" class="col-12" state.bind="model.viewModel.AMDisassembleMasterTranLineSplittingExtension_GenerateNumbers"></qp-button>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="serialNumbersGrid" view.bind="MasterSplits"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabReferences" caption="References">
+			<qp-template id="CurrentDocument_Referencesform" wg-container name="17-17-14">
+				<qp-fieldset slot="A" id="CurrentDocument1" view.bind="CurrentDocument">
+					<field name="BranchID"></field>
+					<field name="INDocType"></field>
+					<field name="INBatNbr" config-allow-edit.bind="true"></field>
+					<field name="TranDesc" config-type.bind="1" config-rows.bind="3"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="AMDisassembleMaterialTranLineSplittingExtension_lsselect" caption="Material Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="AMDisassembleMaterialTranLineSplittingExtension_LotSerOptions_optform" wg-container name="14-17-17" class="equal-height">
+			<qp-fieldset slot="A" id="AMDisassembleMaterialTranLineSplittingExtension_LotSerOptions1" view.bind="AMDisassembleMaterialTranLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="AMDisassembleMaterialTranLineSplittingExtension_LotSerOptions2" view.bind="AMDisassembleMaterialTranLineSplittingExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="AMDisassembleMaterialTranLineSplittingExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grid2" view.bind="MaterialSplits"></qp-grid>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

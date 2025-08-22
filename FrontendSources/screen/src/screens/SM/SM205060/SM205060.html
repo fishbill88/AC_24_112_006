@@ -1,0 +1,14 @@
+<template>
+	<qp-template id="Filter_template" name="17-17-14">
+		<qp-fieldset slot="A" id="Filter_form" view.bind="Filter">
+			<field name="ReportID"></field>
+			<field name="Username">
+				<qp-field
+					class="col-3 no-label"
+					control-state.bind="Filter.My"
+				></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridTemplates" view.bind="Templates" wg-container="Templates_grid"></qp-grid>
+</template>

@@ -1,0 +1,234 @@
+﻿<!--Delete 'groupStateForm' after fix https://jira.acumatica.com/browse/AC-287583-->
+<template>
+
+    <qp-template name="1-1" id="formBAccount" wg-container="BAccount_PXFormView1" class="label-size-m">
+
+        <qp-fieldset slot="A" id="columnFirst" view.bind="BAccount">
+            <field name="AcctCD"></field>
+            <field name="AcctName"></field>
+            <field name="OrganizationView.OrganizationType"></field>
+        </qp-fieldset>
+
+        <div slot="B" id="columnSecond">
+            <qp-fieldset id="groupStatus" view.bind="OrganizationView">
+                <field name="Status"></field>
+                <field name="UseForAnomalyService"></field>
+            </qp-fieldset>
+
+            <!--if.bind doesn't work. There is the WA - a hidden view with flags for if.binds https://jira.acumatica.com/browse/AC-287583-->
+            <qp-fieldset id="groupStateForm" view.bind="StateView" style="display: none;">
+                <field name="IsBranchTabVisible"></field>
+            </qp-fieldset>
+        </div>
+
+    </qp-template>
+
+    <qp-tabbar id="tabs">
+        <qp-tab id="tabCompanyDetails" caption="Company Details">
+            <qp-template name="1-1" id="formCompanyDetails">
+                <div slot="A" id="columnFirst-CompanyDetails">
+
+                    <qp-fieldset id="groupDefContact" view.bind="DefContact" caption="Main Contact" wg-container="DefContact_DefContact">
+                        <field name="FullName"></field>
+                        <field name="Attention"></field>
+                        <field name="EMail"></field>
+                        <field name="WebSite"></field>
+                        <field name="Phone1"></field>
+                        <field name="Phone2"></field>
+                        <field name="Fax"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupDefAddress" view.bind="DefAddress" caption="Main Address" wg-container="DefAddress_DefAddress">
+                        <field name="actionAddressLookup" unbound>
+                            <qp-button id="buttonAddressLookup" state.bind="AddressLookup"></qp-button>
+                        </field>
+                        <field name="actionViewMainOnMap" unbound>
+                            <qp-button id="buttonViewMainOnMap" state.bind="ViewMainOnMap"></qp-button>
+                        </field>
+                        <field name="AddressLine1"></field>
+                        <field name="AddressLine2"></field>
+                        <field name="City"></field>
+                        <field name="CountryID" config-allow-edit.bind="true"></field>
+                        <field name="State" config-allow-edit.bind="true"></field>
+                        <field name="PostalCode"></field>
+                        <field name="OrganizationView.CarrierFacility"></field>
+                        <field name="IsValidated"></field>
+                    </qp-fieldset>
+
+                </div>
+
+                <div slot="B" id="columnSecond-CompanyDetails">
+
+                    <qp-fieldset id="groupBaseCuryID" view.bind="OrganizationView" caption="Base Currency Settings (Shared)" wg-container="OrganizationView_Company">
+                        <field name="BaseCuryID" config-allow-edit.bind="true"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupTaxRegistrationInfo" view.bind="CurrentBAccount" caption="Tax Registration Info" wg-container="CurrentBAccount_tab">
+                        <field name="LegalName"></field>
+                        <field name="TaxRegistrationID"></field>
+                        <field name="MTDApplicationID"></field>
+                        <field name="DefLocation.CAvalaraExemptionNumber"></field>
+                        <field name="DefLocation.CAvalaraCustomerUsageType"></field>
+                        <field name="OrganizationView.FileTaxesByBranches"></field>
+                        <field name="OrganizationView.Reporting1099ByBranches"></field>
+                        <field name="OrganizationView.Reporting1099"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupConfigurationSettings" view.bind="OrganizationView" caption="Configuration Settings" wg-container="OrganizationView_ConfigurationSettings">
+                        <field name="RoleName"></field>
+                        <field name="CountryID" config-allow-edit.bind="true"></field>
+                        <field name="OrganizationLocalizationCode"></field>
+                        <field name="DefaultPrinterID"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupMiscellaneousSettings" view.bind="commonsetup" caption="Miscellaneous Settings (Shared)" wg-container="commonsetup_CommonSettings">
+                        <field name="DecPlQty"></field>
+                        <field name="DecPlPrcCst"></field>
+                        <field name="WeightUOM" config-allow-edit.bind="true"></field>
+                        <field name="LinearUOM" config-allow-edit.bind="true"></field>
+                        <field name="VolumeUOM" config-allow-edit.bind="true"></field>
+                        <field name="Company.PhoneMask"></field>
+                    </qp-fieldset>
+
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabBranches" caption="Branches" if.bind="StateView.IsBranchTabVisible.value == true">
+            <qp-grid id="gridBranches" view.bind="BranchesView" wg-container="BranchesView_grdBranches">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabDeliverySettings" caption="Delivery Settings" if.bind="StateView.IsDeliverySettingsTabVisible.value == true">
+            <qp-template name="1-1" id="formDeliverySettings">
+                <div slot="A" id="columnFirst-DeliverySettings">
+
+                    <qp-fieldset id="groupDefLocationContact" view.bind="DefLocationContact" caption="Delivery Contact" wg-container="DefLocationContact_DefLocationContact">
+                        <field name="DefLocation.OverrideContact"></field>
+                        <field name="FullName"></field>
+                        <field name="Attention"></field>
+                        <field name="EMail"></field>
+                        <field name="WebSite"></field>
+                        <field name="Phone1"></field>
+                        <field name="Phone2"></field>
+                        <field name="Fax"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupFirstDefLocationAddress" view.bind="DefLocationAddress" caption="Delivery Address" wg-container="DefLocationAddress_DefLocationAddress">
+                        <field name="DefLocation.OverrideAddress"></field>
+                        <field name="IsValidated"></field>
+                        <field name="actionDefLocationAddressLookup" unbound>
+                            <qp-button id="buttonDefLocationAddressLookup" state.bind="DefLocationAddressLookup"></qp-button>
+                        </field>
+                        <field name="AddressLine1"></field>
+                        <field name="AddressLine2"></field>
+                        <field name="City"></field>
+                        <field name="CountryID" config-allow-edit.bind="true"></field>
+                        <field name="State" config-allow-edit.bind="true"></field>
+                        <field name="PostalCode"></field>
+                    </qp-fieldset>
+
+                </div>
+
+                <div slot="B" id="columnSecond-DeliverySettings">
+
+                    <qp-fieldset id="groupShippingInstructions" view.bind="DefLocation" caption="Shipping Instructions" wg-container="DefLocation_frmDefLocation">
+                        <field name="VTaxZoneID" config-allow-edit.bind="true"></field>
+                        <field name="CShipComplete"></field>
+                    </qp-fieldset>
+
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabEmployees" caption="Employees" if.bind="StateView.IsGroup.value != true">
+            <qp-grid id="gridEmployees" view.bind="Employees" wg-container="Employees_grdEmployees">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabLedgers" caption="Ledgers" if.bind="StateView.IsGroup.value != true">
+            <qp-grid id="gridLedgers" view.bind="OrganizationLedgerLinkWithLedgerSelect" wg-container="OrganizationLedgerLinkWithLedgerSelect_grdLedgerLinks">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabGLAccounts" caption="GL Accounts" if.bind="StateView.IsGLAccountsTabVisible.value == true">
+            <qp-template name="1-1" id="formGLAccounts">
+                <qp-fieldset slot="A" id="columnFirst-GLAccounts" view.bind="DefLocation">
+                    <field name="CMPSalesSubID"></field>
+                    <field name="CMPExpenseSubID"></field>
+                    <field name="CMPFreightSubID"></field>
+                    <field name="CMPDiscountSubID"></field>
+                    <field name="CMPGainLossSubID"></field>
+                    <field name="CMPPayrollSubID"></field>
+                </qp-fieldset>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabVisualAppearance" caption="Visual Appearance" if.bind="StateView.IsGroup.value != true">
+            <qp-template name="1-1" id="formVisualAppearance" wg-container="CurrentBAccount_frmLogo">
+                <div slot="A" id="columnFirst-VisualAppearance">
+                    <qp-fieldset id="groupSiteLogo" view.bind="OrganizationView" caption="Site Logo">
+                        <field name="LogoNameLabel" unbound replace-content>
+                            <qp-label caption="Recommended Size: Width 210px, Height 50px"></qp-label>
+                        </field>
+                        <field name="LogoName" unbound replace-content>
+                            <qp-image-uploader id="LogoName" state.bind="OrganizationView.LogoName" value.two-way="OrganizationView.LogoName.value"
+                                               width="420px" height="120px"></qp-image-uploader>
+                        </field>
+                        <field name="LogoNameGetter"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="groupTheme" view.bind="OrganizationView" caption="Theme">
+                        <field name="OverrideThemeVariables"></field>
+                        <field name="PrimaryColor" control-type="qp-color-picker"></field>
+                        <field name="BackgroundColor" control-type="qp-color-picker"></field>
+                    </qp-fieldset>
+                </div>
+
+                <div slot="B" id="columnSecond-VisualAppearance">
+                    <qp-fieldset id="groupReportLogo" view.bind="OrganizationView" caption="Report Logo">
+                        <field name="LogoNameReportLabel" unbound replace-content>
+                            <qp-label caption="Recommended Size: Width 300px, Height 100px"></qp-label>
+                        </field>
+                        <field name="LogoNameReport" unbound replace-content>
+                            <qp-image-uploader id="LogoNameReport" state.bind="OrganizationView.LogoNameReport" value.two-way="OrganizationView.LogoNameReport.value"
+                                               width="420px" height="120px"></qp-image-uploader>
+                        </field>
+                        <field name="LogoNameReportGetter"></field>
+                    </qp-fieldset>
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabCompanyGroups" caption="Company Groups" if.bind="StateView.IsCompanyGroupsVisible.value == true">
+            <qp-grid id="gridCompanyGroups" view.bind="Groups" wg-container="Groups_grid">
+            </qp-grid>
+        </qp-tab>
+
+    </qp-tabbar>
+
+    <qp-panel id="CreateLedgerView" caption="Create Ledger" auto-repaint="true">
+        <qp-template id="formCreateLedgerView" name="1-1" wg-container="CreateLedgerView_loform">
+            <qp-fieldset slot="A" id="groupFirstCreateLedgerView" caption="Source" view.bind="CreateLedgerView">
+                <field name="LedgerCD"></field>
+                <field name="Descr"></field>
+            </qp-fieldset>
+        </qp-template>
+        <footer>
+            <qp-button id="buttonOK-CreateLedgerView" caption="Create" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-CreateLedgerView" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+
+    <qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+        <qp-template id="formChangeIDDialog" name="1-1" wg-container="ChangeIDDialog_formChangeID">
+            <qp-fieldset slot="A" id="groupFirstChangeIDDialog" caption="Source" view.bind="ChangeIDDialog">
+                <field name="CD"></field>
+            </qp-fieldset>
+        </qp-template>
+        <footer>
+            <qp-button id="buttonOK-ChangeIDDialog" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-ChangeIDDialog" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+
+</template>

@@ -1,0 +1,33 @@
+<template>
+
+	<qp-template name="1-1" id="formTaxZone" wg-container="TxZone_form">
+		<qp-fieldset id="panelTaxZone" view.bind="TxZone" slot="A">
+			<field name="TaxZoneID"></field>
+			<field name="Descr"></field>
+			<field name="DfltTaxCategoryID" config-allow-edit.bind="true"></field>
+			<field name="IsExternal"></field>
+			<field name="TaxPluginID" config-allow-edit.bind="true"></field>
+			<field name="TaxVendorID"></field>
+			<field name="ExternalAPTaxType"></field>
+			<field name="IsManualVATZone"></field>
+			<field name="TaxID"></field>
+			<field name="ShowTaxTabExpr"></field>
+			<field name="ShowZipTabExpr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabApplicableTaxes" caption="Applicable Taxes" if.bind="TxZone.ShowTaxTabExpr.value == true">
+			<qp-grid id="gridApplicableTaxes" view.bind="Details" wg-container="Details_grid"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabShipToAddresses" caption="Ship-To Addresses" if.bind="TxZone.ShowZipTabExpr.value == true">
+			<qp-template name="1-1" id="formShipToAddress" wg-container="TxZoneCurrent_AddressMappingParameters">
+				<qp-fieldset slot="A" id="panelShipToAddress" view.bind="TxZoneCurrent">
+					<field name="MappingType"></field>
+					<field name="CountryID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridAddressMapping" view.bind="TaxZoneAddressMappings"> </qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

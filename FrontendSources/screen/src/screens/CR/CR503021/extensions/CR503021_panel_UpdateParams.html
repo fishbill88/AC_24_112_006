@@ -1,0 +1,20 @@
+<template>
+	<qp-panel id="Fields" after="#anchor_Panels" caption="Mass Update" width="60vw" height="80vh">
+		<qp-wizard id="wizard" config.bind="wizardConfig">
+			<qp-tab id="tabFields">
+				<qp-label caption="Please select the fields you want to update"></qp-label>
+				<qp-grid id="fields" view.Bind="Fields"></qp-grid>
+			</qp-tab>
+			<qp-tab id="tabAttrs">
+				<qp-label caption="Please select the attributes you want to update"></qp-label>
+				<qp-grid id="attributes" view.Bind="Attributes"></qp-grid>
+			</qp-tab>
+			<qp-tab id="tabSummary">
+				<qp-label caption="Please review your action and press finish button to apply the changes to selected records:"></qp-label>
+				<qp-fieldset id="summary" class="no-label" view.Bind="wizardSummary">
+					<field name="Summary" config.bind="{ type:1, rows:30 }"></field>
+				</qp-fieldset>
+			</qp-tab>
+		</qp-wizard>
+	</qp-panel>
+</template>

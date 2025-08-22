@@ -1,0 +1,48 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="PIHeader_form" wg-container>
+		<qp-fieldset slot="A"  id="PIHeader_form_column1" view.bind="PIHeader">
+			<field name="PIID"></field>
+			<field name="SiteID"></field>
+			<using wg-container="Filter_PXFormView1" view="Filter">
+				<field name="LocationID"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItem"></field>
+				<field name="LotSerialNbr"></field>
+			</using>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="PIHeader_form_column2" view.bind="PIHeader">
+			<field name="CountDate"></field>
+			<field name="LineCntr"></field>
+			<using wg-container="Filter_formFilter" view="Filter">
+				<field name="StartLineNbr"></field>
+				<field name="EndLineNbr"></field>
+			</using>
+			<field name="Descr" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="PIDetail">
+	</qp-grid>
+	<qp-panel id="AddByBarCode" caption="Add Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1" id="AddByBarCode_template" wg-container="AddByBarCode_frmBarCode" class="equal-height">
+			<qp-fieldset slot="A" id="AddByBarCode_column1" view.bind="AddByBarCode">
+				<field name="BarCode"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItemID"></field>
+				<field name="UOM"></field>
+				<field name="LocationID"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="AddByBarCode_column2" view.bind="AddByBarCode">
+				<field name="Qty"></field>
+				<field name="LotSerialNbr"></field>
+				<field name="ExpireDate"></field>
+				<field name="ByOne"></field>
+				<field name="Description" no-label="true"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonAddClose-GeneratorSettings" wg-name="PXButton7" state.bind="AddLine2"></qp-button>
+			<qp-button id="buttonAddClose-GeneratorSettings" wg-name="PXButton5" caption="Add &amp; Close" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-GeneratorSettings" wg-name="PXButton6" caption="Close" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

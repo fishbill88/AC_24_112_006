@@ -1,0 +1,19 @@
+<template>
+
+	<qp-template id="formFilter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" view.bind="Filter" id="columnFirstFilter">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="DocDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" view.bind="Filter" id="columnSecondFilter">
+			<field name="VendorID"></field>
+			<field name="ProjectID"></field>
+			<field name="RefNbr"></field>
+			<field name="ShowBillsWithOpenBalance"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridDocumentList" view.bind="DocumentList" wg-container="DocumentList_grid"></qp-grid>
+
+</template>

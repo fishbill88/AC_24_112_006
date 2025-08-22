@@ -1,0 +1,68 @@
+<template>
+	<qp-template id="Features_form" wg-container name="1-1" class="label-size-m equal-height">
+		<qp-fieldset slot="A" id="FeaturesRecords1" view.bind="Features">
+			<field name="FeatureID"></field>
+			<field name="ActiveFlg"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="FeaturesRecords2" view.bind="Features" class="no-label">
+			<field name="AllowNonInventoryOptions"></field>
+			<field name="DisplayOptionAttributes"></field>
+			<field name="PrintResults"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabOptions" caption="Options">
+			<qp-grid id="PXGridFeatureOptions" view.bind="FeatureOptions">
+				<columns>
+					<column field="FeatureID"></column>
+					<column field="LineNbr"></column>
+					<column field="InventoryID"></column>
+					<column field="SubItemID"></column>
+					<column field="Label"></column>
+					<column field="Descr"></column>
+					<column field="FixedInclude"></column>
+					<column field="QtyEnabled"></column>
+					<column field="QtyRequired" editor-type="qp-formula-editor" editor-config.bind="{
+									fieldsControllerRoute: 'inquiry/designer/feditor/fields-in-relation',
+									dynamicNodeName: 'Fields',
+									preloadDynamicNode: true
+								}"></column>
+					<column field="UOM"></column>
+					<column field="MinQty" editor-type="qp-formula-editor" editor-config.bind="{
+									fieldsControllerRoute: 'inquiry/designer/feditor/fields-in-relation',
+									dynamicNodeName: 'Fields',
+									preloadDynamicNode: true
+								}"></column>
+					<column field="MaxQty" editor-type="qp-formula-editor" editor-config.bind="{
+									fieldsControllerRoute: 'inquiry/designer/feditor/fields-in-relation',
+									dynamicNodeName: 'Fields',
+									preloadDynamicNode: true
+								}"></column>
+					<column field="LotQty" editor-type="qp-formula-editor" editor-config.bind="{
+									fieldsControllerRoute: 'inquiry/designer/feditor/fields-in-relation',
+									dynamicNodeName: 'Fields',
+									preloadDynamicNode: true
+								}"></column>
+					<column field="ScrapFactor" editor-type="qp-formula-editor" editor-config.bind="{
+									fieldsControllerRoute: 'inquiry/designer/feditor/fields-in-relation',
+									dynamicNodeName: 'Fields',
+									preloadDynamicNode: true
+								}"></column>
+					<column field="BFlush"></column>
+					<column field="MaterialType"></column>
+					<column field="PhantomRouting"></column>
+					<column field="PriceFactor"></column>
+					<column field="ResultsCopy"></column>
+					<column field="QtyRoundUp"></column>
+					<column field="BatchSize"></column>
+					<column field="SubcontractSource"></column>
+					<column field="PrintResults"></column>
+				</columns>
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="FeatureAttributes"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

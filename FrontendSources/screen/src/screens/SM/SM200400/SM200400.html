@@ -1,0 +1,9 @@
+<template>
+	<qp-template name="1-1" id="Setup_form" wg-container>
+		<qp-fieldset id="first" view.bind="Setup" slot="A" class="label-size-xm" caption="Processing Settings">
+			<field name="ArchivingProcessDurationLimitInHours"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Policies" class="framed-section" caption="Retention Settings">
+	</qp-grid>
+</template>

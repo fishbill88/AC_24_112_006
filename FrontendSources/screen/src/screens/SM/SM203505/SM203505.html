@@ -1,0 +1,16 @@
+<template>
+    <qp-template id="settingsForm" name="1-1">
+        <div id="Setup_form" wg-container slot="A" class="v-stack">
+            <qp-fieldset id="generalSettingsForm" view.bind="Setup" caption="Update Settings">
+                <field name="UpdateEnabled"></field>
+                <field name="UpdateServer"></field>
+                <field name="UpdateNotification"></field>
+            </qp-fieldset>
+            <qp-fieldset id="storageSettingsForm" view.bind="Setup" caption="Storage Settings">
+                <field name="StorageProvider"></field>
+            </qp-fieldset>
+        </div>
+    </qp-template>
+    <qp-grid id="StorageSettings_grid" wg-container view.bind="StorageSettings" class="stretch">
+    </qp-grid>
+</template>

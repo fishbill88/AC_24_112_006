@@ -1,0 +1,21 @@
+<template>
+	<qp-panel
+		id="NotificationInfo"
+		auto-repaint="true"
+		caption="Select Template"
+	>
+		<qp-fieldset
+			id="panel_SelectNotificationTemplate"
+			view.bind="NotificationInfo"
+		>
+			<field name="NotificationName"></field>
+			<field name="ReplaceEmailContents"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="SelectNotificatonTemplateOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="SelectNotificatonTemplateCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

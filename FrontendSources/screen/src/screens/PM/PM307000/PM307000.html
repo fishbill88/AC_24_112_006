@@ -1,0 +1,170 @@
+<template>
+	<qp-template name="7-10-7" class="equal-height label-size-m" id="Document_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="Document">
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="InvoiceDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="InvoiceNbr"></field>
+			<field name="ProjectNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Document">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="LocationID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<using view="Project" wg-container="Project_form"></using>
+			<field name="ProjectCuryDummy" unbound replace-content>
+				<qp-field wg-container="Project_form" control-state.bind="Project.CuryID"></qp-field>
+			</field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="C"
+			id="form03"
+			view.bind="Document"
+			class="highlights-section">
+			<field name="CuryProgressiveTotal"></field>
+			<field name="CuryTransactionalTotal"></field>
+			<field name="CuryTaxTotalWithRetainage"></field>
+			<field name="CuryDocTotal"></field>
+			<field name="Overflow.CuryOverflowTotal"></field>
+			<field name="CuryRetainageTotal"></field>
+			<field name="CuryAmountDue"></field>
+			<field name="RetainagePct"></field>
+			<field name="CuryAllocatedRetainedTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="DocumentSettings_tab" wg-container>
+		<qp-tab id="ProgressBillingTab" caption="Progress Billing">
+			<qp-grid id="ProgressiveLines_ProgressiveLinesGrid" view.bind="ProgressiveLines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TimeAndMaterialTab" caption="Time and Material">
+			<qp-grid id="TransactionLines_TransactionLinesGrid" view.bind="TransactionLines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-grid id="TaxDetailsGrid" view.bind="Taxes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="FinancialTab" caption="Financial">
+			<qp-template name="7-17" id="FinancialForm">
+				<div slot="A">
+					<qp-fieldset
+						id="DocumentSettingsForm01"
+						view.bind="DocumentSettings"
+						caption="AR Invoice Info">
+						<field name="ARInvoiceDocType"></field>
+						<field name="ARInvoiceRefNbr" config-allow-edit.bind="true"></field>
+						<field name="BranchID"></field>
+						<field name="TermsID"></field>
+						<field name="DueDate"></field>
+						<field name="DiscDate"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="DocumentSettingsForm02"
+						view.bind="DocumentSettings"
+						caption="Tax Info"
+						class="label-size-m">
+						<field name="TaxZoneID"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="AvalaraCustomerUsageType"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="DocumentSettingsForm03"
+						view.bind="DocumentSettings"
+						caption="Other Info"
+						class="label-size-m">
+						<field name="IsMigratedRecord"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="gridRevisions" view.bind="Revisions" caption="Previous Revisions"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ApprovalsTab" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AddressesTab" caption="Addresses">
+			<qp-template name="1-1" id="AddressForm">
+				<div slot="A">
+					<qp-fieldset id="Billing_Contact" view.bind="Billing_Contact" caption="Bill-to contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset wg-container id="Billing_Address" view.bind="Billing_Address" caption="Bill-to address">
+						<field name="OverrideAddress"></field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode">
+							<qp-address-lookup
+								class="control-container size-default"
+								view.bind="Billing_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="Shipping_Contact" view.bind="Shipping_Contact" caption="Ship-to contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset wg-container id="Shipping_Address" view.bind="Shipping_Address" caption="Ship-to address">
+						<field name="OverrideAddress"></field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode">
+							<qp-address-lookup
+								class="control-container size-default"
+								view.bind="Shipping_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="Details" caption="Transaction Details" auto-repaint="true" width="95vw" height="90vh">
+		<qp-grid id="Details_DetailsGrid" view.bind="Details"></qp-grid>
+	</qp-panel>
+	<qp-panel id="Unbilled" caption="Upload Unbilled Transactions" auto-repaint="true" width="95vw" height="90vh">
+		<qp-grid id="Unbilled_UnbilledGrid" view.bind="Unbilled"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="AppendSelected"></qp-button>
+			<qp-button id="PXButtonAddClose" caption="Upload & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButtonClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="btnReassignApprovalCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" dialog-result="OK"></qp-button>
+			<qp-button id="btnReasonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

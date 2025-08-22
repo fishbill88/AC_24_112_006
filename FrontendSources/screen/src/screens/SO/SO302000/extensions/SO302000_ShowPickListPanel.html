@@ -1,0 +1,27 @@
+<template>
+	<qp-panel id="PickListEntries" caption="Pick List" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="PickListHeader" name="14-17-17" wg-container="PickListEntries_PickListHeader">
+			<qp-fieldset id="PickListHeaderFirst" view.bind="PickListHeader" slot="A">
+				<field name="PickListNbr" wg-name="SOPickingJob__PickListNbr"></field>
+				<field name="Status" wg-name="SOPickingJob__Status"></field>
+				<field name="Priority" wg-name="SOPickingJob__Priority"></field>
+				<field name="AutomaticShipmentConfirmation" wg-name="SOPickingJob__AutomaticShipmentConfirmation"></field>
+			</qp-fieldset>
+			<qp-fieldset id="PickListHeaderSecond" view.bind="PickListHeader" slot="B">
+				<field name="SOPicker__PathLength"></field>
+				<field name="PreferredAssigneeID" wg-name="SOPickingJob__PreferredAssigneeID"></field>
+				<field name="ActualAssigneeID" wg-name="SOPickingJob__ActualAssigneeID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridPickList" view.bind="PickListEntries">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButtonDeletePickList" state.bind="DeletePickList" dialog-result="Cancel" wg-container="PickListEntries_lv0">
+			</qp-button>
+			<qp-button id="PXButtonPickListViewSource" state.bind="ViewPickListSource" wg-container="PickListEntries_lv0">
+			</qp-button>
+			<qp-button id="PXButtonPickListClose" dialog-result="Cancel" caption="Close" wg-container="PickListEntries_lv0">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

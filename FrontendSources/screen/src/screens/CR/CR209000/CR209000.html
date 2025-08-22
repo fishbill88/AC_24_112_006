@@ -1,0 +1,59 @@
+<template>
+	<qp-template id="OpportunityClass_template" name="1-1" class="equal-height label-size-xm">
+		<qp-fieldset
+			slot="A"
+			id="OpportunityClass_form"
+			view.bind="OpportunityClass"
+		>
+			<field name="CROpportunityClassID"></field>
+			<field name="Description"></field>
+			<field name="IsInternal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template id="OpportunityClass_DataEntry_template" name="1-1" class="equal-height label-size-xm">
+				<div slot="A">
+					<qp-fieldset
+						id="OpportunityClass_DataEntry"
+						view.bind="OpportunityClass"
+						caption="Data Entry Settings"
+						wg-container="OpportunityClassProperties_tab"
+					>
+						<field name="DefaultOwner"></field>
+						<field name="DefaultAssignmentMapID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="OpportunityClass_Conversion"
+						view.bind="OpportunityClass"
+						caption="Conversion Settings"
+						wg-container="OpportunityClassProperties_tab"
+					>
+						<field name="TargetContactClassID" config-allow-edit.bind="true"></field>
+						<field name="TargetBAccountClassID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="OpportunityClass_EmailSettings"
+						view.bind="OpportunityClass"
+						caption="Activity Settings"
+						wg-container="OpportunityClassProperties_tab"
+					>
+						<field name="DefaultEMailAccountID" config-allow-edit.bind="true"></field>
+						<field name="ShowContactActivities"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+						<qp-grid
+							id="OpportunityProbabilities_gridStages"
+							view.bind="OpportunityProbabilities"
+							class="framed-section"
+							caption="Stages"
+						></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="Mapping_grid" view.bind="Mapping"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

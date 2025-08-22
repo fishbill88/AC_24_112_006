@@ -1,0 +1,18 @@
+<template>
+	<template id="tabDuplicates_Content">
+		<qp-splitter id="dsplitterId"
+			split="height"
+			initial-split="50%"
+			state="normal"
+		>
+			<split-pane>
+				<qp-grid id="PXGridDuplicatesForMerging" view.bind="DuplicatesForMerging" caption="Records for Merging" class="framed-section">
+				</qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-grid id="PXGridDuplicatesForLinking" view.bind="DuplicatesForLinking" caption="Records for Association" class="framed-section">
+				</qp-grid>
+			</split-pane>
+		</qp-splitter>
+	</template>
+</template>

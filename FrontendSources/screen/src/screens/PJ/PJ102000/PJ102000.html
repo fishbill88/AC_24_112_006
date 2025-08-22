@@ -1,0 +1,20 @@
+<template>
+	<qp-tabbar id="DrawingLogSetup_tab" wg-container>
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template name="1-1" id="DrawingLogSetupForm" class="label-size-xm">
+				<qp-fieldset slot="A" id="DrawingLogSetup_form" view.bind="DrawingLogSetup">
+					<field name="DrawingLogNumberingSequenceId" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="DisciplinesTab" caption="Disciplines">
+			<qp-grid id="gridDisciplines" view.bind="DrawingLogDisciplines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="StatusTab" caption="Status">
+			<qp-grid id="gridStatuses" view.bind="DrawingLogStatuses"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="Attributes_AttributesGrid" view.bind="Attributes" wg-container></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

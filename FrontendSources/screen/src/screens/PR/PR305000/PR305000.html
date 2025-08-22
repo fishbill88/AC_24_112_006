@@ -1,0 +1,90 @@
+<template>
+	<qp-template id="Document_form" name="7-10-7" class="equal-height" wg-container>
+		<qp-fieldset id="form_Left" view.bind="Document" slot="A">
+			<field name="BatchNbr"></field>
+			<field name="Filter.PaymentBatchStatus"></field>
+			<field name="TranDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_Middle" view.bind="Document" slot="B">
+			<field name="CashAccountID"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="LatestExport.ExportDateTime"></field>
+			<field name="TranDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset id="summary" label-size="col-lg-6" view.bind="Document" slot="C" class="highlights-section">
+			<field name="Filter.BatchTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="BatchDetailsTab" caption="Batch Details">
+			<qp-grid id="grid" view.bind="BatchPaymentsDetails">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="PrintingHistoryTab" caption="Printing History" if.bind="Document.PaymentMethodID.value.id == 'CHECK'">
+			<qp-grid id="printHistoryGrid" view.bind="ExportHistory">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ExportHistoryTab" caption="Export History" if.bind="Document.PaymentMethodID.value.id != 'CHECK'">
+			<qp-grid id="exportHistoryGrid" view.bind="ExportHistory">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<!-- Triggered from the Add button in the Batch Details tab -->
+	<qp-panel id="PaymentsToAdd" caption="Add Payment" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="addPaymentGrid" view.bind="PaymentsToAdd">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" caption="Add" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<!-- Triggered from Actions / Print Checks when there's already been at least one print -->
+	<qp-panel id="Payments" caption="Print Checks" auto-repaint="true" width="75vw">
+		<qp-fieldset id="formPrintChecks" view.bind="Filter">
+			<field name="PrintReason"></field>
+			<field name="OtherPrintReason"></field>
+			<field name="NextCheckNbr"></field>
+		</qp-fieldset>
+		<qp-grid id="gridChecksToPrint" view.bind="Payments">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton2" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<!-- Triggered from Actions / Export when there's already been at least one export -->
+	<qp-panel id="ExportHistory" caption="Export Reason" auto-repaint="true">
+		<qp-fieldset id="formExportReason" view.bind="Filter">
+			<field name="ExportReason"></field>
+			<field name="OtherExportReason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<!-- Triggered from:
+		1 - the Export Details action on the Export History grid
+		2 - the Printing Details action on the Printing History grid -->
+	<qp-panel id="ExportDetails" caption="Printing Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="form" name="1-1">
+			<qp-fieldset id="formExportDetails" view.bind="CurrentExportHistory" slot="A">
+				<field name="UserID_Description"></field>
+				<field name="ExportDateTime"></field>
+				<field name="Reason"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridExportDetails" view.bind="ExportDetails">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton3" caption="OK" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

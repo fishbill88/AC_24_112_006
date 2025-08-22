@@ -1,0 +1,45 @@
+<template>
+	<qp-tabbar id="tabBar">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template name="1-1" id="generalSettingsTemplate" wg-container="Setup_form" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="formRequestSettings" view.bind="Setup" caption="Request Settings">
+						<field name="RequestNumberingID" config-allow-edit.bind="true"></field>
+						<field name="RequestAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="MonthRetainRequest"></field>
+						<field name="RequestApproval"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formRQSettings" view.bind="Setup" caption="Requisition Settings">
+						<field name="RequisitionNumberingID" config-allow-edit.bind="true"></field>
+						<field name="RequisitionAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="MonthRetainRequisition"></field>
+						<field name="RequisitionApproval"></field>
+						<field name="RequisitionMergeLines"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="formRQOrderSettings" view.bind="Setup" caption="Requisition Order Settings">
+						<field name="QTOrderType" config-allow-edit.bind="true"></field>
+						<field name="SOOrderType" config-allow-edit.bind="true"></field>
+						<field name="POHold"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formOtherSettings" view.bind="Setup" caption="Other Settings">
+						<field name="BudgetLedgerId" config-allow-edit.bind="true"></field>
+						<field name="BudgetCalculation"></field>
+						<field name="DefaultReqClassID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="SetupApproval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing">
+			<qp-grid id="gridNS" caption="Default Sources" view.bind="Notifications" class="framed-section">
+			</qp-grid>
+			<qp-grid id="gridNR" caption="Default Recipients" view.bind="Recipients" class="framed-section">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

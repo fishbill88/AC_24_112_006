@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="formFilter" name="1-1-1" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst-Filter" view.bind="Filter">
+			<field name="PriceType"></field>
+			<field name="PriceCode"></field>
+			<field name="TaxCalcMode"></field>
+			<field name="EffectiveAsOfDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-Filter" view.bind="Filter">
+			<field name="ItemClassCD"></field>
+			<field name="InventoryID"></field>
+			<field name="SiteID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird-Filter" view.bind="Filter">
+			<field name="InventoryPriceClassID"></field>
+			<field name="OwnerID">
+				<qp-field no-label="true" control-state.bind="Filter.MyOwner" class="col-3"></qp-field>
+			</field>
+			<field name="WorkGroupID">
+				<qp-field no-label="true" control-state.bind="Filter.MyWorkGroup" class="col-3"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Records"></qp-grid>
+</template>

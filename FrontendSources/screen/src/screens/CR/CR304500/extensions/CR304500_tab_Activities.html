@@ -1,0 +1,20 @@
+<template>
+	<template id="tabActivities_Content">
+		<qp-splitter id="splitter" split="height" class="stretch">
+			<split-pane>
+				<qp-grid id="gridActivities" view.bind="Activities"> </qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-rich-text-editor
+					class="stretch"
+					id="edActivityBody"
+					state.bind="Activities.Body"
+					wg-field
+					value.bind="Activities.activeRow.Body.value"
+					config.bind="{readOnly: true}"
+				>
+				</qp-rich-text-editor>
+			</split-pane>
+		</qp-splitter>
+	</template>
+</template>

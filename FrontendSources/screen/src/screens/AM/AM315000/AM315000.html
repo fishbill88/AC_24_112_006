@@ -1,0 +1,39 @@
+<template>
+	<qp-template id="header_form" wg-container name="7-10-7" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="header1" view.bind="header">
+			<field name="EmployeeID">
+				<qp-button id="btnCurrent" class="col-12" state.bind="FillCurrentUser"></qp-button>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="header2" view.bind="header">
+			<field name="OrderType"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+			<field name="OperationID"></field>
+			<field name="ShiftCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="header3" view.bind="header">
+			<field name="Qty"></field>
+			<field name="UOM"></field>
+			<field name="StartTime"></field>
+			<field name="LaborTime"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="transactions"></qp-grid>
+	<qp-panel id="AMClockItemLineSplittingExtension_lsselect" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="AMClockItemLineSplittingExtension_LotSerOptions_optform" wg-container name="14-17-17" class="equal-height">
+			<qp-fieldset slot="A" id="AMClockItemLineSplittingExtension_LotSerOptions1" view.bind="AMClockItemLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="AMClockItemLineSplittingExtension_LotSerOptions2" view.bind="AMClockItemLineSplittingExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="AMClockItemLineSplittingExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grid2" view.bind="splits"></qp-grid>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

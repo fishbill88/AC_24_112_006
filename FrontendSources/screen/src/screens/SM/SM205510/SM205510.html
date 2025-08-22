@@ -1,0 +1,22 @@
+<template>
+	<qp-template name="1-1" id="Audit_form" wg-container>
+		<qp-fieldset slot="A" id="first" view.bind="Audit">
+			<field name="ScreenID" config.bind="{displayMode: 'text'}"></field>
+			<field name="VirtualScreenID"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Audit">
+			<field name="Description"></field>
+			<field name="ShowFieldsType"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="splitter" split="height" initial-split="50%" class="stretch">
+		<split-pane slot="A">
+			<qp-grid id="grid" view.bind="Tables" caption="Tables"></qp-grid>
+		</split-pane>
+		<split-pane slot="B">
+			<qp-grid id="grid2" view.bind="Fields" caption="Fields"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

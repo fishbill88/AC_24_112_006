@@ -1,0 +1,67 @@
+<template>
+
+	<qp-template id="formReconciliation" name="7-10-7" class="equal-height" wg-container="CAReconRecords_form">
+		<qp-fieldset id="columnFirstReconciliation" view.bind="CAReconRecords" slot="A">
+			<field name="CashAccountID"></field>
+			<field name="CuryID"></field>
+			<field name="ReconNbr"></field>
+			<field name="Status"></field>
+			<field name="LastReconDate"></field>
+			<field name="ReconDate"></field>
+			<field name="LoadDocumentsTill"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondReconciliation" view.bind="CAReconRecords" slot="B">
+			<field name="CuryBegBalance"></field>
+			<field name="CuryReconciledDebits"></field>
+			<field name="CuryReconciledCredits"></field>
+			<field name="CuryReconciledBalance"></field>
+			<field name="CuryBalance"></field>
+			<field name="CuryDiffBalance"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdReconciliation" view.bind="CAReconRecords" slot="C">
+			<field name="CountDebit"></field>
+			<field name="CountCredit"></field>
+			<field name="SkipVoided"></field>
+			<field name="ShowBatchPayments"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="CAReconTranRecords"></qp-grid>
+
+	<qp-panel id="AddFilter" width="60vw" caption="Quick Transaction" auto-repaint="true">
+
+		<qp-template id="formQuickTransaction" name="1-1" class="equal-height" wg-container="AddFilter_AddFilter">
+			<qp-fieldset id="columnFirstQuickTransaction" view.bind="AddFilter" slot="A">
+				<field name="CashAccountID"></field>
+				<field name="EntryTypeID"></field>
+				<field name="TranDate"></field>
+				<field name="FinPeriodID"></field>
+				<field name="CuryID" control-type="qp-currency" view.bind="_AddTrxFilter_CurrencyInfo_"></field>
+				<field name="ExtRefNbr"></field>
+				<field name="ReferenceID"></field>
+				<field name="LocationID"></field>
+				<field name="PaymentMethodID"></field>
+				<field name="PMInstanceID"></field>
+				<field name="CuryTranAmt"></field>
+				<field name="Descr"></field>
+			</qp-fieldset>
+			<qp-fieldset id="columnSecondQuickTransaction" view.bind="AddFilter" slot="B">
+				<field name="DrCr"></field>
+				<field name="OrigModule"></field>
+				<field name="Status"></field>
+				<field name="Hold"></field>
+				<field name="Cleared"></field>
+				<field name="AccountID"></field>
+				<field name="SubID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="buttonOK" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="buttonRelease" dialog-result="Yes" caption="Release"></qp-button>
+			<qp-button id="buttonCancel" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+
+	</qp-panel>
+
+</template>

@@ -1,0 +1,78 @@
+<template>
+	<qp-template id="EmployeeClass_template" name="1-1" class="label-size-xm">
+		<qp-fieldset slot="A" id="EmployeeClass_form" view.bind="EmployeeClass">
+			<field name="VendorClassID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab" class="label-size-xm">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template
+				id="CurrEmployeeClass_template"
+				name="1-1"
+				wg-container="CurEmployeeClassRecord_tab"
+			>
+				<div slot="A">
+					<qp-fieldset
+						id="CurEmployeeClassRecord_data1"
+						caption="Financial Settings"
+						view.bind="EmployeeClass"
+					>
+						<field name="TaxZoneID" config-allow-edit.bind="true"></field>
+						<field name="TermsID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CurEmployeeClassRecord_data2"
+						caption="GL Accounts"
+						view.bind="EmployeeClass"
+					>
+						<field name="APAcctID" config-allow-edit.bind="true"></field>
+						<field name="APSubID"></field>
+						<field name="DiscTakenAcctID" config-allow-edit.bind="true"></field>
+						<field name="DiscTakenSubID"></field>
+						<field
+							name="PrepaymentAcctID"
+							config-allow-edit.bind="true"
+						></field>
+						<field name="PrepaymentSubID"></field>
+						<field name="ExpenseAcctID" config-allow-edit.bind="true"></field>
+						<field name="ExpenseSubID"></field>
+						<field name="SalesAcctID" config-allow-edit.bind="true"></field>
+						<field name="SalesSubID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset
+						id="CurEmployeeClassRecord_data3"
+						caption="Payment Settings"
+						view.bind="EmployeeClass"
+					>
+						<field name="PaymentMethodID" config-allow-edit.bind="true"></field>
+						<field name="CashAcctID" config-allow-edit.bind="true"></field>
+						<field name="CuryID" config-allow-edit.bind="true"></field>
+						<field name="AllowOverrideCury"></field>
+						<field name="CuryRateTypeID" config-allow-edit.bind="true"></field>
+						<field name="AllowOverrideRate"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CurEmployeeClassRecord_data4"
+						caption="Time Management Settings"
+						view.bind="EmployeeClass"
+					>
+						<field name="CalendarID" config-allow-edit.bind="true"></field>
+						<field name="HoursValidation"></field>
+						<field name="DefaultDateInActivity"></field>
+						<field name="ProbationPeriodMonths"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid
+				id="attributes"
+				view.bind="Mapping"
+				wg-container="Mapping_grid"
+			></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

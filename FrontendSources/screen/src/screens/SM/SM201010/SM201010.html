@@ -1,0 +1,196 @@
+<template>
+	<qp-template
+		id="UserList_form"
+		name="1-1"
+		class="label-size-xm equal-height"
+		wg-container
+	>
+		<div class="v-stack" slot="A">
+			<qp-fieldset
+				id="userInformation"
+				view.bind="UserList"
+				caption="User Information"
+			>
+				<field name="Username"></field>
+				<field name="Password"></field>
+				<field name="GeneratePassword"></field>
+				<field name="ForbidLoginWithPassword"></field>
+				<field name="Guest"></field>
+				<field name="LoginTypeID" config-allow-edit.bind="true"></field>
+				<field name="ContactID" config.bind="{displayMode:'text'}"></field>
+				<field name="FirstName"></field>
+				<field name="LastName"></field>
+				<field name="Email" control-type="qp-mail-editor"></field>
+				<field name="State"></field>
+			</qp-fieldset>
+		</div>
+
+		<div class="v-stack" slot="B">
+			<qp-fieldset id="userSettings" view.bind="UserList">
+				<field name="Comment" config-type.bind="1" config-rows.bind="3"></field>
+				<field name="AllowPasswordRecovery"></field>
+				<field name="PasswordChangeable"></field>
+				<field name="PasswordNeverExpires"></field>
+				<field name="PasswordChangeOnNextLogin"></field>
+				<field name="AllowedSessions"></field>
+				<field name="OverrideADRoles"></field>
+				<field name="OverrideLocalRolesWithOidcProviderRoles"></field>
+				<field name="MultiFactorType"></field>
+				<field name="MultiFactorOverride"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-tabbar id="UserConfiguration">
+		<qp-tab id="roles" caption="Roles">
+			<qp-grid
+				id="AllowedRoles_gridRoles"
+				view.bind="AllowedRoles"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="statistics" caption="Statistics">
+			<qp-template id="statistics" name="1-1">
+				<qp-fieldset
+					id="UserListCurrent_tab"
+					view.bind="UserListCurrent"
+					class="label-size-xxl"
+					slot="A"
+					wg-container
+				>
+					<field name="CreationDate"></field>
+					<field name="LastLoginDate"></field>
+					<field name="LastLockedOutDate"></field>
+					<field name="LastPasswordChangedDate"></field>
+					<field name="FailedPasswordAttemptCount"></field>
+					<field name="FailedPasswordAnswerAttemptCount"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="ipFilter" caption="IP filter">
+			<qp-grid
+				id="UserFilters_gridFilterIP"
+				view.bind="UserFilters"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="externalIdentities" caption="External Identities">
+			<qp-grid
+				id="Identities_gridIdentities"
+				view.bind="Identities"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="personalSettings" caption="Personal Settings">
+			<qp-template id="settings" name="1-1" class="label-size-xm">
+				<qp-fieldset
+					id="UserPrefs_PrefsForm"
+					view.bind="UserPrefs"
+					slot="A"
+					wg-container
+				>
+					<field name="PdfCertificateName"></field>
+					<field name="TimeZone"></field>
+					<field name="DefBranchID" config.bind="{displayMode:'text'}"></field>
+					<field name="HomePage" config.bind="{displayMode:'text'}"></field>
+				</qp-fieldset>
+
+				<qp-fieldset
+					id="Contact_formContactTeamsSettings"
+					view.bind="Contact"
+					caption="Teams Preferences"
+					slot="B"
+					wg-container
+				>
+					<field name="TeamsID"></field>
+					<field name="DefaultTeamsClient"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="emailAccounts" caption="Email Accounts">
+			<qp-grid
+				id="EMailAccounts_gridEMailAccounts"
+				view.bind="EMailAccounts"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="devices" caption="Devices">
+			<qp-grid
+				id="UserDevices_gridDevices"
+				view.bind="UserDevices"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabLocationTracking" caption="Location Tracking">
+			<qp-template id="statistics" name="1-1" class="stretch label-size-xm">
+				<div slot="A">
+					<qp-fieldset
+						id="UserPrefs_formLT"
+						view.bind="UserPrefs"
+						caption="Location Tracking Settings"
+						wg-container
+					>
+						<field name="TrackLocation"></field>
+						<field name="Interval">
+							<qp-label caption="Minutes"></qp-label>
+						</field>
+						<field name="Distance">
+							<qp-label caption="Meters"></qp-label>
+						</field>
+					</qp-fieldset>
+				</div>
+
+				<div slot="B">
+					<qp-grid
+						id="LocationTracking_gridLT"
+						view.bind="LocationTracking"
+						class="framed-section"
+						wg-container
+					></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="UserList" auto-repaint="true" caption="Reset Password">
+		<qp-fieldset
+			id="ResetPasswordOK_pnlResetPassword"
+			view.bind="UserList"
+			wg-container="UserList_form"
+		>
+			<field name="NewPassword" config-type.bind="2"></field>
+			<field name="ConfirmPassword" config-type.bind="2"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button
+				id="btnOK"
+				state.bind="ResetPasswordOK"
+				wg-name="Ok"
+				caption="OK"
+			></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ADUser" caption="Active Directory User" width="40vw">
+		<qp-fieldset id="ADUser_frmADUser" view.bind="ADUser" class="label-size-m">
+			<field name="Username"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button
+				id="btnOK"
+				state.bind="addADUserOK"
+				wg-name="Ok"
+				caption="OK"
+			></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

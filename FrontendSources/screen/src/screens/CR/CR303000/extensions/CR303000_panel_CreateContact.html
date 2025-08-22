@@ -1,0 +1,70 @@
+<template>
+	<qp-panel
+		id="ContactInfo"
+		auto-repaint="true"
+		caption="Create Contact"
+		height="540px"
+	>
+		<qp-tabbar id="panel_CreateContact_mainTabBar">
+			<qp-tab id="panel_CreateContact_tabMain" caption="Main">
+				<qp-fieldset
+					id="panel_CreateContact_Contact"
+					caption="Contact"
+					view.bind="ContactInfo"
+				>
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="ContactInfo.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="ContactInfo.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Email"></field>
+					<field name="ContactClass"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateContact_tabAttributes" caption="Attributes">
+				<qp-grid
+					id="grdCreateContactContactInfoAttributes"
+					view.bind="ContactInfoAttributes"
+				>
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateContactAll_tabUDFS" caption="User-Defined Fields">
+				<qp-grid id="grdCreateContactContactInfoUDF" view.bind="ContactInfoUDF">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="CreateContactBtnReview"
+				caption="Create and review"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateContactBtnConvert"
+				caption="Create"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateContactBtnCancel"
+				caption="Cancel"
+				dialog-result="Cancel"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

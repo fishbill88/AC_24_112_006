@@ -1,0 +1,51 @@
+<template>
+	<!--#include file="~\Pages\CR\Includes\TeamsContactPanel.inc"-->
+	<qp-panel id="TeamsContactCard" caption="Teams Contact" auto-repaint="true">
+
+		<qp-fieldset id="formTeamsContactCard" view.bind="TeamsContactCard" wg-container="TeamsContactCard_formTeamsContact">
+			<field name="PhotoFileName"></field>
+			<field name="DisplayName"></field>
+			<field name="actions" unbound>
+				<qp-button id="buttonOffline-TeamsContactCard" state.bind="StatusIconContactOffline" caption="Offline" config.bind="{imageSet: 'teams', imageKey: 'offline'}"></qp-button>
+				<qp-button id="buttonAvailable-TeamsContactCard" state.bind="StatusIconContactAvailable" caption="Available" config.bind="{imageSet: 'teams', imageKey: 'available'}"></qp-button>
+				<qp-button id="buttonBusy-TeamsContactCard" state.bind="StatusIconContactBusy" caption="Busy" config.bind="{imageSet: 'teams', imageKey: 'busy'}"></qp-button>
+				<qp-button id="buttonAway-TeamsContactCard" state.bind="StatusIconContactAway" caption="Away" config.bind="{imageSet: 'teams', imageKey: 'away'}"></qp-button>
+			</field>
+			<field name="TeamsStatus"></field>
+			<field name="JobTitle"></field>
+			<field name="CompanyName"></field>
+			<field name="Email"></field>
+			<field name="MobilePhone"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="buttonChat-TeamsContactCard" state.bind="ContactChat" dialog-result="OK" caption="Chat" config.bind="{imageSet: 'teams', imageKey: 'teams_chat'}"></qp-button>
+			<qp-button id="buttonCall-TeamsContactCard" state.bind="ContactCall" dialog-result="OK" caption="Call" config.bind="{imageSet: 'teams', imageKey: 'teams_call'}"></qp-button>
+			<qp-button id="buttonEvent-TeamsContactCard" state.bind="ContactMeeting" dialog-result="OK" config.bind="{imageSet: 'team', imageKey: 'teams_event'}"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="TeamsOwnerCard" caption="Teams Contact">
+		<qp-fieldset id="formTeamsOwnerCard" view.bind="TeamsOwnerCard" wg-container="TeamsOwnerCard_formTeamsOwner">
+			<field name="PhotoFileName"></field>
+			<field name="DisplayName"></field>
+			<field name="actions" unbound>
+				<qp-button id="buttonOffline-TeamsOwnerCard" state.bind="StatusIconOwnerOffline" caption="Offline" config.bind="{imageSet: 'teams', imageKey: 'offline'}"></qp-button>
+				<qp-button id="buttonAvailable-TeamsOwnerCard" state.bind="StatusIconOwnerAvailable" caption="Available" config.bind="{imageSet: 'teams', imageKey: 'available'}"></qp-button>
+				<qp-button id="buttonBusy-TeamsOwnerCard" state.bind="StatusIconOwnerBusy" caption="Busy" config.bind="{imageSet: 'teams', imageKey: 'busy'}"></qp-button>
+				<qp-button id="buttonAway-TeamsOwnerCard" state.bind="StatusIconOwnerAway" caption="Away" config.bind="{imageSet: 'teams', imageKey: 'away'}"></qp-button>
+			</field>
+			<field name="TeamsStatus"></field>
+			<field name="JobTitle"></field>
+			<field name="CompanyName"></field>
+			<field name="Email"></field>
+			<field name="MobilePhone"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="buttonChat-TeamsOwnerCard" state.bind="OwnerChat" dialog-result="OK" caption="Chat" config.bind="{imageSet: 'teams', imageKey: 'teams_chat'}"></qp-button>
+			<qp-button id="buttonCall-TeamsOwnerCard" state.bind="OwnerCall" dialog-result="OK" caption="Call" config.bind="{imageSet: 'teams', imageKey: 'teams_call'}"></qp-button>
+			<qp-button id="buttonEvent-TeamsOwnerCard" state.bind="OwnerMeeting" dialog-result="OK" caption="Event" config.bind="{imageSet: 'teams', imageKey: 'teams_event'}"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,16 @@
+<template>
+	<qp-template name="17-17-14" id="BatchRecords_form" class="equal-height" wg-container>
+		<qp-fieldset id="BatchRecords_10" slot="A" view.bind="BatchRecords">
+			<field name="BatchNbr"></field>
+			<field name="BillingCycleID"></field>
+			<field name="UpToDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="BatchRecords_20" slot="B" view.bind="BatchRecords">
+			<field name="InvoiceDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="QtyDoc"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="BatchDetailsInfo">
+	</qp-grid>
+</template>

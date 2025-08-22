@@ -1,0 +1,13 @@
+<template>
+	<qp-template id="CapacityFilter_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="CapacityFilter1" view.bind="CapacityFilter">
+			<field name="WcID"></field>
+			<field name="CapacityRange"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="CapacityFilter2" view.bind="CapacityFilter">
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="CapacityDetail"></qp-grid>
+</template>

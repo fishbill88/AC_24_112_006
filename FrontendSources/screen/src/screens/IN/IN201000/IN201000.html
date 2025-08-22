@@ -1,0 +1,194 @@
+<template>
+	<qp-splitter id="sp1" split="width" initial-split="20%">
+		<split-pane id="leftPane" slot="A" class="v-stack">
+			<qp-tree id="tree" view.bind="ItemClassNodes" caption="Item Class Tree"></qp-tree>
+		</split-pane>
+		<split-pane id="rightPane" slot="B" class="v-stack">
+			<qp-template id="itemclass_form" name="17-17-14" wg-container>
+				<qp-fieldset id="form" view.bind="itemclass" slot="A">
+					<field Name="ItemClassCD"></field>
+					<field Name="Descr"></field>
+					<field Name="ChkServiceManagement"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-tabbar id="mainTabBar" active-tab-id="tabGeneral">
+				<qp-tab id="tabGeneral" caption="General">
+					<qp-template name="1-1" id="itemclasssettings_tab" wg-container>
+						<div id="generalLeft" slot="A">
+							<qp-fieldset id="groupItemDefaults" view.bind="itemclasssettings" caption="General Settings">
+								<field name="StkItem"></field>
+								<field name="NegQty"></field>
+								<field name="ExportToExternal"></field>
+								<field name="ItemType"></field>
+								<field name="ValMethod"></field>
+								<field name="PlanningMethod"></field>
+								<field name="TaxCategoryID"></field>
+								<field name="PostClassID"></field>
+								<field name="PostToExpenseAccount"></field>
+								<field name="LotSerClassID"></field>
+								<field name="PriceClassID"></field>
+								<using wg-container="Itemclasscurysettings_CurySettingsFormDefaultSite" view="itemclasscurysettings">
+									<field name="DfltSiteID"></field>
+								</using>
+								<field name="AvailabilitySchemeID"></field>
+								<field name="CountryOfOrigin"></field>
+							</qp-fieldset>
+
+							<qp-fieldset id="groupInternationalShipping" view.bind="itemclasssettings" caption="International Shipping">
+								<field name="CommodityCodeType"></field>
+								<field name="HSTariffCode"></field>
+							</qp-fieldset>
+
+							<qp-fieldset id="groupShippingThresholds" view.bind="itemclasssettings" caption="Shipping Thresholds">
+								<field name="UndershipThreshold"></field>
+								<field name="OvershipThreshold"></field>
+							</qp-fieldset>
+						</div>
+
+						<div id="generalRight" slot="B">
+							<qp-fieldset id="groupUnitOfMeasure" view.bind="itemclasssettings" caption="Unit of Measure">
+								<field name="BaseUnit">
+									<qp-field control-state.bind="itemclasssettings.DecimalBaseUnit" class="no-label">
+									</qp-field>
+								</field>
+								<field name="SalesUnit">
+									<qp-field control-state.bind="itemclasssettings.DecimalSalesUnit" class="no-label">
+									</qp-field>
+								</field>
+								<field name="PurchaseUnit">
+									<qp-field control-state.bind="itemclasssettings.DecimalPurchaseUnit" class="no-label">
+									</qp-field>
+								</field>
+							</qp-fieldset>
+
+							<qp-grid id="gridUnits" view.bind="classunits" caption="Conversion Rules" class="framed-section">
+							</qp-grid>
+
+							<qp-fieldset id="groupPriceManagement" view.bind="itemclasssettings" caption="Price Management">
+								<field name="PriceWorkgroupID"></field>
+								<field name="PriceManagerID"></field>
+								<field name="MinGrossProfitPct"></field>
+								<field name="MarkupPct"></field>
+							</qp-fieldset>
+						</div>
+					</qp-template>
+				</qp-tab>
+
+				<qp-tab id="tabInventoryPlanning" caption="Inventory Planning">
+					<qp-template name="17-17-14" id="inventoryPlanning">
+						<qp-fieldset id="productionOrderDefaultSettings_frmProductionDefaults" view.bind="productionOrderDefaultSettings" caption="Production Order Defaults" wg-container slot="A">
+							<field name="ReplenishmentSource"></field>
+							<field name="AMSourceSiteID"></field>
+							<field name="AMMinOrdQty"></field>
+							<field name="AMMaxOrdQty"></field>
+							<field name="AMLotSize"></field>
+							<field name="AMMFGLeadTime"></field>
+						</qp-fieldset>
+
+						<qp-fieldset id="inventoryPlanningSettings_inventoryPlanningSettingsForm" view.bind="inventoryPlanningSettings" caption="Inventory Planning Settings" wg-container slot="B">
+							<field name="ReplenishmentSource"></field>
+							<field name="AMSourceSiteID"></field>
+							<field name="AMSafetyStock"></field>
+							<field name="AMMinQty"></field>
+							<field name="AMMinOrdQty"></field>
+							<field name="AMMaxOrdQty"></field>
+							<field name="AMLotSize"></field>
+							<field name="AMMFGLeadTime"></field>
+							<field name="AMDaysSupply"></field>
+						</qp-fieldset>
+					</qp-template>
+
+					<qp-template name="17-17-14" id="fromReplenishment">
+						<qp-fieldset id="itemclasssettings_fromReplenishment" view.bind="itemclasssettings" caption="Inventory Replenishment Settings" wg-container slot="A">
+							<field name="DemandCalculation"></field>
+						</qp-fieldset>
+					</qp-template>
+
+					<qp-grid id="repGrid" view.bind="replenishment" caption="Replenishment Parameters">
+					</qp-grid>
+				</qp-tab>
+
+				<qp-tab id="tabRestrictionGroups" caption="Restriction Groups">
+					<qp-grid id="grid" view.bind="Groups">
+					</qp-grid>
+				</qp-tab>
+
+				<qp-tab id="tabAttributes" caption="Attributes">
+					<qp-grid id="AttributesGrid" view.bind="Mapping" class="framed-section">
+					</qp-grid>
+					<!-- <qp-template name="17-17-14" id="attributeMatrixDefaults">
+						<qp-fieldset id="fsAttributeMatrixDefaults" view.bind="itemclasssettings" slot="A">
+							<field Name="DefaultColumnMatrixAttributeID"></field>
+							<field Name="DefaultRowMatrixAttributeID"></field>
+						</qp-fieldset>
+					</qp-template> -->
+					<!-- <qp-template name="1-1" id="attributeMatrix">
+						<div slot="A">
+							<qp-grid id="PXGridIdGenerationRules" view.bind="Mapping" caption="Inventory ID Segment Settings" class="framed-section">
+							</qp-grid>
+						</div>
+						<div slot="B">
+							<qp-grid id="PXGridDescriptionGenerationRules" view.bind="Mapping" caption="Description Segment Settings" class="framed-section">
+							</qp-grid>
+						</div>
+					</qp-template> -->
+				</qp-tab>
+
+				<qp-tab id="tabServiceManagement" caption="Service Management">
+				<!-- if.bind="Item.ChkEquipmentManagement.value == true" -->
+					<qp-template name="17-17-14" id="itemclasssettings_formSM" wg-container="Itemclasssettings_formEquipment">
+						<div id="divServiceManagemant" slot="A">
+							<qp-fieldset id="fsServiceManagement" view.bind="itemclasssettings" caption="Service Management">
+								<field name="DefaultBillingRule"></field>
+							</qp-fieldset>
+							<qp-fieldset id="fsRouteManagement" view.bind="itemclasssettings" caption="Route Management">
+								<field name="RequireRoute"></field>
+							</qp-fieldset>
+							<qp-fieldset id="fsEquipmentManagement" view.bind="itemclasssettings" caption="Equipment Management">
+								<field name="EquipmentItemClass" replace-content>
+									<qp-field
+										control-state.bind="itemclasssettings.EquipmentItemClass"
+										control-type="qp-radio"
+										config-class.bind="'vertical'"
+										config-options.bind="[
+											{ value: 'OI', text: EquipmentItemClassMode.PartOrOtherInventory },
+											{ value: 'ME', text: EquipmentItemClassMode.ModelEquipment },
+											{ value: 'CT', text: EquipmentItemClassMode.Component },
+											{ value: 'CE', text: EquipmentItemClassMode.Consumable }
+										]">
+									</qp-field>
+								</field>
+							</qp-fieldset>
+						</div>
+					</qp-template>
+					<qp-grid id="ModelTemplateComponents" view.bind="ModelTemplateComponentRecords">
+					</qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-template name="1" id="changeIDSettings">
+			<qp-fieldset slot="A" id="formChangeID" wg-container view.bind="ChangeIDDialog">
+				<field name="CD"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="itemclass" auto-repaint="true">
+		<qp-label id="lblConfirmNavigation" caption="Any unsaved changes will be discarded."></qp-label>
+		<footer>
+			<qp-button id="btnYes" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnNo" dialog-result="Abort" caption="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

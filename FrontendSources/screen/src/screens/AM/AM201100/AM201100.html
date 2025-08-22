@@ -1,0 +1,74 @@
+<template>
+	<qp-template id="OrderType_form" wg-container name="1-1" class="label-size-m">
+		<qp-fieldset slot="A" id="OrderType1" view.bind="OrderType">
+			<field name="OrderType"></field>
+			<field name="Active"></field>
+			<field name="Function"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="CurrentOrderType_tab" wg-container name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="CurrentOrderType1" view.bind="CurrentOrderType" caption="Numbering Settings">
+						<field name="ProdNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentOrderType2" view.bind="CurrentOrderType" caption="Account Settings">
+						<field name="WIPAcctID"></field>
+						<field name="WIPSubID"></field>
+						<field name="WIPVarianceAcctID"></field>
+						<field name="WIPVarianceSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentOrderType3" view.bind="CurrentOrderType" caption="Order Defaults">
+						<field name="DefaultCostMethod"></field>
+						<field name="ExcludeFromMRP"></field>
+						<field name="SubstituteWorkCenters"></field>
+						<field name="AutoBackwardReporting"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentOrderType4" view.bind="CurrentOrderType" caption="Printing">
+						<field name="ProductionReportID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentOrderType5" view.bind="CurrentOrderType" caption="Scheduling">
+						<field name="CheckSchdMatlAvailability"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CurrentOrderType6" view.bind="CurrentOrderType" caption="Scrap">
+						<field name="ScrapSource"></field>
+						<field name="ScrapSiteID" config-allow-edit.bind="true"></field>
+						<field name="ScrapLocationID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentOrderType7" view.bind="CurrentOrderType" caption="Copy BOM Notes">
+						<field name="CopyNotesItem">
+							<qp-field id="CopyNotes2" control-state.bind="CurrentOrderType.CopyNotesOper"></qp-field>
+						</field>
+						<field name="CopyNotesMatl">
+							<qp-field id="CopyNotes4" control-state.bind="CurrentOrderType.CopyNotesStep"></qp-field>
+						</field>
+						<field name="CopyNotesTool">
+							<qp-field id="CopyNotes6" control-state.bind="CurrentOrderType.CopyNotesOvhd"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentOrderTyp8" view.bind="CurrentOrderType" caption="Data Entry Settings">
+						<field name="UnderIssueMaterial"></field>
+						<field name="BackflushUnderIssueMaterial"></field>
+						<field name="OverIssueMaterial">
+							<qp-field id="IncludeUnreleasedOverIssueMaterialField" control-state.bind="CurrentOrderType.IncludeUnreleasedOverIssueMaterial"></qp-field>
+						</field>
+						<field name="IssueMaterialOnTheFly"></field>
+						<field name="MoveCompletedOrders"></field>
+						<field name="ExceedQtyOperations"></field>
+						<field name="OverCompleteOrders"></field>
+						<field name="DefaultOperationMoveQty"></field>
+						<field name="PreassignLotSerial"></field>
+						<field name="ParentLotSerialRequired"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="OrderTypeAttributes"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

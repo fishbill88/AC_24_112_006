@@ -1,0 +1,41 @@
+<template>
+	<qp-panel id="PublishToUIDialog" caption="Publish to the UI">
+		<qp-template id="PublishToUIDialog_formPublishToUI" name="1" wg-container>
+			<div slot="A">
+				<qp-fieldset
+					id="uiSettings"
+					view.bind="PublishToUIDialog"
+					class="label-size-m"
+				>
+					<field name="Title"></field>
+					<field name="Workspace"></field>
+					<field name="Category"></field>
+					<field name="ScreenID"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="accessRights"
+					caption="Access Rights"
+					view.bind="PublishToUIDialog"
+					class="label-size-m"
+				>
+					<field name="CopyFromScreenID" config.bind="{displayMode:'text'}">
+						<qp-field
+							slot="label"
+							control-state.bind="PublishToUIDialog.AccessRights"
+							config-enabled.bind="false"
+							class="no-label"
+						></qp-field>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" caption="Publish" dialog-result="OK"></qp-button>
+			<qp-button
+				id="btnCancel"
+				caption="Cancel"
+				dialog-result="Cancel"
+			></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,51 @@
+<template>
+	 
+	<qp-template id='Operation_form' name='1-1' wg-container> 
+		<qp-fieldset id='formOperation1' view.bind='Operation' slot='A' class="label-size-xs">
+				<field name="Operation"></field>
+				<field name="BreakOnError"></field>
+				<field name="BreakOnTarget"></field>
+		</qp-fieldset>				
+		<qp-fieldset id='formOperation2' view.bind='Operation'  slot='B' class="label-size-xs">
+			<field name="SkipHeaders"></field>
+			<field name="Validate"></field>
+			<field name="ValidateAndSave"></field>
+		</qp-fieldset>				
+	</qp-template>	 
+	<qp-grid id='grid' view.bind="Mappings" batchUpdate='True'></qp-grid>	
+
+	<qp-panel id="History" caption="History"  height="65vh">
+		<qp-grid id="grHistory" view.bind="History"></qp-grid>
+	</qp-panel>
+
+	<qp-panel id="PreparedData" caption="Prepared Data" width="85vw" height="85vh">
+		<qp-grid id="gridPreparedData" view.bind="PreparedData"></qp-grid>
+		<footer>
+			<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReplacementProperties" caption="Replace">
+		<qp-fieldset id='FormReplacementProperties' view.bind='ReplacementProperties'>
+			<field name="ColumnIndex"></field>
+			<field name="SearchValue"></field>
+			<field name="ReplaceValue"></field>
+			<field name="MatchCase"></field>
+			<field name="ReplaceResult"></field>
+		</qp-fieldset>	
+		<footer>
+			<qp-button id="ButtonReplaceOne" caption="Replace" state.bind="replaceOneValue"></qp-button>
+			<qp-button id="ButtonReplaceAll" caption="Replace All" state.bind="replaceAllValues"></qp-button>
+			<qp-button id="ButtonClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SubstitutionInfo" caption="Add Substitution" width="85vw" >
+		<qp-grid id="GridSubstitutionInfo" view.bind="SubstitutionInfo"></qp-grid>
+		<footer>
+			<qp-button id="ButtonSave" caption="Save" state.bind="saveSubstitutions"></qp-button>
+			<qp-button id="ButtonCancel" caption="Close" dialog-result="Cancel" state.bind="closeSubstitutions"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

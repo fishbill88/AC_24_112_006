@@ -1,0 +1,174 @@
+<template>
+	<qp-template
+		name="7-10-7"
+		id="EmailAccounts_template"
+		class="equal-height label-size-m"
+		wg-container="EMailAccounts_form"
+	>
+		<qp-fieldset slot="A" id="EmailAccounts_formLeft" view.bind="EMailAccounts">
+			<field name="EmailAccountID"></field>
+			<field name="UserId" config-allow-edit.bind="true"></field>
+			<field name="Description"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="B"
+			id="EmailAccounts_formRight"
+			view.bind="EMailAccounts"
+		>
+			<field name="Address"></field>
+			<field name="ReplyAddress"></field>
+			<field name="PluginTypeName"></field>
+			<field name="IsOfPluginType"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentEMailAccounts_tab" class="label-size-m" wg-container>
+		<qp-tab
+			id="tabPlugIn"
+			caption="Plug-In"
+			if.bind="EMailAccounts.IsOfPluginType.value == true"
+		>
+			<qp-grid id="Details_PXGridSettings" view.bind="Details"></qp-grid>
+		</qp-tab>
+		<qp-tab
+			id="tabService"
+			caption="Service"
+			if.bind="EMailAccounts.IsOfPluginType.value != true"
+		>
+			<qp-template name="17-17-14" id="serviceTemplate">
+				<div slot="A">
+					<qp-fieldset
+						id="CurrentEMailAccounts_OutgoingMailServerSettings"
+						view.bind="EMailAccounts"
+						caption="Outgoing Mail Server Settings"
+					>
+						<field name="OutcomingHostName" caption="Server"></field>
+						<field name="OutcomingSSLRequest"></field>
+						<field name="OutcomingPort" caption="Port"></field>
+						<field name="SendGroupMails" caption="Batch Size"></field>
+						<field name="ValidateFrom"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CurrentEMailAccounts_IncomingMailServerSettings"
+						view.bind="EMailAccounts"
+						caption="Incoming Mail Server Settings"
+					>
+						<field name="IncomingHostProtocol" caption="Protocol"></field>
+						<field name="IncomingHostName" caption="Server"></field>
+						<field name="ImapRootFolder"></field>
+						<field name="IncomingSSLRequest"></field>
+						<field name="IncomingPort" caption="Port"></field>
+						<field name="IncomingDelSuccess"></field>
+						<field name="IncomingAttachmentType"></field>
+						<field name="FetchingBehavior"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" class="label-size-m">
+					<qp-fieldset
+						id="CurrentEMailAccounts_AuthenticationSettings"
+						view.bind="EMailAccounts"
+						caption="Authentication Settings"
+					>
+						<field name="AuthenticationMethod"></field>
+						<field name="OAuthApplicationID"></field>
+						<field name="AzureTenantID"></field>
+						<field name="LoginName" caption="Incoming Mail Username"></field>
+						<field name="Password" caption="Incoming Mail Password"></field>
+						<field name="OutcomingAuthenticationRequest"></field>
+						<field name="OutcomingAuthenticationDifferent"></field>
+						<field name="OutcomingLoginName" caption="Outgoing Mail Username"></field>
+						<field name="OutcomingPassword" caption="Outgoing Mail Password"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CurrentEMailAccounts_Other"
+						view.bind="EMailAccounts"
+						caption="Other"
+					>
+						<field name="Timeout"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabIncomingMailProcessing" caption="Incoming Mail Processing">
+			<qp-template name="1" id="tabIncomingMailProcessing_template1">
+				<qp-fieldset
+					slot="A"
+					id="CurrentEMailAccounts_IncomingMailProcessing"
+					view.bind="EMailAccounts"
+					class="transparent-section no-label"
+				>
+					<field name="IncomingProcessing"></field>
+					<field name="AddIncomingProcessingTags"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-template name="17-17-14" id="tabIncomingMailProcessing_template2">
+				<div slot="A">
+					<qp-fieldset
+						id="CurrentEMailAccounts_InitialProcessing"
+						view.bind="EMailAccounts"
+						caption="Initial Processing"
+					>
+						<field name="ConfirmReceipt"></field>
+						<field name="ConfirmReceiptNotificationID"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CurrentEMailAccounts_MainProcessing"
+						view.bind="EMailAccounts"
+						caption="Main Processing"
+					>
+						<field name="CreateCase"></field>
+						<field name="CreateCaseClassID"></field>
+						<field name="RouteEmployeeEmails"></field>
+						<field name="CreateActivity"></field>
+						<field name="CreateLead"></field>
+						<field name="CreateLeadClassID"></field>
+						<field name="ProcessUnassigned"></field>
+						<field name="ResponseNotificationID"></field>
+						<field name="SubmitToIncomingAPDocuments"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CurrentEMailAccounts_FinalProcessing"
+						view.bind="EMailAccounts"
+						caption="Final Processing"
+					>
+						<field class="no-label" name="TypeDelete">
+							<qp-field
+								slot="label"
+								class="no-label"
+								control-state.bind="EMailAccounts.DeleteUnProcessed"
+							></qp-field>
+						</field>
+						<field name="AddUpInformation" class="no-label"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab
+			id="tabAssignmentSettings"
+			caption="Additional Settings"
+		>
+			<qp-template name="17-17-14" id="tabSenderName_template">
+				<qp-fieldset
+					slot="A"
+					id="CurrentEMailAccounts_ServerInformation2"
+					view.bind="EMailAccounts"
+					caption="Sender Name"
+				>
+					<field name="SenderDisplayNameSource"></field>
+					<field name="AccountDisplayName"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					slot="B"
+					id="CurrentEMailAccounts_AssignmentSettings"
+					view.bind="EMailAccounts"
+					if.bind="EMailAccounts.IsOfPluginType.value != true"
+					caption="Automatic Assignment of Emails"
+				>
+					<field name="DefaultEmailAssignmentMapID"></field>
+					<field name="DefaultWorkgroupID"></field>
+					<field name="DefaultOwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

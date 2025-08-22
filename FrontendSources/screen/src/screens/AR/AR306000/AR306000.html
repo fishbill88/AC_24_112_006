@@ -1,0 +1,20 @@
+<template>
+	<qp-template id="formDocument" name="1-1" class="equal-height" wg-container="Document_form">
+		<qp-fieldset id="columnFirst-formDocument" view.bind="Document" slot="A">
+			<field name="Status"></field>
+			<field name="DunningLetterLevel"></field>
+			<field name="DunningLetterDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-formDocument" view.bind="Document">
+			<using wg-container="CurrentCustomer_DunningForm" view="CurrentCustomer">
+				<field name="AcctCD"></field>
+			</using>
+			<field name="DunningFee">
+				<qp-field control-state.bind="Document.CuryID" class="col-2"></qp-field>
+			</field>
+			<field name="FeeRefNbr" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Details"></qp-grid>
+</template>

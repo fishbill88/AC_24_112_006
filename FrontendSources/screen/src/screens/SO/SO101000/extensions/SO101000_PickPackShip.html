@@ -1,0 +1,35 @@
+<template>
+	<template id="tabWarehouseManagement_Content">
+		<qp-template name="1-1" id="pickPackShipTemplate"  class="label-size-xm">
+			<div slot="A" id="PickPackShipSetup_formScanSetup" wg-container>
+				<qp-label caption="These settings are specific to the current branch."></qp-label>
+				<qp-fieldset id="groupFulfillmentWorkflow" view.bind="PickPackShipSetup" caption="Fulfillment Workflow">
+					<field name="ShowPickTab"></field>
+					<field name="ShowPackTab"></field>
+					<field name="ShowShipTab"></field>
+					<field name="ShowReturningTab"></field>
+					<field name="ShowScanLogTab"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupFulfillmentSettings" view.bind="PickPackShipSetup" caption="Fulfillment Settings">
+					<field name="ShortShipmentConfirmation"></field>
+					<field name="ShipmentLocationOrdering"></field>
+					<field name="UseDefaultQty"></field>
+					<field name="ExplicitLineConfirmation"></field>
+					<field name="UseCartsForPick"></field>
+					<field name="DefaultLocationFromShipment"></field>
+					<field name="DefaultLotSerialFromShipment"></field>
+					<field name="EnterSizeForPackages"></field>
+					<field name="PrintShipmentConfirmation"></field>
+					<field name="PrintShipmentLabels"></field>
+					<field name="PrintCommercialInvoices"></field>
+					<field name="ConfirmEachPackageWeight"></field>
+					<field name="RequestLocationForEachItem"></field>
+					<field name="ConfirmToteForEachItem"></field>
+					<field name="AllowMultipleTotesPerShipment"></field>
+					<field name="PrintPickListsAndPackSlipsTogether"></field>
+					<field name="AllowBidirectionalPickLists"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

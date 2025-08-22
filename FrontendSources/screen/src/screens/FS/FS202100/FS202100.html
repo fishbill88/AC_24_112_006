@@ -1,0 +1,16 @@
+<template>
+	<qp-template id="filterTemplate" name="1-1" class="label-size-m">
+		<qp-fieldset id="Filter_form" slot="A" view.bind="Filter">
+			<field name="WFID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitterId" split="width" initial-split="25%" state="normal">
+		<split-pane slot="A">
+			<qp-tree id="tree" view.bind="Nodes" caption="Workflow Stages"></qp-tree>
+		</split-pane>
+		<split-pane slot="B">
+			<qp-grid id="grid" view.bind="Items"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

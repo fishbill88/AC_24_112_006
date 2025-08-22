@@ -1,0 +1,24 @@
+<template>
+
+	<qp-template name="1-1" id="templateOperation">
+		<qp-fieldset id="form" view.bind="Operation" slot="A">
+			<field name="Operation">
+				<qp-field no-label="true" control-state.bind="Operation.SkipHeaders"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Mappings"></qp-grid>
+
+	<qp-panel id="History" caption="History" width="65vw" height="65vh">
+		<qp-grid id="grHistory" view.bind="History"></qp-grid>
+	</qp-panel>
+
+	<qp-panel id="PreparedData" caption="Prepared Data" width="85vw" height="85vh">
+		<qp-grid id="gridPreparedData" view.bind="PreparedData"></qp-grid>
+		<footer>
+			<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,14 @@
+<template>
+
+	<qp-template id="formFilter" name="1-1" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="panelFilter" view.bind="Filter">
+			<field name="AcctCD"></field>
+			<using wg-container="CurrentVendor_tab">
+				<field name="LineDiscountTarget"></field>
+			</using>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridCurrentDiscounts" view.bind="CurrentDiscounts" wg-container="CurrentDiscounts_grid"></qp-grid>
+
+</template>

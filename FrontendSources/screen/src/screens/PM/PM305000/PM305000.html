@@ -1,0 +1,91 @@
+<template>
+	<qp-template name="1-1-1" class="equal-height" id="Document_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="Document">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="RevisionID" ></field>
+			<field name="Status" ></field>
+			<field name="ClassID" config-allow-edit.bind="true"></field>
+			<field name="Date" ></field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="Document" caption="Totals By Revision" class="highlights-section label-size-m">
+			<field name="TotalAmountToComplete" ></field>
+			<field name="TotalAmount" ></field>
+			<field name="TotalBudgetedAmount" ></field>
+			<field name="TotalProjectedAmount" ></field>
+			<field name="TotalVarianceAmount" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formSlotC" view.bind="ProjectTotals" caption="Totals By Project" class="highlights-section label-size-m">
+			<field name="TotalBudgetedRevenueAmount" ></field>
+			<field name="TotalBudgetedCompletedAmount" ></field>
+			<field name="TotalBudgetedAmountToComplete" ></field>
+			<field name="TotalBudgetedCostAmount" ></field>
+			<field name="TotalBudgetedGrossProfit" ></field>
+			<field name="TotalBudgetedVarianceAmount" ></field>
+			<field name="TotalProjectedGrossProfit" ></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar active-tab-id="DetailsTab" id="DocumentSettings_tab" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-grid id="grid" view.bind="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ApprovalsTab" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="AvailableCostBudget" caption="Add Budget Lines" auto-repaint="true" width="80vw">
+		<qp-grid id="AvailableCostBudget_AvailableCostBudgetGrid" view.bind="AvailableCostBudget">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButtonAdd" state.bind="AppendSelectedCostBudget" >
+			</qp-button>
+			<qp-button id="PXButtonAddClose" caption="Add Lines & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonClose" caption="Close" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="History" caption="History" auto-repaint="true" width="80vw" height="60vh">
+		<qp-grid id="History_HistoryGrid" view.bind="History">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="CopyDialog" caption="Copy Revision" auto-repaint="true">
+		<qp-fieldset id="formNewRevision" view.bind="CopyDialog">
+			<field name="RevisionID" ></field>
+			<field name="RefreshBudget" ></field>
+			<field name="CopyNotes" ></field>
+			<field name="CopyFiles" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover" ></field>
+			<field name="IgnoreApproversDelegations" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK"  caption="Reassign" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReassignApprovalCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

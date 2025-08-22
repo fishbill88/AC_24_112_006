@@ -1,0 +1,76 @@
+<template>
+
+	<qp-template id="formBankFeed" name="7-10-7" wg-container="BankFeed_form" class="equal-height">
+		<qp-fieldset id="columnFirstBankFeed" view.bind="BankFeed" slot="A">
+			<field name="BankFeedID"></field>
+			<field name="Status"></field>
+			<field name="Type"></field>
+			<field name="ImportStartDate"></field>
+			<field name="Descr" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondBankFeed" view.bind="BankFeed" slot="B">
+			<field name="Institution"></field>
+			<field name="CreateExpenseReceipt"></field>
+			<field name="CreateReceiptForPendingTran"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabVashAccount" caption="Cash Accounts">
+			<qp-grid id="gridCashAccounts" view.bind="BankFeedDetail" wg-container="BankFeedDetail_gridAccounts"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabCorporateCards" caption="Corporate Cards" if.bind="BankFeed.CreateExpenseReceipt.value==true">
+			<qp-grid id="gridCorporateCards" view.bind="BankFeedCorpCC" wg-container="BankFeedCorpCC_gridCorpCC"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabExpenseItems" caption="Expense Items" if.bind="BankFeed.CreateExpenseReceipt.value==true">
+			<qp-template name="17-17-14" id="formExpenseTerms" wg-container="CurrentBankFeed_tabs">
+				<qp-fieldset id="panelExpenseTerms" view.bind="CurrentBankFeed" slot="A">
+					<field name="DefaultExpenseItemID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridExpenseTerms" view.bind="BankFeedExpense" wg-container="BankFeedExpense_gridExpense"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabCustomMappingRules" caption="Custom Mapping Rules">
+			<qp-grid id="gridCustomMappingRules" view.bind="BankFeedFieldMapping" wg-container="BankFeedFieldMapping_gridFieldMapping"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+	<qp-panel caption="Categories" id="BankFeedCategories" auto-repaint="true">
+		<qp-grid id="gridCategories" view.bind="BankFeedCategories"></qp-grid>
+	</qp-panel>
+
+	<qp-panel id="Filter" caption="Load Transactions in Test Mode" auto-repaint="true">
+
+		<qp-template id="formFilter-Filtrer" name="1-1" wg-container="Filter_frmLoadTransactions">
+			<qp-fieldset id="panelFilter-Filter" view.bind="Filter" slot="A">
+				<field name="Date"></field>
+				<field name="DateTo"></field>
+				<field name="MaxTransactions"></field>
+				<field name="LineNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="gridTransactions-Filter" view.bind="BankFeedTransactions" wg-container="BankFeedTransactions_gridTrans"></qp-grid>
+
+		<footer>
+			<qp-button id="buttonLoadTransactions-Filter" state.bind="LoadTransactions"></qp-button>
+			<qp-button id="buttonClose-Filter" dialog-result="Cancel" caption="Close"></qp-button>
+		</footer>
+
+	</qp-panel>
+
+	<qp-panel id="CurrentBankFeed" caption="Access ID" auto-repaint="true">
+
+		<qp-template id="formAccessID" name="1-1">
+			<qp-fieldset id="layoutRule8" view.bind="CurrentBankFeed" slot="A" wg-container="CurrentBankFeed_frmShowIDs">
+				<field name="ExternalUserID"></field>
+				<field name="ExternalItemID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+	</qp-panel>
+</template>

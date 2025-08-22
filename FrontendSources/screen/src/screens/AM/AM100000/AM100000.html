@@ -1,0 +1,39 @@
+﻿<template>
+	<qp-template id="setup_form" wg-container name="1-1" class="label-size-xm">
+		<div slot="A">
+			<qp-fieldset id="setup_Exceptions" view.bind="setup" caption="Exceptions">
+				<field name="ExceptionDaysBefore"></field>
+				<field name="ExceptionDaysAfter"></field>
+			</qp-fieldset>
+			<qp-fieldset id="setup_Forecast" view.bind="setup" caption="Forecast">
+				<field name="ForecastPlanHorizon"></field>
+				<field name="ForecastNumberingID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset id="setup_MPS" view.bind="setup" caption="MPS">
+				<field name="MPSFence"></field>
+				<field name="DefaultMPSTypeID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="setup_General" view.bind="setup" caption="General">
+				<field name="AMPlanningHorizon"></field>
+				<field name="PlanOrderType" config-allow-edit.bind="true"></field>
+				<field name="GracePeriod"></field>
+				<field name="StockingMethod"></field>
+				<field name="PurchaseCalendarID" config-allow-edit.bind="true"></field>
+				<field name="IncludeOnHoldSalesOrder"></field>
+				<field name="IncludeOnHoldPurchaseOrder"></field>
+				<field name="IncludeOnHoldProductionOrder"></field>
+				<field name="IncludeOnHoldKitAssemblies"></field>
+				<field name="UseFixMfgLeadTime"></field>
+				<field name="IncludeExpiredBlanketSalesOrders"></field>
+			</qp-fieldset>
+			<qp-fieldset id="setup_Consolidation" view.bind="setup" caption="Consolidation">
+				<field name="UseDaysSupplytoConsolidateOrders"></field>
+				<field name="UseLongTermConsolidationBucket"></field>
+				<field name="ConsolidateAfterDays"></field>
+				<field name="BucketDays"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

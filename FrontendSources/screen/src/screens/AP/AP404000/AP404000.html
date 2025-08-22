@@ -1,0 +1,18 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirstFilter" view.bind="Filter">
+			<field name="PayTypeID"></field>
+			<field name="PayAccountID"></field>
+			<field name="PayDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondFilter" view.bind="Filter">
+			<field name="Balance"></field>
+			<field name="CuryBalance"></field>
+			<field name="CuryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridDocuments" view.bind="Documents" wg-container="Documents_grid"></qp-grid>
+
+</template>

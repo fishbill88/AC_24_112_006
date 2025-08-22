@@ -1,0 +1,40 @@
+<template>
+	<qp-tabbar id="RouteSetupRecord_tab" wg-container active-tab-id="tabGeneral">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="RouteSetupRecordTemplate" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="RouteSetupRecord_edRouteSetup" wg-container caption="Numbering Settings" view.bind="RouteSetupRecord">
+						<using wg-container="SetupRecord_edEquipmentNumbering" view="SetupRecord">
+							<field name="EquipmentNumberingID" config-allow-edit.bind="true"></field>
+						</using>
+						<field name="RouteNumberingID" config-allow-edit.bind="true"></field>
+						<using wg-container="SetupRecord_edSetupContractNumbering" view="SetupRecord">
+							<field name="ServiceContractNumberingID" config-allow-edit.bind="true"></field>
+							<field name="ScheduleNumberingID" config-allow-edit.bind="true"></field>
+						</using>
+						<field name="EnableSeasonScheduleContract"></field>
+						<field name="DfltSrvOrdType" config-allow-edit.bind="true"></field>
+						<field name="AutoCalculateRouteStats"></field>
+						<field name="GroupINDocumentsByPostingProcess"></field>
+						<field name="SetFirstManualAppointment"></field>
+						<field name="TrackRouteLocation"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset id="RouteSetupRecord_30" slot="B" caption="Billing Settings" view.bind="RouteSetupRecord">
+					<field name="SetupRecord.ContractPostTo"></field>
+					<field name="SetupRecord.ContractPostOrderType" config-allow-edit.bind="true"></field>
+					<field name="SetupRecord.DfltContractTermIDARSO" config-allow-edit.bind="true"></field>
+					<field name="SetupRecord.ContractSalesAcctSource"></field>
+					<field name="SetupRecord.ContractCombineSubFrom"></field>
+					<field name="SetupRecord.EnableContractPeriodWhenInvoice"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailing" caption="Mailing & Printing">
+			<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources">
+			</qp-grid>
+			<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

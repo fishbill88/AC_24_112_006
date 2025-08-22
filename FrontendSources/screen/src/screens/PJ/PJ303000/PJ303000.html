@@ -1,0 +1,59 @@
+<template>
+	<qp-template name="1-1-1" class="equal-height" id="DrawingLog_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="DrawingLog">
+			<field name="DrawingLogCd" ></field>
+			<field name="StatusId" ></field>
+			<field name="IsCurrent" ></field>
+			<field name="DisciplineId" ></field>
+			<field name="Number" ></field>
+			<field name="Revision" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="DrawingLog">
+			<field name="ProjectId" ></field>
+			<field name="ProjectTaskId" ></field>
+			<field name="Title" config-rows.bind="3"></field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formSlotC" view.bind="DrawingLog">
+			<field name="DrawingDate" ></field>
+			<field name="ReceivedDate" ></field>
+			<field name="OwnerId" ></field>
+			<field name="Sketch" ></field>
+			<field name="OriginalDrawingId" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentDrawingLog_tab" wg-container>
+		<qp-tab id="DrawingsTab" caption="Drawings">
+			<qp-grid id="PXGridDrawings" view.bind="Drawings">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Attributes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ActivitiesTab" caption="Activities">
+			<qp-grid id="Activities_Activities_grid" view.bind="Activities">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="RevisionsTab" caption="Revisions">
+			<qp-grid id="gridRevisions" view.bind="Revisions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="RelationsTab" caption="Relations">
+			<qp-grid id="PXRelationsGrid" view.bind="LinkedDrawingLogRelations">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="UnlinkedDrawingLogRelations" caption="Link" auto-repaint="true" width="80vw">
+		<qp-grid id="PXRelationsPanelGrid" view.bind="UnlinkedDrawingLogRelations">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButtonJLink" state.bind="LinkEntity" >
+			</qp-button>
+			<qp-button id="PXButtonLink" caption="Link & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

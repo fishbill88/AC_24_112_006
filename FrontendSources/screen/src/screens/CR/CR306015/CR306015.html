@@ -1,0 +1,34 @@
+<template>
+
+	<qp-template name="17-7" id="form">
+		<qp-fieldset id="form_MessageLeft" view.bind="Message" slot="A">
+			<field name="MailAccountID"></field>
+			<field name="MailTo"></field>
+			<field name="MailCc"></field>
+			<field name="MailBcc"></field>
+			<field name="Subject"></field>
+			<field name="RecipientNotes"></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_MessageRight" view.bind="Message" slot="B">
+			<field name="EntityDescription" replace-content>
+				<qp-rich-text-editor id="edEntityDescription" class="stretch" state.bind="Message.EntityDescription"
+					wg-field value.two-way="Message.EntityDescription.value" config.bind="{readOnly: true}">
+				</qp-rich-text-editor>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTabBar">
+
+		<qp-tab id="tabMessage" caption="Message" ref="tabMessage_Content">
+		</qp-tab>
+
+		<qp-tab id="tabDetails" caption="Details" ref="tabDetails_Content">
+		</qp-tab>
+
+		<qp-tab id="tabTracking" caption="Tracking" ref="tabTracking_Content">
+		</qp-tab>
+
+	</qp-tabbar>
+
+</template>

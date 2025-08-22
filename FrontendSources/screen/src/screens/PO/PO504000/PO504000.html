@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="Filter_form" wg-container>
+		<qp-fieldset id="Filter_form_column1" view.bind="Filter" slot="A">
+			<field name="DocDate" id="edDocDate"></field>
+			<field name="PutReceiptsOnHold"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_form_column2" view.bind="Filter" slot="B">
+			<field name="PurchasingCompany"></field>
+			<field name="SellingCompany"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Documents" ></qp-grid>
+</template>

@@ -1,0 +1,2212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report version="" Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>@Project_Status</DataField>
+      <OpenBraces>2</OpenBraces>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMReportProject.IsCompleted</DataField>
+      <Value>0</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>PMReportProject.IsActive</DataField>
+      <Operator>Or</Operator>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@Project_Status</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>2</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>PMReportProject.IsCompleted</DataField>
+      <Operator>Or</Operator>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@Project_Status</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>3</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMReportProject.IsActive</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>3</CloseBraces>
+      <DataField>PMReportProject.IsCompleted</DataField>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>PMReportProject.NonProject</DataField>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMReportProject.ContractID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ProjectID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@ProjectID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMReportProject.IsCancelled</DataField>
+      <Value>0</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@ProjectEndDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>PMReportProject.ExpireDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>PMReportProject.IsCompleted</DataField>
+      <Operator>Or</Operator>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>2</CloseBraces>
+      <Condition>Greater</Condition>
+      <DataField>PMReportProject.ExpireDate</DataField>
+      <Value>@ProjectEndDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@As_Of_Date</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNotNull</Condition>
+      <DataField>PMReportProject.StartDate</DataField>
+      <OpenBraces>1</OpenBraces>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>2</CloseBraces>
+      <Condition>LessOrEqual</Condition>
+      <DataField>PMReportProject.StartDate</DataField>
+      <Value>[MasterFinPeriod.EndDate]</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>PMReportProject.DefaultBranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrgBAccountID</DataField>
+    </FilterExp>
+  </Filters>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrganizationID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>=Report.GetDefExt('Batch.TranPeriodID')</DefaultValue>
+      <Name>As_Of_Date</Name>
+      <Prompt>As of Period</Prompt>
+      <ViewName>=Report.GetFieldSchema('GLHistory.FinPeriodID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>1</DefaultValue>
+      <Name>Project_Status</Name>
+      <Prompt>Status</Prompt>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Active</Label>
+          <Value>1</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Completed</Label>
+          <Value>2</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Active and Completed</Label>
+          <Value>3</Value>
+        </ParameterValue>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ProjectEndDate</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Exclude Projects Completed Through Date:</Prompt>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ProjectID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Project</Prompt>
+      <ViewName>=Report.GetFieldSchema('PMReportMetadata.ProjectID,[@BranchID]')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>CostProjection</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Use Cost Projections</Prompt>
+      <Type>Boolean</Type>
+    </ReportParameter>
+  </Parameters>
+  <ParamsColumns>1</ParamsColumns>
+  <Relations>
+    <ReportRelation>
+      <ChildName>PMWipTotalBudget</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>ProjectID</ChildField>
+          <ParentField>ContractID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMReportProject</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Branch</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>DefaultBranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMReportProject</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>MasterFinPeriod</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>=[@As_Of_Date]</ChildField>
+          <ParentField>MasterFinPeriod.FinPeriodID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMReportProject</ParentName>
+    </ReportRelation>
+      <ReportRelation>
+          <ChildName>PMProject</ChildName>
+          <JoinType>Inner</JoinType>
+          <Links>
+              <RelationRow>
+                  <ChildField>PMProject.ContractID</ChildField>
+                  <ParentField>PMReportProject.ContractID</ParentField>
+              </RelationRow>
+          </Links>
+          <ParentName>PMReportProject</ParentName>
+      </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/code</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>PMReportProject.ContractCD</DataField>
+    </SortExp>
+  </Sorting>
+  <Style>
+    <TextAlign>Left</TextAlign>
+  </Style>
+  <StylesTemplate>TemplateFormExternal.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="Branch">
+      <Fields>
+        <ReportField Name="AcctMapNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="BranchCD"></ReportField>
+        <ReportField Name="BranchCD_Segment1"></ReportField>
+        <ReportField Name="BranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BranchOrOrganizationLogoNameReport"></ReportField>
+        <ReportField Name="CEmail"></ReportField>
+        <ReportField Name="CFSFiler">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ContactName"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CTelNumber"></ReportField>
+        <ReportField Name="DefaultPrinter"></ReportField>
+        <ReportField Name="ForeignEntity">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LedgerCD"></ReportField>
+        <ReportField Name="LedgerID"></ReportField>
+        <ReportField Name="LedgerID_description"></ReportField>
+        <ReportField Name="LedgerID_Ledger_descr"></ReportField>
+        <ReportField Name="LogoName"></ReportField>
+        <ReportField Name="LogoNameReport"></ReportField>
+        <ReportField Name="MainLogoName"></ReportField>
+        <ReportField Name="NameControl"></ReportField>
+        <ReportField Name="OrganizationID"></ReportField>
+        <ReportField Name="OrganizationID_description"></ReportField>
+        <ReportField Name="OrganizationID_Organization_organizationName"></ReportField>
+        <ReportField Name="OrganizationID_Segment1"></ReportField>
+        <ReportField Name="OrganizationLogoNameReport"></ReportField>
+        <ReportField Name="ParentBranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PhoneMask"></ReportField>
+        <ReportField Name="Reporting1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RoleName"></ReportField>
+        <ReportField Name="RoleName_description"></ReportField>
+        <ReportField Name="RoleName_Roles_descr"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TCC"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Branch</FullName>
+    </ReportTable>
+    <ReportTable Name="PMReportProject">
+      <Fields>
+        <ReportField Name="BaseType"></ReportField>
+        <ReportField Name="ContractCD"></ReportField>
+        <ReportField Name="ContractCD_Segment1"></ReportField>
+        <ReportField Name="ContractID"></ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="DefaultBranchID"></ReportField>
+        <ReportField Name="DefaultBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="DefaultBranchID_description"></ReportField>
+        <ReportField Name="DefaultBranchID_Segment1"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="ExpireDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ExpireDate_Day"></ReportField>
+        <ReportField Name="ExpireDate_Hour"></ReportField>
+        <ReportField Name="ExpireDate_Month"></ReportField>
+        <ReportField Name="ExpireDate_Quarter"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCancelled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCompleted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NonProject">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StartDate_Day"></ReportField>
+        <ReportField Name="StartDate_Hour"></ReportField>
+        <ReportField Name="StartDate_Month"></ReportField>
+        <ReportField Name="StartDate_Quarter"></ReportField>
+        <ReportField Name="Status"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CN.PMReportProject</FullName>
+    </ReportTable>
+    <ReportTable Name="PMWipTotalBudget">
+      <Fields>
+        <ReportField Name="ChangeOrderContractAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ChangeOrderCostAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostProjectionCostAtCompletion">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostProjectionCostToComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostToComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OriginalContractAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OriginalCostAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.CN.PMWipTotalBudget</FullName>
+    </ReportTable>
+    <ReportTable Name="MasterFinPeriod">
+      <Fields>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APClosed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ARClosed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CAClosed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Closed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Custom">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DateLocked">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="EndDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="EndDate_Day"></ReportField>
+        <ReportField Name="EndDate_Hour"></ReportField>
+        <ReportField Name="EndDate_Month"></ReportField>
+        <ReportField Name="EndDate_Quarter"></ReportField>
+        <ReportField Name="EndDateUI">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FAClosed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FinDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="FinYear"></ReportField>
+        <ReportField Name="INClosed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAdjustment">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="Length">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="OrganizationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PeriodNbr"></ReportField>
+        <ReportField Name="PRClosed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StartDate_Day"></ReportField>
+        <ReportField Name="StartDate_Hour"></ReportField>
+        <ReportField Name="StartDate_Month"></ReportField>
+        <ReportField Name="StartDate_Quarter"></ReportField>
+        <ReportField Name="StartDateUI">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.FinPeriods.MasterFinPeriod</FullName>
+    </ReportTable>
+      <ReportTable Name="PMProject">
+          <Fields>
+              <ReportField Name="AccountingMode"></ReportField>
+              <ReportField Name="ActivationDate">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="ActivationDate_Day"></ReportField>
+              <ReportField Name="ActivationDate_Hour"></ReportField>
+              <ReportField Name="ActivationDate_Month"></ReportField>
+              <ReportField Name="ActivationDate_Quarter"></ReportField>
+              <ReportField Name="AIALevel"></ReportField>
+              <ReportField Name="AllocationID"></ReportField>
+              <ReportField Name="AllocationID_description"></ReportField>
+              <ReportField Name="AllocationID_PMAllocation_description"></ReportField>
+              <ReportField Name="AllowNonProjectAccountGroups">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="AllowOverride">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="AllowOverrideCury">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="AllowOverrideRate">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="ApplyOTMultiplierToFringeRate">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="Approved">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="ApproverID"></ReportField>
+              <ReportField Name="ApproverID_description"></ReportField>
+              <ReportField Name="ApproverID_EPEmployee_acctName"></ReportField>
+              <ReportField Name="ApproverID_Segment1"></ReportField>
+              <ReportField Name="AutoAllocate">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="AutomaticReleaseAR">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="AutoRenew">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="AutoRenewDays">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="Balance">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="BaseCuryID"></ReportField>
+              <ReportField Name="BaseType"></ReportField>
+              <ReportField Name="BenefitCodeReceivingFringeRate"></ReportField>
+              <ReportField Name="BenefitCodeReceivingFringeRate_description"></ReportField>
+              <ReportField Name="BenefitCodeReceivingFringeRate_PRDeductCode_description"></ReportField>
+              <ReportField Name="BenefitExpenseAcctID"></ReportField>
+              <ReportField Name="BenefitExpenseAcctID_Account_description"></ReportField>
+              <ReportField Name="BenefitExpenseAcctID_description"></ReportField>
+              <ReportField Name="BenefitExpenseAcctID_Segment1"></ReportField>
+              <ReportField Name="BenefitExpenseSubID"></ReportField>
+              <ReportField Name="BenefitExpenseSubID_description"></ReportField>
+              <ReportField Name="BenefitExpenseSubID_Segment1"></ReportField>
+              <ReportField Name="BenefitExpenseSubID_Segment2"></ReportField>
+              <ReportField Name="BenefitExpenseSubID_Sub_description"></ReportField>
+              <ReportField Name="BillAddressID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="BillContactID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="BillingCuryID"></ReportField>
+              <ReportField Name="BillingID"></ReportField>
+              <ReportField Name="BillingID_description"></ReportField>
+              <ReportField Name="BillingID_PMBilling_description"></ReportField>
+              <ReportField Name="BillingLineCntr">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="BudgetFinalized">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="BudgetLevel"></ReportField>
+              <ReportField Name="BudgetMetricsEnabled">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="BURDEN_Attributes"></ReportField>
+              <ReportField Name="CalendarID"></ReportField>
+              <ReportField Name="CalendarID_CSCalendar_description"></ReportField>
+              <ReportField Name="CalendarID_description"></ReportField>
+              <ReportField Name="CapAmount">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="CaseItemID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="CertifiedJob">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="ChangeOrderWorkflow">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="ClassID"></ReportField>
+              <ReportField Name="ClassType"></ReportField>
+              <ReportField Name="ContractAccountGroup"></ReportField>
+              <ReportField Name="ContractCD"></ReportField>
+              <ReportField Name="ContractCD_Segment1"></ReportField>
+              <ReportField Name="ContractID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="ContractInfo"></ReportField>
+              <ReportField Name="CostBudgetLevel"></ReportField>
+              <ReportField Name="CostTaxZoneID"></ReportField>
+              <ReportField Name="CostTaxZoneID_description"></ReportField>
+              <ReportField Name="CostTaxZoneID_TaxZone_descr"></ReportField>
+              <ReportField Name="CountryUS"></ReportField>
+              <ReportField Name="CPMARGIN_Attributes"></ReportField>
+              <ReportField Name="CreatedByID"></ReportField>
+              <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+              <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+              <ReportField Name="CreatedByID_description"></ReportField>
+              <ReportField Name="CreatedByScreenID"></ReportField>
+              <ReportField Name="CreatedDateTime">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="CreatedDateTime_Day"></ReportField>
+              <ReportField Name="CreatedDateTime_Hour"></ReportField>
+              <ReportField Name="CreatedDateTime_Month"></ReportField>
+              <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+              <ReportField Name="CreateProforma">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="CurrentRecurring">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="CurrentRenewal">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="CurrentSetup">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="CuryCapAmount">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="CuryID"></ReportField>
+              <ReportField Name="CuryIDCopy"></ReportField>
+              <ReportField Name="CuryInfoID">
+                  <DataType>Int64</DataType>
+              </ReportField>
+              <ReportField Name="CuryRate">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="CustomerID"></ReportField>
+              <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+              <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+              <ReportField Name="CustomerID_description"></ReportField>
+              <ReportField Name="CustomerID_Segment1"></ReportField>
+              <ReportField Name="Days"></ReportField>
+              <ReportField Name="DaysBeforeExpiration"></ReportField>
+              <ReportField Name="DefaultAccrualAccountID"></ReportField>
+              <ReportField Name="DefaultAccrualAccountID_Account_description"></ReportField>
+              <ReportField Name="DefaultAccrualAccountID_description"></ReportField>
+              <ReportField Name="DefaultAccrualAccountID_Segment1"></ReportField>
+              <ReportField Name="DefaultAccrualSubID"></ReportField>
+              <ReportField Name="DefaultAccrualSubID_description"></ReportField>
+              <ReportField Name="DefaultAccrualSubID_Segment1"></ReportField>
+              <ReportField Name="DefaultAccrualSubID_Segment2"></ReportField>
+              <ReportField Name="DefaultAccrualSubID_Sub_description"></ReportField>
+              <ReportField Name="DefaultBranchID"></ReportField>
+              <ReportField Name="DefaultBranchID_Branch_acctName"></ReportField>
+              <ReportField Name="DefaultBranchID_description"></ReportField>
+              <ReportField Name="DefaultBranchID_Segment1"></ReportField>
+              <ReportField Name="DefaultExpenseAccountID"></ReportField>
+              <ReportField Name="DefaultExpenseAccountID_Account_description"></ReportField>
+              <ReportField Name="DefaultExpenseAccountID_description"></ReportField>
+              <ReportField Name="DefaultExpenseAccountID_Segment1"></ReportField>
+              <ReportField Name="DefaultExpenseSubID"></ReportField>
+              <ReportField Name="DefaultExpenseSubID_description"></ReportField>
+              <ReportField Name="DefaultExpenseSubID_Segment1"></ReportField>
+              <ReportField Name="DefaultExpenseSubID_Segment2"></ReportField>
+              <ReportField Name="DefaultExpenseSubID_Sub_description"></ReportField>
+              <ReportField Name="DefaultSalesAccountID"></ReportField>
+              <ReportField Name="DefaultSalesAccountID_Account_description"></ReportField>
+              <ReportField Name="DefaultSalesAccountID_description"></ReportField>
+              <ReportField Name="DefaultSalesAccountID_Segment1"></ReportField>
+              <ReportField Name="DefaultSalesSubID"></ReportField>
+              <ReportField Name="DefaultSalesSubID_description"></ReportField>
+              <ReportField Name="DefaultSalesSubID_Segment1"></ReportField>
+              <ReportField Name="DefaultSalesSubID_Segment2"></ReportField>
+              <ReportField Name="DefaultSalesSubID_Sub_description"></ReportField>
+              <ReportField Name="Description"></ReportField>
+              <ReportField Name="DetailedBilling">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="DiscontinueAfter">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="DiscontinueAfter_Day"></ReportField>
+              <ReportField Name="DiscontinueAfter_Hour"></ReportField>
+              <ReportField Name="DiscontinueAfter_Month"></ReportField>
+              <ReportField Name="DiscontinueAfter_Quarter"></ReportField>
+              <ReportField Name="DiscountID"></ReportField>
+              <ReportField Name="DropshipExpenseAccountSource"></ReportField>
+              <ReportField Name="DropshipExpenseRecording"></ReportField>
+              <ReportField Name="DropshipExpenseSubMask"></ReportField>
+              <ReportField Name="DropshipExpenseSubMask_Segment1"></ReportField>
+              <ReportField Name="DropshipExpenseSubMask_Segment2"></ReportField>
+              <ReportField Name="DropshipReceiptProcessing"></ReportField>
+              <ReportField Name="Duration">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="DurationType"></ReportField>
+              <ReportField Name="EarningsAcctID"></ReportField>
+              <ReportField Name="EarningsAcctID_Account_description"></ReportField>
+              <ReportField Name="EarningsAcctID_description"></ReportField>
+              <ReportField Name="EarningsAcctID_Segment1"></ReportField>
+              <ReportField Name="EarningsSubID"></ReportField>
+              <ReportField Name="EarningsSubID_description"></ReportField>
+              <ReportField Name="EarningsSubID_Segment1"></ReportField>
+              <ReportField Name="EarningsSubID_Segment2"></ReportField>
+              <ReportField Name="EarningsSubID_Sub_description"></ReportField>
+              <ReportField Name="EffectiveFrom">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="EffectiveFrom_Day"></ReportField>
+              <ReportField Name="EffectiveFrom_Hour"></ReportField>
+              <ReportField Name="EffectiveFrom_Month"></ReportField>
+              <ReportField Name="EffectiveFrom_Quarter"></ReportField>
+              <ReportField Name="ExpireDate">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="ExpireDate_Day"></ReportField>
+              <ReportField Name="ExpireDate_Hour"></ReportField>
+              <ReportField Name="ExpireDate_Month"></ReportField>
+              <ReportField Name="ExpireDate_Quarter"></ReportField>
+              <ReportField Name="EXPMARKUP_Attributes"></ReportField>
+              <ReportField Name="ExtRefNbr"></ReportField>
+              <ReportField Name="FileEmptyCertifiedReport">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="GraceDate">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="GracePeriod">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="GroupMask">
+                  <DataType>Object</DataType>
+              </ReportField>
+              <ReportField Name="Hold">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IncludeCO">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="Included">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IncludeQtyInAIA">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsActive">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsCancelled">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsCompleted">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsContinuous">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsLastActionUndoable">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsPendingUpdate">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="IsTemplate">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="LastActiveRevID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="LastChangeOrderNumber"></ReportField>
+              <ReportField Name="LastModifiedByID"></ReportField>
+              <ReportField Name="LastModifiedByID_description"></ReportField>
+              <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+              <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+              <ReportField Name="LastModifiedByScreenID"></ReportField>
+              <ReportField Name="LastModifiedDateTime">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+              <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+              <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+              <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+              <ReportField Name="LastProformaNumber"></ReportField>
+              <ReportField Name="LimitsEnabled">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="LineCtr">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="LocationID"></ReportField>
+              <ReportField Name="LocationID_description"></ReportField>
+              <ReportField Name="LocationID_Location_descr"></ReportField>
+              <ReportField Name="LocationID_Segment1"></ReportField>
+              <ReportField Name="LockCommitments">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="MasterContractID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="Min"></ReportField>
+              <ReportField Name="NonProject">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="NoteActivity"></ReportField>
+              <ReportField Name="NoteFiles"></ReportField>
+              <ReportField Name="NoteID">
+                  <DataType>Object</DataType>
+              </ReportField>
+              <ReportField Name="NoteImages"></ReportField>
+              <ReportField Name="NoteText"></ReportField>
+              <ReportField Name="OriginalContractID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="OwnerID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="OwnerID_description"></ReportField>
+              <ReportField Name="OwnerID_Owner_displayName"></ReportField>
+              <ReportField Name="PayrollWorkLocationID"></ReportField>
+              <ReportField Name="PendingRecurring">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="PendingRenewal">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="PendingSetup">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="PMDIRECTOR_Attributes"></ReportField>
+              <ReportField Name="PrepaymentDefCode"></ReportField>
+              <ReportField Name="PrepaymentDefCode_description"></ReportField>
+              <ReportField Name="PrepaymentDefCode_DRDeferredCode_description"></ReportField>
+              <ReportField Name="PrepaymentEnabled">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="PTOExpenseAcctID"></ReportField>
+              <ReportField Name="PTOExpenseAcctID_Account_description"></ReportField>
+              <ReportField Name="PTOExpenseAcctID_description"></ReportField>
+              <ReportField Name="PTOExpenseAcctID_Segment1"></ReportField>
+              <ReportField Name="PTOExpenseSubID"></ReportField>
+              <ReportField Name="PTOExpenseSubID_description"></ReportField>
+              <ReportField Name="PTOExpenseSubID_Segment1"></ReportField>
+              <ReportField Name="PTOExpenseSubID_Segment2"></ReportField>
+              <ReportField Name="PTOExpenseSubID_Sub_description"></ReportField>
+              <ReportField Name="QuoteNbr"></ReportField>
+              <ReportField Name="RateTableID"></ReportField>
+              <ReportField Name="RateTableID_description"></ReportField>
+              <ReportField Name="RateTableID_PMRateTable_description"></ReportField>
+              <ReportField Name="RateTypeID"></ReportField>
+              <ReportField Name="RefreshOnRenewal">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="Refundable">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="RefundPeriod">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="Rejected">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="RenewalBillingStartDate">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="RenewalBillingStartDate_Day"></ReportField>
+              <ReportField Name="RenewalBillingStartDate_Hour"></ReportField>
+              <ReportField Name="RenewalBillingStartDate_Month"></ReportField>
+              <ReportField Name="RenewalBillingStartDate_Quarter"></ReportField>
+              <ReportField Name="RestrictProjectSelect"></ReportField>
+              <ReportField Name="RestrictToEmployeeList">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="RestrictToResourceList">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="RetainageMaxPct">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="RetainageMode"></ReportField>
+              <ReportField Name="RetainagePct">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="RevenueTaxZoneID"></ReportField>
+              <ReportField Name="RevenueTaxZoneID_description"></ReportField>
+              <ReportField Name="RevenueTaxZoneID_TaxZone_descr"></ReportField>
+              <ReportField Name="RevID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="SalesPersonID"></ReportField>
+              <ReportField Name="SalesPersonID_description"></ReportField>
+              <ReportField Name="SalesPersonID_SalesPerson_descr"></ReportField>
+              <ReportField Name="SalesPersonID_Segment1"></ReportField>
+              <ReportField Name="ScheduleStartsOn"></ReportField>
+              <ReportField Name="Secured">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="Selected">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="ServiceActivate">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="SiteAddress"></ReportField>
+              <ReportField Name="SiteAddressID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="StartDate">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="StartDate_Day"></ReportField>
+              <ReportField Name="StartDate_Hour"></ReportField>
+              <ReportField Name="StartDate_Month"></ReportField>
+              <ReportField Name="StartDate_Quarter"></ReportField>
+              <ReportField Name="Status"></ReportField>
+              <ReportField Name="SteppedRetainage">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="StrIsTemplate"></ReportField>
+              <ReportField Name="TaxExpenseAcctID"></ReportField>
+              <ReportField Name="TaxExpenseAcctID_Account_description"></ReportField>
+              <ReportField Name="TaxExpenseAcctID_description"></ReportField>
+              <ReportField Name="TaxExpenseAcctID_Segment1"></ReportField>
+              <ReportField Name="TaxExpenseSubID"></ReportField>
+              <ReportField Name="TaxExpenseSubID_description"></ReportField>
+              <ReportField Name="TaxExpenseSubID_Segment1"></ReportField>
+              <ReportField Name="TaxExpenseSubID_Segment2"></ReportField>
+              <ReportField Name="TaxExpenseSubID_Sub_description"></ReportField>
+              <ReportField Name="TemplateID"></ReportField>
+              <ReportField Name="TemplateID_description"></ReportField>
+              <ReportField Name="TemplateID_PMProject_description"></ReportField>
+              <ReportField Name="TemplateID_Segment1"></ReportField>
+              <ReportField Name="TerminationDate">
+                  <DataType>DateTime</DataType>
+              </ReportField>
+              <ReportField Name="TerminationDate_Day"></ReportField>
+              <ReportField Name="TerminationDate_Hour"></ReportField>
+              <ReportField Name="TerminationDate_Month"></ReportField>
+              <ReportField Name="TerminationDate_Quarter"></ReportField>
+              <ReportField Name="TermsID"></ReportField>
+              <ReportField Name="TermsID_description"></ReportField>
+              <ReportField Name="TermsID_Terms_descr"></ReportField>
+              <ReportField Name="ThroughDateSourceConditional"></ReportField>
+              <ReportField Name="ThroughDateSourceUnconditional"></ReportField>
+              <ReportField Name="TotalDue">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="TotalPending">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="TotalRecurring">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="TotalsCalculated">
+                  <DataType>Int32</DataType>
+              </ReportField>
+              <ReportField Name="TotalUsage">
+                  <DataType>Decimal</DataType>
+              </ReportField>
+              <ReportField Name="tstamp"></ReportField>
+              <ReportField Name="Type"></ReportField>
+              <ReportField Name="VisibleInAP">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInAR">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInCA">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInCR">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInEA">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInGL">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInIN">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInPO">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInSO">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="VisibleInTA">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="WageAbovePrevailingAnnualizationException">
+                  <DataType>Boolean</DataType>
+              </ReportField>
+              <ReportField Name="WorkgroupID">
+                  <DataType>Int32</DataType>
+              </ReportField>
+          </Fields>
+          <FullName>PX.Objects.PM.PMProject</FullName>
+      </ReportTable>
+  </Tables>
+  <Width>52.25662cm</Width>
+  <Sections>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>Original_Contract_Amt</Name>
+          <ValueExpr>=([PMWipTotalBudget.OriginalContractAmount])</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CO_Contract_Amt</Name>
+          <ValueExpr>=([PMWipTotalBudget.ChangeOrderContractAmount])</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Original_Cost_Amt</Name>
+          <ValueExpr>=([PMWipTotalBudget.OriginalCostAmount])</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CO_Cost_Amt</Name>
+          <ValueExpr>=([PMWipTotalBudget.ChangeOrderCostAmount])</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Actual_Cost_Amt</Name>
+          <ValueExpr>=$pmwipsubdaterange_ActualCostAmtTodate</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Actual_Revenue_Amt</Name>
+          <ValueExpr>=$pmwipsubdaterange_ActualRevenueAmtTodate</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Actual_RevenueInclTax_Amt</Name>
+          <ValueExpr>=$pmwipsubdaterange_ArRevenueInclTaxAmtTodate</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>EstRevised</Name>
+          <ValueExpr>=$Original_Cost_Amt + $CO_Cost_Amt</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Contract_Revised</Name>
+          <ValueExpr>=$Original_Contract_Amt + $CO_Contract_Amt</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>PercentComplete</Name>
+          <ValueExpr>=iif($EstRevised = 0,0,$Actual_Cost_Amt/$EstRevised)#010;#010;#010;#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Revenue_Recognized</Name>
+          <ValueExpr>=$PercentComplete * $Contract_Revised</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>EstGross_Profit</Name>
+          <ValueExpr>=($Original_Contract_Amt+$CO_Contract_Amt)-($Original_Cost_Amt+$CO_Cost_Amt)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Gross_Profit</Name>
+          <ValueExpr>=$Revenue_Recognized - $Actual_Cost_Amt#010;#010;/*$TotalPercentComplete * $EstGross_Profit*/</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Under_Over_Billings</Name>
+          <ValueExpr>=$Actual_Revenue_Amt - $Revenue_Recognized</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Revenue_Backlog</Name>
+          <ValueExpr>=$Contract_Revised - $Revenue_Recognized</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Gross_Profit_Backlog</Name>
+          <ValueExpr>=$EstGross_Profit - $Gross_Profit</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Remaing_Contract</Name>
+          <ValueExpr>=($Contract_Revised-($Actual_Revenue_Amt))</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Billed_Percent</Name>
+          <ValueExpr>=iif($Contract_Revised=0,0,$Actual_Revenue_Amt / $Contract_Revised)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Cost_to_Complete</Name>
+          <ValueExpr>=iif([@CostProjection]=1, [PMWipTotalBudget.CostProjectionCostToComplete], [PMWipTotalBudget.CostToComplete])</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Cost_At_Complete</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=iif([@CostProjection]=0,$Actual_Cost_Amt + $Cost_to_Complete,[PMWipTotalBudget.CostProjectionCostAtCompletion])#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Project_Billings</Name>
+          <ValueExpr>=$pmwipsubdaterange_ActualRevenueAmt</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Project_Costs</Name>
+          <ValueExpr>=$pmwipsubdaterange_ActualCostAmt</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Cost_Through_Amt</Name>
+          <ValueExpr>=$pmwipsubdaterange_CostThroughAmt</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Billed_Through_Amt</Name>
+          <ValueExpr>=$pmwipsubdaterange_BilledThroughAmt</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Items>
+        <TextBox Name="textBox10">
+          <Format>####,###,##0.00</Format>
+          <Location>1072px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Remaing_Contract</Value>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Format>####,###,##0.00</Format>
+          <Location>1640px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Project_Costs</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Format>####,###,##0.00</Format>
+          <Location>432px, 0px</Location>
+          <Size>120px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Contract_Revised</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Format>####,###,##0.00</Format>
+          <Location>1528px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Project_Billings</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Format>####,###,##0.00</Format>
+          <Location>1392px, 0px</Location>
+          <Size>136px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Cost_At_Complete</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Format>####,###,##0.00;(####,###,##0.00)</Format>
+          <Location>960px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Under_Over_Billings</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Format>####,###,##0.00</Format>
+          <Location>1280px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Cost_to_Complete</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Format>####,###,##0.00</Format>
+          <Location>640px, 0px</Location>
+          <Size>120px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Revenue_Recognized</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Format>####,###,##0.00</Format>
+          <Location>760px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Actual_Revenue_Amt</Value>
+        </TextBox>
+        <TextBox Name="textBox21">
+          <Format>####,###,##0.00 %</Format>
+          <Location>552px, 0px</Location>
+          <Size>88px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$PercentComplete#010;#010;/*iif(($Original_Cost_Amt+$CO_Cost_Amt) = 0,0,$Actual_Cost_Amt/($Original_Cost_Amt+$CO_Cost_Amt))*/</Value>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Format>####,###,##0.00</Format>
+          <Location>1184px, 0px</Location>
+          <Size>96px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Actual_Cost_Amt</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Format>####,###,##0.00 %</Format>
+          <Location>872px, 0px</Location>
+          <Size>88px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Billed_Percent</Value>
+        </TextBox>
+        <TextBox Name="textBox24">
+          <Format>####,###,##0.00</Format>
+          <Location>1864px, 0px</Location>
+          <Size>104px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Cost_Through_Amt</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <Format>####,###,##0.00</Format>
+          <Location>1752px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Billed_Through_Amt</Value>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <CanGrow>True</CanGrow>
+          <Location>108px, 0px</Location>
+          <Size>204px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMReportProject.Description]</Value>
+        </TextBox>
+        <TextBox Name="textBox29">
+          <Location>12px, 0px</Location>
+          <NavigateMethod>Server</NavigateMethod>
+          <Size>96px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Target> _blank</Target>
+          <Value>=[PMReportProject.ContractCD]</Value>
+        </TextBox>
+        <TextBox Name="textBox30">
+          <Format>####,###,##0.00</Format>
+          <Location>312px, 0px</Location>
+          <Size>120px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMReportProject.CuryID]</Value>
+        </TextBox>
+        <TextBox Name="textBox31">
+          <Location>0px, 0px</Location>
+          <Size>12px, 12px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Name>Arial</Name>
+              <Size>14px</Size>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Value>*</Value>
+          <Visible>False</Visible>
+          <VisibleExpr>=$Actual_RevenueInclTax_Amt &gt; 0</VisibleExpr>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.21164cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+        </Font>
+      </Style>
+      <Visible>False</Visible>
+    </PageHeader>
+    <PageFooter Name="pageFooterSection1">
+      <Height>1.26984cm</Height>
+      <Items>
+        <TextBox Name="textBox32">
+          <Location>0px, 8px</Location>
+          <Size>12px, 12px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Name>Arial</Name>
+              <Size>14px</Size>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Value>*</Value>
+          <VisibleExpr>=$Actual_RevenueInclTax_Amt_Total&gt;0</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <Location>12px, 8px</Location>
+          <Size>664px, 32px</Size>
+          <Style>
+            <Color>Black</Color>
+            <Font>
+              <Name>Arial</Name>
+              <Size>12px</Size>
+            </Font>
+          </Style>
+          <Value>The Billed to Date and Period Billings amounts include applicable taxes.</Value>
+          <VisibleExpr>=$Actual_RevenueInclTax_Amt_Total&gt;0</VisibleExpr>
+        </TextBox>
+      </Items>
+    </PageFooter>
+    <ReportHeader Name="reportHeaderSection1">
+      <Height>0.21164cm</Height>
+      <Style>
+        <Font>
+          <Size>10px</Size>
+        </Font>
+      </Style>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox38">
+          <Location>2136px, 88px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <Font>
+              <Style>Bold, Underline</Style>
+            </Font>
+            <TextAlign>Center</TextAlign>
+          </Style>
+          <Value>Gross Profit Backlog</Value>
+        </TextBox>
+        <TextBox Name="textBox39">
+          <Location>2016px, 88px</Location>
+          <Size>120px, 16px</Size>
+          <Style>
+            <Font>
+              <Style>Bold, Underline</Style>
+            </Font>
+            <TextAlign>Center</TextAlign>
+          </Style>
+          <Value>Revenue Backlog</Value>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <CanGrow>True</CanGrow>
+          <Location>1904px, 88px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <Font>
+              <Style>Bold, Underline</Style>
+            </Font>
+            <TextAlign>Center</TextAlign>
+          </Style>
+          <Value>Under (Over) Billings</Value>
+        </TextBox>
+        <TextBox Name="textBox41">
+          <Location>2016px, 72px</Location>
+          <Size>232px, 16px</Size>
+          <Style>
+            <BorderStyle>
+              <Bottom>Outset</Bottom>
+            </BorderStyle>
+            <BorderWidth>
+              <Bottom>2px</Bottom>
+            </BorderWidth>
+            <Font>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Center</TextAlign>
+          </Style>
+          <Value>Forecasted</Value>
+        </TextBox>
+      </Items>
+    </ReportHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+      <Visible>False</Visible>
+    </ReportFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="dummygroup">
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <Height>3.59788cm</Height>
+          <PageBreak>Before</PageBreak>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <Variables>
+            <ReportVariable>
+              <Name>InitialPageNumber</Name>
+              <ValueExpr>1</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>PageNumber</Name>
+              <ValueExpr>=$InitialPageNumber + $PageNumber</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <PictureBox Name="pictureBox2">
+              <Location>864px, 0px</Location>
+              <QRCodeSettings />
+              <Size>300px, 100px</Size>
+              <Source>Database</Source>
+              <Value>=[Branch.BranchOrOrganizationLogoNameReport]</Value>
+            </PictureBox>
+            <TextBox Name="textBox1">
+              <CanGrow>True</CanGrow>
+              <Location>0px, 104px</Location>
+              <Size>12px, 26px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+            </TextBox>
+            <TextBox Name="textBox100">
+              <Location>1704px, 36px</Location>
+              <Size>36px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>User</Value>
+            </TextBox>
+            <TextBox Name="textBox101">
+              <Format>g</Format>
+              <Location>1744px, 20px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Now()</Value>
+            </TextBox>
+            <TextBox Name="textBox102">
+              <ExcelVisible>False</ExcelVisible>
+              <Location>1744px, 4px</Location>
+              <Size>78px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$PageNumber + ' of ' + [PageCount]</Value>
+            </TextBox>
+            <TextBox Name="textBox103">
+              <ExcelVisible>False</ExcelVisible>
+              <Location>1704px, 4px</Location>
+              <Size>36px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Page</Value>
+            </TextBox>
+            <TextBox Name="textBox104">
+              <Location>1704px, 20px</Location>
+              <Size>36px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Date</Value>
+            </TextBox>
+            <TextBox Name="textBox107">
+              <Location>120px, 40px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[@OrgBAccountID]</Value>
+            </TextBox>
+            <TextBox Name="textBox108">
+              <Location>8px, 40px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Company/Branch</Value>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <CanGrow>True</CanGrow>
+              <Location>1752px, 104px</Location>
+              <Size>112px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>=Concat('BILLED THROUGH ',Cstr(Concat(CStr(CInt(Year([MasterFinPeriod.EndDate]))-1),'-12')))</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <CanGrow>True</CanGrow>
+              <Location>1864px, 104px</Location>
+              <Size>104px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>=Concat('COST THROUGH ',Cstr(Concat(CStr(CInt(Year([MasterFinPeriod.EndDate]))-1),'-12')))</Value>
+            </TextBox>
+            <TextBox Name="textBox2">
+              <CanGrow>True</CanGrow>
+              <Location>1968px, 104px</Location>
+              <Size>8px, 26px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>592px, 56px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=IIF([@CostProjection], 'Yes', 'No')</Value>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <CanGrow>True</CanGrow>
+              <Location>312px, 104px</Location>
+              <Size>120px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>PROJECT CURRENCY</Value>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Location>344px, 40px</Location>
+              <Size>240px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Exclude Projects Completed Through Date</Value>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <CanGrow>True</CanGrow>
+              <Location>872px, 104px</Location>
+              <Size>88px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>% BILLED</Value>
+            </TextBox>
+            <TextBox Name="textBox45">
+              <Location>8px, 56px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Status</Value>
+            </TextBox>
+            <TextBox Name="textBox46">
+              <Location>120px, 56px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=iif([@Project_Status]='1','Active',#010;	iif([@Project_Status]='2','Completed','Active and Completed'))</Value>
+            </TextBox>
+            <TextBox Name="textBox47">
+              <Location>120px, 72px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=Left([@As_Of_Date],2)+'-'+Right([@As_Of_Date],4)</Value>
+              <VisibleExpr>=([@As_Of_Date]&lt;&gt;Null)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Location>8px, 72px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Actuals to Period</Value>
+              <VisibleExpr>=([@As_Of_Date]&lt;&gt;Null)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>592px, 40px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=ISNULL([@ProjectEndDate], '-')</Value>
+            </TextBox>
+            <TextBox Name="textBox51">
+              <CanGrow>True</CanGrow>
+              <Location>960px, 104px</Location>
+              <Size>112px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>OVER/UNDER BILLED</Value>
+            </TextBox>
+            <TextBox Name="textBox53">
+              <CanGrow>True</CanGrow>
+              <Location>1400px, 104px</Location>
+              <Size>136px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>=IIF([@CostProjection], 'PROJECTED COST AT COMPLETION' ,'COST AT COMPLETION')</Value>
+            </TextBox>
+            <TextBox Name="textBox54">
+              <CanGrow>True</CanGrow>
+              <Location>1536px, 104px</Location>
+              <Size>104px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>PERIOD BILLINGS</Value>
+            </TextBox>
+            <TextBox Name="textBox55">
+              <CanGrow>True</CanGrow>
+              <Location>1280px, 104px</Location>
+              <Size>120px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>=IIF([@CostProjection], 'PROJECTED COST TO COMPLETE','COST TO COMPLETE')</Value>
+            </TextBox>
+            <TextBox Name="textBox56">
+              <CanGrow>True</CanGrow>
+              <Location>640px, 104px</Location>
+              <Size>120px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>EARNED REVENUE</Value>
+            </TextBox>
+            <TextBox Name="textBox57">
+              <CanGrow>True</CanGrow>
+              <Location>760px, 104px</Location>
+              <Size>112px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>BILLED TO DATE</Value>
+            </TextBox>
+            <TextBox Name="textBox58">
+              <CanGrow>True</CanGrow>
+              <Location>552px, 104px</Location>
+              <Size>88px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>% COMPLETE</Value>
+            </TextBox>
+            <TextBox Name="textBox59">
+              <CanGrow>True</CanGrow>
+              <Location>1184px, 104px</Location>
+              <Size>96px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>COST TO DATE</Value>
+            </TextBox>
+            <TextBox Name="textBox69">
+              <CanGrow>True</CanGrow>
+              <Location>432px, 104px</Location>
+              <Size>120px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>CONTRACT AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <CanGrow>True</CanGrow>
+              <Location>1640px, 104px</Location>
+              <Size>112px, 26px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>PERIOD COSTS</Value>
+            </TextBox>
+            <TextBox Name="textBox75">
+              <CanGrow>True</CanGrow>
+              <Location>108px, 104px</Location>
+              <Size>204px, 26px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>DESCRIPTION</Value>
+            </TextBox>
+            <TextBox Name="textBox76">
+              <CanGrow>True</CanGrow>
+              <Location>12px, 104px</Location>
+              <Size>96px, 26px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>PROJECT</Value>
+            </TextBox>
+            <TextBox Name="textBox77">
+              <Location>8px, 0px</Location>
+              <Size>472px, 32px</Size>
+              <StyleName>Document Name</StyleName>
+              <Value>CONSTRUCTION BONDING REPORT</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Location>344px, 56px</Location>
+              <Size>240px, 14px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Use Cost Projections</Value>
+            </TextBox>
+            <TextBox Name="textBox93">
+              <CanGrow>True</CanGrow>
+              <Location>1744px, 36px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+            </TextBox>
+            <TextBox Name="textBox97">
+              <CanGrow>True</CanGrow>
+              <Location>1072px, 104px</Location>
+              <Size>112px, 26px</Size>
+              <Style>
+                <Padding>
+                  <Left>8px</Left>
+                </Padding>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>UNBILLED CONTRACT AMOUNT</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <Height>0.21164cm</Height>
+          <Style>
+            <Font>
+              <Size>12px</Size>
+              <Style>Bold</Style>
+            </Font>
+          </Style>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="CurrGroup">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PMReportProject.CuryID]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection3">
+          <Height>0.21164cm</Height>
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection3">
+          <Height>0.42328cm</Height>
+          <Items>
+            <TextBox Name="textBox50">
+              <Format>####,###,##0.00</Format>
+              <Location>1752px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Billed_Through_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Format>####,###,##0.00 %</Format>
+              <Location>872px, 0px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Billed_Percent_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox60">
+              <Format>####,###,##0.00</Format>
+              <Location>1864px, 0px</Location>
+              <Size>104px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Cost_Through_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox61">
+              <Format>####,###,##0.00 %</Format>
+              <Location>552px, 0px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$PercentComplete_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox81">
+              <Format>####,###,##0.00</Format>
+              <Location>432px, 0px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Cotract_Revised_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox82">
+              <Format>####,###,##0.00</Format>
+              <Location>1528px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Project_Billings_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox83">
+              <Format>####,###,##0.00</Format>
+              <Location>1392px, 0px</Location>
+              <Size>136px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Cost_At_Complete_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox84">
+              <Format>####,###,##0.00;(####,###,##0.00)</Format>
+              <Location>960px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Under_Over_Billings_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox86">
+              <Format>####,###,##0.00</Format>
+              <Location>1280px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Cost_To_Compelte_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox87">
+              <Format>####,###,##0.00</Format>
+              <Location>640px, 0px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Revenue_Recognized_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox88">
+              <Format>####,###,##0.00</Format>
+              <Location>760px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Actual_Revenue_Amt_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Format>####,###,##0.00</Format>
+              <Location>1640px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Project_Costs_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox90">
+              <Format>####,###,##0.00</Format>
+              <Location>1184px, 0px</Location>
+              <Size>96px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Actual_Cost_Amt_Total</Value>
+            </TextBox>
+            <TextBox Name="textBox96">
+              <Location>352px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>='Totals:'</Value>
+            </TextBox>
+            <TextBox Name="textBox99">
+              <Format>####,###,##0.00</Format>
+              <Location>1072px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Remaining_Contract_Total</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>PMReportProject.ContractCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>0.63492cm</Height>
+          <Style>
+            <Font>
+              <Size>10px</Size>
+            </Font>
+          </Style>
+          <Variables>
+            <ReportVariable>
+              <Name>ResetActualCost</Name>
+              <ValueExpr>=Assign( '$pmwipsubdaterange_ActualCostAmtTodate', 0)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ResetActualRevenue</Name>
+              <ValueExpr>=Assign( '$pmwipsubdaterange_ActualCostAmtTodate', 0 )</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ResetProjectBillings</Name>
+              <ValueExpr>=Assign( '$pmwipsubdaterange_ActualRevenueAmt', 0 )</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ResetProjectCosts</Name>
+              <ValueExpr>=Assign( '$pmwipsubdaterange_ActualCostAmt', 0 )</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Visible>False</Visible>
+          <Items>
+            <SubReport Name="pmwipsubdaterange">
+              <Location>0px, 0px</Location>
+              <Parameters>
+                <ExternalParameter>
+                  <Name>ActToPeriod</Name>
+                  <ValueExpr>=Right([MasterFinPeriod.FinPeriodID],4)+Left([MasterFinPeriod.FinPeriodID],2)</ValueExpr>
+                </ExternalParameter>
+                <ExternalParameter>
+                  <Name>From_Date</Name>
+                  <ValueExpr>=Right([MasterFinPeriod.FinPeriodID],4)+Left([MasterFinPeriod.FinPeriodID],2)</ValueExpr>
+                </ExternalParameter>
+                <ExternalParameter>
+                  <Name>To_Date</Name>
+                  <ValueExpr>=Right([MasterFinPeriod.FinPeriodID],4)+Left([MasterFinPeriod.FinPeriodID],2)</ValueExpr>
+                </ExternalParameter>
+                <ExternalParameter>
+                  <Name>ProjectID</Name>
+                  <ValueExpr>=[PMWipTotalBudget.ProjectID]</ValueExpr>
+                </ExternalParameter>
+              </Parameters>
+              <ReportName>PM651050.rpx</ReportName>
+              <Size>312px, 24px</Size>
+            </SubReport>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0.21164cm</Height>
+          <Style>
+            <Font>
+              <Size>12px</Size>
+            </Font>
+          </Style>
+          <Variables>
+            <ReportVariable>
+              <Name>Original_Contract_Amt_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Original_Contract_Amt + $Original_Contract_Amt_Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CO_Contract_Amt_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$CO_Contract_Amt + $CO_Contract_Amt_Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Original_Cost_Amt_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Original_Cost_Amt_Total + $Original_Cost_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CO_Cost_Amt_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$CO_Cost_Amt_Total + $CO_Cost_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Actual_Cost_Amt_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Actual_Cost_Amt_Total + $Actual_Cost_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Actual_Revenue_Amt_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Actual_Revenue_Amt_Total + $Actual_Revenue_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Actual_RevenueInclTax_Amt_Total</Name>
+              <ValueExpr>=$Actual_RevenueInclTax_Amt_Total + $Actual_RevenueInclTax_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Remaining_Contract_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Remaining_Contract_Total+$Remaing_Contract</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Gross_Profit_Backlog_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Gross_Profit_Backlog_Total+$Gross_Profit_Backlog</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Revenue_Backlog_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Revenue_Backlog_Total+$Revenue_Backlog</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Under_Over_Billings_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Under_Over_Billings_Total+$Under_Over_Billings</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Gross_Profit_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Gross_Profit_Total+$Gross_Profit</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Revenue_Recognized_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Revenue_Recognized_Total+$Revenue_Recognized</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>EstGross_Profit_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$EstGross_Profit_Total+$EstGross_Profit</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>EstRevised_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$EstRevised_Total+$EstRevised</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Cotract_Revised_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Cotract_Revised_Total+$Contract_Revised</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Billed_Percent_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=iif($Cotract_Revised_Total = 0,0,$Actual_Revenue_Amt_Total / $Cotract_Revised_Total)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Cost_To_Compelte_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Cost_To_Compelte_Total + $Cost_to_Complete</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Cost_At_Complete_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Cost_At_Complete_Total + $Cost_At_Complete</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Project_Billings_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Project_Billings_Total + $Project_Billings</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Project_Costs_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Project_Costs_Total + $Project_Costs</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Cost_Through_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Cost_Through_Total + $Cost_Through_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Billed_Through_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=$Billed_Through_Total + $Billed_Through_Amt</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>PercentComplete_Total</Name>
+              <ResetGroup>CurrGroup</ResetGroup>
+              <ValueExpr>=iif($EstRevised_Total = 0,0,$Actual_Cost_Amt_Total/$EstRevised_Total)</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

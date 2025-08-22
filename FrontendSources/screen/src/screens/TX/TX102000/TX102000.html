@@ -1,0 +1,20 @@
+<template>
+	<qp-template id="formPlugin" wg-container="Plugin_form" name="1-1-1">
+		<qp-fieldset id="first" view.bind="Plugin" slot="A">
+			<field name="TaxPluginID"></field>
+			<field name="Description"></field>
+			<field name="PluginTypeName"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="PluginParamterTab" caption="Plug-in Parameters">
+			<qp-grid id="PXGridSettings" view.bind="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="CompanyCodeTab" caption="Company Code Mapping">
+			<qp-grid id="PXGridAccounts" view.bind="Mapping">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

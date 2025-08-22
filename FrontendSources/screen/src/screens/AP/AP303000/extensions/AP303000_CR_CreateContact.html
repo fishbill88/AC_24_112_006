@@ -1,0 +1,34 @@
+<template>
+	<!--#include file="~\Pages\CR\Includes\CRCreateContactPanel.inc"-->
+	<qp-panel caption="Create Contact" id="ContactInfo" width="85vw" height="85vh">
+		<qp-tabbar id="tabs-ContactInfo"  wg-container="ContactInfo_tabCreateContact">
+			<qp-tab id="tabMain-ContactInfo" caption="Main">
+				<qp-template name="1-1-1" id="formCreateContact-ContactInfo">
+					<qp-fieldset id="panelCreateContact-ContactInfo" slot="A" view.bind="ContactInfo" wg-container="ContactInfo_formCreateContact">
+						<field name="FirstName"></field>
+						<field name="LastName"></field>
+						<field name="FullName"></field>
+						<field name="Salutation"></field>
+						<field name="Phone1Type"></field>
+						<field name="Phone1"></field>
+						<field name="Phone2Type"></field>
+						<field name="Phone2"></field>
+						<field name="Email"></field>
+						<field name="ContactClass"></field>
+					</qp-fieldset>
+				</qp-template>
+			</qp-tab>
+			<qp-tab id="tabAttributes-ContactInfo" caption="Attributes">
+				<qp-grid id="gridAttributes-ContactInfo" view.bind="ContactInfoAttributes" wg-container="ContactInfoAttributes_grdContactInfoAttributes"></qp-grid>
+			</qp-tab>
+			<qp-tab id="tabUserDefinedFields-ContactInfo" caption="User-Defined Fields">
+				<qp-grid id="gridUserDefinedFields-ContactInfo" view.bind="ContactInfoUDF" wg-container="ContactInfoUDF_grdContactInfoUDF"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="buttonCancel-ContactInfo" state.bind="CreateContactCancel" dialog-result="Abort"></qp-button>
+			<qp-button id="buttonCreate-ContactInfo" state.bind="CreateContactFinish" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCreateAndReview-ContactInfo" state.bind="CreateContactFinishRedirect" dialog-result="Yes"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,21 @@
+<template>
+	<qp-template name="17-31" id="PhotoScreen">
+		<div slot="A">
+			<qp-fieldset id="form" view.bind="Photos">
+				<field name="PhotoCd" ></field>
+				<field name="PhotoLogId" ></field>
+				<field name="Name" ></field>
+				<field name="Description" config-rows.bind="3"></field>
+				<field name="UploadedDate" >
+					<qp-field control-state.bind="Photos.IsMainPhoto" class="col-sm-12 col-md-12 col-lg-5"></qp-field>
+				</field>
+				<field name="UploadedById" ></field>
+				<field name="FileId" ></field>
+			</qp-fieldset>
+			<qp-grid id="gridAttributes" view.bind="Attributes" caption="Attributes"></qp-grid>
+		</div>
+		<div slot="B" class="col-12">
+			<qp-image-uploader state.bind="Photos.ImageUrl" value.two-way="Photos.ImageUrl.value" width="100%" height="500px"></qp-image-uploader>
+		</div>
+	</qp-template>
+</template>

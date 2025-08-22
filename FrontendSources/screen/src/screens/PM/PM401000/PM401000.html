@@ -1,0 +1,39 @@
+<template>
+	<qp-template name="1-1-1"
+		class="equal-height label-size-s"
+		id="Filter_form"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset
+			slot="A"
+			id="formSlotA01"
+			view.bind="Filter"
+			caption="Selection Criteria">
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="AccountGroupID"></field>
+			<field name="AccountID"></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="B"
+			id="formSlotB01"
+			view.bind="Filter"
+			caption="Selection Criteria">
+			<field name="ARDocType"></field>
+			<field name="ARRefNbr"></field>
+			<field name="RefNbr"></field>
+			<field name="TranID"></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="C"
+			id="formSlotC01"
+			view.bind="Filter"
+			caption="Filtering Criteria">
+			<field name="DateFrom"></field>
+			<field name="DateTo"></field>
+			<field name="ResourceID"></field>
+			<field name="IncludeUnreleased"></field>
+			<field name="OnlyAllocation"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Transactions"></qp-grid>
+</template>

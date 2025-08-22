@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="formFilter" name="17-17-14" wg-container="Filter_form">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+			<field name="ShowReconciled"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="BranchID"></field>
+			<field name="EmployeeID"></field>
+			<field name="Department"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitterGLFATransactions" split="height" class="stretch">
+		<split-pane>
+			<qp-grid id="gridGLTransactions" view.bind="GLTransactions" wg-container="GLTransactions_grid"></qp-grid>
+		</split-pane>
+		<split-pane slot="B">
+			<qp-grid id="gridSplit" view.bind="FATransactions" wg-container="FATransactions_gridSplit"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

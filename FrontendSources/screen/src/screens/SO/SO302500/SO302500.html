@@ -1,0 +1,57 @@
+<template>
+	<qp-template name="17-17-14" id="worksheet_form" wg-container qp-collapsible class="equal-height">
+		<qp-fieldset id="first" view.bind="worksheet" slot="A">
+			<field name="WorksheetNbr"></field>
+			<field name="WorksheetType"></field>
+			<field name="Status"></field>
+			<field name="PickDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" view.bind="worksheet" slot="B">
+			<field name="SiteID"></field>
+			<field name="PickStartDate" config-time-mode.bind="true"></field>
+			<field name="PickCompleteDate" config-time-mode.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="summary" view.bind="worksheet" slot="C" class="highlights-section">
+			<field name="Qty"></field>
+			<field name="ShipmentWeight"></field>
+			<field name="ShipmentVolume"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTabbar" active-tab-id="tabDetails">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridWorksheetLines" view.bind="worksheetLines">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabShipments" caption="Shipments">
+			<qp-grid id="gridShipments" view.bind="shipmentLinks">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabPickers" caption="Pickers">
+			<qp-grid id="gridPickers" view.bind="pickers">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="worksheetLineSplits" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridWorksheetLineSplits" view.bind="worksheetLineSplits">
+		</qp-grid>
+	</qp-panel>
+
+	<qp-panel id="shipmentPickers" caption="Pickers of a Shipment" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridShipmentPickers" view.bind="shipmentPickers">
+		</qp-grid>
+	</qp-panel>
+
+	<qp-panel id="pickerShipments" caption="Assigned Shipments" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridPickerShipments" view.bind="pickerShipments">
+		</qp-grid>
+		<qp-grid id="gridPickListByTote" view.bind="pickerListByShipment">
+		</qp-grid>
+	</qp-panel>
+
+	<qp-panel id="pickerList" caption="Pick List" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridPickList" view.bind="pickerList">
+		</qp-grid>
+	</qp-panel>
+</template>

@@ -1,0 +1,22 @@
+<template>
+	<qp-tab before="#tabLogs" id="tabPack" caption="Pack" if.bind='HeaderView.ShowPack.value == true'>
+		<qp-grid id="gridPacked" view.bind="PickedForPack" class="framed-section">
+		</qp-grid>
+		<qp-template name="17-31" id="package-form" class="stretch unlimited-width">
+			<qp-fieldset id="formBoxInfo" view.bind="ShownPackage" slot="A">
+				<field name="PackageLineNbrUI" replace-content>
+					<qp-field control-state.bind="HeaderView.PackageLineNbrUI" wg-container="HeaderView_formBoxPackage">
+						<qp-field control-state.bind="ShownPackage.Confirmed" class="col-5" wg-container="ShownPackage_formBoxInfo">
+						</qp-field>
+					</qp-field>
+				</field>
+				<field name="Weight"></field>
+				<field name="MaxWeight"></field>
+				<field name="WeightUOM"></field>
+				<field name="PackageDimensionsCombined"></field>
+			</qp-fieldset>
+			<qp-grid id="gridPackedItems" view.bind="Packed" caption="Package Content" slot="B" class="framed-section">
+			</qp-grid>
+		</qp-template>
+	</qp-tab>
+</template>

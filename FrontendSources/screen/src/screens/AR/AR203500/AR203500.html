@@ -1,0 +1,71 @@
+<template>
+
+	<qp-template id="formScheduleHeader" name="17-17-14" class="equal-height" wg-container="Schedule_Header_form">
+
+		<div id="columnFirstHeader" slot="A">
+			<qp-fieldset id="panelFirstHeader" view.bind="Schedule_Header">
+				<field name="ScheduleID">
+					<qp-field control-state.bind="Schedule_Header.Active"></qp-field>
+				</field>
+				<field name="StartDate"></field>
+				<field name="EndDate">
+					<qp-field control-state.bind="Schedule_Header.NoEndDate"></qp-field>
+				</field>
+				<field name="RunLimit">
+					<qp-field control-state.bind="Schedule_Header.NoRunLimit"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="groupScheduleType" view.bind="Schedule_Header" caption="Schedule Type">
+				<field name="FormScheduleType" control-type="qp-radio" config-class.bind="'vertical'" class="no-label"></field>
+			</qp-fieldset>
+		</div>
+
+		<div id="columnSecondScheduleHeader" slot="B">
+			<qp-fieldset id="panelSecondScheduleHeader" view.bind="Schedule_Header">
+				<field name="ScheduleName"></field>
+				<field name="LastRunDate"></field>
+				<field name="NextRunDate"></field>
+				<field name="RunCntr"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupByFinancialPeriod" view.bind="Schedule_Header" caption="By Financial Period">
+				<field name="PeriodDateSel" control-type="qp-radio" class="no-label" config-class.bind="'vertical'"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupMonthly" view.bind="Schedule_Header" caption="Monthly">
+				<field name="MonthlyFrequency">
+					<qp-field control-state.bind="Schedule_Header.Months"></qp-field>
+				</field>
+				<field name="MonthlyDaySel"></field>
+				<field class="no-label" name="MonthlyOnDay"></field>
+				<field class="no-label" name="MonthlyOnWeek">
+					<qp-field control-state.bind="Schedule_Header.MonthlyOnDayOfWeek"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="groupWeekly" view.bind="Schedule_Header" caption="Weekly">
+				<field name="WeeklyFrequency">
+					<qp-field control-state.bind="Schedule_Header.Weeks"></qp-field>
+				</field>
+				<field name="WeeklyOnDay1"></field>
+				<field name="WeeklyOnDay2"></field>
+				<field name="WeeklyOnDay3"></field>
+				<field name="WeeklyOnDay4"></field>
+				<field name="WeeklyOnDay5"></field>
+				<field name="WeeklyOnDay6"></field>
+				<field name="WeeklyOnDay7"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDaily" view.bind="Schedule_Header" caption="Daily">
+				<field name="DailyFrequency">
+					<qp-field control-state.bind="Schedule_Header.Days"></qp-field>
+				</field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabDocuments" caption="Document List">
+			<qp-grid id="gridDocuments" view.bind="Document_Detail" wg-container="Document_Detail_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGeneratedDocuments" caption="Generated Documents">
+			<qp-grid id="gridGeneratedDocuments" view.bind="Document_History" wg-container="Document_History_grid2"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

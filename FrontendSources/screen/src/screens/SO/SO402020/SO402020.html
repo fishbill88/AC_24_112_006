@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="form" name="17-17-14" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset slot="A" id="filterColumn1" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="ExpandByDay"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="filterColumn2" view.bind="Filter">
+			<field name="ExpandByUser"></field>
+			<field name="UserID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="filterColumn3" view.bind="Filter">
+			<field name="ExpandByShipment" class="no-label"></field>
+			<field name="StandaloneShipmentNbr" class="no-label"></field>
+			<field name="DocType" control-type="qp-radio" config-class.bind="'vertical'" class="no-label"></field>
+			<field name="ShipmentNbr"></field>
+			<field name="WorksheetNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" wg-container="Efficiency_grid" view.bind="Efficiency"></qp-grid>
+</template>

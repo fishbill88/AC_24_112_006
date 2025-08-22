@@ -1,0 +1,71 @@
+<template>
+
+	<qp-template name="1-1-1" id="CalculationHistory_form" class="equal-height" wg-container>
+		<qp-fieldset slot="A" id="col11" view.bind="CalculationHistory" caption="Used Database Space">
+			<field name="UsedTotal" control-type="qp-text-editor"></field>
+			<field name="UsedByCompanies" control-type="qp-text-editor"></field>
+			<field name="UsedBySnapshots" control-type="qp-text-editor"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="col12" view.bind="CalculationHistory">
+			<field name="FreeSpace" control-type="qp-text-editor"></field>
+			<field name="QuotaSize" control-type="qp-text-editor"></field>
+			<field name="CurrentStatus"></field>
+			<field name="CalculationDate" config-time-mode.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabGridCompanies" caption="Tenants">		
+			<qp-grid id="gridCompanies" view.bind="Companies">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGridSnapshots" caption="Snapshots">		
+			<qp-grid id="gridSnapshots" view.bind="Snapshots">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGridTables" caption="Tables">		
+			<qp-grid id="gridTables" view.bind="Tables">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="PopupCompanyTablesDefinition" caption="Table Sizes by Tenant" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="PopupCompanyTablesDefinition_frmViewCompanyTables" wg-container>
+			<qp-fieldset slot="A" id="frmExportSnapshot1" view.bind="PopupCompanyTablesHeader">
+				<field name="CompanyName"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmExportSnapshot2" view.bind="PopupCompanyTablesHeader">
+				<field name="SizeMB"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridCompanyTables" view.bind="PopupCompanyTablesDefinition">
+		</qp-grid>
+	</qp-panel>
+
+	<qp-panel id="PopupSnapshotTablesDefinition" caption="Table Sizes by Snapshot" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="PopupSnapshotTablesDefinition_frmViewSnapshotTables" wg-container>
+			<qp-fieldset slot="A" id="frmViewSnapshotTables1" view.bind="PopupSnapshotTablesHeader">
+				<field name="SnapshotName"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmViewSnapshotTables2" view.bind="PopupSnapshotTablesHeader">
+				<field name="SizeMB"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridSnapshotTables" view.bind="PopupSnapshotTablesDefinition">
+		</qp-grid>
+	</qp-panel>
+
+	<qp-panel id="PopupCompaniesByTableDefinition" caption="Used Space by Tenants and Snapshots" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="PopupCompaniesByTableDefinition_frmViewCompaniesByTable" wg-container>
+			<qp-fieldset slot="A" id="frmViewCompaniesByTable1" view.bind="PopupCompaniesByTableHeader">
+				<field name="TableName"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmViewCompaniesByTable2" view.bind="PopupCompaniesByTableHeader">
+				<field name="Size"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridCompaniesByTable" view.bind="PopupCompaniesByTableDefinition">
+		</qp-grid>
+	</qp-panel>
+
+</template>

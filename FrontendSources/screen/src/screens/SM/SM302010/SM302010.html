@@ -1,0 +1,114 @@
+<template>
+
+	<qp-grid id="grid1" view.bind="Status"></qp-grid>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabStatistics" caption="Statistics" load-on-demand="true">
+			<qp-template id="Settings_form" name="1-1-1" wg-container>
+				<qp-fieldset id="formSettings1" view.bind="Settings" slot="A" class="transparent-section">
+					<field name="KeepStatisticsForPeriod" class="label-size-xm"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formSettings2" view.bind="Settings" slot="B" class="no-label transparent-section">
+					<field name="LogDetails"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-tabbar id="tab2">
+				<qp-tab id="tabDispatcherStatisticsPerHour" caption="Grouped by Hour" load-on-demand="true">
+					<qp-grid id="grid0" view.bind="DispatcherStatisticsPerHour"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabDispatcherStatistics" caption="Grouped by Minute" load-on-demand="true">
+					<qp-grid id="grid01" view.bind="DispatcherStatistics"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</qp-tab>
+
+		<qp-tab id="tabCurrentDispatcherSettings" caption="Performance Issues">
+			<qp-template id="CurrentDispatcherSettings_form10" name="1-1-1" wg-container class="label-size-xm" >
+				<qp-fieldset id="formCurrentDispatcherSettings1" view.bind="CurrentDispatcherSettings" slot="A" class="transparent-section">
+					<field name="LogMaxLength"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formCurrentDispatcherSettings2" view.bind="CurrentDispatcherSettings" slot="B" class="transparent-section">
+					<field name="LongProcessingThreshold"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid10" view.bind="SlowLogs"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="Errors" caption="Errors" width="60vw" height="85vh">
+		<qp-grid id="grid60" view.bind="Errors"></qp-grid>
+	</qp-panel>
+
+	<qp-panel id="CurrentError" caption="Source Data" width="60vw">
+		<qp-fieldset id="frmViewNotification" view.bind="CurrentError">
+			<field name="SourceData" config-type.bind="1" config-rows.bind="20"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" caption="Close" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CurrentNotificationSettings" caption="Notification Settings">
+		<qp-fieldset id="frmNotificationSettings1" view.bind="CurrentNotificationSettings">
+			<field name="FillThreshold" class="label-size-l"></field>
+		</qp-fieldset>
+		<qp-fieldset id="frmNotificationSettings2" view.bind="CurrentNotificationSettings" caption="Send">
+			<field name="SourceDataFillThreshold"></field>
+			<field name="EmailRow" unbound replace-content>
+				<qp-field control-state.bind="CurrentNotificationSettings.IsEmailActive" class="no-label col-4"></qp-field>
+				<qp-field control-state.bind="CurrentNotificationSettings.EmailNotificationID" class="label-size-xs" config-allow-edit.bind="true"></qp-field>
+			</field>
+			<field name="SmsRow" unbound replace-content>
+				<qp-field control-state.bind="CurrentNotificationSettings.IsMobileSmsActive" class="no-label col-4"></qp-field>
+				<qp-field control-state.bind="CurrentNotificationSettings.MobileSmsNotificationID" class="label-size-xs" config-allow-edit.bind="true"></qp-field>
+			</field>
+			<field name="PushRow" unbound replace-content>
+				<qp-field control-state.bind="CurrentNotificationSettings.IsMobilePushActive" class="no-label col-4" ></qp-field>
+				<qp-field control-state.bind="CurrentNotificationSettings.MobilePushNotificationID" class="label-size-xs" config-allow-edit.bind="true"></qp-field>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk" state.bind="setNotificationSettingsOk" caption="OK" dialog-result="Cancel"></qp-button> <!-- if set dialog-result="OK" then state action not work-->
+			<qp-button id="btnCancel" state.bind="setNotificationSettingsCancel" dialog-result="Cancel" ></qp-button>
+		</footer>
+	</qp-panel>
+
+
+	<qp-panel id="DispatcherLogDetail" caption="Queue Processing Log" auto-repaint="true" width="60vw" >
+		<qp-fieldset id="LogDetailView" view.bind="DispatcherLogDetail">
+			<field name="ProcessingTime" control-type="qp-text-editor"></field>
+			<field name="Log" config-type.bind="1" config-rows.bind="25"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PanelNqdLogDetailsSubmit" caption="Close" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+	
+	<qp-panel id="DetailsFilter" caption="Trigger Details" auto-repaint="true" wg-container width="60vw" height="85vh">
+		<qp-label caption="Details are logged only if the Log Trigger Details check box is selected on the Statistics tab."></qp-label>
+			<qp-fieldset id="StatisticDetailsView" view.bind="DetailsFilter">
+				<field name="From_Date">
+					<qp-field control-state.bind="DetailsFilter.From_Time"></qp-field>
+				</field>
+				<field name="To_Date">
+					<qp-field control-state.bind="DetailsFilter.To_Time"></qp-field>
+				</field>
+			</qp-fieldset>
+
+			<qp-tabbar id="StatisticDetailsTab">
+				<qp-tab id="tabTriggeredByFields" caption="Triggering Fields" if.bind='DetailsFilter.QueueType.value == "PN"'>
+					<qp-grid id="grid40" view.bind="TriggeredByFields"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTriggeredBySources" caption="Source DACs" if.bind='DetailsFilter.QueueType.value == "PN"'>
+					<qp-grid id="grid41" view.bind="TriggeredBySources"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTriggeredByEvent" caption="Business Event messages" if.bind='DetailsFilter.QueueType.value == "BE"'>
+					<qp-grid id="grid43" view.bind="TriggeredByEvent"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabStatisticCommerceDetail" caption="Commerce messages" if.bind='DetailsFilter.QueueType.value == "CO"'>
+					<qp-grid id="grid42" view.bind="StatisticCommerceDetail"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,25 @@
+<template>
+	<qp-template name="1-1" id="GeneralForm" class="label-size-xm">
+		<div slot="A" class="v-stack">
+			<qp-grid id="grid" view.bind="Items" caption="Codes" class="framed-section">
+			</qp-grid>
+		</div>
+		<div slot="B" class="framed-section">
+			<qp-label caption="Sources"></qp-label>
+			<qp-tabbar active-tab-id="ProjectTasksTab" id="tabSources" wg-container>
+				<qp-tab id="ProjectTasksTab" caption="Project Tasks">
+					<qp-grid id="projectTasksGrid" view.bind="ProjectTaskSources">
+					</qp-grid>
+				</qp-tab>
+				<qp-tab id="LaborItemsTab" caption="Labor Items">
+					<qp-grid id="laborItemsGrid" view.bind="LaborItemSources">
+					</qp-grid>
+				</qp-tab>
+				<qp-tab id="CostCodesTab" caption="Cost Codes">
+					<qp-grid id="costCodesGrid" view.bind="CostCodeRanges">
+					</qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</div>
+	</qp-template>
+</template>

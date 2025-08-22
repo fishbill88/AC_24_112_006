@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="Filter_form" name="17-17-14" wg-container class="equal-height label-size-s">
+		<qp-fieldset id="first" view.bind="Filter" slot="A">
+			<field name="SiteID"></field>
+			<field name="StorageType" control-type="qp-radio"></field>
+			<field name="LocationID"></field>
+			<field name="CartID"></field>
+			<field name="StorageID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" view.bind="Filter" slot="B">
+			<field name="InventoryID"></field>
+			<field name="SubItemID"></field>
+			<field name="ExpandByLotSerialNbr"></field>
+			<field name="LotSerialNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="storages">
+	</qp-grid>
+</template>

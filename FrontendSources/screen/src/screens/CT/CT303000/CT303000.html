@@ -1,0 +1,26 @@
+<template>
+
+	<qp-template name="1-1" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="panelFilter" view.bind="Filter">
+			<field name="ContractID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+
+		<qp-tab id="tabUnbilled" caption="Unbilled">
+			<qp-grid id="gridUnbilled" view.bind="UnBilled" wg-container="UnBilled_UnbilledGrid"> </qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabBilled" caption="Billed">
+
+			<qp-template id="Billed-form" name="1-1">
+				<qp-fieldset slot="A" id="panelFilterBilled" view.bind="Filter" wg-container="Filter_UsageFilterForm">
+					<field name="InvFinPeriodID"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="gridNilled" view.bind="Billed" wg-container="Billed_BilledGrid"> </qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

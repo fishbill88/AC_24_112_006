@@ -1,0 +1,12 @@
+<template>
+
+	<qp-template id="formHeader" name="17-17-14">
+		<qp-fieldset slot="A" view.bind="YearVendorHeader" id="panelHeader" wg-container="YearVendorHeader_form">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="VendorID"></field>
+			<field name="FinYear"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridYearVendorSummary" view.bind="YearVendorSummary" wg-container="YearVendorSummary_grid"></qp-grid>
+
+</template>

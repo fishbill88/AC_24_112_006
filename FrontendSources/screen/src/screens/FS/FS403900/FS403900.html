@@ -1,0 +1,57 @@
+<template>
+	<qp-template id="FilterTemplate" name="17-17-14">
+		<qp-fieldset id="Filter_form" slot="A" view.bind="Filter">
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+			<field name="DriverID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Routes">
+	</qp-grid>
+
+	<qp-panel id="DriverRouteSelected" caption="Driver Selector" auto-repaint="true" width="80vw" height="80vh" wg-container="DriverRouteSelected_PXFormView7">
+		<qp-template id="DriverTemplate1" name="1-1" class="equal-height">
+			<qp-fieldset id="DriverRouteSelected_10" slot="A" view.bind="DriverRouteSelected">
+				<field name="RefNbr"></field>
+				<field name="FSRoute__RouteCD"></field>
+				<field name="Date"></field>
+				<using wg-container="DriverFilter_PXFormView8" view="DriverFilter">
+					<field name="ShowUnassignedDrivers"></field>
+				</using>
+			</qp-fieldset>
+			<qp-fieldset id="DriverRouteSelected_30" slot="B" view.bind="DriverRouteSelected" caption="Current Selection">
+				<field name="DriverID"></field>
+				<field name="VehicleID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXGrid3" view.bind="DriverRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" caption="Select Driver" dialog-result="OK"></qp-button>
+			<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="VehicleRouteSelected" caption="Vehicle Selector" auto-repaint="true" width="80vw" height="80vh" wg-container="VehicleRouteSelected_VehicleRouteForm">
+		<qp-template id="VehicleTemplate1" name="1-1" class="equal-height">
+			<qp-fieldset id="VehicleRouteSelected_10" slot="A" view.bind="VehicleRouteSelected">
+				<field name="RefNbr"></field>
+				<field name="FSRoute__RouteCD"></field>
+				<field name="Date"></field>
+				<using wg-container="VehicleFilter_PXFormView1" view="VehicleFilter">
+					<field name="ShowUnassignedVehicles"></field>
+				</using>
+			</qp-fieldset>
+			<qp-fieldset id="VehicleRouteSelected_30" slot="B" view.bind="VehicleRouteSelected" caption="Current Selection">
+				<field name="DriverID"></field>
+				<field name="VehicleID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="VehiclesGrid" view.bind="VehicleRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" caption="Select Vehicle" dialog-result="OK"></qp-button>
+			<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

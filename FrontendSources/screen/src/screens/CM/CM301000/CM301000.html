@@ -1,0 +1,16 @@
+<template>
+	<qp-template name="1-1" id="formFilter">
+		<qp-fieldset id="panelFilter" view.bind="Filter" wg-container="Filter_form" slot="A">
+			<field name="ToCurrency"></field>
+			<field name="EffDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabCurrencyRateEntry" caption="Currency Rate Entry">
+			<qp-grid id="gridCurrencyRateEntry" view.bind="CuryRateRecordsEntry" wg-container="CuryRateRecordsEntry_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabEffectiveCurrencyRates" caption="Effective Currency Rates">
+			<qp-grid id="gridEffectiveCurrencyRates" view.bind="CuryRateRecordsEffDate" wg-container="CuryRateRecordsEffDate_gridEffDate"> </qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

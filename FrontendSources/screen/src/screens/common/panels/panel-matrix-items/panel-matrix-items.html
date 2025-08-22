@@ -1,0 +1,46 @@
+<template>
+	<qp-panel id="Header" caption="Add Matrix Item: Table View" auto-repaint="true" width="85vw"
+		height="85vh">
+		<qp-template name="17-31" id="matrix-view">
+			<qp-fieldset slot="A" id="MatrixEntryFormView" wg-container view.bind="Header" hide-caption="true">
+				<field name="TemplateItemID"></field>
+				<field name="Description"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+			<qp-grid slot="B" id="MatrixItems" view.bind="MatrixItems" class="framed-section">
+			</qp-grid>
+		</qp-template>
+		<footer>
+			<qp-button id="InventoryMatrixEntrySmartPanelButtonToLookup" caption="Open Table View" dialog-result="Yes">
+			</qp-button>
+			<qp-button id="InventoryMatrixEntrySmartPanelButtonOK" caption="Add and Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="InventoryMatrixEntrySmartPanelButtonCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="Matrix" caption="Add Matrix Item: Matrix View" auto-repaint="true" width="85vw"
+		height="85vh">
+		<qp-template name="17-31" id="matrix-form">
+			<qp-fieldset slot="A" id="MatrixFormView" wg-container view.bind="Header" hide-caption="true">
+				<field name="TemplateItemID"></field>
+				<field name="ColAttributeID"></field>
+				<field name="RowAttributeID"></field>
+				<field name="ShowAvailable"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+			<qp-grid slot="B" id="MatrixAttributes" view.bind="AdditionalAttributes" class="framed-section">
+			</qp-grid>
+		</qp-template>
+		<qp-grid id="MatrixMatrix" view.bind="Matrix" class="framed-section">
+		</qp-grid>
+		<footer>
+			<qp-button id="InventoryMatrixLookupSmartPanelButtonToEntry" caption="Open Table View"
+				dialog-result="Yes"></qp-button>
+			<qp-button id="InventoryMatrixLookupSmartPanelButtonOK" caption="Add and Close"
+				dialog-result="OK"></qp-button>
+			<qp-button id="InventoryMatrixLookupSmartPanelButtonCancel"
+				dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

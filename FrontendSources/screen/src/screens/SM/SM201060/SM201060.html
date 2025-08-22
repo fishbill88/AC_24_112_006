@@ -1,0 +1,223 @@
+<template>
+	<qp-template name="2-1" id="Prefs_form" wg-container>
+		<div slot="A" class="label-size-l">
+			<qp-fieldset
+				id="passwordPolicy"
+				view.bind="Prefs"
+				caption="Password Policy"
+			>
+				<field name="PasswordDayAge" no-label="true">
+					<qp-field
+						slot="label"
+						control-state.bind="Prefs.IsPasswordDayAge"
+						config-enabled.bind="false"
+						no-label="true"
+					></qp-field>
+					<qp-label caption="Days"></qp-label>
+				</field>
+				<field name="PasswordMinLength" no-label="true">
+					<qp-field
+						slot="label"
+						control-state.bind="Prefs.IsPasswordMinLength"
+						config-enabled.bind="false"
+						no-label="true"
+					></qp-field>
+					<qp-label caption="Characters"></qp-label>
+				</field>
+				<field name="PasswordComplexity"></field>
+				<field name="PasswordRegexCheck"></field>
+				<field
+					name="PasswordRegexCheckMessage"
+					config-type.bind="1"
+					config-rows.bind="2"
+				></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="twoFactorAuthPolicy"
+				view.bind="Prefs"
+				caption="Two-factor Authentication Policy"
+			>
+				<field name="MultiFactorAuthLevel"></field>
+
+				<field name="TwoFactorAuthCheckboxes" unbound>
+					<qp-field
+						control-state.bind="Prefs.EmailEnabled"
+						class="col-4"
+					></qp-field>
+					<qp-field
+						control-state.bind="Prefs.SmsEnabled"
+						class="col-4"
+					></qp-field>
+				</field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="accountLockoutPolicy"
+				view.bind="Prefs"
+				caption="Account Lockout Policy"
+			>
+				<field name="AccountLockoutThreshold">
+					<qp-label caption="Unsuccessful Login Attempts"></qp-label>
+				</field>
+				<field name="AccountLockoutDuration">
+					<qp-label caption="Minutes"></qp-label>
+				</field>
+				<field name="AccountLockoutReset">
+					<qp-label caption="Minutes"></qp-label>
+				</field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="timeoutSettings"
+				view.bind="PrefsGlobal"
+				caption="Timeout Settings"
+			>
+				<field name="UsePreconfiguredTimeouts"></field>
+				<field name="LogoutTimeout"></field>
+				<field name="PreconfiguredLogoutTimeout"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="encryptionCertificates"
+				view.bind="Prefs"
+				caption="Encryption Certificates"
+			>
+				<field name="DBCertificateName"></field>
+				<field name="PdfCertificateName"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="modernUi" view.bind="Prefs" caption="Modern UI">
+				<field name="DefaultMenuEditorRole"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="audit" view.bind="Prefs" caption="Audit">
+				<field name="TraceMonthsKeep">
+					<qp-label caption="Months"></qp-label>
+				</field>
+
+				<field name="AuditCheckboxesRow1" unbound>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationLogin"
+						class="col-4"
+					></qp-field>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationLicenseExceeded"
+						class="col-4"
+					></qp-field>
+				</field>
+
+				<field name="AuditCheckboxesRow2" unbound>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationLoginFailed"
+						class="col-4"
+					></qp-field>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationSendMail"
+						class="col-4"
+					></qp-field>
+				</field>
+
+				<field name="AuditCheckboxesRow3" unbound>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationLogout"
+						class="col-4"
+					></qp-field>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationSendMailFailed"
+						class="col-4"
+					></qp-field>
+				</field>
+
+				<field name="AuditCheckboxesRow4" unbound>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationAccessScreen"
+						class="col-4"
+					></qp-field>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationODataRefresh"
+						class="col-4"
+					></qp-field>
+				</field>
+
+				<field name="AuditCheckboxesRow5" unbound>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationSessionExpired"
+						class="col-4"
+					></qp-field>
+					<qp-field
+						control-state.bind="Prefs.TraceOperationCustomizationPublished"
+						class="col-4"
+					></qp-field>
+				</field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-panel
+		id="ConfirmView"
+		caption="Confirm"
+		width="50vw"
+		wg-container="ConfirmView_formConfirmView"
+	>
+		<qp-fieldset
+			id="emailConfirmation"
+			view.bind="ConfirmView"
+			caption="Email Confirmation"
+		>
+			<field
+				name="ConfirmText"
+				no-label="true"
+				config-enabled.bind="false"
+				config-type.bind="1"
+				config-rows.bind="3"
+			></field>
+			<field name="AccessCode" class="label-size-m"></field>
+		</qp-fieldset>
+
+		<qp-fieldset
+			id="backupOption"
+			view.bind="ConfirmView"
+			caption="Backup Option"
+		>
+			<field
+				name="BackupText"
+				no-label="true"
+				config-enabled.bind="false"
+				config-type.bind="1"
+				config-rows.bind="2"
+			>
+			</field>
+			<field name="button" no-label="true" unbound>
+				<qp-button
+					id="btnGenerateCodes"
+					state.bind="GenerateCodes"
+					class="col-7"
+					wg-name="btnGenerateCodes"
+				></qp-button>
+			</field>
+		</qp-fieldset>
+
+		<qp-fieldset
+			id="confirmationOfUsers"
+			view.bind="ConfirmView"
+			caption="Configuration of Users for Integrated Applications"
+		>
+			<field
+				name="ConfigureApiText"
+				no-label="true"
+				config-enabled.bind="false"
+				config-type.bind="1"
+				config-rows.bind="2"
+			></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button
+				id="btnOK"
+				config.bind="{ dialogResult: 'OK', validateInput: true }"
+			></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

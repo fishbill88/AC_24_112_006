@@ -1,0 +1,27 @@
+<template>
+	<qp-template id="Tools" name="1-1" class="label-size-m">
+		<div slot="A" id="Tools_form" wg-container>
+			<qp-fieldset id="Tools1" view.bind="Tools">
+				<field name="ToolID"></field>
+				<field name="Descr"></field>
+				<field name="Active"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Tools2" view.bind="Tools" caption="Cost">
+				<using wg-container="CurySettings_AMToolMst_curySettingsForm" view="CurySettings_AMToolMst">
+					<field name="UnitCost"></field>
+					<field name="TotalCost"></field>
+					<field name="ActualCost"></field>
+				</using>
+				<field name="ActualUses"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Tools3" view.bind="Tools" caption="Account Settings">
+				<field name="AcctID"></field>
+				<field name="SubID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Tools4" view.bind="Tools" caption="Scheduling">
+				<field name="ScheduleEnabled"></field>
+				<field name="ScheduleQty"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

@@ -1,0 +1,24 @@
+<template>
+	<qp-tabbar id="PhotoLogSetup_tab" wg-container>
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template name="1-1" id="PhotoLogSetupForm" class="label-size-xm">
+				<qp-fieldset slot="A" id="PhotoLogSetup_form" view.bind="PhotoLogSetup">
+					<field
+						name="PhotoLogNumberingId"
+						config.bind="{ allowEdit: true }">
+					</field>
+					<field
+						name="PhotoNumberingId"
+						config.bind="{ allowEdit: true }">
+					</field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="StatusTab" caption="Status">
+			<qp-grid id="gridStatuses" view.bind="PhotoLogStatuses"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="gridAttributes" view.bind="Attributes"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

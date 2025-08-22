@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="Machines_form" wg-container name="1-1" class="label-size-m">
+		<div slot="A">
+			<qp-fieldset id="MachinesTop" view.bind="Machines">
+				<field name="MachID"></field>
+				<field name="ActiveFlg"></field>
+				<field name="DownFlg"></field>
+				<field name="Descr" config-type.bind="1" config-rows.bind="3"></field>
+			</qp-fieldset>
+			<qp-fieldset id="MachinesGeneral" view.bind="Machines" caption="General">
+				<field name="AssetID"></field>
+				<using wg-container="CurySettings_AMMach_curySettingsForm" view="CurySettings_AMMach">
+					<field name="StdCost"></field>
+				</using>
+				<field name="CalendarID" config-allow-edit.bind="true"></field>
+				<field name="MachEff"></field>
+				<field name="MachAcctID"></field>
+				<field name="MachSubID"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

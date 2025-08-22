@@ -1,0 +1,70 @@
+<template>
+	<qp-template id="headerSettings_0" name="1-1" class="label-size-m">
+		<qp-fieldset id="form_0" wg-container="Bank_form" view.bind="Bank" slot="A">
+			<field name="BankID"></field>
+			<field name="Description"></field>
+			<field name="EarningTypeCD"></field>
+		</qp-fieldset>
+		<qp-fieldset id="headerSettings_1" wg-container="Bank_form" view.bind="Bank" slot="B" class="no-label">
+			<field name="IsActive"></field>
+			<field name="ApplyBandingRules"></field>
+			<field name="IsCertifiedJobAccrual"></field>
+			<field name="CreateFinancialTransaction"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template id="GeneralSettingsTab" name="1-1" class="label-size-m">
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="general_0" wg-container="CurrentBank_tab" view.bind="CurrentBank">
+						<field name="AccrualMethod"></field>
+						<field name="TransferDateType"></field>
+
+						<field name="groupDates" unbound>
+							<qp-label slot="label" caption="Start Date" if.bind="CurrentBank.TransferDateType.value == 'S'"></qp-label>
+							<qp-field control-state.bind="CurrentBank.StartDateMonth" class="col-6"></qp-field>
+							<qp-field control-state.bind="CurrentBank.StartDateDay" class="col-6"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+
+				<div slot="B" class="v-stack">
+					<qp-fieldset id="general_1" wg-container="CurrentBank_tab" view.bind="CurrentBank">
+						<field name="CarryoverType"></field>
+						<field name="SettlementBalanceType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="general_2" wg-container="CurrentBank_tab" view.bind="CurrentBank" slot="B" caption="Disbursing Rules">
+						<field name="DisbursingType"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="EmployeeClassTab" caption="Employee Classes">
+			<qp-grid id="EmployeeClassPTOBanks_grdPTOBanks" wg-container view.bind="EmployeeClassPTOBanks"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="BandingRulesTab" caption="Banding rules" if.bind="Bank.ApplyBandingRules.value == true">
+			<qp-template id="BandingRuleTemplate" name="17-17-14">
+				<qp-fieldset slot="A" id="splitTypeForm_0" wg-container view.bind="CurrentBank" class="transparent-section">
+					<field name="BandingRuleRoundingMethod"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="BandingRulePTOBanks_grdBandingRules" wg-container view.bind="BandingRulePTOBanks"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="GlAccountTab" caption="GL Accounts" if.bind="Bank.CreateFinancialTransaction.value == true && CANPayrollEnabled">
+			<qp-template id="GlAccountTemplate" name="1-1" class="label-size-m">
+				<qp-fieldset id="CurrentBank_PXLayoutRule1" view.bind="CurrentBank" slot="A">
+					<field name="PTOExpenseAcctID"></field>
+					<field name="PTOExpenseSubID"></field>
+					<field name="PTOLiabilityAcctID"></field>
+					<field name="PTOLiabilitySubID"></field>
+					<field name="PTOAssetAcctID"></field>
+					<field name="PTOAssetSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

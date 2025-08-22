@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="AMEstimateSetupRecord_form" wg-container name="1-1" class="label-size-xm">
+		<div slot="A">
+			<qp-fieldset id="AMEstimateSetupRecord_GeneralSettings" view.bind="AMEstimateSetupRecord" caption="General Settings">
+				<field name="EstimateNumberingID" config-allow-edit.bind="true"></field>
+				<field name="DefaultRevisionID"></field>
+				<field name="AutoNumberRevisionID"></field>
+				<field name="DefaultEstimateClassID" config-allow-edit.bind="true"></field>
+				<field name="DefaultWorkCenterID" config-allow-edit.bind="true"></field>
+				<field name="DefaultOrderType" config-allow-edit.bind="true"></field>
+				<field name="NewRevisionIsPrimary"></field>
+			</qp-fieldset>
+			<qp-fieldset id="AMEstimateSetupRecord_CreateInventoryItems" view.bind="AMEstimateSetupRecord" caption="Create Inventory Items">
+				<field name="UpdateAllRevisions"></field>
+				<field name="UpdatePriceInfo"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

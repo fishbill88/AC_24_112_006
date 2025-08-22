@@ -1,0 +1,22 @@
+<template>
+	<qp-template
+		name="17-14-17"
+		class="equal-height"
+		id="Filter_form"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="Filter">
+			<field name="ProjectID"></field>
+			<field name="TaskID"></field>
+			<field name="CustomerClassID"></field>
+			<field name="CustomerID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB01" view.bind="Filter">
+			<field name="AllocationID"></field>
+			<field name="Date"></field>
+			<field name="DateFrom"></field>
+			<field name="DateTo"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Items"></qp-grid>
+</template>

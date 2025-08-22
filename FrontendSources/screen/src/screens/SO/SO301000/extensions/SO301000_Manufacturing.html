@@ -1,0 +1,29 @@
+<template>
+	<qp-panel after='#copyparamfilter' id="AMSOLineRecords" caption="Production Orders" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="CreateProdgrid" view.bind="AMSOLineRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="CreateProd" caption="Save" dialog-result="OK">
+			</qp-button>
+			<qp-button id="CancelProd" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel after='#AMSOLineRecords' id="AMSOLineLinkRecords" caption="Production Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="17-17-14" id="linkprodorderselectfilter_formlinkfilter" wg-container class="equal-height">
+			<qp-fieldset slot="A" id="LinkOrderType" view.bind="linkProdOrderSelectFilter">
+				<field name="OrderType"></field>
+				<field name="ProdOrdID"></field>
+				<field name="StatusID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="LinkProdGrid" view.bind="AMSOLineLinkRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="LinkProd" caption="Save" dialog-result="OK">
+			</qp-button>
+			<qp-button id="CancelLink" caption="Cancel" dialog-result="Abort">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

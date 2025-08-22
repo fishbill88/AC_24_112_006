@@ -1,0 +1,14 @@
+<template>
+	<qp-grid id="grid" view.bind="SiteMap">
+	</qp-grid>
+
+	<qp-panel id="ViewCompanyList" wg-container="PanelMultipleTenants" caption="Apply to Multiple Tenants"
+		auto-repaint="true" width="60vw" height="60vh">
+		<qp-grid id="GridCompanyList" view.bind="ViewCompanyList">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" wg-name="PXButton5" caption.bind="SysMessages.Confirm" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" wg-name="PXButton6" caption.bind="SysMessages.Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

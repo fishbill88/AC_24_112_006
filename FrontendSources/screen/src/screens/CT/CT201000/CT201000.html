@@ -1,0 +1,59 @@
+<template>
+	<qp-template name="1-1" id="formHeader">
+		<qp-fieldset slot="A" id='panelHeader' view.bind='ContractItems' wg-container="ContractItems_form">
+			<field name="ContractItemCD"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs" wg-container="CurrentContractItem_tab">
+		<qp-tab id="tabPriceOptions" caption="Price Options">
+			<qp-template id="formPriceOptions" name="1-1" wg-container="CurrentContractItem_form1">
+				<div slot="A">
+					<qp-fieldset view.bind="CurrentContractItem" id="columnFirstPriceOptions">
+						<field name="MaxQty"></field>
+						<field name="MinQty"></field>
+						<field name="DefaultQty"></field>
+						<field name="CuryID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupSetupAndRenewal" view.bind="CurrentContractItem" GroupCaption="Setup and Renewal">
+						<field name="BaseItemID" config-allow-edit.bind="true"></field>
+						<field name="BasePriceOption"></field>
+						<field name="BasePrice"></field>
+						<field name="RetainRate"></field>
+						<field name="Deposit"></field>
+						<field name="Refundable"></field>
+						<field name="ProrateSetup"></field>
+						<field name="RenewalItemID" config-allow-edit.bind="true"></field>
+						<field name="CollectRenewFeeOnActivation"></field>
+						<field name="RenewalPriceOption"></field>
+						<field name="RenewalPrice"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id='columnSecondPriceOptions' view.bind='CurrentContractItem'>
+						<field name="BasePriceVal"></field>
+						<field name="FixedRecurringPriceVal"></field>
+						<field name="UsagePriceVal"></field>
+						<field name="RenewalPriceVal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRecurringBilling" view.bind="CurrentContractItem" caption="Recurring Billing">
+						<field name="RecurringType"></field>
+						<field name="RecurringItemID" config-allow-edit.bind="true"></field>
+						<field name="ResetUsageOnBilling"></field>
+						<field name="FixedRecurringPriceOption"></field>
+						<field name="FixedRecurringPrice"></field>
+						<field name="UsagePriceOption"></field>
+						<field name="UsagePrice"></field>
+						<field name="DepositItemID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Contract Templates" id="tabContractTemplates">
+			<qp-grid id="gridTemplates" view.bind="CurrentTemplates" wg-container="CurrentTemplates_detGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab caption="Active Contracts" id="tabActiveContracts">
+			<qp-grid id="gridContracts" view.bind="CurrentContracts" wg-container="CurrentContracts_ContractsGrid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="AddMembersToExistingListsFilterView" auto-repaint="true" caption="Add Members to Marketing Lists">
+		<qp-grid id="grdAddMembersToExistingLists" view.bind="AddMembersToExistingListsFilterView"></qp-grid>
+		<footer>
+			<qp-button
+				id="btnAddMembersToNewListCreateAndReview"
+				caption="Create and Review"
+				dialog-result="Yes">
+			</qp-button>
+			<qp-button
+				id="btnAddMembersToNewListCreate"
+				caption="Create"
+				dialog-result="OK">
+			</qp-button>
+			<qp-button
+				id="btnAddMembersToNewListCancel"
+				caption="Cancel"
+				dialog-result="Abort">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

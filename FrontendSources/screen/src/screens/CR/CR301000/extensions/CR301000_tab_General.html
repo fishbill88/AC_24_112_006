@@ -1,0 +1,75 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template name="1" id="contactInfo-formOverride" wg-container>
+			<div slot="A">
+				<qp-fieldset
+					id="contactInfo_override"
+					view.bind="Lead"
+					class="transparent-section"
+				>
+					<field no-label="true" name="OverrideRefContact"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<qp-template name="1-1" id="contactInfo-form">
+			<div slot="A">
+				<qp-fieldset
+					id="tabContactInfo_Contact"
+					caption="Contact"
+					view.bind="Lead"
+					wg-container="LeadCurrent_edOpportunity_Contact"
+				>
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="EMail" control-type="qp-mail-editor"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Lead.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Lead.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="WebSite" control-type="qp-link-editor"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="tabContactInfo_PersonalDataPrivacy"
+					caption="Personal Data Privacy"
+					view.bind="Lead"
+				>
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="tabContactInfo_AddressLookup"
+					caption="Address"
+					view.bind="AddressCurrent"
+					wg-container="AddressCurrent_formA"
+				>
+					<field name="FakeField" unbound>
+						<qp-address-lookup class="col-12" view.bind="AddressCurrent">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="CountryID"></field>
+					<field name="IsValidated" config-enabled.bind="false"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

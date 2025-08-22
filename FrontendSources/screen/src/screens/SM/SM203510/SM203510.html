@@ -1,0 +1,91 @@
+<template>
+	<qp-template id="VersionRecord_form" name="1-1" wg-container>
+		<qp-fieldset id="currentVersion" view.bind="VersionRecord" slot="A">
+			<field name="CurrentVersion"></field>
+			<field name="Date"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="updates" caption="Updates">
+			<qp-template id="restrictionKey" name="1-1">
+				<qp-fieldset
+					id="VersionFilterRecord_frmPrimaryPage"
+					view.bind="VersionFilterRecord"
+					slot="A"
+					wg-container
+				>
+					<field name="Key"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid
+				id="AvailableVersions_gridAvailableVersions"
+				view.bind="AvailableVersions"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+		<qp-tab id="updateHistory" caption="Update History">
+			<qp-grid
+				id="UpdateHistoryFullRecords_gridUPHistory"
+				view.bind="UpdateHistoryFullRecords"
+				wg-container
+			></qp-grid>
+
+			<qp-grid
+				id="UpdateErrorRecords_gridUPErrors"
+				view.bind="UpdateErrorRecords"
+				wg-container
+			></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel
+		id="LockoutFilterRecord"
+		caption="Schedule Lockout"
+		auto-repaint="true"
+	>
+		<qp-fieldset
+			id="frmLockout"
+			view.bind="LockoutFilterRecord"
+			class="label-size-s"
+		>
+			<field name="DateTime_Date">
+				<qp-field
+					control-state.bind="LockoutFilterRecord.DateTime_Time"
+					config-time-mode.bind="true"
+					config-enabled.bind="false"
+				></qp-field>
+			</field>
+			<field name="Reason" config-type.bind="1" config-rows.bind="1"></field>
+			<field name="LockoutAll"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel
+		id="LogFileFilterRecord"
+		caption="Log"
+		auto-repaint="true"
+		width="50vw"
+	>
+		<qp-fieldset id="frmLockout" view.bind="LogFileFilterRecord">
+			<field
+				name="Text"
+				class="label-size-xxs"
+				config-type.bind="1"
+				config-rows.bind="3"
+			></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button
+				id="btnCancel"
+				dialog-result="Cancel"
+				caption="Close"
+			></qp-button>
+		</footer>
+	</qp-panel>
+</template>

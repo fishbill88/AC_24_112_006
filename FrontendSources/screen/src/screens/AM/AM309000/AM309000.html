@@ -1,0 +1,26 @@
+<template>
+	<qp-template id="batch_form" wg-container name="7-10-7" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="batch1" view.bind="batch">
+			<field name="BatNbr"></field>
+			<field name="TranDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="batch2" view.bind="batch">
+			<field name="Status">
+				<qp-field id="HoldField" control-state.bind="batch.Hold"></qp-field>
+			</field>
+			<field name="TranDate"></field>
+			<field name="FinPeriodID">
+				<!-- This empty div is used to align the right side of the field with the right side of the other fields in that fieldset -->
+				<div></div>
+			</field>
+			<field name="OrigBatNbr" config-allow-edit.bind="true">
+				<qp-field id="DocTypeField" control-state.bind="batch.OrigDocType"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="batch3" view.bind="batch" class="highlights-section">
+			<field name="TotalAmount"></field>
+			<field name="ControlAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="transactions"></qp-grid>
+</template>

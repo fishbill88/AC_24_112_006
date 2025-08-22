@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="RouteAppointmentForecastingFilter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="RouteAppointmentForecastingFilter_10" slot="A" view.bind="RouteAppointmentForecastingFilter">
+			<field name="RouteID"></field>
+			<field name="ServiceID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="RouteAppointmentForecastingFilter_20" slot="B" view.bind="RouteAppointmentForecastingFilter">
+			<field name="CustomerID"></field>
+			<field name="CustomerLocationID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="RouteAppointmentForecastingFilter_30" slot="C" view.bind="RouteAppointmentForecastingFilter">
+			<field name="DateBegin"></field>
+			<field name="DateEnd"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="RouteAppointmentForecastingRecords">
+	</qp-grid>
+</template>

@@ -1,0 +1,20 @@
+<template>
+
+	<qp-template id="formDepreciationMethod" name="1-1" class="equal-height" wg-container="Method_form">
+		<qp-fieldset id="columnFirstDepreciationMethod" view.bind="Method" slot="A">
+			<field name="MethodCD"></field>
+			<field name="DepreciationMethod"></field>
+			<field name="Description"></field>
+			<field name="DBMultiplier">
+				<qp-field no-label="true" control-state.bind="Method.SwitchToSL"></qp-field>
+			</field>
+			<field name="PercentPerYear"></field>
+			<field name="Source"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondDepreciationMethod" view.bind="Method" slot="B">
+			<field name="AveragingConvention"></field>
+			<field name="YearlyAccountancy"></field>
+		</qp-fieldset>
+	</qp-template>
+
+</template>

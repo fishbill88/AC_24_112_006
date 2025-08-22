@@ -1,0 +1,168 @@
+<template>
+	<qp-panel
+		after="#anchor_Panels"
+		id="CurrentItem"
+		auto-repaint="true"
+		caption="Synchronization Status"
+		width="80vw"
+		height="80vh"
+	>
+		<div id="frmStatus" wg-container>
+			<qp-template id="frmStatus_key-form" name="1-1-1">
+				<qp-fieldset slot="A" id="edServerID" view.bind="CurrentItem">
+					<field name="ServerID"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="edAddress" view.bind="CurrentItem">
+					<field name="Address"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-template id="frmStatus_contactsdate-form" name="1-1-1">
+				<qp-fieldset slot="A" id="edContactsExportDate" view.bind="CurrentItem">
+					<field name="ContactsExportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.ContactsExportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="edContactsImportDate" view.bind="CurrentItem">
+					<field name="ContactsImportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.ContactsImportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-button
+					slot="C"
+					id="btnContactsReset"
+					state.bind="ResetContacts"
+				></qp-button>
+			</qp-template>
+
+			<qp-template id="frmStatus_taskdate-form" name="1-1-1">
+				<qp-fieldset slot="A" id="edTasksExportDate" view.bind="CurrentItem">
+					<field name="TasksExportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.TasksExportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="edTasksImportDate" view.bind="CurrentItem">
+					<field name="TasksImportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.TasksImportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-button
+					slot="C"
+					id="btnTasksReset"
+					state.bind="ResetTasks"
+				></qp-button>
+			</qp-template>
+
+			<qp-template id="frmStatus_eventsdate-form" name="1-1-1">
+				<qp-fieldset slot="A" id="edEventsExportDate" view.bind="CurrentItem">
+					<field name="EventsExportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.EventsExportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="edEventsImportDate" view.bind="CurrentItem">
+					<field name="EventsImportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.EventsImportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-button
+					slot="C"
+					id="btnEventsReset"
+					state.bind="ResetEvents"
+				></qp-button>
+			</qp-template>
+
+			<qp-template id="frmStatus_emailsdate-form" name="1-1-1">
+				<qp-fieldset slot="A" id="edEmailsExportDate" view.bind="CurrentItem">
+					<field name="EmailsExportDate_Date">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.EmailsExportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="edEmailsImportDate" view.bind="CurrentItem">
+					<field name="EmailsImportDate_Date" config-enabled.bind="false">
+						<qp-field
+							class="col-3"
+							control-state.bind="CurrentItem.EmailsImportDate_Time"
+							no-label.bind="true"
+							config-time-mode.bind="true"
+							config-edit-mask.bind="`10:17 15`"
+							config-display-mask.bind="`10:17 15`"
+						>
+						</qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-button
+					slot="C"
+					id="btnEmailsReset"
+					state.bind="ResetEmails"
+				></qp-button>
+			</qp-template>
+		</div>
+		<div id="gridLog" wg-container>
+			<qp-grid view.bind="OperationLog"> </qp-grid>
+			<footer>
+				<qp-button
+					id="btnCopyCompanyCancel"
+					caption="Close"
+					dialogResult="Cancel"
+				>
+				</qp-button>
+			</footer>
+		</div>
+	</qp-panel>
+</template>

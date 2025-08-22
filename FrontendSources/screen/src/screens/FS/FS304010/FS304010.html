@@ -1,0 +1,45 @@
+<template>
+	<qp-template name="7-10-7" id="RouteRecords_form" wg-container class="equal-height">
+		<qp-fieldset id="RouteRecords_10" slot="A" view.bind="RouteRecords">
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="Date"></field>
+			<field name="TimeBegin_Time" config-time-mode.bind="true"></field>
+			<field name="TimeEnd_Time" config-time-mode.bind="true"></field>
+			<field name="ActualStartTime_Time" config-time-mode.bind="true"></field>
+			<field name="ActualEndTime_Time" config-time-mode.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="RouteRecords_20" slot="B" view.bind="RouteRecords">
+			<field name="BranchID"></field>
+			<field name="RouteID" config-allow-edit.bind="true"></field>
+			<field name="DriverID"></field>
+			<field name="VehicleID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="RouteRecords_30" slot="C" view.bind="RouteRecords" class="highlights-section">
+			<field name="TripNbr"></field>
+			<field name="MemActualDuration"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab" wg-container="RouteDocumentSelected">
+		<qp-tab caption="Appointments" id="appointmentsTab">
+			<qp-grid id="gridAppointmentsInRoute" view.bind="AppointmentsInRoute">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Additional Info" id="additionalInfoTab">
+			<qp-template id="AdditionalTemplate" name="17-17-14" wg-container>
+				<qp-fieldset id="RouteDocumentSelected_10" slot="A" view.bind="RouteDocumentSelected">
+					<field name="Miles"></field>
+					<field name="Weight"></field>
+					<field name="FuelQty"></field>
+					<field name="FuelType"></field>
+				</qp-fieldset>
+				<qp-fieldset id="RouteDocumentSelected_20" slot="B" view.bind="RouteDocumentSelected">
+					<field name="Oil"></field>
+					<field name="AntiFreeze"></field>
+					<field name="DEF"></field>
+					<field name="Propane"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

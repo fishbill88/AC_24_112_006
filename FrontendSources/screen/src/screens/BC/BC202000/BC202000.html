@@ -1,0 +1,86 @@
+﻿<template>
+    <qp-template name="7-10-7" id="EntityFilter_form" wg-container class="equal-height">
+        <qp-fieldset id="EntityFilter_firstColumn" view.bind="EntityFilter" slot="A" class="label-size-xs">
+            <field name="ConnectorType"></field>
+            <field name="BindingID"></field>
+            <field name="EntityType"></field>
+            <using view="CurrentEntity" wg-container="CurrentEntity_PXFormView1">
+                <field name="IsActive"></field>
+            </using>
+        </qp-fieldset>
+        <qp-fieldset id="CurrentEntity_PXFormView2" view.bind="CurrentEntity" slot="B" wg-container class="label-size-m">
+            <field name="Direction"></field>
+            <field name="PrimarySystem"></field>
+            <field name="MaxAttemptCount"></field>
+            <field name="AutoMergeDuplicates"></field>
+            <field name="ParallelProcessing"></field>
+        </qp-fieldset>
+        <qp-fieldset id="CurrentEntity_PXFormView3" view.bind="CurrentEntity" slot="C" wg-container>
+            <field name="ImportRealTimeStatus"></field>
+            <field name="ExportRealTimeStatus"></field>
+            <field name="RealTimeMode"></field>
+            <field name="RealTimeBaseURL"></field>
+        </qp-fieldset>
+    </qp-template>
+    <!-- Tabs -->
+    <qp-tabbar id="mainTab">
+        <qp-tab id="tabImportMapping" caption="Import Mapping">
+            <qp-grid id="gridImportMapping" view.bind="ImportMappings"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabImportFiltering" caption="Import Filtering">
+            <qp-grid id="gridImportConditions" view.bind="ImportFilters"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabExportMapping" caption="Export Mapping">
+            <qp-grid id="gridExportMapping" view.bind="ExportMappings"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabExportFiltering" caption="Export Filtering">
+            <qp-grid id="gridExportConditions" view.bind="ExportFilters"></qp-grid>
+        </qp-tab>
+    </qp-tabbar>
+    <!-- Clear Sync Data -->
+    <qp-panel id="DeleteConfirmationPanel"
+              caption="Clear Sync Data"
+              width="40vw"
+              auto-repaint="true">
+        <qp-template name="1" id="DeleteConfirmationPanelTemplate">
+            <qp-fieldset slot="A" id="DeleteConfirmationPanel_CstFormView45" view.bind="DeleteConfirmationPanel" wg-container>
+                <field name="DeleteConfirmationPanelLabel01" id="lblDeleteConfirmationPanel01" replace-content unbound>
+                    <qp-label caption="Are you sure you want to delete all synchronization data for the entity? This operation cannot be undone.">
+                    </qp-label>
+                </field>
+                <field name="DeleteConfirmationPanelLabel02" id="lblDeleteConfirmationPanel02" replace-content unbound>
+                    <qp-label caption="Please enter the Entity Name to confirm.">
+                    </qp-label>
+                </field>
+                <field name="EntityName"></field>
+            </qp-fieldset>
+        </qp-template>
+        <footer>
+            <qp-button id="btnDeleteConfirmationPanelContinue" caption="Continue" dialog-result="Yes"></qp-button>
+            <qp-button id="btnDeleteConfirmationPanelCancel" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+    <!-- Start Real-Time Sync -->
+    <qp-panel id="StartRealTimePanel"
+              caption="Start Real-Time Sync"
+              wg-container
+              auto-repaint="true">
+        <qp-template name="1" id="StartRealTimePanelTemplate">
+            <qp-fieldset slot="A" id="StartRealTimePanel_firstColumn" view.bind="StartRealTimePanel">
+                <field name="StartRealTimePanelLabel01" id="lblStartRealTimePanelConfirmationMessage01" replace-content unbound>
+                    <qp-label caption="This webhook URL will be used to receive push notifications from the external system.">
+                    </qp-label>
+                </field>
+                <field name="StartRealTimePanelLabel02" id="lblStartRealTimePanelConfirmationMessage02" replace-content unbound>
+                    <qp-label caption="Please make sure that the URL is correct and click Continue to proceed.">
+                    </qp-label>
+                </field>
+                <field name="RealTimeURL"></field>
+            </qp-fieldset>
+        </qp-template>
+        <footer>
+            <qp-button id="btnStartRealTimePanelContinue" caption="Continue" dialog-result="Yes"></qp-button>
+            <qp-button id="btnStartRealTimePanelCancel" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+</template>

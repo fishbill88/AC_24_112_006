@@ -1,0 +1,37 @@
+﻿<template>
+	<qp-splitter id="splitContainerWorkCodes" initial-split="65%">
+		<split-pane>
+			<qp-grid id="grid1" caption="WCC Codes" view.bind="WorkCompensationCodes">
+			</qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-splitter id="splitContainerRightPane" initial-split="65%" split="height">
+				<split-pane>
+					<qp-grid id="rateGrid" view.bind="WorkCompensationRates" caption="Rates">
+					</qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-caption caption="Sources"></qp-caption>
+					<qp-tabbar id="tabBottomRight" wg-container>
+						<qp-tab id="projectTab" caption="Project Tasks">
+							<qp-grid id="projectTasksGrid" view.bind="ProjectTaskSources">
+							</qp-grid>
+						</qp-tab>
+						<qp-tab id="laborTab" caption="Labor Items">
+							<qp-grid id="laborItemsGrid" view.bind="LaborItemSources">
+							</qp-grid>
+						</qp-tab>
+						<qp-tab id="costCodesTab" caption="Cost Codes">
+							<qp-grid id="costCodesGrid" view.bind="CostCodeRanges">
+							</qp-grid>
+						</qp-tab>
+					</qp-tabbar>
+				</split-pane>
+			</qp-splitter>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="MaximumInsurableWages" caption="Maximum Insurable Wages" wg-container auto-repaint="true" height="55vh">
+		<qp-grid id="grdMaximumInsurabelWages" view.bind="MaximumInsurableWages">
+		</qp-grid>
+	</qp-panel>
+</template>

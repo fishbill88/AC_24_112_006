@@ -1,0 +1,165 @@
+﻿<template>
+    <qp-template name="17-17-14" id="Bindings_form" wg-container>
+        <qp-fieldset id="summaryFirstColumn" view.bind="Bindings" slot="A">
+            <field name="ConnectorType"></field>
+            <field name="BindingName"></field>
+        </qp-fieldset>
+        <qp-fieldset id="summarySecondColumn" view.bind="Bindings" slot="B" no-label="true">
+            <field name="IsActive"></field>
+            <field name="IsDefault"></field>
+        </qp-fieldset>
+    </qp-template>
+
+    <!-- Tabs -->
+    <qp-tabbar active-tab-id="tabConnectionSettings" id="CurrentStore_tab" wg-container>
+        <qp-tab id="tabConnectionSettings" caption="Connection Settings">
+            <qp-template name="17-17-14" id="tabConnectionSettingsTemplate">
+                <div slot="A" class="v-stack">
+                    <qp-fieldset id="CurrentBindingShopify_frmCurrentBindingShopify1"
+                                 view.bind="CurrentBindingShopify"
+                                 caption="Store Settings"
+                                 wg-container>
+                        <field name="ShopifyApiBaseUrl"></field>
+                        <field name="ShopifyApiKey"></field>
+                        <field name="ShopifyAccessToken"></field>
+                        <field name="StoreSharedSecret"></field>
+                        <field name="ShopifyStorePlan"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="CurrentBinding_PXFormView1" view.bind="CurrentBinding" caption="System Settings" wg-container>
+                        <field name="LocaleName"></field>
+                    </qp-fieldset>
+                </div>
+                <div slot="B" class="v-stack">
+                    <qp-fieldset id="CurrentBindingShopify_frmStorePreferences" view.bind="CurrentBindingShopify" caption="Store Properties" wg-container>
+                        <field name="ShopifyStoreUrl"></field>
+                        <field name="ShopifyApiVersion"></field>
+                        <div id="CurrentStore_frmCurrencyZone" wg-container>
+                            <field name="CurrentStore.DefaultStoreCurrency"></field>
+                            <field name="CurrentStore.SupportedCurrencies"></field>
+                            <field name="CurrentStore.StoreTimeZone"></field>
+                        </div>
+                    </qp-fieldset>
+                    <div id="CurrentBinding_frmOther" wg-container>
+                        <qp-fieldset id="groupStoreAdministratorDetails" view.bind="CurrentBinding" caption="Store Administrator Details">
+                            <field name="BindingAdministrator"></field>
+                        </qp-fieldset>
+                        <qp-fieldset id="groupLicenseRestrictions" view.bind="CurrentBinding" caption="License Restrictions">
+                            <field name="AllowedStores"></field>
+                        </qp-fieldset>
+                    </div>
+                </div>
+            </qp-template>
+        </qp-tab>
+        <qp-tab id="tabEntitySettings" caption="Entity Settings">
+            <qp-grid id="CstPXGrid60" view.bind="Entities"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabCustomerSettings" caption="Customer Settings">
+            <qp-template name="17-17-14" id="frmCustomerSettings">
+                <qp-fieldset slot="A" id="groupCustomer" view.bind="CurrentStore" caption="Customer" class="label-size-m">
+                    <field name="CustomerClassID" control-type="qp-selector" config-allow-edit.bind="true"></field>
+                    <field name="CustomerTemplate"></field>
+                    <field name="CustomerNumberingID" config-allow-edit.bind="true"></field>
+                    <field name="LocationTemplate"></field>
+                    <field name="LocationNumberingID" config-allow-edit.bind="true"></field>
+                    <field name="InventoryNumberingID" config-allow-edit.bind="true"></field>
+                    <field name="InventoryTemplate"></field>
+                    <field name="GuestCustomerID" config-allow-edit.bind="true"></field>
+                    <field name="MultipleGuestAccounts"></field>
+                </qp-fieldset>
+            </qp-template>
+        </qp-tab>
+        <qp-tab id="tabInventorySettings" caption="Inventory Settings">
+            <qp-template name="17-17-14" id="frmInventorySettings">
+                <div slot="A">
+                    <qp-fieldset id="groupInventorySettings" view.bind="CurrentStore" caption="Inventory Settings">
+                        <using wg-container="CurrentBindingShopify_frmCurrentBindingShopify3">
+                            <field name="CurrentBindingShopify.CombineCategoriesToTags"></field>
+                        </using>
+                        <field name="StockItemClassID" config-allow-edit.bind="true"></field>
+                        <field name="NonStockItemClassID" config-allow-edit.bind="true"></field>
+                        <field name="Visibility"></field>
+                        <field name="Availability"></field>
+                        <field name="NotAvailMode"></field>
+                        <field name="AvailabilityCalcRule"></field>
+                        <field name="WarehouseMode"></field>
+                    </qp-fieldset>
+                    <qp-grid id="gridExportLocations"
+                             view.bind="ExportLocations"
+                             caption="Warehouse Mapping for Inventory Export">
+                        <columns>
+                            <column field="SiteID"></column>
+                            <column field="LocationID"></column>
+                            <!--if not defined, then input type is generated-->
+                            <column field="ExternalLocationID" editor-type="qp-drop-down"></column>
+                        </columns>
+                    </qp-grid>
+                </div>
+            </qp-template>
+        </qp-tab>
+        <qp-tab id="tabOrderSettings" caption="Order Settings">
+            <qp-template name="17-17-14" id="frmOrderSettings">
+                <div slot="A" id="frmOrderSettingsFirstColumn">
+                    <qp-fieldset id="CurrentBinding_frmCurrentBinding1" view.bind="CurrentBinding" wg-container>
+                        <field name="BranchID" config-allow-edit.bind="true"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="groupOrder" view.bind="CurrentStore" caption="Order">
+                        <field name="OrderType" config-allow-edit.bind="true"></field>
+                        <field name="OtherSalesOrderTypes"></field>
+                        <field name="ReturnOrderType" config-allow-edit.bind="true"></field>
+                        <field name="RefundAmountItemID" config-allow-edit.bind="true"></field>
+                        <field name="ReasonCode" config-allow-edit.bind="true"></field>
+                        <field name="OrderTimeZone"></field>
+                        <field name="PostDiscounts"></field>
+                        <field name="ImportOrderRisks"></field>
+                        <field name="HoldOnRiskStatus"></field>
+                        <field name="GiftCertificateItemID" config-allow-edit.bind="true"></field>
+                        <field name="SyncOrdersFrom"></field>
+                        <field name="SyncOrderNbrToStore"></field>
+                        <field name="AllowOrderEdit"></field>
+                    </qp-fieldset>
+                </div>
+                <div slot="B" id="frmOrderSettingsSecondColumn">
+                    <qp-fieldset id="groupTaxes" view.bind="CurrentStore" caption="Taxes">
+                        <field name="TaxSynchronization"></field>
+                        <field name="DefaultTaxZoneID"></field>
+                        <field name="UseAsPrimaryTaxZone"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="groupSubstitutionLists" view.bind="CurrentStore" caption="Substitution Lists">
+                        <field name="TaxSubstitutionListID"></field>
+                        <field name="TaxCategorySubstitutionListID"></field>
+                        <field name="ShippingCarrierListID"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="CurrentBindingShopify_PXFormView234" view.bind="CurrentBindingShopify" caption="POS Order" wg-container>
+                        <field name="ShopifyPOS"></field>
+                        <field name="POSDirectOrderType"></field>
+                        <field name="POSShippingOrderType"></field>
+                    </qp-fieldset>
+                    <qp-grid id="gridImportLocations"
+                             view.bind="ImportLocations"
+                             caption="Warehouse Mapping for Order Import">
+                        <columns>
+                            <!--if not defined, then input type is generated-->
+                            <column field="ExternalLocationID" editor-type="qp-drop-down"></column>
+                            <column field="SiteID"></column>
+                            <column field="LocationID"></column>
+                        </columns>
+                    </qp-grid>
+                </div>
+            </qp-template>
+        </qp-tab>
+        <qp-tab id="tabPaymentSettings" caption="Payment Settings">
+            <qp-grid id="PaymentsMethods"
+                     class="framed-section"
+                     view.bind="PaymentMethods"></qp-grid>
+            <qp-grid id="FeeMappings"
+                        view.bind="FeeMappings"
+                        class="framed-section"
+                        caption="Shopify Fees"
+                        wg-container ="FeeMappings_FeeMappings"></qp-grid>
+        </qp-tab>
+        <qp-tab id="tabShippingSettings" caption="Shipping Settings">
+            <qp-grid id="PXGrid1"
+                     view.bind="ShippingMappings"></qp-grid>
+        </qp-tab>
+    </qp-tabbar>
+</template>

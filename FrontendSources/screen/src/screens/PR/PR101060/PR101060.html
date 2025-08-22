@@ -1,0 +1,195 @@
+<template>
+	<qp-template name="1-1" id="Document_form" class="equal-height" wg-container>
+		<div slot="A">
+			<qp-fieldset id="basic" view.bind="Document">
+				<field name="CodeCD"></field>
+				<field name="Description"></field>
+				<field name="ContribType"></field>
+				<field name="AssociatedSource"></field>
+				<field name="BAccountID"></field>
+				<field name="DedInvDescrType"></field>
+				<field name="VndInvDescr"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="boxes" view.bind="Document" class="no-label">
+				<field name="IsActive"></field>
+				<field name="IsGarnishment"></field>
+				<field name="AffectsTaxes"></field>
+				<field name="AcaApplicable"></field>
+				<field name="IsPayableBenefit"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="CurrentDocument_tab" view.bind="CurrentDocument">
+		<qp-tab id="USTaxSettings" caption="US Tax Settings" if.bind="Document.ShowUSTaxSettingsTab.value == true">
+			<qp-template name="1-1" id="usaTemplate">
+				<div slot="A">
+					<qp-fieldset id="taxSettingsForm" view.bind="CurrentDocument">
+						<field name="IncludeType"></field>
+						<field name="BenefitTypeCD"></field>
+						<field name="AllowSupplementalElection"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="grdUSTaxability" view.bind="DeductCodeTaxesUS" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="CANTaxSettingsTab" caption="CAN Tax Settings" if.bind="Document.ShowCANTaxSettingsTab.value == true">
+			<qp-template name="1-1" id="canTemplate">
+				<div slot="A">
+					<qp-fieldset id="frmCANTaxSettings" view.bind="CurrentDocument">
+						<field name="IncludeType"></field>
+						<field name="BenefitTypeCD"></field>
+						<field name="AllowSupplementalElection"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="grdCANTaxability" view.bind="DeductCodeTaxesCAN" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ACAInformationTab" caption="ACA Information" if.bind="Document.AcaApplicable.value == true">
+			<qp-template name="1-1" id="acaTemplate">
+				<div slot="A">
+					<qp-fieldset id="acaInformationForm" view.bind="CurrentDocument">
+						<field name="MinimumIndividualContribution"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="gridAca" view.bind="AcaInformation" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="EmployeeDeductionTab" caption="Employee Deduction" if.bind="Document.ContribType.value != 'CNT'">
+			<qp-template name="1-1" id="dedTemplate">
+				<div slot="A">
+					<qp-fieldset id="EmpDedBasic" view.bind="CurrentDocument">
+						<using view="CurrentDocument" wg-container="CurrentDocument_tab">
+							<field name="DedCalcType"></field>
+							<field name="DedAmount"></field>
+							<field name="DedPercent"></field>
+							<field name="DedMaxFreqType"></field>
+							<field name="DedMaxAmount"></field>
+							<field name="DedApplicableEarnings"></field>
+							<field name="DedReportType"></field>
+							<field name="DedReportTypeCAN"></field>
+							<field name="DedQuebecReportTypeCAN"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="EmployerContributionTab" caption="Employer Contribution" if.bind="Document.ContribType.value != 'DED'">
+			<qp-template name="1-1" id="benTemplate">
+				<div slot="A">
+					<qp-fieldset id="EmpCntBasic" view.bind="CurrentDocument">
+						<using view="CurrentDocument" wg-container="CurrentDocument_tab">
+							<field name="CntCalcType"></field>
+							<field name="CNtAmount"></field>
+							<field name="CntPercent"></field>
+							<field name="CntMaxFreqType"></field>
+							<field name="CntMaxAmount"></field>
+							<field name="CntApplicableEarnings"></field>
+							<field name="CntReportType"></field>
+							<field name="CntReportTypeCAN"></field>
+							<field name="CertifiedReportType"></field>
+							<field name="CntQuebecReportTypeCAN"></field>
+							<field name="NoFinancialTransaction"></field>
+							<field name="ContributesToGrossCalculation"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="WCCCodeTab" caption="WCC Code" if.bind="Document.AssociatedSource.value == 'WCC'">
+			<qp-template name="1-1" id="wccTemplate">
+				<div slot="A">
+					<qp-fieldset id="wcForm" view.bind="CurrentDocument">
+						<field name="State"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-template name="1-1" id="wccGridTemplate">
+				<div slot="A">
+					<qp-label caption="Rates"></qp-label>
+					<qp-grid id="gridWCRates" view.bind="WorkCompensationRates" class="framed-section">
+					</qp-grid>
+				</div>
+				<div slot="B">
+					<qp-label caption="Maximum Insurable Wages"></qp-label>
+					<qp-grid id="gridWCMaxInsurableWages" view.bind="MaximumInsurableWages" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ApplicableWageTab" caption="Applicable Wage" if.bind="Document.ShowApplicableWageTab.value == true">
+			<qp-template name="1-1" id="wccGridTemplate">
+				<div slot="A">
+					<qp-label caption="Earnings Increasing Applicable Wage"></qp-label>
+					<qp-fieldset id="frmEarningsIncreasingWage" view.bind="CurrentDocument">
+						<field name="EarningsIncreasingWageIncludeType"></field>
+					</qp-fieldset>
+					<qp-grid id="grdEarningsIncreasingWage" view.bind="EarningsIncreasingWage" class="framed-section">
+					</qp-grid>
+				</div>
+				<div slot="B">
+					<qp-label caption="Deductions Decreasing Applicable Wage"></qp-label>
+					<qp-fieldset id="frmDeductionsDecreasingWage" view.bind="CurrentDocument">
+						<field name="DeductionsDecreasingWageIncludeType"></field>
+					</qp-fieldset>
+					<qp-grid id="grdDeductionsDecreasingWage" view.bind="DeductionsDecreasingWage" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+			<qp-template name="1-1" id="wccGridTemplate">
+				<div slot="A">
+					<qp-label caption="Benefits Increasing Applicable Wage"></qp-label>
+					<qp-fieldset id="frmBenefitsIncreasingWage" view.bind="CurrentDocument">
+						<field name="BenefitsIncreasingWageIncludeType"></field>
+					</qp-fieldset>
+					<qp-grid id="grdBenefitsIncreasingWage" view.bind="BenefitsIncreasingWage" class="framed-section">
+					</qp-grid>
+				</div>
+				<div slot="B">
+					<qp-label caption="Employee Taxes Decreasing Applicable Wage"></qp-label>
+					<qp-fieldset id="frmTaxesDecreasingWage" view.bind="CurrentDocument">
+						<field name="TaxesDecreasingWageIncludeType"></field>
+					</qp-fieldset>
+					<qp-grid id="grdTaxesDecreasingWage" view.bind="TaxesDecreasingWage" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+			<qp-template name="1-1" id="wccTemplate">
+				<div slot="A">
+					<qp-label caption="Employer Taxes Increasing Applicable Wage"></qp-label>
+					<qp-fieldset id="frmTaxesIncreasingWage" view.bind="CurrentDocument">
+						<field name="TaxesIncreasingWageIncludeType"></field>
+					</qp-fieldset>
+					<qp-grid id="grdTaxesIncreasingWage" view.bind="TaxesIncreasingWage" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="GLAccountsTab" caption="GL Accounts">
+			<qp-template name="1-1" id="glTemplate">
+				<div slot="A">
+					<qp-fieldset id="GLAccountsBasic" view.bind="CurrentDocument">
+						<using view="CurrentDocument" wg-container="CurrentDocument_tab">
+							<field name="DedLiabilityAcctID"></field>
+							<field name="DedLiabilitySubID"></field>
+							<field name="BenefitExpenseAcctID"></field>
+							<field name="BenefitExpenseSubID"></field>
+							<field name="BenefitLiabilityAcctID"></field>
+							<field name="BenefitLiabilitySubID"></field>
+						</using>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

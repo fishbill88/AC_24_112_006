@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report version="" Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PMWipTotalForecastHistory.ProjectID</DataField>
+      <Value>@ProjectID</Value>
+    </FilterExp>
+  </Filters>
+  <Parameters>
+    <ReportParameter>
+      <Name>From_Date</Name>
+      <Prompt>From Date</Prompt>
+      <Required>True</Required>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>To_Date</Name>
+      <Prompt>To Date</Prompt>
+      <Required>True</Required>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ProjectID</Name>
+      <Prompt>Project</Prompt>
+      <Required>True</Required>
+      <Type>Integer</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ActToPeriod</Name>
+      <Prompt>ActToPeriod</Prompt>
+      <Required>True</Required>
+    </ReportParameter>
+  </Parameters>
+  <ParamsColumns>1</ParamsColumns>
+  <SchemaUrl>http://localhost/code</SchemaUrl>
+  <Style>
+    <TextAlign>Left</TextAlign>
+  </Style>
+  <Tables>
+    <ReportTable Name="PMWipTotalForecastHistory">
+      <Fields>
+        <ReportField Name="ActualCostAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualRevenueAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ArRevenueAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+		<ReportField Name="ArAssetAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="ArLiabilityAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="ArExpenseAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="ArRevenueInclTaxAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="PeriodID"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.CN.PMWipTotalForecastHistory</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>15.74075cm</Width>
+  <Sections>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>ThroughDate</Name>
+          <ValueExpr>=CStr(CInt(Left([@To_Date],4))-1) + '12'</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualCostAmt</Name>
+          <ValueExpr>=$ActualCostAmt + IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipTotalForecastHistory.ActualCostAmount],0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualRevenueAmt</Name>
+          <ValueExpr>=$ActualRevenueAmt + IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipTotalForecastHistory.ActualRevenueAmount] + [PMWipTotalForecastHistory.ArRevenueInclTaxAmount],0)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualCostAmtTodate</Name>
+          <ValueExpr>=$ActualCostAmtTodate + IIF([PMWipTotalForecastHistory.PeriodID] &lt;= [@ActToPeriod],[PMWipTotalForecastHistory.ActualCostAmount], 0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualRevenueAmtTodate</Name>
+          <ValueExpr>=$ActualRevenueAmtTodate +  IIF([PMWipTotalForecastHistory.PeriodID] &lt;= [@To_Date],[PMWipTotalForecastHistory.ActualRevenueAmount] + [PMWipTotalForecastHistory.ArRevenueInclTaxAmount], 0)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CostThroughAmt</Name>
+          <ValueExpr>=$CostThroughAmt + IIf([PMWipTotalForecastHistory.PeriodID]&lt;=$ThroughDate, [PMWipTotalForecastHistory.ActualCostAmount],0)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>BilledThroughAmt</Name>
+          <ValueExpr>=$BilledThroughAmt + IIf([PMWipTotalForecastHistory.PeriodID]&lt;=$ThroughDate, [PMWipTotalForecastHistory.ActualRevenueAmount] + [PMWipTotalForecastHistory.ArRevenueInclTaxAmount],0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ArRevenueAmt</Name>
+          <ValueExpr>=$ArRevenueAmt + IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date,[PMWipTotalForecastHistory.ArRevenueAmount] + [PMWipTotalForecastHistory.ArRevenueInclTaxAmount] ,0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ArRevenueAmtTodate</Name>
+          <ValueExpr>=$ArRevenueAmtTodate + IIf([PMWipTotalForecastHistory.PeriodID]&lt;=@ActToPeriod, [PMWipTotalForecastHistory.ArRevenueAmount] + [PMWipTotalForecastHistory.ArRevenueInclTaxAmount], 0)</ValueExpr>
+        </ReportVariable>
+		<ReportVariable>
+		  <Name>ArAssetAmt</Name>
+		  <ValueExpr>=$ArAssetAmt + IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date,[PMWipTotalForecastHistory.ArAssetAmount] ,0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArAssetAmtTodate</Name>
+		  <ValueExpr>=$ArAssetAmtTodate + IIf([PMWipTotalForecastHistory.PeriodID]&lt;=@ActToPeriod, [PMWipTotalForecastHistory.ArAssetAmount], 0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArLiabilityAmt</Name>
+		  <ValueExpr>=$ArLiabilityAmt + IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date,[PMWipTotalForecastHistory.ArLiabilityAmount] ,0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArLiabilityAmtTodate</Name>
+		  <ValueExpr>=$ArLiabilityAmtTodate + IIf([PMWipTotalForecastHistory.PeriodID]&lt;=@ActToPeriod, [PMWipTotalForecastHistory.ArLiabilityAmount], 0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArExpenseAmt</Name>
+		  <ValueExpr>=$ArExpenseAmt + IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date,[PMWipTotalForecastHistory.ArExpenseAmount] ,0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArExpenseAmtTodate</Name>
+		  <ValueExpr>=$ArExpenseAmtTodate + IIf([PMWipTotalForecastHistory.PeriodID]&lt;=@ActToPeriod, [PMWipTotalForecastHistory.ArExpenseAmount], 0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArRevenueInclTaxAmtTodate</Name>
+		  <ValueExpr>=$ArRevenueInclTaxAmtTodate + [PMWipTotalForecastHistory.ArRevenueInclTaxAmount]</ValueExpr>
+		</ReportVariable>
+	  </Variables>
+    </Detail>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+        </Font>
+      </Style>
+      <Visible>False</Visible>
+    </PageHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </ReportFooter>
+  </Sections>
+</Report>

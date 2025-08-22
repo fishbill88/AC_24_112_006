@@ -1,0 +1,52 @@
+<template>
+	<template id="tabDetails_Content">
+		
+		<qp-template name="1-1" id="details">
+
+			<div class="v-stack" slot="A">
+				<qp-fieldset id="tabDetails_MessageLeft" view.bind="Message">
+					<field name="StartDate_Date" ></field>
+					<field name="StartDate_Time" ></field>
+					<field name="MPStatus" ></field>
+					<field name="IsIncome" ></field>
+					<field name="IsPrivate" ></field>
+					<field name="ProvidesCaseSolution"></field>
+					<field name="WorkgroupID" ></field>
+					<field name="OwnerID" ></field>
+					<field name="ResponseToNoteID"  config-allow-edit.bind="true"></field>
+					<field name="RefNoteIDType" ></field>
+					<field name="RefNoteID" config-allow-edit.bind="true"></field>
+					<field name="ParentNoteID" config-allow-edit.bind="true"></field>
+					<field name="TimeActivity.ProjectID" ></field>
+					<field name="TimeActivity.CertifiedJob" ></field>
+					<field name="TimeActivity.ProjectTaskID" ></field>
+					<field name="TimeActivity.CostCodeID" ></field>
+					<field name="TimeActivity.LabourItemID" ></field>
+					<field name="TimeActivity.UnionID" ></field>
+					<field name="SendAt" ></field>
+				</qp-fieldset>
+				<qp-fieldset id="tabDetails_SendGrid" view.bind="Message" caption="SendGrid">
+					<field name="Categories" ></field>
+					<field name="BypassSuppressionChecks" ></field>
+					<field name="TrackEmailOpens" ></field>
+					<field name="TrackClicksInEmail" ></field>
+				</qp-fieldset>
+			</div>
+			<qp-fieldset id="tabDetails_MessageRight" view.bind="TimeActivity" slot="B">
+				<field name="TrackTime" ></field>
+				<field name="ApprovalStatus" ></field>
+				<field name="ApproverID" ></field>
+				<field name="EarningTypeID" ></field>
+				<field name="WorkCodeID" ></field>
+				<field name="ShiftID" ></field>
+				<field name="TimeSpent" ></field>
+				<field name="OvertimeSpent" ></field>
+				<field name="IsBillable" ></field>
+				<field name="Released" ></field>
+				<field name="TimeBillable" ></field>
+				<field name="OvertimeBillable" ></field>
+			</qp-fieldset>
+		</qp-template>
+
+	</template>
+</template>

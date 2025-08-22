@@ -1,0 +1,868 @@
+{
+	"name": "SM204030",
+	"graphName": "PX.Objects.CS.Email.EmailsSyncMaint",
+	"primaryView": "Filter",
+	"featureInstalled": [],
+	"actions": [
+		{
+			"name": "ViewEmployee",
+			"decorators": []
+		}
+	],
+	"views": [
+		{
+			"name": "Filter",
+			"dacClassName": null,
+			"displayName": null,
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ServerID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PolicyName",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [],
+			"actions": []
+		},
+		{
+			"name": "SelectedItems",
+			"dacClassName": null,
+			"displayName": null,
+			"isCollection": true,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "ProcessingStatus",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": [
+						2
+					],
+					"stateType": "default",
+					"name": "ProcessingMessage",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": true,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Selected",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "ServerID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "Address",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "EmailAccountID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "EmployeeID",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": "ViewEmployee",
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "linkCommand"
+							},
+							"arguments": [
+								"ViewEmployee"
+							]
+						}
+					],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "EmployeeCD",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				},
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "PolicyName",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": null,
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "linkCommand"
+					},
+					"arguments": [
+						"Status"
+					]
+				},
+				{
+					"name": {
+						"name": "gridConfig"
+					},
+					"arguments": [
+						{
+							"preset": "PrimaryInquiry",
+							"fastFilterByAllFields": false,
+							"suppressNoteFiles": true
+						}
+					]
+				}
+			],
+			"actions": [
+				{
+					"name": "Status",
+					"decorators": []
+				}
+			],
+			"suppressNoteFiles": true,
+			"mergeToolbarWith": "ScreenToolbar",
+			"allowDelete": false,
+			"allowInsert": false
+		}
+	],
+	"extensions": [
+		{
+			"name": "SM204030_SynchronizationStatus",
+			"graphName": null,
+			"extendsScreen": "SM204030",
+			"featureInstalled": [],
+			"actions": [
+				{
+					"name": "ResetContacts",
+					"decorators": []
+				},
+				{
+					"name": "ResetTasks",
+					"decorators": []
+				},
+				{
+					"name": "ResetEvents",
+					"decorators": []
+				},
+				{
+					"name": "ResetEmails",
+					"decorators": []
+				}
+			],
+			"views": [
+				{
+					"name": "CurrentItem",
+					"dacClassName": null,
+					"displayName": null,
+					"isCollection": false,
+					"featureInstalled": [],
+					"fields": [
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "ServerID",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "Address",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "ContactsExportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "ContactsExportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "ContactsImportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "ContactsImportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "TasksExportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "TasksExportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "TasksImportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "TasksImportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "EventsExportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "EventsExportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "EventsImportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "EventsImportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "EmailsExportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "EmailsExportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "EmailsImportDate_Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": [
+								32
+							],
+							"stateType": "default",
+							"name": "EmailsImportDate_Time",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": true,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						}
+					],
+					"extensions": [],
+					"decorators": [],
+					"actions": []
+				},
+				{
+					"name": "OperationLog",
+					"dacClassName": null,
+					"displayName": null,
+					"isCollection": true,
+					"featureInstalled": [],
+					"fields": [
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "ServerID",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "Address",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "Level",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "Date",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						},
+						{
+							"args": null,
+							"stateType": "default",
+							"name": "Message",
+							"bound": true,
+							"commitChanges": false,
+							"suppressLabel": false,
+							"invisible": false,
+							"readonly": false,
+							"disabled": false,
+							"multiLine": false,
+							"calculated": false,
+							"linkCommand": null,
+							"text": null,
+							"group": null,
+							"placeBeforeProperty": null,
+							"placeAfterProperty": null,
+							"decorators": [],
+							"editorType": null
+						}
+					],
+					"extensions": [],
+					"decorators": [
+						{
+							"name": {
+								"name": "gridConfig"
+							},
+							"arguments": [
+								{
+									"preset": "Details"
+								}
+							]
+						}
+					],
+					"actions": [
+						{
+							"name": "ClearLog",
+							"decorators": []
+						},
+						{
+							"name": "ResetWarning",
+							"decorators": []
+						}
+					]
+				}
+			],
+			"extensions": [],
+			"decorators": []
+		}
+	],
+	"decorators": [
+		{
+			"name": {
+				"name": "graphInfo"
+			},
+			"arguments": [
+				{
+					"graphType": "PX.Objects.CS.Email.EmailsSyncMaint",
+					"primaryView": "Filter"
+				}
+			]
+		}
+	]
+}

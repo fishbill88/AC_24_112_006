@@ -1,0 +1,33 @@
+<template>
+	<qp-panel
+		id="Merge_Filter"
+		auto-repaint="true"
+		caption="Merge Conflicts"
+		width="750px"
+	>
+		<qp-fieldset id="panel_MergeEntities_TargetRecord" view.bind="Merge_Filter">
+			<field name="TargetRecord"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="frmGrdMergeEntities" view.bind="Merge_Filter">
+			<field name="Caption" no-label.bind="true"> </field>
+		</qp-fieldset>
+
+		<qp-grid id="grdMergeEntities" view.bind="Merge_VisibleComparisonRows">
+		</qp-grid>
+		<footer>
+			<qp-button
+				id="btnProcessMergeEntities"
+				caption="Resolve"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="btnCancelMergeEntities"
+				caption="Cancel"
+				dialog-result="Abort"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

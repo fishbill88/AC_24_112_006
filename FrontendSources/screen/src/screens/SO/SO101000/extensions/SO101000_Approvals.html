@@ -1,0 +1,14 @@
+<template>
+	<template id="tabApproval_Content">
+		<qp-splitter id="splitApprovals" split="height" initial-split="50%">
+			<split-pane>
+				<qp-grid id="gridApproval" view.bind="SetupApproval" caption="Sales Orders">
+				</qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-grid id="gridInvoiceApproval" view.bind="SetupInvoiceApproval" caption="Invoices">
+				</qp-grid>
+			</split-pane>
+		</qp-splitter>
+	</template>
+</template>

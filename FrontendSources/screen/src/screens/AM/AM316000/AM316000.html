@@ -1,0 +1,34 @@
+<template>
+	<qp-template id="Document_form" name="7-10-7" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="form" view.bind="Document">
+			<field name="EmployeeID">
+				<qp-button id="btnCurrent" class="col-12" state.bind="FillCurrentUser"></qp-button>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabClockEntries" caption="Clock Entries">
+			<qp-grid id="gridClockEntires" view.bind="Transactions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOperations" caption="Operations">
+			<qp-grid id="gridOperations" view.bind="Operations"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="AMClockTranLineSplittingMultipleProductionExtension_lsselect" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="MatlLineSplittingExtension_LotSerOptions_optform" wg-container name="14-17-17" class="equal-height">
+			<qp-fieldset slot="A" id="AMClockTranLineSplittingMultipleProductionExtension_LotSerOptions1" view.bind="AMClockTranLineSplittingMultipleProductionExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="AMClockTranLineSplittingMultipleProductionExtension_LotSerOptions2" view.bind="AMClockTranLineSplittingMultipleProductionExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="AMClockTranLineSplittingMultipleProductionExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grid2" view.bind="Splits"></qp-grid>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

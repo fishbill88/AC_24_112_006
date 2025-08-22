@@ -1,0 +1,49 @@
+<template>
+	<qp-template id="formFilter" name="1-1-1" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="ClassID"></field>
+			<field name="AssetTypeID"></field>
+			<field name="PropertyType"></field>
+			<field name="Condition"></field>
+			<!-- Following 2 fields splitted into 2 separated lines according to: https://wiki.acumatica.com/display/TND/Field+Set#FieldSet-Recommendationsonhowtoorganizecontentinsideafieldset -->
+			<field name="AcqDateFrom"></field>
+			<field name="AcqDateTo"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B" class="label-size-s">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="BuildingID"></field>
+			<!-- Following 2 fields splitted into 2 separated lines according to: https://wiki.acumatica.com/display/TND/Field+Set#FieldSet-Recommendationsonhowtoorganizecontentinsideafieldset -->
+			<field name="Floor"></field>
+			<field name="Room"></field>
+			<field name="EmployeeID"></field>
+			<field name="Department"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdFilter" view.bind="Filter" slot="C">
+			<field name="PONumber"></field>
+			<field name="ReceiptType"></field>
+			<field name="ReceiptNbr"></field>
+			<field name="BillNumber"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="assets"></qp-grid>
+
+	<qp-panel id="DispParams" caption="Disposal Parameters" auto-repaint="true">
+		<qp-template id="formDispParams" name="1" wg-container="DispParams_DisposePrm">
+			<qp-fieldset id="panelDispParams" view.bind="DispParams" slot="A">
+				<field name="DisposalDate"></field>
+				<field name="DisposalPeriodID"></field>
+				<field name="DisposalAmt"></field>
+				<field name="DisposalMethodID"></field>
+				<field name="DisposalAccountID"></field>
+				<field name="DisposalSubID"></field>
+				<field name="DeprBeforeDisposal"></field>
+				<field name="Reason"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-DispParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-DisiParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

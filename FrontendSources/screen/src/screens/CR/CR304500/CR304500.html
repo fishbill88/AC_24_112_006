@@ -1,0 +1,69 @@
+<template>
+	<!-- Primary Form -->
+	<qp-template
+		name="7-10-7"
+		id="form"
+		wg-container
+		qp-collapsible
+		class="equal-height"
+	>
+		<qp-fieldset slot="A" id="phF_form_PXLayoutRule#0" view.bind="Quote">
+			<field name="OpportunityID" config-allow-edit.bind="true"></field>
+			<field name="QuoteNbr" pinned></field>
+			<field name="IsPrimary" config-enabled.bind="false" pinned></field>
+			<field name="Status"></field>
+			<field name="DocumentDate" pinned="false"></field>
+			<field name="ExpirationDate" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="phF_form_PXLayoutRule#8" view.bind="Quote">
+			<field name="BAccountID" config-allow-edit.bind="true" pinned></field>
+			<field name="LocationID" config-allow-edit.bind="true" pinned></field>
+			<field name="ContactID" config-allow-edit.bind="true" pinned></field>
+			<field
+				name="CuryID"
+				control-type="qp-currency"
+				view.bind="currencyinfo"
+			></field>
+			<field name="OwnerID"></field>
+			<field name="Subject" config-type.bind="1" config-rows.bind="3" pinned></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="C"
+			id="phF_form_PXLayoutRule#25"
+			view.bind="Quote"
+			class="highlights-section"
+		>
+			<field name="ManualTotalEntry"></field>
+			<field name="CuryAmount"></field>
+			<field name="CuryLineDiscountTotal"></field>
+			<field name="CuryDiscTot"></field>
+			<field name="AMCuryEstimateTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryProductsAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<!-- Tabs -->
+	<qp-tabbar id="tab">
+		<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content">
+		</qp-tab>
+		<qp-tab id="tabDetails" caption="Details" ref="tabDetails_Content">
+		</qp-tab>
+		<qp-tab id="tabEstimates" caption="Estimates" ref="tabEstimates_Content">
+		</qp-tab>
+		<qp-tab id="tabContact" caption="Contact" ref="tabContact_Content">
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial" ref="tabFinancial_Content">
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping" ref="tabShipping_Content">
+		</qp-tab>
+		<qp-tab id="tabTaxes" caption="Taxes" ref="tabTaxes_Content">
+		</qp-tab>
+		<qp-tab id="tabDiscounts" caption="Discounts" ref="tabDiscounts_Content">
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals" ref="tabApprovals_Content">
+		</qp-tab>
+		<qp-tab id="tabRelations" caption="Relations" ref="tabRelations_Content">
+		</qp-tab>
+	</qp-tabbar>
+</template>

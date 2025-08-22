@@ -1,0 +1,33 @@
+<template>
+	<qp-template name="17-17-14" id="Filter_form" wg-container class="equal-height">
+		<qp-fieldset slot="A" id="column1" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="OwnerID">
+				<qp-field control-state.bind="Filter.MyOwner" no-label="true" class="col-4">
+				</qp-field>
+			</field>
+			<field name="WorkGroupID">
+				<qp-field control-state.bind="Filter.MyWorkGroup" no-label="true" class="col-4">
+				</qp-field>
+			</field>
+			<field name="SalesPersonID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="column2" view.bind="Filter">
+			<field name="OrderType"></field>
+			<field name="Status"></field>
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="ShowAll"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="column3" view.bind="Filter">
+			<field name="PrintWithDeviceHub" no-label="true"></field>
+			<field name="DefinePrinterManually" no-label="true"></field>
+			<field name="PrinterID"></field>
+			<field name="NumberOfCopies"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" class="stretch" view.bind="Records">
+	</qp-grid>
+</template>

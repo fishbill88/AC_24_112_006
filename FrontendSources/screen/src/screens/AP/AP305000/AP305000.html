@@ -1,0 +1,54 @@
+<template>
+	<qp-template name="7-10-7" id="formHeader" wg-container="Document_form" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" slot="A" view.bind="Document">
+			<field name="BatchNbr"></field>
+			<field name="Status"></field>
+			<field name="TranDate"></field>
+			<field name="ExportTime"></field>
+			<field name="ExtRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" slot="B" view.bind="Document">
+			<field name="CashAccountID"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="ReferenceID"></field>
+			<field name="TranDesc" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdHeader" slot="C" view.bind="Document">
+			<field name="CuryDetailTotal"></field>
+			<field name="BatchSeqNbr"></field>
+			<field name="DateSeqNbr"></field>
+			<field name="CountOfPayments"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridBatchPayments" view.bind="BatchPayments" wg-container="BatchPayments_grid"></qp-grid>
+
+	<qp-grid id="gridAddendaInfo" view.bind="AddendaInfo"></qp-grid>
+
+	<qp-panel id="AvailablePayments" caption="Add Payments" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template name="1-1-1" id="formFilterAddPayments">
+			<qp-fieldset slot="A" id="groupFilterAddPayments" view.bind="filter" caption="Payment Selection" wg-container="filter_frmPaymentFilter1">
+				<field name="NextPaymentRefNumber"></field>
+				<field name="StartDate"></field>
+				<field name="EndDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridAvailablePayments" view.bind="AvailablePayments" wg-container="AvailablePayments_gridOL1"></qp-grid>
+		<footer>
+			<qp-button id="buttonOK-AvailablePayments" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-AvailablePayments" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="VoidFilter" caption="Void Batch Payments" auto-repaint="true">
+		<qp-fieldset id="formVoidFilter" view.bind="voidFilter" wg-container="voidFilter_PXFormView1" caption="Void Batch Payments">
+			<field name="VoidDateOption"></field>
+			<field name="VoidDate"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonVoid-VoidFilter" dialog-result="OK" caption="Void"></qp-button>
+			<qp-button id="buttonCaption-VoidFilter" dialog-result="No" caption="Cancel"></qp-button>"
+		</footer>
+	</qp-panel>
+
+</template>

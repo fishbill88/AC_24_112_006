@@ -1,0 +1,11 @@
+<template>
+	<qp-template id="template" name="1-1" class="equal-height">
+		<qp-fieldset id="form" slot="A" view.bind="HeaderEntity">
+			<field name="EntityTypeName" config-display-mode.bind="'text'"></field>
+			<field name="Entity"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="DetailsEntity">
+	</qp-grid>
+</template>

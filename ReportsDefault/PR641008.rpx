@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report version="" Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PRPaymentEarning.RefNbr</DataField>
+      <Value>@RefNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRPaymentEarning.DocType</DataField>
+      <Value>@DocType</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>5px, 5px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Margins></Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <Name>DocType</Name>
+      <Required>True</Required>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>RefNbr</Name>
+      <Required>True</Required>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>CalcYTD</Name>
+      <Required>True</Required>
+      <Type>Boolean</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>http://localhost/2023_113_0042/</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>PRPaymentEarning.Amount</DataField>
+      <SortOrder>Descending</SortOrder>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PRPaymentEarning">
+      <Fields>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="Hours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="MTDAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QTDAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Rate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="TypeCD"></ReportField>
+        <ReportField Name="TypeCD_description"></ReportField>
+        <ReportField Name="TypeCD_EPEarningType_description"></ReportField>
+        <ReportField Name="YTDAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRPaymentEarning</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFieldsMode>OnlySpecified</ViewerFieldsMode>
+  <Width>4.26083in</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0in</Height>
+      <Visible>False</Visible>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.01in</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0in</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpEmployee">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PRPaymentEarning.RefNbr]</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.16in</Height>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox122">
+              <Location>344px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>YTD Amt</Value>
+            </TextBox>
+            <TextBox Name="textBox288">
+              <Location>176px, 0px</Location>
+              <Size>40px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+            </TextBox>
+            <TextBox Name="textBox289">
+              <Location>216px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+            </TextBox>
+            <TextBox Name="textBox385">
+              <Location>280px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>0px, 0px</Location>
+              <Size>176px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Earnings</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.16in</Height>
+          <Style>
+            <BackColor>Transparent</BackColor>
+          </Style>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox27">
+              <Format>N</Format>
+              <Location>288px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$totYTDAmt</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="grpType">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PRPaymentEarning.TypeCD]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>grpNbr</Name>
+              <ResetGroup>grpEmployee</ResetGroup>
+              <ValueExpr>=$grpNbr+1</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totYTDAmt</Name>
+              <ValueExpr>=$totYTDAmt+SUM([PRPaymentEarning.YTDAmount])</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.16in</Height>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox10">
+              <Location>0px, 0px</Location>
+              <Size>176px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= [PRPaymentEarning.TypeCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Format>N</Format>
+              <Location>336px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM([PRPaymentEarning.YTDAmount])</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

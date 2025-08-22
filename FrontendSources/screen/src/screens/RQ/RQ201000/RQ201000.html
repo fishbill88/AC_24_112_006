@@ -1,0 +1,35 @@
+<template>
+	<qp-template name="1-1" id="Classes_form" wg-container qp-collapsible class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="first" view.bind="Classes">
+			<field name="ReqClassID"></field>
+			<field name="Descr"></field>
+			<field name="PromisedLeadTime"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Classes" class="no-label">
+			<field name="CustomerRequest"></field>
+			<field name="VendorNotRequest"></field>
+			<field name="VendorMultiply"></field>
+			<field name="IssueRequestor"></field>
+			<field name="RestrictItemList"></field>
+			<field name="HideInventoryID"></field>
+		</qp-fieldset>
+	</qp-template>
+		
+	<qp-tabbar id="tab">
+		<qp-tab id="tabItemList" caption="Item List">
+        	<qp-grid id="grid" view.bind="ClassItems">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template name="1-1" id="CurrentClass_tab" wg-container class="label-size-m">
+				<qp-fieldset slot="A" id="CurrentClass_tab-A" view.bind="CurrentClass">
+					<field name="BudgetValidation"></field>
+					<field name="ExpenseAccountDefault"></field>
+					<field name="ExpenseSubMask"></field>
+					<field name="ExpenseAcctID"></field>
+					<field name="ExpenseSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

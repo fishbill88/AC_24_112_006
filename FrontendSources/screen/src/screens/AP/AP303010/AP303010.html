@@ -1,0 +1,186 @@
+<template>
+	<qp-template name="17-17-14" wg-container="Location_frmHeader" id="formHeader" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" slot="A" view.bind="Location">
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="LocationCD"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" slot="B" view.bind="Location">
+			<field name="Status"></field>
+			<field name="IsDefault"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="LocationCurrent_tab">
+		<qp-tab id="tabGeneral" caption="General">
+
+			<qp-template name="17-17-14" id="formGeneral">
+				<div slot="A" id="columnFirstGeneral">
+					<qp-fieldset id="groupLocationInfo" caption="Location Info">
+						<field name="LocationCurrent.Descr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupAddress" caption="Location Address" view.bind="Address" wg-container="Address_Address">
+						<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+							<field name="OverrideAddress"></field>
+						</using>
+						<field name="actionsAddress" unbound>
+							<qp-button id="buttonAddressLookup" state.bind="AddressLookup" caption="Address Lookup"></qp-button>
+							<qp-button id="buttonViewOnMap" state.bind="ViewOnMap" caption="View On Map"></qp-button>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="CountryID"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondGeneral">
+					<qp-fieldset id="groupAdditionalLocationInfo" caption="Additional Location Info" view.bind="Contact" wg-container="Contact_Contact">
+						<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+							<field name="OverrideContact"></field>
+						</using>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1Type"></field>
+						<field name="Phone1"></field>
+						<field name="Phone2Type"></field>
+						<field name="Phone2"></field>
+						<field name="FaxType"></field>
+						<field name="Fax"></field>
+						<field name="EMail"></field>
+						<field name="WebSite"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupOtherSettings" caption="Other Settings" view.bind="LocationCurrent">
+						<field name="VBranchID" config-allow-edit.bind="true"></field>
+						<field name="VPrintOrder"></field>
+						<field name="VEmailOrder"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPayment" caption="Payment">
+			<qp-template name="17-17-14" id="formPayment">
+				<div slot="A" id="columnFirstPayment">
+
+					<qp-fieldset id="groupRemitToAddress" caption="Remit-To Address" view.bind="RemitAddress" wg-container="RemitAddress_RemitAddress">
+						<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+							<field name="OverrideRemitAddress"></field>
+						</using>
+						<field name="actionsRemitAddress" unbound>
+							<qp-button id="buttonRemitAddressLookup" state.bind="RemitAddressLookup" caption="Address Lookup"></qp-button>
+							<qp-button id="buttonViewRemitOnMap" state.bind="ViewRemitOnMap" caption="View on Map"></qp-button>
+						</field>
+
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="State" config-allow-edit.bind="true"></field>
+						<field name="PostalCode"></field>
+						<field name="CountryID" config-allow-edit.bind="true"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+
+					<qp-fieldset id="groupRemitToInfo" caption="Remit-To Info" view.bind="RemitContact" wg-container="RemitContact_RemitContact">
+						<using wg-container="LocationCurrent_tab" view="LocationCurrent">
+							<field name="OverrideRemitContact"></field>
+						</using>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1Type"></field>
+						<field name="Phone1"></field>
+						<field name="Phone2Type"></field>
+						<field name="Phone2"></field>
+						<field name="FaxType"></field>
+						<field name="Fax"></field>
+						<field name="EMail"></field>
+						<field name="WebSite"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondPayment">
+					<qp-fieldset id="groupDefPaymentSettings" caption="Default Payment Settings" view.bind="APPaymentInfoLocation" wg-container="APPaymentInfoLocation_APPaymentInfoLocation">
+						<using wg-container="LocationCurrent_IsAPPaymentInfoSameAsMain" view="LocationCurrent">
+							<field name="IsAPPaymentInfoSameAsMain"></field>
+						</using>
+						<field name="VPaymentMethodID" config-allow-edit.bind="true"></field>
+						<field name="VCashAccountID" config-allow-edit.bind="true"></field>
+						<field name="VPaymentByType"></field>
+						<field name="VPaymentLeadTime"></field>
+						<field name="VSeparateCheck"></field>
+					</qp-fieldset>
+					<qp-grid id="gridPaymentDetails" view.bind="PaymentDetails" wg-container="PaymentDetails_grdPaymentDetails"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPurchaseSettings" caption="Purchase Settings">
+			<qp-template name="17-17-14" id="formPurchaseSettings">
+				<div slot="A" id="columnFirstPurchaseSettings">
+					<qp-fieldset id="groupTaxSettings" caption="Tax Settings" view.bind="LocationCurrent">
+						<field name="TaxRegistrationID"></field>
+						<field name="VTaxZoneID" config-allow-edit.bind="true"></field>
+						<field name="VTaxCalcMode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReceiptActions" caption="Receipt Actions" view.bind="LocationCurrent">
+						<field name="VAllowAPBillBeforeReceipt"></field>
+						<field name="VRcptQtyMin"></field>
+						<field name="VRcptQtyMax"></field>
+						<field name="VRcptQtyThreshold"></field>
+						<field name="VRcptQtyAction"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="groupShippingInstructions" caption="Shipping Instructions" view.bind="LocationCurrent">
+					<field name="VSiteID" config-allow-edit.bind="true"></field>
+					<field name="LocationBranchSettings.VSiteID" config-allow-edit.bind="true"></field>
+					<field name="VCarrierID" config-allow-edit.bind="true"></field>
+					<field name="VShipTermsID" config-allow-edit.bind="true"></field>
+					<field name="VFOBPointID" config-allow-edit.bind="true"></field>
+					<field name="VLeadTime"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template name="17-17-14" id="formGLAccounts">
+				<qp-fieldset id="panelGLAccounts" slot="A" view.bind="LocationCurrent">
+					<field name="IsAPAccountSameAsMain"></field>
+					<using view="APAccountSubLocation" wg-container="APAccountSubLocation_APAccountSubLocation">
+						<field name="VAPAccountID"></field>
+						<field name="VAPSubID"></field>
+					</using>
+					<field name="VExpenseAcctID"></field>
+					<field name="VExpenseSubID"></field>
+					<field name="VDiscountAcctID"></field>
+					<field name="VDiscountSubID"></field>
+					<using view="APAccountSubLocation" wg-container="APAccountSubLocation_APAccountSubLocation1">
+						<field name="VRetainageAcctID"></field>
+						<field name="VRetainageSubID"></field>
+					</using>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<!--#include file="~\Pages\Includes\AddressLookupPanel.inc"-->
+	<!-- TODO apply js sxripts -->
+	<qp-panel id="AddressLookupFilter" caption="Address Lookup">
+		<qp-fieldset id="panelAddressLookupFilter" view.bind="AddressLookupFilter" wg-container="AddressLookupFilter_AddressLookupPanelformAddress">
+
+			<field name="SearchAddress"></field>
+			<field name="ViewName"></field>
+			<field name="AddressLine1"></field>
+			<field name="AddressLine2"></field>
+			<field name="AddressLine3"></field>
+			<field name="City"></field>
+			<field name="CountryID"></field>
+			<field name="State"></field>
+			<field name="PostalCode"></field>
+			<field name="Latitude"></field>
+			<field name="Longitude"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button id="buttonSelect-AddressLookupFilter" state.bind="AddressLookupSelectAction" caption="Select" dialog-result="Cancel"></qp-button>
+			<qp-button id="buttonCancel-AddressLookupFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

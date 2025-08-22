@@ -1,0 +1,116 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template name="1-1" id="formGeneral" wg-container>
+			<div slot="A" id="columnFirstInTabGeneral">
+				<qp-fieldset
+					id="groupAdditionalAccountInfo"
+					view.bind="DefContact"
+					caption="Account Information"
+					wg-container="DefContact_DefContact1"
+				>
+					<field name="Phone1" unbound>
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="DefContact.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="DefContact.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Fax">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="DefContact.FaxType"
+						></qp-field>
+					</field>
+					<field
+						name="EMail"
+						control-type="qp-mail-editor"
+						caption="Account Email"
+					>
+					</field>
+					<field name="WebSite" control-type="qp-link-editor"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupAccountAddress"
+					view.bind="DefAddress"
+					caption="Account Address"
+					wg-container="DefAddress_DefAddress"
+				>
+					<field name="FakeField" unbound>
+						<qp-address-lookup class="col-12" view.bind="DefAddress">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="CountryID"></field>
+					<field name="IsValidated"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupAccountPersonalDataPrivacy"
+					caption="Account Personal Data Privacy"
+					view.bind="DefContact"
+					wg-container="DefContact_DefContact2"
+				>
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+			</div>
+			<div
+				slot="B"
+				id="columnSecondInTabGeneral"
+				wg-container="CurrentBAccount_tab"
+			>
+				<qp-fieldset
+					id="groupPrimaryContact"
+					view.bind="PrimaryContactCurrent"
+					caption="Primary Contact"
+				>
+					<using view="BAccount" wg-container="BAccount_frmPrimaryContact0">
+						<field
+							name="PrimaryContactID"
+							config.bind="{allowEdit: true, displayMode: 'text'}"
+						></field>
+					</using>
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="Salutation"></field>
+					<field name="EMail" control-type="qp-mail-editor"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="PrimaryContactCurrent.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="PrimaryContactCurrent.Phone2Type"
+						></qp-field>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupContactPersonalDataPrivacy"
+					view.bind="PrimaryContactCurrent"
+					caption="Contact Personal Data Privacy"
+				>
+					<field name="ConsentAgreement"></field>
+					<field name="ConsentDate"></field>
+					<field name="ConsentExpirationDate"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

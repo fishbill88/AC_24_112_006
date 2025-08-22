@@ -1,0 +1,53 @@
+<template>
+	<qp-tabbar id='Tasks_tabMain'>
+		<qp-tab id='Tasks_tab' caption='Details' wg-container>
+			<qp-template name="1-1" id="Details_template" qp-collapsible>
+				<qp-fieldset slot="A" id="Details_formLeft" view.bind="Tasks">
+					<field name="Subject"></field>
+					<field name="StartDate_Date"></field>
+					<field name="EndDate_Date"></field>
+					<field name="UIStatus"></field>
+					<field name="Priority"></field>
+					<field name="PercentCompletion"></field>
+					<field name="OwnerID"></field>
+					<field name="WorkgroupID"></field>
+					<field name="Reminder.IsReminderOn"></field>
+					<field name="Reminder.ReminderDate_Date">
+						<qp-field
+							control-state.bind="Reminder.ReminderDate_Time"
+							class="no-label"
+							config-time-mode.bind="true"
+							>
+						</qp-field>
+					</field>
+					<field name="IsPrivate"></field>
+					<field name="ProvidesCaseSolution"></field>
+					<field name="RefNoteIDType"></field>
+					<field name="RefNoteID" config-allow-edit.bind='true'></field>
+					<field name="ParentNoteID" config-allow-edit.bind='true'></field>
+					<field name="TimeActivity.ProjectID"></field>
+					<field name="TimeActivity.ProjectTaskID"></field>
+					<field name="TimeActivity.CostCodeID"></field>
+					<field name="CategoryID"></field>
+					<field name="CompletedDate"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="Details_formRight" view.bind="Tasks" class="highlights-section">
+					<field name="TimeActivity.TimeSpent"></field>
+					<field name="TimeActivity.OvertimeSpent"></field>
+					<field name="TimeActivity.TimeBillable"></field>
+					<field name="TimeActivity.OvertimeBillable"></field>
+					<field name="TimeActivity.ServiceID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-rich-text-editor
+				id="edTasksBody"
+				state.bind="Tasks.Body"
+				wg-field
+				value.bind="Tasks.Body.value">
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id='Activities_tab' caption='Activities'>
+			<qp-grid id="gridActivities" view.bind="Activities"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

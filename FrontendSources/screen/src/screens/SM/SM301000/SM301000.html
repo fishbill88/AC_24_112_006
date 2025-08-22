@@ -1,0 +1,16 @@
+<template>
+        <qp-template name="1-1" class="equal-height" id="Applications_form" wg-container>
+            <qp-fieldset slot="A" id="col1" view.bind="Applications" caption="Application">
+                <field name="ApplicationID"></field>
+                <field name="Type"></field>
+                <field name="ApplicationName"></field>
+                <field name="ClientID"></field>
+                <field name="ClientSecret"></field>
+                <field name="ReturnUrl"></field>
+            </qp-fieldset>
+            <qp-fieldset slot="B" id="col2" view.bind="Applications" caption="Authentication Token">
+                <field name="Applications.OAuthToken.Bearer"></field>
+                <field name=".OAuthToken.UtcExpiredOn" config-display-mask.bind="`04/08/03 10:17 15`" config-time-mode.bind="true"></field>
+            </qp-fieldset>
+        </qp-template>
+</template>

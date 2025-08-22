@@ -1,0 +1,295 @@
+<template>
+	<qp-template id="form" name="1-1" wg-container="itemsiterecord_form" class="label-size-m">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="itemsiterecord">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="SiteStatus"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="headerColumn2" view.bind="itemsiterecord">
+			<field name="ProductManagerOverride"></field>
+			<field name="ProductWorkgroupID"></field>
+			<field name="ProductManagerID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab" class="label-size-m">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="formGeneral" name="1-1" wg-container="itemsitesettings_tab">
+				<div slot="A" id="generalColumn1">
+					<qp-fieldset id="formStorageDefaults" view.bind="itemsitesettings" caption="Storage Defaults">
+						<field name="DfltShipLocationID" config-allow-edit.bind="true"></field>
+						<field name="DfltReceiptLocationID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formPhysicalInventory" view.bind="itemsitesettings" caption="Physical Inventory">
+						<field name="ABCCodeOverride"></field>
+						<field name="ABCCodeID"></field>
+						<field name="ABCCodeIsFixed"></field>
+						<field name="MovementClassOverride"></field>
+						<field name="MovementClassID" config-allow-edit.bind="true"></field>
+						<field name="MovementClassIsFixed"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="generalColumn2">
+					<qp-fieldset id="formItemDefaults" view.bind="itemsitesettings" caption="Item Defaults">
+						<field name="CountryOfOrigin"></field>
+					</qp-fieldset>
+					<qp-fieldset slot="B" id="generalColumn2" view.bind="itemsitesettings" caption="GL Accounts">
+						<field name="OverrideInvtAcctSub"></field>
+						<field name="InvtAcctID" config-allow-edit.bind="true"></field>
+						<field name="InvtSubID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabInventoryPlanning" caption="Inventory Planning">
+			<qp-template id="formInventoryPlanning" name="1-1">
+				<div slot="A" id="inventoryPlanningColumn1">
+					<qp-fieldset id="formPlanningMethod" view.bind="itemsitesettings" wg-container="itemsitesettings_tab"
+						caption="Planning Method Settings">
+						<field name="PlanningMethod"></field>
+					</qp-fieldset>
+					<qp-fieldset id="PlanningReplenishmentSettingsForm" view.bind="PlanningReplenishmentSettings"
+						wg-container="PlanningReplenishmentSettings_PlanningReplenishmentSettingsForm"
+						caption="Replenishment Settings">
+						<field name="ReplenishmentClassID"></field>
+						<field name="ReplenishmentPolicyOverride"></field>
+						<field name="ReplenishmentPolicyID"></field>
+						<field name="ReplenishmentSource"></field>
+						<field name="ReplenishmentMethod"></field>
+						<field name="ReplenishmentSourceSiteID"></field>
+						<field name="MaxShelfLife">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.MaxShelfLifeOverride">
+							</qp-field>
+						</field>
+						<field name="LaunchDate">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.LaunchDateOverride">
+							</qp-field>
+						</field>
+						<field name="TerminationDate">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.TerminationDateOverride">
+							</qp-field>
+						</field>
+						<field name="ServiceLevelPct">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.ServiceLevelOverride">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="formReplenishmentParameters" view.bind="PlanningReplenishmentSettings"
+						wg-container="PlanningReplenishmentSettings_PlanningReplenishmentSettingsForm"
+						caption="Replenishment Parameters">
+						<field name="SafetyStock">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.SafetyStockOverride">
+							</qp-field>
+						</field>
+						<field name="MinQty">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.MinQtyOverride">
+							</qp-field>
+						</field>
+						<field name="MaxQty">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.MaxQtyOverride">
+							</qp-field>
+						</field>
+						<field name="TransferERQ">
+							<qp-field control-state.bind="PlanningReplenishmentSettings.TransferERQOverride">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="foemDemandForecast" view.bind="PlanningReplenishmentSettings"
+						wg-container="PlanningReplenishmentSettings_PlanningReplenishmentSettingsForm"
+						caption="Demand Forecast Result">
+						<field name="DemandPerDayAverage"></field>
+						<field name="DemandPerDaySTDEV"></field>
+						<field name="LeadTimeAverage"></field>
+						<field name="LeadTimeSTDEV"></field>
+						<field name="SafetyStockSuggested"></field>
+						<field name="MinQtySuggested"></field>
+						<field name="LastForecastDate"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="invnetoryPlanningColumn2">
+					<qp-fieldset id="frmInventoryPlanningSettings" view.bind="inventoryPlanningSettings"
+						wg-container="inventoryPlanningSettings_frmInventoryPlanningSettings"
+						caption="Inventory Planning Settings">
+						<field name="AMReplenishmentSource">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMReplenishmentSourceOverride"
+							class="no-label">
+							</qp-field>
+						</field>
+						<field name="AMSourceSiteID">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMSourceSiteIDOverride">
+							</qp-field>
+						</field>
+						<field name="AMSafetyStock">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMSafetyStockOverride">
+							</qp-field>
+						</field>
+						<field name="AMMinQty">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMMinQtyOverride">
+							</qp-field>
+						</field>
+						<field name="AMMinOrdQty">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMMinOrdQtyOverride">
+							</qp-field>
+						</field>
+						<field name="AMMaxOrdQty">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMMaxOrdQtyOverride">
+							</qp-field>
+						</field>
+						<field name="AMLotSize">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMLotSizeOverride">
+							</qp-field>
+						</field>
+						<field name="AMMFGLeadTime">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMMFGLeadTimeOverride">
+							</qp-field>
+						</field>
+						<field name="AMTransferLeadTime">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMTransferLeadTimeOverride">
+							</qp-field>
+						</field>
+						<field name="AMGroupWindow">
+							<qp-field control-state.bind="inventoryPlanningSettings.AMGroupWindowOverride">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="preferedVendorFieldsForm" view.bind="preferedVendorFields"
+						wg-container="PreferedVendorFields_preferedVendorFieldsForm" caption="Preferred Parameters">
+						<field name="PreferredVendorOverride"></field>
+						<field name="PreferredVendorID" config-allow-edit.bind="true"></field>
+						<field name="PreferredVendorLocationID"></field>
+						<field name="InventoryItem__DefaultSubItemID"></field>
+						<using wg-container="PreferredVendorItem_preferredForm" view="PreferredVendorItem">
+							<field name="VLeadTime"></field>
+							<field name="AddLeadTimeDays"></field>
+							<field name="MinOrdFreq"></field>
+							<field name="MinOrdQty"></field>
+							<field name="MaxOrdQty"></field>
+							<field name="LotSize"></field>
+							<field name="ERQ"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="frmProductionDefaults" view.bind="productionOrderDefaultSettings" wg-container
+						caption="Production Order Defaults">
+						<field name="AMReplenishmentSource">
+							<qp-field control-state.bind="productionOrderDefaultSettings.AMReplenishmentSourceOverride">
+							</qp-field>
+						</field>
+						<field name="AMSourceSiteID">
+							<qp-field control-state.bind="productionOrderDefaultSettings.AMSourceSiteIDOverride">
+							</qp-field>
+						</field>
+						<field name="AMMinOrdQty">
+							<qp-field control-state.bind="productionOrderDefaultSettings.AMMinOrdQtyOverride">
+							</qp-field>
+						</field>
+						<field name="AMMaxOrdQty">
+							<qp-field control-state.bind="productionOrderDefaultSettings.AMMaxOrdQtyOverride">
+							</qp-field>
+						</field>
+						<field name="AMLotSize">
+							<qp-field control-state.bind="productionOrderDefaultSettings.AMLotSizeOverride">
+							</qp-field>
+						</field>
+						<field name="AMMFGLeadTime">
+							<qp-field control-state.bind="productionOrderDefaultSettings.AMMFGLeadTimeOverride">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabSubitemReplenishment" caption="Subitem Replenishment Info">
+			<qp-template id="formSubitemRepColumn1" name="1-1">
+				<qp-fieldset slot="A" id="pnlSubitem" wg-container view.bind="itemsitesettings"
+					class="transparent-section">
+					<field name="SubItemOverride" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="subRepGrid" view.bind="subitemrecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabPriceCost" caption="Price/Cost">
+			<qp-template id="formPriceCost" name="1-1">
+				<qp-fieldset slot="A" id="formPriceManagement" view.bind="itemsitesettings" caption="Price Management"
+					wg-container="itemsitesettings_tab">
+					<field name="PriceWorkgroupID"></field>
+					<field name="PriceManagerID" config-allow-edit.bind="true"></field>
+					<field name="Commissionable"></field>
+					<field name="MarkupPctOverride"></field>
+					<field name="MarkupPct"></field>
+					<field name="RecPriceOverride"></field>
+					<field name="RecPrice">
+						<qp-field slot="label" control-state.bind="itemsitesettings.RecPrice_Label" class="no-label"></qp-field>
+					</field>
+				</qp-fieldset>
+				<div slot="B" id="formPriceCostColumn1">
+					<qp-fieldset id="formPriceCostColumn1" view.bind="itemsitesettings" caption="Standard Cost"
+						wg-container="itemsitesettings_tab">
+						<field name="StdCostOverride"></field>
+						<field name="LastStdCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.LastStdCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="StdCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.StdCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="StdCostDate"></field>
+						<field name="PendingStdCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.PendingStdCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="PendingStdCostDate"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formCostStatistics" view.bind="itemsitesettings" caption="Cost Statistics"
+						wg-container="itemsitesettings_tab">
+						<field name="LastCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.LastCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="AvgCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.AvgCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="MinCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.MinCost_Label" class="no-label"></qp-field>
+						</field>
+						<field name="MaxCost">
+							<qp-field slot="label" control-state.bind="itemsitesettings.MaxCost_Label" class="no-label"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabManufacturing" caption="Manufacturing">
+			<qp-template name="1-1" id="manufacturingSettingsForm" wg-container="manufacturingSettings_manufacturingSettingsForm">
+				<div slot="A" id="formManufacturingColumn1">
+					<qp-fieldset id="formManufacturingGeneral" view.bind="manufacturingSettings" caption="General">
+						<field name="AMBOMID" class="no-label">
+							<qp-button id="btnCheckFreightRate" class="col-5" state.bind="ViewBOM">
+							</qp-button>
+						</field>
+						<field name="AMPlanningBOMID" class="no-label">
+							<qp-button id="btnViewPlanningBOM" class="col-5" state.bind="ViewPlanningBOM">
+							</qp-button>
+						</field>
+						<field name="AMConfigurationID" config-allow-edit.bind="true">
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="formProductionOrderDefaults" view.bind="manufacturingSettings"
+						caption="Production Order Defaults">
+						<field name="ReplenishmentSource"></field>
+						<field name="AMMinOrdQty"></field>
+						<field name="AMMaxOrdQty"></field>
+						<field name="AMLotSize"></field>
+						<field name="AMMFGLeadTime"></field>
+					</qp-fieldset>
+					<qp-grid id="AMGridAMSubItemDefault" view.bind="AMSubItemDefaults" caption="Sub Item Defaults"
+						class="framed-section">
+					</qp-grid>
+				</div>
+				<qp-fieldset slot="B" id="formManufacturingColumn2" view.bind="manufacturingSettings" caption="Scrap">
+					<field name="AMScrapOverride"></field>
+					<field name="AMScrapSiteID" config-allow-edit.bind="true"></field>
+					<field name="AMScrapLocationID" config-allow-edit.bind="true">
+					</field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

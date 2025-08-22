@@ -1,0 +1,38 @@
+<template>
+	<qp-template id="Filter_form" name="17-14-17" wg-container class="equal-height">
+		<qp-fieldset id="first" slot="A" view.bind="Filter">
+			<field Name="Action"></field>
+			<field Name="SiteID"></field>
+			<field name="InventoryID" replace-content>
+				<qp-field control-state.bind="Filter.InventoryID">
+					<qp-button id="btnItemList" state.bind="SelectItems" class="col-auto"></qp-button>
+				</qp-field>
+			</field>
+			<field name="LocationID" replace-content>
+				<qp-field control-state.bind="Filter.LocationID">
+					<qp-button id="btnLocationList" state.bind="SelectLocations" class="col-auto"></qp-button>
+				</qp-field>
+			</field>
+		</qp-fieldset>
+
+		<qp-fieldset id="second" slot="B" view.bind="Filter">
+			<field Name="StartDate"></field>
+			<field Name="EndDate"></field>
+			<field Name="MaxNumberOfLinesInShipment"></field>
+			<field Name="MaxQtyInLines"></field>
+		</qp-fieldset>
+		
+		<qp-fieldset id="parameters" view.bind="Filter" slot="C" caption="Parameters">
+			<field Name="NumberOfPickers"></field>
+			<field Name="NumberOfTotesPerPicker"></field>
+			<field Name="SendToQueue" class="no-label"></field>
+			<field Name="AutomaticShipmentConfirmation" class="no-label"></field>
+			<field Name="PrintPickLists" class="no-label"></field>
+			<field Name="PrintWithDeviceHub" class="no-label"></field>
+			<field Name="DefinePrinterManually" class="no-label"></field>
+			<field Name="PrinterID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Shipments">
+	</qp-grid>
+</template>

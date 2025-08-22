@@ -1,0 +1,72 @@
+<template>
+	<qp-template name="7-10-7" id="headerTemplate" wg-container class="equal-height">
+		<qp-fieldset id="headerForm" view.bind="Document" slot="A">
+			<field name="WorkgroupID"></field>
+			<field name="Week"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="headerFilter" view.bind="Filter" slot="B">
+			<field name="ProjectID"></field>
+			<field name="ProjectTaskID"></field>
+			<field name="Day"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="headerTime" view.bind="Filter" caption="Total" class="highlights-section" slot="C">
+			<field name="TotalTime"></field>
+			<field name="TotalBillableTime"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tab_0" caption="Time Activities">
+			<qp-grid id="TimeActivities_gridTimeActivities" wg-container view.bind="TimeActivities"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_1" caption="Crew Members">
+			<qp-template name="17-17-14" id="glTemplate" class="label-size-m">
+				<qp-fieldset id="membersForm_0" wg-container="Filter_membersForm" view.bind="Filter" slot="A">
+					<field name="TotalWorkgroupMembers"></field>
+				</qp-fieldset>
+				<qp-fieldset id="membersForm_0" wg-container="Filter_membersForm" view.bind="Filter" slot="B">
+					<field name="TotalWorkgroupMembersWithActivities"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="WorkgroupTimeSummary_gridWorkgroupMembers" wg-container view.bind="WorkgroupTimeSummary"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_2" caption="Totals">
+			<qp-template name="7-17" id="DocumentFormTotals">
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="headerFilter_1" view.bind="Filter" caption="Regular" class="highlights-section">
+						<field name="RegularTime"></field>
+						<field name="BillableTime"></field>
+					</qp-fieldset>
+					<qp-fieldset id="headerFilter_2" view.bind="Filter" caption="Overtime" class="highlights-section">
+						<field name="Overtime"></field>
+						<field name="BillableOvertime"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="CompanyTreeMembers" caption="Mass Enter Time" auto-repaint="true" width="80vw" height="80vh">
+		<qp-splitter id="splitterId" split="width" initial-split="30%">
+			<split-pane>
+				<qp-fieldset id="bulkForm_0" view.bind="Filter" class="no-label transparent-section">
+					<field name="ShowAllMembers"></field>
+				</qp-fieldset>
+				<qp-grid id="CompanyTreeMembers_gridCompanyTreeMembers" wg-container view.bind="CompanyTreeMembers"></qp-grid>
+			</split-pane>
+
+			<split-pane>
+				<qp-grid id="BulkEntryTimeActivities_gridBulkEntryTimeActivities" wg-container view.bind="BulkEntryTimeActivities"></qp-grid>
+			</split-pane>
+		</qp-splitter>
+		<footer>
+			<qp-button id="btnAdd" caption="Add" state.bind="InsertForBulkTimeEntry"></qp-button>
+			<qp-button id="btnAddClose" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

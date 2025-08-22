@@ -1,0 +1,60 @@
+﻿<template>
+	<qp-template id="ProdSetupRecord_form" wg-container name="1-1">
+		<div slot="A">
+			<qp-fieldset id="ProdSetupRecord_NumberingSettings" view.bind="ProdSetupRecord" caption="Numbering Settings">
+				<field name="MoveNumberingID" config-allow-edit.bind="true"></field>
+				<field name="LaborNumberingID" config-allow-edit.bind="true"></field>
+				<field name="MaterialNumberingID" config-allow-edit.bind="true"></field>
+				<field name="WipAdjustNumberingID" config-allow-edit.bind="true"></field>
+				<field name="ProdCostNumberingID" config-allow-edit.bind="true"></field>
+				<field name="DisassemblyNumberingID" config-allow-edit.bind="true"></field>
+				<field name="VendorShipmentNumberingID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset id="ProdSetupRecord_Scheduling" view.bind="ProdSetupRecord" caption="Scheduling">
+				<field name="FMLTMRPOrdorOP"></field>
+				<field name="FMLTime"></field>
+				<field name="MachineScheduling"></field>
+				<field name="ToolScheduling"></field>
+				<field name="UseShiftCrewSize"></field>
+				<field name="FixMfgCalendarID" config-allow-edit.bind="true"></field>
+				<field name="FMLTimeUnits"></field>
+				<field name="SchdBlockSize"></field>
+			</qp-fieldset>
+			<qp-fieldset id="ProdSetupRecord_VendorShipmentSettings" view.bind="ProdSetupRecord" caption="Vendor Shipment Settings">
+				<field name="HoldShipmentsOnEntry"></field>
+				<field name="ValidateShipmentTotalOnConfirm"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="ProdSetupRecord_DataEntrySettings" view.bind="ProdSetupRecord" caption="Data Entry Settings">
+				<field name="DfltLbrRate"></field>
+				<field name="DefaultOrderType" config-allow-edit.bind="true"></field>
+				<field name="DefaultDisassembleOrderType" config-allow-edit.bind="true"></field>
+				<field name="CTPOrderType" config-allow-edit.bind="true"></field>
+				<field name="InclScrap"></field>
+				<field name="SummPost"></field>
+				<field name="HoldEntry"></field>
+				<field name="RequireControlTotal"></field>
+				<field name="DefaultEmployee"></field>
+				<field name="RestrictClockCurrentUser"></field>
+				<field name="LockWorkflowEnabled"></field>
+			</qp-fieldset>
+			<qp-fieldset id="ScanSetup_formScanSetup" wg-container view.bind="ScanSetup" caption="Manufacturing Operations Settings">
+				<field name="note" replace-content unbound>
+					<div i18n>These settings are specific to the current branch.</div>
+				</field>
+				<field name="UseDefaultQtyInMaterials"></field>
+				<field name="UseDefaultQtyInMove"></field>
+				<field name="UseRemainingQtyInMaterials"></field>
+				<field name="UseRemainingQtyInMove"></field>
+				<field name="UseDefaultOrderType"></field>
+				<field name="RequestLocationForEachItemInMaterials"></field>
+				<field name="RequestLocationForEachItemInMove"></field>
+				<field name="ExplicitLineConfirmation"></field>
+				<field name="DefaultWarehouse"></field>
+				<field name="DefaultLotSerialNumber"></field>
+				<field name="DefaultExpireDate"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

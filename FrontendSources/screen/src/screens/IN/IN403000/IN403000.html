@@ -1,0 +1,26 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="Filter_form">
+		<qp-fieldset id="Filter_form_column1" view.bind="Filter" slot="A" wg-container="Filter_form">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="AccountID"></field>
+			<field name="FinPeriodID"></field>
+			<field name="ByFinancialPeriod"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_form_column2" view.bind="Filter" slot="B" wg-container="Filter_PXPanel1">
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="PeriodStartDate">
+				<qp-label slot="label" caption="Period Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.PeriodEndDateInclusive"></qp-field>
+			</field>
+			<using wg-container="Filter_form" view="Filter">
+				<field name="SummaryByDay"></field>
+			</using>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="ResultRecords">
+	</qp-grid>
+</template>

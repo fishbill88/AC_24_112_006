@@ -1,0 +1,151 @@
+<template>
+	<qp-template id="EquipmentRecords_form" wg-container name="1-1" class="equal-height label-size-m">
+		<qp-fieldset id="equipmentRecords10" slot="A" view.bind="EquipmentRecords">
+			<field name="RefNbr"></field>
+			<field name="EquipmentTypeID" config-allow-edit.bind="true"></field>
+			<field name="Status"></field>
+			<field name="SerialNumber"></field>
+			<field name="Descr"></field>
+			<field name="IsVehicle"></field>
+			<field name="RequireMaintenance"></field>
+			<field name="ResourceEquipment"></field>
+		</qp-fieldset>
+		<qp-fieldset id="equipmentRecords20" slot="B" view.bind="EquipmentRecords">
+			<field name="OwnerType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			<field name="OwnerID" config-allow-edit.bind="true"></field>
+			<field name="LocationType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			<field name="BranchID" config-allow-edit.bind="true"></field>
+			<field name="BranchLocationID" config-allow-edit.bind="true"></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="EquipmentSelected_tab" wg-container>
+		<qp-tab caption="General" id="generalTab">
+			<qp-template id="generalTemplate" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="generalForm10" view.bind="EquipmentSelected">
+						<field name="RegisteredDate"></field>
+						<field name="RegistrationNbr"></field>
+						<field name="Barcode"></field>
+						<field name="TagNbr"></field>
+						<field name="SalesDate"></field>
+						<field name="Color"></field>
+					</qp-fieldset>
+					<qp-fieldset id="generalForm20" caption="Installation Info" view.bind="EquipmentSelected">
+						<field name="DateInstalled"></field>
+						<field name="InstServiceOrderRefNbr" config-allow-edit.bind="true"></field>
+						<field name="InstAppointmentRefNbr" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="generalForm30" caption="Disposal Info" view.bind="EquipmentSelected">
+						<field name="DisposalDate"></field>
+						<field name="ReplaceEquipmentID" config-allow-edit.bind="true"></field>
+						<field name="DispServiceOrderRefNbr" config-allow-edit.bind="true"></field>
+						<field name="DispAppointmentRefNbr" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="generalForm40" caption="Manufacturer Info" view.bind="EquipmentSelected">
+						<field name="ManufacturerID" config-allow-edit.bind="true"></field>
+						<field name="ManufacturerModelID" config-allow-edit.bind="true"></field>
+						<field name="ManufacturingYear"></field>
+					</qp-fieldset>
+					<qp-fieldset id="generalForm50" caption="Inventory Info" view.bind="EquipmentSelected">
+						<field name="InventoryID" config-allow-edit.bind="true"></field>
+						<field name="SiteID" config-allow-edit.bind="true"></field>
+						<field name="LocationID" config-allow-edit.bind="true"></field>
+						<field name="INSerialNumber"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Vehicle Info" id="vehicleTab" if.bind="EquipmentRecords.IsVehicle.value == true">
+			<qp-template id="vehicleTemplate" name="1-1" class="label-size-m">
+				<qp-fieldset id="vehicleForm10" slot="A" view.bind="EquipmentSelected">
+					<field name="VehicleTypeID"></field>
+					<field name="EngineNo"></field>
+					<field name="Axles"></field>
+					<field name="MaxMiles"></field>
+					<field name="TareWeight"></field>
+					<field name="WeightCapacity"></field>
+					<field name="GrossVehicleWeight"></field>
+				</qp-fieldset>
+				<qp-fieldset id="vehicleForm20" slot="B" view.bind="EquipmentSelected">
+					<field name="FuelType"></field>
+					<field name="FuelTank1"></field>
+					<field name="FuelTank2"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Purchase" id="purchaseTab">
+			<qp-template id="purchaseTemplate" name="1-1" class="label-size-m">
+				<qp-fieldset id="purchaseForm10" slot="A" view.bind="EquipmentSelected">
+					<field name="PropertyType"></field>
+					<field name="VendorID"></field>
+					<field name="PurchDate"></field>
+					<field name="PurchPONumber"></field>
+					<field name="PurchAmount"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Components" id="componentsTab">
+			<qp-grid id="PXGridWarranty" view.bind="EquipmentWarranties">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Warranties" id="warrantiesTab">
+			<qp-template id="EquipmentSelected_formCompWarr" wg-container name="1-1" class="equal-height label-size-m">
+				<div slot="A">
+					<qp-fieldset id="componentsForm10" view.bind="EquipmentSelected">
+						<field name="CpnyWarrantyValue">
+							<qp-field control-state.bind="EquipmentSelected.CpnyWarrantyType" config-enabled.bind="false"></qp-field>
+						</field>
+						<field name="CpnyWarrantyEndDate"></field>
+						<field name="VendorWarrantyValue">
+							<qp-field name="VendorWarrantyType" control-state.bind="EquipmentSelected.VendorWarrantyType" config-enabled.bind="false"></qp-field>
+						</field>
+						<field name="VendorWarrantyEndDate"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Attributes" id="attributesTab">
+			<qp-template id="attributesTemplate" name="1-1" class="label-size-m">
+				<qp-grid id="PXGridAnswers" slot="A" view.bind="Answers">
+				</qp-grid>
+				<div slot="B">
+					<qp-image-uploader width="400px" height="360px" config.bind="{showFeed: true}" control-state.bind="EquipmentRecords.ImageUrl"></qp-image-uploader>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Source" id="sourceTab">
+			<qp-template id="sourceTemplate" name="1-1" class="label-size-m">
+				<qp-fieldset id="sourceForm10" slot="A" view.bind="EquipmentSelected">
+					<field name="SourceType"></field>
+					<field name="SourceRefNbr" config-link-command.bind="'OpenSource'"></field>
+					<field name="SalesOrderNbr" config-allow-edit.bind="true"></field>
+					<field name="EquipmentReplacedID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="ReplaceComponentInfo" caption="Perform Action" auto-repaint="true" width="80vw" height="80vh">
+		<qp-grid id="PXGridComponentSelected" view.bind="ComponentSelected" caption="Selected Component for Replacement">
+		</qp-grid>
+		<qp-label caption="Replacement Information"></qp-label>
+		<qp-template id="ReplaceComponentInfo_PXReplaceForm" wg-container name="1-1" class="equal-height">
+			<qp-fieldset slot="A" id="replacementForm10" view.bind="ReplaceComponentInfo">
+				<field name="InstallationDate"></field>
+				<field name="SalesDate"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="replacementForm20" view.bind="ReplaceComponentInfo">
+				<field name="ComponentID"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button caption="Replace Component" dialog-result="OK"></qp-button>
+			<qp-button caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

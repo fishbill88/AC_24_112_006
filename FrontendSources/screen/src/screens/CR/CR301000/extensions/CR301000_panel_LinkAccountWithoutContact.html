@@ -1,0 +1,40 @@
+<template>
+	<qp-panel
+		id="LinkAccountWithoutContact"
+		auto-repaint="true"
+		caption="Associate the Account with the Lead"
+	>
+		<qp-label
+			caption="Select one of the following options to associate the account with the lead:"
+		>
+		</qp-label>
+
+		<qp-fieldset
+			id="panel_LinkAccountWithoutContact_Contact"
+			view.bind="LinkAccountWithoutContact"
+		>
+			<field
+				name="WithoutContactOption"
+				control-type="qp-radio"
+				config-class.bind="'vertical'"
+				no-label="true"
+			></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnLinkAccountWithoutContactBack" caption="Back">
+			</qp-button>
+			<qp-button
+				id="btnLinkAccountWithoutContactCancel"
+				caption="Cancel"
+				dialog-result="Abort"
+			>
+			</qp-button>
+			<qp-button
+				id="btnLinkAccountWithoutContactFinish"
+				caption="Associate"
+				dialog-result="Yes"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,94 @@
+<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormTab.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="CA204550.aspx.cs" Inherits="Page_CA204550" Title="Untitled Page" %>
+
+<%@ MasterType VirtualPath="~/MasterPages/FormTab.master" %>
+<asp:Content ID="cont1" ContentPlaceHolderID="phDS" runat="server" >
+	<px:PXDataSource ID="ds" runat="server" AutoCallBack="True" PrimaryView="Rule" TypeName="PX.Objects.CA.CABankTranRuleMaintPopup">        
+        <CallbackCommands>           
+            <px:PXDSCallbackCommand Name="SaveClose" PostData="Self" Visible="false" CommitChanges="true"/>
+            <px:PXDSCallbackCommand Name="SaveAndApply" PostData="Self" Visible="false" ClosePopup="true" CommitChanges="true"/>
+            <px:PXDSCallbackCommand Name="Save" PostData="Self" Visible="false" PopupVisible="false" CommitChanges="true"/>
+            <px:PXDSCallbackCommand Name="Insert" PostData="Self" Visible="false" />
+            <px:PXDSCallbackCommand Name="First" PostData="Self" StartNewGroup="True" Visible="false"/>
+            <px:PXDSCallbackCommand Name="Last" PostData="Self" Visible="false"/>
+            <px:PXDSCallbackCommand Name="Previous" PostData="Self" Visible="false"/>
+            <px:PXDSCallbackCommand Name="Next" PostData="Self" Visible="false"/>
+            <px:PXDSCallbackCommand Name="Cancel" PostData="Self" Visible="false"/>
+            <px:PXDSCallbackCommand Name="Delete" PostData="Self" Visible="false"/>
+            <px:PXDSCallbackCommand Name="CopyPaste" PostData="Self" Visible="false"/>
+        </CallbackCommands>
+	</px:PXDataSource>
+  <style type="text/css">
+      .phF, .phG
+      {
+        border: none;
+        background-color: #F5F7F8;
+        background-color: var(--background-color, #F5F7F8);
+        margin: 0px !important;
+      }
+  </style>
+</asp:Content>
+<asp:Content ID="cont2" ContentPlaceHolderID="phF" runat="Server">
+    <px:PXFormView ID="form" runat="server" DataMember="Rule" DataSourceID="ds" ActivityIndicator="False" 
+        LinkIndicator="False" FilesIndicator="false" NotifyIndicator="false" NoteIndicator="False" Width="100%" SkinID="Transparent">
+        <Template>
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="m" ControlSize="sm" />
+            <px:PXLayoutRule runat="server"/>
+            <px:PXTextEdit runat="server" DataField="Description" ID="edDescription" Size="L" />
+            <px:PXLayoutRule runat="server" ColumnSpan="2" />
+            <px:PXCheckBox runat="server" DataField="IsActive" ID="edIsActive" CommitChanges="true" />
+            <px:PXLayoutRule runat="server" GroupCaption="Matching Criteria" LabelsWidth="m" ControlSize="m" ></px:PXLayoutRule>
+        </Template>
+    </px:PXFormView>
+</asp:Content>
+
+<asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
+    <px:PXTab ID="tab" runat="server" DataMember="Rule" DataSourceID="ds"
+              Width="100%">
+        <AutoSize Container="Window" Enabled="True"/>
+        <Items>
+            <px:PXTabItem Text="Matching Criteria">
+                <Template>
+                    <px:PXLayoutRule runat="server" StartColumn="true"/>
+                    <px:PXLayoutRule runat="server" GroupCaption="General" StartGroup="True"/>
+            <px:PXDropDown runat="server" DataField="BankDrCr" ID="edBankDrCr" CommitChanges="true" />
+            <px:PXSegmentMask runat="server" DataField="BankTranCashAccountID" ID="edCashAccountID" CommitChanges="true" />
+            <px:PXSelector runat="server" DataField="TranCuryID" ID="edCuryID" />
+            <px:PXMaskEdit runat="server" DataField="TranCode" ID="edTranCode" />
+
+                    <px:PXLayoutRule runat="server" GroupCaption="Description" StartGroup="True"/>
+                    <px:PXTextEdit runat="server" DataField="BankTranDescription" ID="edBankTranDescription"/>
+            <px:PXCheckBox runat="server" DataField="MatchDescriptionCase" ID="edMatchDescriptionCase" />
+            <px:PXCheckBox runat="server" DataField="UseDescriptionWildcards" ID="edUseDescriptionWildcards" />
+
+                    <px:PXLayoutRule runat="server" StartColumn="true"/>
+                    <px:PXLayoutRule runat="server" GroupCaption="Payee/Payer" StartGroup="True"/>
+                    <px:PXTextEdit runat="server" DataField="PayeeName" ID="edPayeeName"/>
+                    <px:PXCheckBox runat="server" DataField="UsePayeeNameWildcards" ID="edUsePayeeNameWildcards"/>
+
+                    <px:PXLayoutRule runat="server" GroupCaption="Amount" StartGroup="True"/>
+            <px:PXDropDown runat="server" DataField="AmountMatchingMode" ID="edAmountMatchingMode" CommitChanges="true" />
+            <px:PXNumberEdit runat="server" DataField="CuryTranAmt" ID="edCuryTranAmt" AllowNull="true" />
+            <px:PXNumberEdit runat="server" DataField="CuryMinTranAmt" ID="edCuryMinTranAmt" AllowNull="true" />
+            <px:PXNumberEdit runat="server" DataField="MaxCuryTranAmt" ID="edMaxCuryTranAmt" AllowNull="true" />
+
+                </Template>
+            </px:PXTabItem>
+            <px:PXTabItem Text="Output">
+                <Template>
+                    <px:PXLayoutRule runat="server" StartColumn="true"/>
+            <px:PXDropDown runat="server" DataField="Action" ID="edAction" CommitChanges="true" />
+            <px:PXSelector runat="server" DataField="DocumentEntryTypeID" ID="edDocumentEntryType" AutoRefresh="true" />
+                </Template>
+            </px:PXTabItem>
+        </Items>
+    </px:PXTab>
+    <px:PXFormView ID="ButtonsForm" runat="server" DataMember="Rule" DataSourceID="ds" ActivityIndicator="False" 
+        LinkIndicator="False" FilesIndicator="false" NotifyIndicator="false" NoteIndicator="False" Width="100%" SkinID="Transparent">
+        <Template>
+            <px:PXPanel ID="PXPanel6" runat="server" SkinID="Buttons">
+                <px:PXButton ID="PXButton2" runat="server" DialogResult="Yes" Text="Apply to All"  CommandName="saveAndApply" CommandSourceID="ds" />
+                <px:PXButton ID="PXButton1" runat="server" DialogResult="OK" CommandName="SaveClose" CommandSourceID="ds" Text="Apply"/>
+		    </px:PXPanel>
+        </Template>
+    </px:PXFormView>
+</asp:Content>

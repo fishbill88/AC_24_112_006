@@ -1,0 +1,66 @@
+.qp-sch-event-info > div:first-child > span:first-child,
+.qp-sch-event-info > div:first-child > span:first-child *  {
+	font-weight: 700 !important;
+}
+
+*:is(.qp-sch-main-container, .qp-sch-dragged) span[sch-field="SelectedAppointment.RefNbr"] {
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.qp-sch-left-container span[sch-field="SelectedAppointment.RefNbr"] {
+	line-height: 26px;
+	font-size: 16px;
+	font-weight: 700;
+}
+.qp-sch-tile-icon:has(span > svg[sch-value="H"]) {
+	flex-shrink: 0;
+}
+
+*[sch-field="SelectedAppointment.Status"][sch-value="N"] {
+	color: var(--qp-primary-color);
+}
+*[sch-field="SelectedAppointment.Status"][sch-value="Z"],
+*[sch-field="SelectedAppointment.Status"][sch-value="C"],
+*[sch-field="SelectedAppointment.Status"][sch-value="B"] {
+	color: #626262;
+}
+
+*[sch-field="SelectedSO.Priority"] {
+	font-weight: 700 !important;
+}
+	*[sch-field="SelectedSO.Priority"][sch-value="H"] {
+		color: #EE4051;
+	}
+	*[sch-field="SelectedSO.Priority"][sch-value="M"] {
+		color: #BFBFBF;
+	}
+	*[sch-field="SelectedSO.Priority"][sch-value="L"] {
+		color: #4BA5E2;
+	}
+span:has(> *[sch-field="SelectedSO.Priority"][sch-value="M"]) {
+	display: none;
+}
+
+*[sch-field="SelectedSO.Severity"] {
+	font-weight: 700 !important;
+}
+	*[sch-field="SelectedSO.Severity"][sch-value="H"] {
+		color: #EE4051;
+	}
+	*[sch-field="SelectedSO.Severity"][sch-value="M"] {
+		color: #BFBFBF;
+	}
+	*[sch-field="SelectedSO.Severity"][sch-value="L"] {
+		color: #4BA5E2;
+	}
+span:has(> *[sch-field="SelectedSO.Severity"][sch-value="M"]) {
+	display: none;
+}
+
+*[sch-field="SelectedAppointment.StaffCntr"]:not([sch-value="1"]) {
+	color: black;
+}
+	.qp-sch-not-confirmed *[sch-field="SelectedAppointment.StaffCntr"]:not([sch-value="1"]) {
+		color: white;
+	}

@@ -1,0 +1,17 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="LotSerialNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="LocationID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Filter3" view.bind="Filter">
+			<field name="ProductionStatusID"></field>
+			<field name="MultiLevel"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ProductionWhereUsed"></qp-grid>
+</template>

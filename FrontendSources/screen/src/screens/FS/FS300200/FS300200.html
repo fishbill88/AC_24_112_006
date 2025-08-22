@@ -1,0 +1,395 @@
+<template>
+	<qp-template name="7-10-7" id="AppointmentRecords_mainForm" class="equal-height" qp-collapsible wg-container>
+		<qp-fieldset slot="A" id="first" view.bind="AppointmentRecords">
+			<field name="SrvOrdType" config-allow-edit.bind="true"></field>
+			<field name="RefNbr"></field>
+			<field name="SORefNbr" config-allow-edit.bind="true"></field>
+			<field name="Status"></field>
+			<field name="ScheduledDateTimeBegin_Date"></field>
+			<field name="ExecutionDate"></field>
+			<field name="IsRouteAppoinment"></field>
+			<field name="IsPrepaymentEnable"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="AppointmentRecords">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<using wg-container="ServiceOrderRelated_ServiceOrderHeader" view="ServiceOrderRelated">
+				<field name="LocationID" config-allow-edit.bind="true"></field>
+				<field name="AppointmentSelected.CuryID" control-type="qp-currency" view.bind="currencyinfo"></field>
+			</using>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="DfltProjectTaskID"></field>
+			<field name="DocDesc" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="summary" view.bind="AppointmentRecords" class="highlights-section">
+			<field name="EstimatedDurationTotal"></field>
+			<field name="ActualDurationTotal"></field>
+			<field name="CuryActualBillableTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryDocTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="settingsTab_edContactAddressForm" caption="Settings">
+			<qp-template id="SettingsTemplate" name="17-17-14" wg-container="ServiceOrderRelated_ServiceOrderHeader">
+				<div slot="A">
+					<qp-fieldset id="ServiceOrder_Contact_edServiceOrder_Contact" view.bind="ServiceOrder_Contact" caption="Contact" wg-container>
+						<field name="OverrideContact"></field>
+						<using wg-container="ServiceOrderRelated_edContactForm" view="ServiceOrderRelated">
+							<field name="ContactID" config-allow-edit.bind="true"></field>
+						</using>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1">
+							<qp-field slot="label" control-state.bind="ServiceOrder_Contact.Phone1Type" class="no-label"></qp-field>
+						</field>
+						<field name="EMail" control-type="qp-mail-editor"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ServiceOrder_Address_edServiceOrder_Address" view.bind="ServiceOrder_Address" caption="Address" wg-container>
+						<field name="OverrideAddress">
+							<qp-address-lookup class="col-12" view.bind="ServiceOrder_Address">
+							</qp-address-lookup>
+						</field>
+						<using wg-container="ServiceOrderRelated_edRoomForm" view="ServiceOrderRelated">
+							<field name="RoomID" config-allow-edit.bind="true"></field>
+						</using>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID" config-allow-edit.bind="true"></field>
+						<field name="State" config-allow-edit.bind="true"></field>
+						<field name="PostalCode"></field>
+						<field name="Latitude"></field>
+						<field name="Longitude"></field>
+					</qp-fieldset>
+					<qp-fieldset id="AppointmentSelected_edSignatureForm" view.bind="AppointmentSelected" caption="Signature">
+						<field name="FullNameSignature"></field>
+					</qp-fieldset>
+					<qp-fieldset id="AppointmentSelected_edLocationForm" wg-container view.bind="AppointmentSelected" caption="Location" class="label-size-sm">
+						<field name="fake01" unbound>
+							<qp-label caption="Appointment Location" slot="label"></qp-label>
+							<qp-field control-state.bind="AppointmentSelected.MapLatitude" config-enabled.bind="false" class="col-4"></qp-field>
+							<qp-field control-state.bind="AppointmentSelected.MapLongitude" config-enabled.bind="false" class="col-4"></qp-field>
+						</field>
+						<field name="fake02" unbound>
+							<qp-label caption="Start Location" slot="label"></qp-label>
+							<qp-field control-state.bind="AppointmentSelected.GPSLatitudeStart" config-enabled.bind="false" class="col-4"></qp-field>
+							<qp-field control-state.bind="AppointmentSelected.GPSLongitudeStart" config-enabled.bind="false" class="col-4"></qp-field>
+							<qp-button id="btnViewCompleteGPSOnMap" state.bind="model.viewModel.ViewStartGPSOnMap" class="col-4"></qp-button>
+						</field>
+						<field name="fake03" unbound>
+							<qp-label caption="End Location" slot="label"></qp-label>
+							<qp-field control-state.bind="AppointmentSelected.GPSLatitudeComplete" config-enabled.bind="false" class="col-4"></qp-field>
+							<qp-field control-state.bind="AppointmentSelected.GPSLongitudeComplete" config-enabled.bind="false" class="col-4"></qp-field>
+							<qp-button id="btnViewCompleteGPSOnMap" state.bind="model.viewModel.ViewCompleteGPSOnMap" class="col-4"></qp-button>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="AppointmentSelected_edAppointmentSettings" wg-container>
+					<qp-fieldset id="AppointmentSelected_edAppointmentSettings1" view.bind="AppointmentSelected" caption="Scheduled Date And Time">
+						<field name="ScheduledDateTimeBegin_Date">
+							<qp-field control-state.bind="AppointmentSelected.ScheduledDateTimeBegin_Time" config-time-mode.bind="true"></qp-field>
+						</field>
+						<field name="ScheduledDateTimeEnd_Date">
+							<qp-field control-state.bind="AppointmentSelected.ScheduledDateTimeEnd_Time" config-time-mode.bind="true"></qp-field>
+						</field>
+						<field name="HandleManuallyScheduleTime"></field>
+						<field name="ScheduledDuration"></field>
+						<field name="ROOptimizationStatus"></field>
+						<field name="Confirmed"></field>
+						<field name="ValidatedByDispatcher"></field>
+					</qp-fieldset>
+					<qp-fieldset id="AppointmentSelected_edAppointmentSettings2" view.bind="AppointmentSelected" caption="Actual Date And Time">
+						<field name="ExecutionDate">
+							<qp-field control-state.bind="AppointmentSelected.ActualDateTimeBegin_Time" config-time-mode.bind="true"></qp-field>
+						</field>
+						<field name="ActualDateTimeEnd_Date">
+							<qp-field control-state.bind="AppointmentSelected.ActualDateTimeEnd_Time" config-time-mode.bind="true"></qp-field>
+						</field>
+						<field name="HandleManuallyActualTime"></field>
+						<field name="ActualDuration"></field>
+						<field name="Finished"></field>
+						<field name="UnreachedCustomer"></field>
+					</qp-fieldset>
+					<qp-fieldset id="appointmentSettingsForm1" view.bind="AppointmentRecords" caption="Workflow" wg-container="AppointmentRecords_mainForm">
+						<field name="WFStageID" config-allow-edit.bind="true"></field>
+						<field name="TimeRegistered"></field>
+						<field name="WaitingForParts"></field>
+					</qp-fieldset>
+					<qp-fieldset id="appointmentSettingsForm2" view.bind="ServiceOrderRelated" caption="Appointment Settings" wg-container="ServiceOrderRelated_ServiceOrderHeader">
+						<field name="BranchLocationID" config-allow-edit.bind="true"></field>
+						<field name="AppointmentSelected.BillServiceContractID" config-allow-edit.bind="true"></field>
+						<field name="AppointmentSelected.BillContractPeriodID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ServiceOrderRelated_ServiceOrderSourceInfo" caption="Source Info" view.bind="ServiceOrderRelated" wg-container>
+						<field name="SourceType"></field>
+						<field name="SourceReferenceNbr"></field>
+						<using wg-container="AppointmentSelected_edSourceInfoForm" view="AppointmentSelected">
+							<field name="ServiceContractID"></field>
+							<field name="ScheduleID"></field>
+							<field name="ScheduleRecord.RecurrenceDescription"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="AppointmentSelected_edRouteInfoForm" wg-container view.bind="AppointmentSelected" caption="Route Info">
+						<field name="RouteID"></field>
+						<field name="RouteDocumentID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="detailsTab" caption="Details">
+			<qp-grid id="PXGridDetails" view.bind="AppointmentDetails">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="taxesTab" caption="Taxes">
+			<qp-grid id="gridTaxDetails" view.bind="Taxes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="staffTab" caption="Staff">
+			<qp-grid id="PXGridStaff" view.bind="AppointmentServiceEmployees">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="resourceEquipmentTab" caption="Resource Equipment">
+			<qp-grid id="PXGridResourceEquipment" view.bind="AppointmentResources">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="logTab" caption="Log">
+			<qp-grid id="PXGridLog" view.bind="LogRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="financialTab" caption="Financial">
+			<qp-template id="FinancialTemplate" name="17-17-14">
+				<qp-fieldset slot="A" id="ServiceOrderRelated_AppointmentBillingInfo" view.bind="ServiceOrderRelated" caption="Appointment Billing Info">
+					<field name="BranchID" config-allow-edit.bind="true"></field>
+					<field name="BillCustomerID" config-allow-edit.bind="true"></field>
+					<field name="BillLocationID" config-allow-edit.bind="true"></field>
+					<field name="AppointmentSelected.TaxZoneID" config-allow-edit.bind="true"></field>
+					<field name="AppointmentSelected.TaxCalcMode"></field>
+					<field name="BillingBy"></field>
+					<field name="AppointmentSelected.SalesPersonID" config-allow-edit.bind="true"></field>
+					<field name="Commissionable"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="profitabilityTab" caption="Profitability">
+			<qp-grid id="PXGridProfitability" view.bind="ProfitabilityRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="attributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="deliveryNotesTab" caption="Delivery Notes" if.bind="AppointmentRecords.IsRouteAppointment.value == true" wg-container="AppointmentSelected_edAppointmentDeliveryNotes">
+			<qp-rich-text-editor id="edDeliveryNotes" state.bind="AppointmentSelected.DeliveryNotes" value.two-way="AppointmentSelected.DeliveryNotes.value" wg-field class="stretch">
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="prepaymentsTab" caption="Prepayments" if.bind="AppointmentRecords.IsPrepaymentEnable.value == true">
+			<qp-template id="ServiceOrderRelated_PrepaymentTotals" name="17-7" class="stretch full-width" wg-container>
+				<qp-grid id="detgrid" slot="A" view.bind="Adjustments">
+				</qp-grid>
+				<div slot="B">
+					<qp-fieldset id="ServiceOrderRelated_PrepaymentTotals_10" view.bind="ServiceOrderRelated" caption="Prepayment Summary">
+						<field name="SOPrepaymentReceived"></field>
+						<field name="SOPrepaymentApplied"></field>
+						<field name="SOPrepaymentRemaining"></field>
+						<field name="SOCuryUnpaidBalanace"></field>
+						<field name="SOCuryBillableUnpaidBalanace"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="totalsTab" caption="Totals">
+			<qp-template id="TotalsTemplate" name="17-17-14">
+				<qp-fieldset slot="A" id="AppointmentSelected_formG" caption="Appointment Totals" view.bind="AppointmentSelected">
+					<field name="CuryEstimatedLineTotal"></field>
+					<field name="CuryEstimatedCostTotal"></field>
+					<field name="CuryLineTotal"></field>
+					<field name="CuryBillableLineTotal"></field>
+					<field name="CuryLogBillableTranAmountTotal"></field>
+					<field name="CuryTaxTotal"></field>
+					<field name="CuryDocTotal"></field>
+					<field name="CuryVatExemptTotal"></field>
+					<field name="CuryVatTaxableTotal"></field>
+					<field name="AppCompletedBillableTotal"></field>
+					<field name="CuryCostTotal"></field>
+				</qp-fieldset>
+				<div slot="B">
+					<qp-fieldset id="ServiceOrderRelated_ServiceOrderTotalsTab" caption="Service Order Totals" view.bind="ServiceOrderRelated">
+						<field name="CuryDocTotal"></field>
+						<field name="CuryEffectiveBillableDocTotal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="AppointmentSelected_ProfitRatiosTotalsTab" caption="Profit Ratios" view.bind="AppointmentSelected">
+						<field name="ProfitPercent"></field>
+						<field name="ProfitMarginPercent"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="billingDocumentsTab" caption="Billing Documents">
+			<qp-grid id="PXGridInvoiceRecords" view.bind="InvoiceRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Other" id="otherTab" wg-container="AppointmentSelected_edCommentsForm">
+			<qp-rich-text-editor id="edLongDescr" state.bind="AppointmentSelected.LongDescr" value.two-way="AppointmentSelected.LongDescr.value" wg-field class="stretch">
+			</qp-rich-text-editor>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="QuickProcessParameters" caption="Process Appointment" width="70vw" height="70vh" auto-repaint="true">
+		<qp-template id="QuickProcessParameters_formQuickProcess" name="1-1" wg-container>
+			<div slot="A">
+				<qp-fieldset id="QuickProcessParameters_10" view.bind="QuickProcessParameters" caption="Appointment Actions">
+					<field name="CloseAppointment"></field>
+					<field name="EmailSignedAppointment"></field>
+					<field name="GenerateInvoiceFromAppointment"></field>
+				</qp-fieldset>
+				<qp-fieldset id="QuickProcessParameters_20" view.bind="QuickProcessParameters" caption="Sales Order Actions">
+					<field name="PrepareInvoice"></field>
+					<field name="SOQuickProcess"></field>
+					<field name="EmailSalesOrder"></field>
+				</qp-fieldset>
+			</div>
+			<qp-fieldset id="QuickProcessParameters_30" slot="B" view.bind="QuickProcessParameters" caption="Invoice Actions">
+				<field name="ReleaseInvoice"></field>
+				<field name="EmailInvoice"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" state.bind="QuickProcessOk" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="StaffSelectorFilter" caption="Add Staff" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="StaffSelectorTemplate" name="17-17-14" class="stretch">
+			<div slot="A">
+				<qp-fieldset id="StaffSelectorFilter_form" view.bind="StaffSelectorFilter">
+					<field name="ServiceLineRef"></field>
+					<field name="PostalCode"></field>
+					<field name="GeoZoneID"></field>
+				</qp-fieldset>
+				<qp-grid id="PXGridServiceSkills" caption="Skills" view.bind="SkillGridFilter" class="framed-section">
+				</qp-grid>
+				<qp-grid id="PXGridLicenseType" caption="Licenses" view.bind="LicenseTypeGridFilter" class="framed-section">
+				</qp-grid>
+			</div>
+			<qp-grid id="PXGridAvailableStaff" caption="Staff" slot="B" view.bind="StaffRecords" class="framed-section">
+			</qp-grid>
+		</qp-template>
+		<footer>
+			<qp-button id="closeStaffSelector" caption="OK" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="LogActionStartFilter" caption="Perform Action" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="LogActionStartTemplate" name="1-1">
+			<qp-fieldset slot="A" id="LogActionStartFilter_PXLogActionStartFilterForm" view.bind="LogActionStartFilter">
+				<field name="Action"></field>
+				<field name="Type"></field>
+				<field name="Me"></field>
+				<field name="LogDateTime_Date"></field>
+				<field name="LogDateTime_Time"></field>
+				<field name="DetLineRef"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXLogStartActionStaffLinesGrid" view.bind="LogActionStaffDistinctRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="startBtnStaffLines" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="cancelBtnStaffLines" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="LogActionPCRFilter" caption="Perform Action" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="LogActionPCRTemplate" name="1-1">
+			<qp-fieldset slot="A" id="LogActionPCRFilter_PXLogActionForm" view.bind="LogActionPCRFilter">
+				<field name="Action"></field>
+				<field name="Type"></field>
+				<field name="Me"></field>
+				<field name="LogDateTime_Date"></field>
+				<field name="LogDateTime_Time"></field>
+				<field name="DetLineRef"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXLogActionGrid" view.bind="LogActionLogRecords">
+		</qp-grid>
+		<footer>
+			<qp-button caption="OK" dialog-result="OK"></qp-button>
+			<qp-button caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="LogActionStartServiceFilter" caption="Perform Action" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="LogActionStartServiceTemplate" name="1-1">
+			<qp-fieldset slot="A" id="LogActionStartServiceFilter_PXServicesBasedActionForm" view.bind="LogActionStartServiceFilter">
+				<field name="Action"></field>
+				<field name="Type"></field>
+				<field name="Me"></field>
+				<field name="LogDateTime_Date"></field>
+				<field name="LogDateTime_Time"></field>
+				<field name="DetLineRef"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXServicesBasedOnGrid" view.bind="ServicesLogAction">
+		</qp-grid>
+		<footer>
+			<qp-button caption="OK" dialog-result="OK"></qp-button>
+			<qp-button caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="LogActionStartStaffFilter" caption="Perform Action" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="LogActionStartStaffTemplate" name="1-1">
+			<qp-fieldset slot="A" id="LogActionStartStaffFilter_PXtaffLinesActionForm" view.bind="LogActionStartStaffFilter">
+				<field name="Action"></field>
+				<field name="Type"></field>
+				<field name="Me"></field>
+				<field name="LogDateTime_Date"></field>
+				<field name="LogDateTime_Time"></field>
+				<field name="DetLineRef"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXLogStaffLinesGrid" view.bind="LogActionStaffRecords">
+		</qp-grid>
+		<footer>
+			<qp-button caption="OK" dialog-result="OK"></qp-button>
+			<qp-button caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ItemInfo" caption="Inventory Lookup" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="ItemFilter_formSitesStatus" name="17-17-14" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="sitestatusfilterForm1" view.bind="sitestatusfilter">
+				<field name="LineType"></field>
+				<field name="Inventory"></field>
+				<field name="BarCode"></field>
+				<field name="SiteID"></field>
+				<field name="ItemClass"></field>
+				<field name="SubItem"></field>
+			</qp-fieldset>
+			<qp-fieldset id="sitestatusfilterForm2" slot="B" view.bind="ItemFilter">
+				<field name="Mode" control-type="qp-radio"></field>
+					<qp-field control-state.bind="ItemFilter.Mode"
+							  control-type="qp-radio"
+							  config-class.bind="'vertical'">
+					</qp-field>
+				</field>
+				<field name="OnlyAvailable"></field>
+				<field name="HistoryDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gripSiteStatus" view.bind="ItemInfo">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnAdd" state.bind="AddSelectedItems"></qp-button>
+			<qp-button id="btnAddClose" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FSAppointmentLineSplittingExtension_lsselect" caption="Lot/Serial Nbrs" auto-repaint="true" width="80vw" height="80vh">
+		<qp-grid id="PXGridLotSer" view.bind="Splits">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnSave" caption="OK" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

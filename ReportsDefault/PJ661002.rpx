@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>RequestForInformationAttachment.RequestForInformationCd</DataField>
+      <Value>@RFIID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RequestForInformationAttachment.Outgoing</DataField>
+      <Value>1</Value>
+    </FilterExp>
+  </Filters>
+  <Parameters>
+    <ReportParameter>
+      <Name>RFIID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>RequestForInformation</Prompt>
+      <Required>True</Required>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>http://172.98.195.46:8484/AcumaticaDBFIN/</SchemaUrl>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="RequestForInformationAttachment">
+      <Fields>
+        <ReportField Name="FileID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Outgoing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RequestForInformationCd"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PJ.RequestsForInformation.PJ.DAC.RequestForInformationAttachment</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>8.04232cm</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.21164cm</Height>
+      <StyleName>Normal</StyleName>
+      <Visible>False</Visible>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>1.69312cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>RecordCount</Name>
+          <ValueExpr>=Count([RequestForInformationAttachment.FileID])</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Items>
+        <TextBox Name="textBox2">
+          <Location>0px, 0px</Location>
+          <Size>304px, 64px</Size>
+          <Value>=Count([RequestForInformationAttachment.FileID])</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+  </Sections>
+</Report>

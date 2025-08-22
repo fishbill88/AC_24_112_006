@@ -1,0 +1,21 @@
+﻿<template>
+    <qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+        <qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+            <field name="AccountType"></field>
+            <field name="DeferredCode"></field>
+            <field name="AccountID"></field>
+            <field name="SubID"></field>
+        </qp-fieldset>
+        <qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+            <field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+            <field name="ComponentID" config.bind="{allowEdit:true}"></field>
+            <field name="BAccountID"></field>
+        </qp-fieldset>
+        <qp-fieldset slot="C" id="columnThird" view.bind="Filter">
+            <field name="TotalScheduled"></field>
+            <field name="TotalDeferred"></field>
+        </qp-fieldset>
+    </qp-template>
+    <qp-grid id="grid" view.bind="Records">
+    </qp-grid>
+</template>

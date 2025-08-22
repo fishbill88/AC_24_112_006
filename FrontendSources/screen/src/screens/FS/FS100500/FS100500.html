@@ -1,0 +1,27 @@
+﻿<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="statusColorTab" caption="Status Color">
+			<qp-template id="StatusColorTemplate" name="7-10-7">
+				<qp-fieldset slot="A" id="StatusColorSelected_frmStatusColor" caption="Selected Status" view.bind="StatusColorSelected">
+					<field name="BackgroundColor" control-type="qp-color-picker"></field>
+					<field name="TextColor" control-type="qp-color-picker"></field>
+					<field name="BandColor" control-type="qp-color-picker"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="statusColorGrid" view.bind="StatusColorRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="appointmentBoxTab" caption="Appointment Box">
+			<qp-grid id="appointmentBoxGrid" view.bind="AppointmentBoxFields">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="serviceOrderTab" caption="Service Order">
+			<qp-grid id="serviceOrderGrid" view.bind="ServiceOrderFields">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="unassignedAppointmentTab" caption="Unassigned Appointment">
+			<qp-grid id="unassignedAppGrid" view.bind="UnassignedAppointmentFields">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

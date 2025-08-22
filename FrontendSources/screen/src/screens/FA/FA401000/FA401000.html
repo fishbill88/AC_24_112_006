@@ -1,0 +1,18 @@
+<template>
+
+	<qp-template id="formFilter" name="1-1" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="BookID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+			<field name="PeriodID"></field>
+			<field name="Balance"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Amts"></qp-grid>
+
+</template>

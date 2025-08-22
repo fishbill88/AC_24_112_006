@@ -1,0 +1,29 @@
+<template>
+	<qp-template id="emailForm_template" name="2-1" class="equal-height" wg-container="Email_frmViewMessage">
+		<qp-fieldset slot="A" id="emailFormLeft" view.bind="Email">
+			<field name="MailFrom"></field>
+			<field name="MailTo"></field>
+			<field name="mailCc"></field>
+			<field name="mailBcc"></field>
+			<field name="Subject"></field>
+		</qp-fieldset>
+		<div slot="B">
+			<qp-fieldset id="emailFormRight" view.bind="Email">
+				<field name="MPStatus"></field>
+			</qp-fieldset>
+			<qp-rich-text-editor
+				id="emailRedException"
+				value.bind="Email.RedException.value"
+				config.bind="{readOnly: true}"
+			></qp-rich-text-editor>
+		</div>
+	</qp-template>
+	<qp-template id="emailForm_body_template" name="1" class="stretch">
+		<qp-rich-text-editor
+			slot="A"
+			id="emailBody_template"
+			value.bind="Email.Body.value"
+			config.bind="{readOnly: true}"
+		></qp-rich-text-editor>
+	</qp-template>
+</template>

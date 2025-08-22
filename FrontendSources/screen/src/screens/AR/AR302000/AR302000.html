@@ -1,0 +1,141 @@
+<template>
+	<qp-template name="top-7-10-7" id="formDocument" class="equal-height" wg-container="Document_form">
+		<qp-fieldset slot="A" id="columnFirst-Document" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="AdjDate"></field>
+			<field name="AdjFinPeriodID"></field>
+			<field name="ExtRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-Document" view.bind="Document">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID" config-allow-edit.bind="true"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="CCTransactionRefund"></field>
+			<field name="RefTranExtNbr"></field>
+			<field name="PMInstanceID"></field>
+			<field name="ProcessingCenterID"></field>
+			<field name="NewCard"></field>
+			<field name="NewAccount"></field>
+			<field name="SaveCard"></field>
+			<field name="SaveAccount"></field>
+			<field name="CCPaymentStateDescr"></field>
+			<field name="CashAccountID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="DepositAfter"></field>
+			<field name="ChkServiceManagement"></field>
+			<field name="DocDesc" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird-Document" view.bind="Document" class="highlights-section">
+			<field name="CuryOrigDocAmt">
+				<!-- TODO: To investigate why does wg-name attribute need here -->
+				<qp-button id="buttonAdjustDocumentAmount" wg-name="SetPaymentAmounttoAppliedtoDocumentsAmount" state.bind="AdjustDocAmt" class="col-2"
+						   config.bind="{imageSet: 'main', imageKey: 'Refresh'}"></qp-button>
+			</field>
+			<field name="CuryApplAmt"></field>
+			<field name="CurySOApplAmt"></field>
+			<field name="CuryUnappliedBal"></field>
+			<field name="CuryInitDocBal"></field>
+			<field name="CuryWOAmt"></field>
+			<field name="CuryChargeAmt"></field>
+			<field name="CuryConsolidateChargeTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabAdjustments" caption="Documents to Apply">
+			<qp-grid id="gridDocumentsToApply" wg-container="Adjustments_detgrid" view.bind="Adjustments">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApplicationHistory" caption="Application History">
+			<qp-grid id="gridApplicationHistory" wg-container="ARPost_detgrid2" view.bind="ARPost">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template name="17-17-14" id="formCurrentDocument-TabFinancial" wg-container="CurrentDocument_form2">
+				<qp-fieldset slot="A" id="groupLinkToGL" view.bind="CurrentDocument" caption="Link to GL">
+					<field name="BatchNbr" config-allow-edit.bind="true"></field>
+					<field name="DisplayCuryInitDocBal"></field>
+					<field name="BranchID"></field>
+					<field name="ARAccountID"></field>
+					<field name="ARSubID"></field>
+					<field name="ProjectID"></field>
+					<field name="TaskID"></field>
+					<field name="OrigRefNbr"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="groupPaymentInformation" view.bind="CurrentDocument" caption="Payment Information">
+					<field name="DocDate"></field>
+					<field name="FinPeriodID"></field>
+					<field name="Cleared"></field>
+					<field name="ClearDate"></field>
+					<field name="DepositAsBatch"></field>
+					<field name="Deposited"></field>
+					<field name="DepositDate"></field>
+					<field name="DepositNbr" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCardProcessing" caption="Card Processing">
+			<qp-grid id="gridCardProcessingTransactions" wg-container="ccProcTran_grdCCProcTran" view.bind="ccProcTran">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCharges" caption="Charges">
+			<qp-grid id="gridPaymentCharges" wg-container="PaymentCharges_detgrid3" view.bind="PaymentCharges">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="loadOpts" caption="Load Options" auto-repaint="true" width="50vw">
+		<qp-template name="1" id="formLoadOptions" wg-container="loadOpts_loform" class="label-size-m">
+			<div slot="A" id="panelloadOptons">
+				<qp-fieldset id="groupFirst-LoadOptions" view.bind="loadOpts">
+					<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+					<field name="FromDate"></field>
+					<field name="TillDate"></field>
+					<field name="MaxDocs"></field>
+					<field name="OrderBy" control-type="qp-radio" config-class.bind="'vertical'"></field>
+					<field name="SOOrderBy" control-type="qp-radio" config-class.bind="'vertical'"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupSecond-LoadOptions" view.bind="loadOpts">
+					<field name="StartRefNbr"></field>
+					<field name="EndRefNbr"></field>
+					<field name="Apply"></field>
+					<field name="LoadChildDocuments"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonLoad-loadOpts" caption="Load" dialog-result="OK"></qp-button>
+			<qp-button id="buttonReload-loadOpts" caption="Reload" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonCancel-loadOpts" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--#include file="~\Pages\Includes\EPReassignApproval.inc"-->
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter" class="h-stack" wg-container="ReassignApprovalFilter_formReassignApproval">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReassignApprovalFilter" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReassignApprovalFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--#include file="~\Pages\Includes\CRApprovalReasonPanel.inc"-->
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason">
+		<qp-fieldset id="formReasonApproveRejectParams" view.bind="ReasonApproveRejectParams" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+			<field name="Reason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReasonApproveRejectParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReasonApproveRejectParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

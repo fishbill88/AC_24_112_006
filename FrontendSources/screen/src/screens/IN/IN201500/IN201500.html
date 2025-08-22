@@ -1,0 +1,37 @@
+<template>
+	<qp-template id="Schemes-first" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="first" view.bind='Schemes' wg-container="Schemes_form">
+			<field name="AvailabilitySchemeID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="Schemes-second" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset slot="A" id='first' view.bind='Schemes' slot='A' wg-container="Schemes_form" caption="Quantities to Deduct">
+			<field name="InclQtyINIssues"></field>
+			<field name="InclQtySOPrepared"></field>
+			<field name="InclQtySOBooked"></field>
+			<field name="InclQtySOShipped"></field>
+			<field name="InclQtySOShipping"></field>
+			<field name="InclQtyINAssemblyDemand"></field>
+			<field name="InclQtySOBackOrdered"></field>
+			<field name="InclQtyFSSrvOrdPrepared"></field>
+			<field name="InclQtyFSSrvOrdBooked"></field>
+			<field name="InclQtyProductionDemandPrepared"></field>
+			<field name="InclQtyProductionDemand"></field>
+			<field name="InclQtyProductionAllocated"></field>
+			<field name="InclQtyFSSrvOrdAllocated"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id='second' view.bind='Schemes' slot='B' wg-container="Schemes_form" caption="Quantities to Include">
+			<field name="InclQtyINReceipts"></field>
+			<field name="InclQtyInTransit"></field>
+			<field name="InclQtyPOReceipts"></field>
+			<field name="InclQtyPOPrepared"></field>
+			<field name="InclQtyPOOrders"></field>
+			<field name="InclQtyFixedSOPO"\></field>
+			<field name="InclQtyINAssemblySupply"></field>
+			<field name="InclQtySOReverse"></field>
+			<field name="InclQtyProductionSupplyPrepared"></field>
+			<field name="InclQtyProductionSupply"></field>
+		</qp-fieldset>
+	</qp-template>
+</template>

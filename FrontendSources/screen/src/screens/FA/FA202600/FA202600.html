@@ -1,0 +1,22 @@
+<template>
+
+	<qp-template id="formMethod" name="1-1" wg-container="Method_form" class="equal-height">
+		<qp-fieldset id="columnFirstMethod" view.bind="Method" slot="A">
+			<field name="MethodCD"></field>
+			<field name="RecordType"></field>
+			<field name="ParentMethodID"></field>
+			<field name="UsefulLife"></field>
+			<field name="RecoveryPeriod"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="phF_form_PXLayoutRule#8" view.bind="Method" slot="B">
+			<field name="AveragingConvention"></field>
+			<field name="AveragingConvPeriod"></field>
+			<field name="DisplayTotalPercents"></field>
+			<field name="Source"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridDetails" view.bind="details" wg-container="details_grid"> </qp-grid>
+
+</template>

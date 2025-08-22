@@ -1,0 +1,17 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="formBudgetTree" wg-container="BudgetTree_form">
+		<qp-fieldset slot="A" id="firstColumn" view.bind="BudgetTree">
+			<field name="GroupID" config-display-mode.bind="'text'"> </field>
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="secondColumn" view.bind="BudgetTree">
+			<field name="IsGroup"></field>
+			<field name="AccountMask"></field>
+			<field name="SubMask"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Groups">
+	</qp-grid>
+</template>

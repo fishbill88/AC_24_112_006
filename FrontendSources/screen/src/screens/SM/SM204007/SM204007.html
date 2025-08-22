@@ -1,0 +1,37 @@
+<template>
+	<qp-template name="1-1" id="ActionExecutions_frmTask" class="equal-height" wg-container>
+		<qp-fieldset slot="A" id="formActionExecutions_1" view.bind="ActionExecutions">
+			<field control-type="qp-selector" name="ExecutionID" config.bind="{displayMode:'text'}"></field>
+			<field name="Name"></field>
+			<field control-type="qp-selector" name="ActionScreenID" ></field>
+			<field name="ActionName"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formActionExecutions_2" view.bind="ActionExecutions">
+			<field control-type="qp-selector" name="ScreenID" ></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabActionExecutionMappings" caption="Keys">
+			<qp-grid id="grdMappingByActionScreenId" view.bind="ActionExecutionMappings">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabActionExecutionParameters" caption="Field Values">
+			<qp-grid id="grdParameterByActionScreenId" view.bind="ActionExecutionParameters">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBusinessEvents" caption="Executed By Events" if.bind="ActionExecutions.ShowCreatedByEventsTabExpr.value===true">
+			<qp-grid id="grdCreatedByEvents" view.bind="BusinessEvents">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="NewEventData" caption="Create Business Event">
+		<qp-fieldset id="NewEventData_frmCreateBusinessEvent" wg-container view.bind="NewEventData" >
+			<field name="Name"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel" ></qp-button>
+		</footer>
+	</qp-panel>
+</template>

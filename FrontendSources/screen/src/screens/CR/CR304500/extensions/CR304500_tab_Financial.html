@@ -1,0 +1,69 @@
+<template>
+	<template id="tabFinancial_Content">
+		<qp-template name="17-17-14" id="Financial-form" wg-container>
+			<div slot="A">
+				<qp-fieldset
+					id="groupBilling_Address"
+					view.bind="Billing_Address"
+					caption="Bill-To Address"
+				>
+					<field name="OverrideAddress"></field>
+					<field name="FakeField" unbound>
+						<qp-address-lookup class="col-12" view.bind="Billing_Address">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="CountryID"></field>
+					<field name="IsValidated"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupBilling_Contact"
+					view.bind="Billing_Contact"
+					caption="Bill-To Info"
+				>
+					<field name="OverrideContact"></field>
+					<field name="FullName"></field>
+					<field name="Attention"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Billing_Contact.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Billing_Contact.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Email" control-type="qp-mail-editor"> </field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="groupFinancialInfo"
+					view.bind="QuoteCurrent"
+					caption="Financial Info"
+				>
+					<field name="BranchID"></field>
+					<field name="TermsID"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupOtherInfo"
+					view.bind="QuoteCurrent"
+					caption="Other Info"
+				>
+					<field name="ProjectID"></field>
+					<field name="ExternalRef"></field>
+					<field name="WorkgroupID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

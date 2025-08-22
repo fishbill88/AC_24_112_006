@@ -1,0 +1,14 @@
+<template>
+	<qp-template id="formFilter" name="1-1" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="CommnPeriodID"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+			<field name="StartDateUI"></field>
+			<field name="EndDateUI"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="ToProcess"></qp-grid>
+</template>

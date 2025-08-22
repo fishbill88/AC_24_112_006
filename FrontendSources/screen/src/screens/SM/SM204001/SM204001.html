@@ -1,0 +1,55 @@
+<template>
+	<qp-template id="Prefs_form" name="1-1" class="label-size-xm" wg-container>
+		<qp-fieldset slot="A" id="FormLeft" view.bind="Prefs">
+			<field
+				name="Prefs.DefaultEMailAccountID"
+				config-allow-edit.bind="true"
+			></field>
+			<field name="EmailTagPrefix"></field>
+			<field name="EmailTagSuffix"></field>
+			<field name="ArchiveEmailsOlderThan"></field>
+			<field name="RepeatOnErrorSending"></field>
+			<field name="SuspendEmailProcessing"></field>
+			<field name="SendUserEmailsImmediately"></field>
+			<field name="EmailProcessingLogging"></field>
+			<field name="EmailProcessingLoggingRetentionPeriod"></field>
+		</qp-fieldset>
+		<qp-fieldset
+			slot="B"
+			id="FormRight"
+			view.bind="Prefs"
+			caption="Security"
+		>
+			<field
+				name="UserWelcomeNotificationId"
+				config-allow-edit.bind="true"
+			></field>
+			<field
+				name="PasswordChangedNotificationId"
+				config-allow-edit.bind="true"
+			></field>
+			<field
+				name="LoginRecoveryNotificationId"
+				config-allow-edit.bind="true"
+			></field>
+			<field
+				name="PasswordRecoveryNotificationId"
+				config-allow-edit.bind="true"
+			></field>
+			<field
+				name="TwoFactorNewDeviceNotificationId"
+				config-allow-edit.bind="true"
+			></field>
+			<field
+				name="TwoFactorCodeByNotificationId"
+				config-allow-edit.bind="true"
+			></field>
+			<field name="NotificationSiteUrl"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid
+		id="grid"
+		view.bind="EMailAccounts"
+		wg-container="EMailAccounts_gridEMail"
+	></qp-grid>
+</template>

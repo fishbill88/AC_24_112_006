@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="first" slot="A" view.bind="Filter">
+			<field name="SOAction"></field>
+			<field name="SrvOrdType"></field>
+			<field name="BranchID"></field>
+			<field name="BranchLocationID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" slot="B" view.bind="Filter">
+			<field name="CustomerID"></field>
+			<field name="ServiceContractID"></field>
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+		</qp-fieldset>	
+	</qp-template>
+	<qp-grid id="gridInventoryLines" view.bind="ServiceOrderRecords">
+	</qp-grid>
+</template>

@@ -1,0 +1,32 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height" qp-collapsible>
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="OwnerID">
+				<qp-field id="MyOwner" control-state.bind="Filter.MyOwner" class="col-2"></qp-field>
+			</field>
+			<field name="WorkGroupID">
+				<qp-field id="MyWorkGroup" control-state.bind="Filter.MyWorkGroup" class="col-2"></qp-field>
+			</field>
+			<field name="ItemClassCD"></field>
+			<field name="InventoryID"></field>
+			<field name="SiteID"></field>
+			<field name="StartDate"></field>
+			<field name="EndDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter">
+			<field name="CustomerID"></field>
+			<field name="SOOrderType"></field>
+			<field name="SOOrderNbr"></field>
+			<field name="OrderType"></field>
+			<field name="ProdOrdID"></field>
+			<field name="Reprint"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Filter3" view.bind="Filter">
+			<field name="PrintWithDeviceHub"></field>
+			<field name="DefinePrinterManually"></field>
+			<field name="PrinterID"></field>
+			<field name="NumberOfCopies"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ProductionOrders"></qp-grid>
+</template>

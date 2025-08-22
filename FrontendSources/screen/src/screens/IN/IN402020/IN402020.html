@@ -1,0 +1,19 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="Filter_form" wg-container>
+		<qp-fieldset id="Filter_form_column1" view.bind="Filter" slot="A">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="InventoryID"></field>
+			<field name="ShippedBefore"></field>
+			<field name="ShowItemsWithoutReceipt"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_form_column2" view.bind="Filter" slot="B">
+				<field name="PurchasingCompany"></field>
+				<field name="PurchasingSiteID"></field>
+				<field name="SellingCompany"></field>
+				<field name="SellingSiteID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Results">
+	</qp-grid>
+</template>

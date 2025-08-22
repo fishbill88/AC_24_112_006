@@ -1,0 +1,30 @@
+<template>
+	<qp-splitter
+		id="splitterId"
+		split="width"
+		initial-split="270px"
+		state="normal"
+	>
+		<split-pane>
+			<qp-tree id="tree" view.bind="Nodes" caption="Comparison"> </qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-template id="CurrentNode_template" name="1-1" class="label-size-xm">
+				<div slot="A" id="CurrentNode_slotA">
+					<qp-fieldset
+						id="frmCurrentNode"
+						view.bind="CurrentNode"
+						caption="Rules of Comparison"
+					>
+						<field name="ValidationThreshold"></field>
+						<field name="ValidateOnEntry"></field>
+					</qp-fieldset>
+					<qp-grid
+						id="bottomGrid"
+						view.bind="ValidationRules"
+					></qp-grid>
+				</div>
+		</qp-template>
+		</split-pane>
+	</qp-splitter>
+</template>

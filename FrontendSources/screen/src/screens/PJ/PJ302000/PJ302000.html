@@ -1,0 +1,68 @@
+<template>
+	<qp-template name="1-1-1" class="equal-height" id="ProjectIssue_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="ProjectIssue">
+			<field name="ProjectIssueCd"></field>
+			<field name="Status"></field>
+			<field name="ProjectId"></field>
+			<field name="ProjectTaskId"></field>
+			<field name="ProjectIssueTypeId"></field>
+			<field name="Summary" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="ProjectIssue">
+			<field name="ClassId" config-allow-edit.bind="true"></field>
+			<field name="PriorityId"></field>
+			<field name="DueDate"></field>
+			<field name="OwnerID"></field>
+			<field name="WorkgroupID"></field>
+			<field name="ResolvedOn"></field>
+			<field name="ConvertedTo" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formSlotC" view.bind="ProjectIssue">
+			<field name="RelatedEntityDescription" config-allow-edit.bind="true"></field>
+			<field name="CreationDate_Date">
+				<qp-field
+					control-state.bind="ProjectIssue.CreationDate_Time"
+					no-label="true"
+					config-time-mode.bind="true"
+					class="col-sm-12 col-md-12 col-lg-5">
+				</qp-field>
+			</field>
+			<field name="CreatedById"></field>
+			<field name="IsScheduleImpact"></field>
+			<field name="ScheduleImpact"></field>
+			<field name="IsCostImpact"></field>
+			<field name="CostImpact"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentProjectIssue_tab" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-rich-text-editor
+				id="edCurrentProjectIssueDescription"
+				class="stretch"
+				state.bind="CurrentProjectIssue.Description"
+				wg-field
+				value.two-way="CurrentProjectIssue.Description.value">
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="ActivitiesTab" caption="Activities">
+			<qp-grid id="Activities_Activities_grid" view.bind="Activities"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="gridAttributes" view.bind="Attributes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="DrawingsTab" caption="Drawings">
+			<qp-grid id="PXDrawingsGrid" view.bind="LinkedDrawingLogs"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="DrawingLogs" caption="Link Drawing" auto-repaint="true" width="80vw">
+		<qp-grid id="PXDrawingLogsGrid" view.bind="DrawingLogs"></qp-grid>
+		<footer>
+			<qp-button id="PXButton6" state.bind="LinkDrawingLogToEntity"></qp-button>
+			<qp-button id="PXButton7" caption="Link & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton8" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="DrawingLogsAttachments" caption="Drawing Log Document Attachments" auto-repaint="true" width="80vw">
+		<qp-grid id="GridDrawingLogsAttachments" view.bind="DrawingLogsAttachments"></qp-grid>
+	</qp-panel>
+</template>

@@ -1,0 +1,44 @@
+<template>
+	<qp-template name="1-1" id="Servers_form_header" class="equal-height label-size-xm" wg-container="Servers_form">
+		<qp-fieldset slot="A" id="servers_form_left" view.bind="Servers">
+			<field name="AccountCD"></field>
+			<field name="Address"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab" class="label-size-xm">
+		<qp-tab id="tabSettings" caption="Settings">
+			<qp-template name="1-1" id="Servers_form" wg-container="Servers_form">
+				<div slot="A">
+					<qp-fieldset
+						id="Authentication-Settings"
+						caption="Authentication Settings"
+						view.bind="Servers"
+					>
+						<field name="AuthenticationMethod"></field>
+						<field name="AzureTenantID"></field>
+						<field name="OAuthApplicationID" config-allow-edit.bind="true"></field>
+						<field name="Password"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="Other-Settings"
+						caption="Other Settings"
+						view.bind="Servers"
+					>
+						<field name="DefaultPolicyName" config-allow-edit.bind="true"></field>
+						<field name="ServerUrl"></field>
+						<field name="LoggingLevel"></field>
+						<field name="ConnectionMode"></field>
+						<field name="SyncProcBatch"></field>
+						<field name="SyncUpdateBatch"></field>
+						<field name="SyncSelectBatch"></field>
+						<field name="SyncAttachmentSize"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabUsers" caption="Users">
+			<qp-grid id="grid" view.bind="SyncAccounts"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

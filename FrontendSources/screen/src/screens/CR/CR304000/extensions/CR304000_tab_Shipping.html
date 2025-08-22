@@ -1,0 +1,80 @@
+<template>
+	<template id="tabShipping_Content">
+		<qp-template name="17-17-14" id="Shipping-form" wg-container>
+			<div slot="A">
+				<qp-fieldset
+					id="groupShipping_Address"
+					view.bind="Shipping_Address"
+					caption="Ship-To Address"
+				>
+					<field name="OverrideAddress"></field>
+					<field name="FakeField" unbound>
+						<qp-address-lookup class="col-12" view.bind="Shipping_Address">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="CountryID"></field>
+					<field name="Latitude"></field>
+					<field name="Longitude"></field>
+					<field name="IsValidated"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupShipping_Contact"
+					view.bind="Shipping_Contact"
+					caption="Ship-To Info"
+				>
+					<field name="OverrideContact"></field>
+					<field name="FullName"></field>
+					<field name="Attention"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Shipping_Contact.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Shipping_Contact.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Email" control-type="qp-mail-editor"> </field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="groupTaxSettings"
+					view.bind="OpportunityCurrent"
+					caption="Tax Settings"
+				>
+					<field name="TaxRegistrationID"></field>
+					<field name="TaxZoneID"></field>
+					<field name="TaxCalcMode"></field>
+					<field name="ExternalTaxExemptionNumber"></field>
+					<field name="AvalaraCustomerUsageType"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="groupShippingInstructions"
+					view.bind="OpportunityCurrent"
+					caption="Shipping Settings"
+				>
+					<field name="SiteID"></field>
+					<field name="CarrierID"></field>
+					<field name="ShipTermsID"></field>
+					<field name="ShipZoneID"></field>
+					<field name="FOBPointID"></field>
+					<field name="Resedential"></field>
+					<field name="SaturdayDelivery"></field>
+					<field name="Insurance"></field>
+					<field name="ShipComplete"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

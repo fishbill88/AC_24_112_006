@@ -1,0 +1,27 @@
+<template>
+	<qp-template name="1-1" id="form" class="equal-height label-size-m" wg-container>
+		<qp-fieldset slot="A" id="form_LeadLeft" view.bind="Location">
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="LocationCD" config-allow-edit.bind="true"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form_LeadRight" view.bind="Location">
+			<field name="Status"></field>
+			<field name="IsDefault"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTabBar" class="label-size-m">
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content"></qp-tab>
+		<qp-tab
+			id="tabShipping"
+			caption="Shipping"
+			ref="tabShipping_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabOpportunities"
+			caption="Opportunities"
+			ref="tabOpportunities_Content"
+		></qp-tab>
+		<qp-tab id="tabCases" caption="Cases" ref="tabCases_Content"></qp-tab>
+	</qp-tabbar>
+</template>

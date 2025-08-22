@@ -1,0 +1,30 @@
+<template>
+	<qp-panel
+		id="OrderEstimateItemFilter"
+		auto-repaint="true"
+		caption="Add Estimate"
+	>
+		<qp-fieldset id="panel_AddEstimate" view.bind="OrderEstimateItemFilter">
+			<field name="EstimateID">
+				<qp-field control-state.bind="OrderEstimateItemFilter.AddExisting">
+				</qp-field>
+			</field>
+			<field name="RevisionID"></field>
+			<field name="InventoryCD">
+				<qp-field control-state.bind="OrderEstimateItemFilter.IsNonInventory">
+				</qp-field>
+			</field>
+			<field name="SubItemID"></field>
+			<field name="SiteID"></field>
+			<field name="ItemDesc"></field>
+			<field name="EstimateClassID"></field>
+			<field name="ItemClassID"></field>
+			<field name="UOM"></field>
+			<field name="BranchID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="AddEstButton1" dialog-result="OK"> </qp-button>
+			<qp-button id="AddEstButton2" dialog-result="Cancel"> </qp-button>
+		</footer>
+	</qp-panel>
+</template>

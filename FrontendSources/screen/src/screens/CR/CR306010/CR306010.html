@@ -1,0 +1,57 @@
+<template>	 
+	<qp-template id='Activities_template' name='1-1' wg-container='Activities_form' qp-collapsible>
+		<qp-fieldset slot='A' id='Activities_formLeft' view.bind='Activities'>
+			<field name="Subject"></field>
+			<field name="Type"></field>
+			<field name="StartDate_Date">
+				<qp-field
+					control-state.bind="Activities.StartDate_Time"
+					no-label="true">
+				</qp-field>
+			</field>
+			<field name="IsPrivate"></field>
+			<field name="ProvidesCaseSolution"></field>
+			<field name="WorkgroupID"></field>
+			<field name="OwnerID"></field>
+			<field name="RefNoteIDType"></field>
+			<field name="RefNoteID" config-allow-edit.bind='true'></field>
+			<field name="ParentNoteID" config-allow-edit.bind='true'></field>
+
+			<using view="TimeActivity">
+				<field name="ProjectID">
+					<qp-field
+						control-state.bind="CertifiedJob"
+						no-label="true">
+					</qp-field>
+				</field>
+				<field name="ProjectTaskID"></field>
+				<field name="CostCodeID"></field>
+				<field name="LabourItemID"></field>
+				<field name="UnionID"></field>
+			</using>
+		</qp-fieldset>
+		<qp-fieldset id='Activities_formRight' view.bind='TimeActivity' slot='B'>
+			<field name="TrackTime"></field>
+			<field name="ApprovalStatus"></field>
+			<field name="ApproverID"></field>
+			<field name="EarningTypeID"></field>
+			<field name="WorkCodeID"></field>
+			<field name="ShiftID"></field>
+			<field name="TimeSpent"></field>
+			<field name="OvertimeSpent"></field>
+			<field name="IsBillable"></field>
+			<field name="Released"></field>
+			<field name="TimeBillable"></field>
+			<field name="OvertimeBillable"></field>
+			<field name="ARRefNbr" config-allow-edit.bind='true'></field>
+		</qp-fieldset>
+	</qp-template>
+	<div id="CurrentActivity_PXFormView2" wg-container>
+		<qp-rich-text-editor
+			id="CurrentActivity"
+			state.bind="Activities.Body"
+			wg-field
+			value.bind="Activities.Body.value">
+		</qp-rich-text-editor>
+	</div>
+</template>

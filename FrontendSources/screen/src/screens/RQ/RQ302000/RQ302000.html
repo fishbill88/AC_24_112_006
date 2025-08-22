@@ -1,0 +1,126 @@
+<template>
+	<qp-template name="7-10-7" id="document_form" wg-container qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="first" view.bind="Document">
+			<field name="ReqNbr"></field>
+			<field name="Status"></field>
+			<field name="OrderDate"></field>
+			<field name="Priority"></field>
+			<field name="EmployeeID"></field>
+			<field name="Quoted"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Document">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID"></field>
+			<using view="_RQRequisition_CurrencyInfo_">
+				<field control-type="qp-currency" view.bind="_RQRequisition_CurrencyInfo_" name="CuryID"></field>
+			</using>
+			<field name="Description" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="summary" view.bind="Document" class="highlights-section">
+			<field name="CuryEstExtCostTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="Lines">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping">
+			<qp-template name="17-17-14" id="Shipping_form">
+				<div slot="A">
+					<qp-fieldset id="Shipping_form_column1_1" view.bind="CurrentDocument" caption="Ship To:" wg-container="CurrentDocument_tab">
+						<field name="ShipDestType"></field>
+						<field name="ShipToBAccountID"></field>
+						<field name="SiteID"></field>
+						<field name="ShipToLocationID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="Shipping_form_column1_2" view.bind="Shipping_Contact" caption="Ship-To Contact" wg-container="Shipping_Contact_formSC">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="Shipping_form_column1_3" view.bind="Shipping_Address" caption="Ship-To Address" wg-container="Shipping_Address_formSA">
+						<field name="OverrideAddress">
+							<qp-address-lookup class="col-12" view.bind="Shipping_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+					<qp-fieldset id="Shipping_form_column2_1" view.bind="CurrentDocument" caption="Ship Via:" wg-container="CurrentDocument_tab">
+						<field name="FOBPoint" id="edFOBPoint"></field>
+						<field name="ShipVia" id="edShipVia"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="Bidding_tab" caption="Bidding">
+			<qp-template name="17-7" id="Bidding_form" class="full-width stretch">
+				<qp-grid slot="A" id="gridVendor" view.bind="Vendors" class="framed-section">
+				</qp-grid>
+				<qp-fieldset slot="B" id="Bidding_form_column1" view.bind="CurrentDocument" wg-container="CurrentDocument_tab">
+					<field name="VendorID"></field>
+					<field name="VendorLocationID"></field>
+					<field name="VendorRefNbr"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="Vendor_Info_tab" caption="Vendor Info">
+			<qp-template name="17-17-14" id="Vendor_Info_form">
+				<div slot="A">
+					<qp-fieldset id="Vendor_Info_form_column1_1" view.bind="Remit_Contact" caption="Vendor Contact" wg-container="Remit_Contact_formVC">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="Vendor_Info_form_column1_2" view.bind="Remit_Address" caption="Vendor Address" wg-container="Remit_Address_formVA">
+						<field name="OverrideAddress">
+							<qp-address-lookup class="col-12" view.bind="RemitAddressLookup">
+							</qp-address-lookup>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="Vendor_Info_form_column2_1" view.bind="CurrentDocument" caption="Info" wg-container="CurrentDocument_tab">
+						<field name="TermsID"></field>
+						<field name="POType"></field>
+						<field name="Splittable"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="Other_tab" caption="Other">
+			<qp-template name="17-17-14" id="Other_form">
+				<qp-fieldset id="Other_form_column2_1" view.bind="CurrentDocument" caption="Ownership" wg-container="CurrentDocument_tab" slot="A">
+					<field name="WorkgroupID"></field>
+					<field name="OwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="Purchase_Orders_tab" caption="Purchase Orders">
+			<qp-grid id="gridPOOrders" view.bind="POOrders" ></qp-grid>
+		</qp-tab>
+		<qp-tab id="Sales_Orders_tab" caption="Sales Orders">
+			<qp-grid id="gridSOOrders" view.bind="SOOrders" ></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report version="" Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PMWipDetailTotalForecastHistory.ProjectID</DataField>
+      <Value>@ProjectID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMWipDetailTotalForecastHistory.ProjectTaskID</DataField>
+      <Value>@TaskID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMWipDetailTotalForecastHistory.CostCodeID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@CostCodeID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@CostCodeID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMWipDetailTotalForecastHistory.AccountGroupID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@AccountGroupID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@AccountGroupID</DataField>
+    </FilterExp>
+  </Filters>
+  <Parameters>
+    <ReportParameter>
+      <Name>From_Date</Name>
+      <Prompt>From Date</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('PMWipDetailTotalForecastHistory.PeriodID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>To_Date</Name>
+      <Prompt>To Date</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('PMWipDetailTotalForecastHistory.PeriodID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ProjectID</Name>
+      <Prompt>Project</Prompt>
+      <Required>True</Required>
+      <Type>Integer</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>TaskID</Name>
+      <Prompt>TaskID</Prompt>
+      <Required>True</Required>
+      <Type>Integer</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>CostCodeID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>CostCodeID</Prompt>
+      <Type>Integer</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>AccountGroupID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>AccountGroupID</Prompt>
+      <Type>Integer</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ActToPeriod</Name>
+      <Prompt>ActToPeriod</Prompt>
+    </ReportParameter>
+  </Parameters>
+  <ParamsColumns>1</ParamsColumns>
+  <SchemaUrl>http://localhost/code</SchemaUrl>
+  <Style>
+    <TextAlign>Left</TextAlign>
+  </Style>
+  <Tables>
+    <ReportTable Name="PMWipDetailTotalForecastHistory">
+      <Fields>
+        <ReportField Name="AccountGroupID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ActualCostAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualRevenueAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ArRevenueAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+    	<ReportField Name="ArAssetAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="ArLiabilityAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="ArExpenseAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="ArRevenueInclTaxAmount">
+		  <DataType>Decimal</DataType>
+		</ReportField>
+		<ReportField Name="CostCodeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PeriodID"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ProjectTaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.CN.PMWipDetailTotalForecastHistory</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>15.71429cm</Width>
+  <Sections>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>ActualCostAmt</Name>
+          <ValueExpr>=$ActualCostAmt + IIf([PMWipDetailTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipDetailTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipDetailTotalForecastHistory.ActualCostAmount],0)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualRevenueAmt</Name>
+          <ValueExpr>=$ActualRevenueAmt + IIf([PMWipDetailTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipDetailTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipDetailTotalForecastHistory.ActualRevenueAmount] + [PMWipDetailTotalForecastHistory.ArRevenueInclTaxAmount] ,0)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualCostAmtTodate</Name>
+          <ValueExpr>=$ActualCostAmtTodate + IIF([PMWipDetailTotalForecastHistory.PeriodID] &lt;= IsNull([@ActToPeriod], [@To_Date] ), [PMWipDetailTotalForecastHistory.ActualCostAmount], 0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualRevenueAmtTodate</Name>
+          <ValueExpr>=$ActualRevenueAmtTodate + IIF([PMWipDetailTotalForecastHistory.PeriodID] &lt;= IsNull([@ActToPeriod], [@To_Date] ),[PMWipDetailTotalForecastHistory.ActualRevenueAmount] + [PMWipDetailTotalForecastHistory.ArRevenueInclTaxAmount], 0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ArRevenueAmt</Name>
+          <ValueExpr>=$ArRevenueAmt + IIf([PMWipDetailTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipDetailTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipDetailTotalForecastHistory.ArRevenueAmount] + [PMWipDetailTotalForecastHistory.ArRevenueInclTaxAmount],0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ArRevenueAmtTodate</Name>
+          <ValueExpr>=$ArRevenueAmtTodate + IIF([PMWipDetailTotalForecastHistory.PeriodID] &lt;= IsNull([@ActToPeriod], [@To_Date] ),[PMWipDetailTotalForecastHistory.ArRevenueAmount] + [PMWipDetailTotalForecastHistory.ArRevenueInclTaxAmount], 0)</ValueExpr>
+        </ReportVariable>
+ 	    <ReportVariable>
+		  <Name>ArAssetAmt</Name>
+		  <ValueExpr>=$ArAssetAmt + IIf([PMWipDetailTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipDetailTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipDetailTotalForecastHistory.ArAssetAmount],0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArAssetAmtTodate</Name>
+		  <ValueExpr>=$ArAssetAmtTodate + IIF([PMWipDetailTotalForecastHistory.PeriodID] &lt;= IsNull([@ActToPeriod], [@To_Date] ),[PMWipDetailTotalForecastHistory.ArAssetAmount], 0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArLiabilityAmt</Name>
+		  <ValueExpr>=$ArLiabilityAmt + IIf([PMWipDetailTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipDetailTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipDetailTotalForecastHistory.ArLiabilityAmount],0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArLiabilityAmtTodate</Name>
+		  <ValueExpr>=$ArLiabilityAmtTodate + IIF([PMWipDetailTotalForecastHistory.PeriodID] &lt;= IsNull([@ActToPeriod], [@To_Date] ),[PMWipDetailTotalForecastHistory.ArLiabilityAmount], 0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArExpenseAmt</Name>
+		  <ValueExpr>=$ArExpenseAmt + IIf([PMWipDetailTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipDetailTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipDetailTotalForecastHistory.ArExpenseAmount],0)</ValueExpr>
+		</ReportVariable>
+		<ReportVariable>
+		  <Name>ArExpenseAmtTodate</Name>
+		  <ValueExpr>=$ArExpenseAmtTodate + IIF([PMWipDetailTotalForecastHistory.PeriodID] &lt;= IsNull([@ActToPeriod], [@To_Date] ),[PMWipDetailTotalForecastHistory.ArExpenseAmount], 0)</ValueExpr>
+		 </ReportVariable>
+		<ReportVariable>
+		  <Name>ArRevenueInclTaxAmtTodate</Name>
+		  <ValueExpr>=$ArRevenueInclTaxAmtTodate + [PMWipDetailTotalForecastHistory.ArRevenueInclTaxAmount]</ValueExpr>
+		</ReportVariable>
+	  </Variables>
+    </Detail>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+        </Font>
+      </Style>
+      <Visible>False</Visible>
+    </PageHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </ReportFooter>
+  </Sections>
+</Report>

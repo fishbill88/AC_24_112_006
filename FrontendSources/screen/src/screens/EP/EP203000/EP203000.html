@@ -1,0 +1,89 @@
+<template>
+	<qp-template
+		name="1-1"
+		id="form"
+		class="equal-height label-size-m"
+		wg-container="Employee_form"
+	>
+		<qp-fieldset slot="A" id="form_EmployeeLeft" view.bind="Employee">
+			<field name="AcctCD"></field>
+			<field name="AcctName"></field>
+			<field name="VStatus"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form_EmployeeRight" view.bind="Employee">
+			<using wg-container="CurrentEmployee_tab">
+				<field name="VendorClassID" config-allow-edit.bind="true"></field>
+			</using>
+			<field name="ChkServiceManagement"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTabBar" class="label-size-m" wg-container="CurrentEmployee_tab">
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content"></qp-tab>
+		<qp-tab id="tabHistory" caption="History" ref="tabHistory_Content"></qp-tab>
+		<qp-tab
+			id="tabFinancial"
+			caption="Financial"
+			ref="tabFinancial_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabAttributes"
+			caption="Attributes"
+			ref="tabAttributes_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabActivities"
+			caption="Activities"
+			ref="tabActivities_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabMailingPrinting"
+			caption="Mailing & Printing"
+			ref="tabMailingPrinting_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabWorkgroups"
+			caption="Workgroups"
+			ref="tabWorkgroups_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabAssignmentandApprovalMaps"
+			caption="Assignment and Approval Maps"
+			ref="tabAssignmentandApprovalMaps_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabDelegates"
+			caption="Delegates"
+			ref="tabDelegates_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabUser"
+			caption="User Info"
+			ref="tabUser_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabCorporateCards"
+			caption="Corporate Cards"
+			ref="tabCorporateCards_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabLaborItemOverrides"
+			caption="Labor Item Overrides"
+			ref="tabLaborItemOverrides_Content"
+		></qp-tab>
+		<qp-tab id="tabSkills" caption="Skills" ref="tabSkills_Content"></qp-tab>
+		<qp-tab
+			id="tabServiceAreas"
+			caption="Service Areas"
+			ref="tabServiceAreas_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabLicenses"
+			caption="Licenses"
+			ref="tabLicenses_Content"
+		></qp-tab>
+	</qp-tabbar>
+</template>

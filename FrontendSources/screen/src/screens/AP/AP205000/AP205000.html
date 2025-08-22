@@ -1,0 +1,49 @@
+<template>
+
+	<qp-template id="formSequence" name="top-17-17-14" class="equal-height" wg-container="Sequence_form">
+		<qp-fieldset id="columnFirstSequence" slot="A" view.bind="Sequence">
+			<field name="VendorID"></field>
+			<field name="DiscountID"></field>
+			<field name="DiscountSequenceID"></field>
+			<field name="IsActive"></field>
+			<field name="IsPromotion"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondSequence" slot="B" view.bind="Sequence">
+			<field name="DiscountedFor"></field>
+			<field name="BreakBy"></field>
+			<field name="StartDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdSequence" slot="C" view.bind="Sequence">
+			<field name="Prorate"></field>
+			<field name="EndDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDiscountBreakpoints" caption="Discount Breakpoints">
+			<qp-grid id="gridDetails" view.bind="Details" wg-container="Details_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabItems" caption="Items" if.bind="Discount.chkShowListOfItems==true">
+			<qp-grid id="gridItems" view.bind="Items" wg-container="Items_itemsGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLocations" caption="Locations" if.bind="Discount.chkShowLocations==true">
+			<qp-grid id="gridlocations" view.bind="Locations" wg-container="Locations_locationsGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabPriceClasses" caption="Item Price Classes" if.bind="Discount.chkShowInventoryPriceClass==true">
+			<qp-grid id="gridinventoryPriceClasses" view.bind="InventoryPriceClasses" wg-container="InventoryPriceClasses_inventoryPriceClassGrid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="UpdateSettings" caption="Update Discounts" auto-repaint="true">
+		<qp-template id="formUpdateSettings" name="base-17-17-14" wg-container="UpdateSettings_formUpdateSettings">
+			<qp-fieldset id="panelUpdateSettings" view.bind="UpdateSettings">
+				<field name="FilterDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

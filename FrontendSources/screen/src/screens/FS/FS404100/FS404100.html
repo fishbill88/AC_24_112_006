@@ -1,0 +1,22 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="Filter_10" slot="A" view.bind="Filter">
+			<field name="RouteID"></field>
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_20" slot="B" caption="Status" view.bind="Filter" class="no-label">
+			<field name="fake01" unbound replace-content>
+				<qp-field control-state.bind="Filter.StatusOpen" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+				<qp-field control-state.bind="Filter.StatusCanceled" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+				<qp-field control-state.bind="Filter.StatusClosed" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+			</field>
+			<field name="fake02" unbound replace-content>
+				<qp-field control-state.bind="Filter.StatusInProcess" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+				<qp-field control-state.bind="Filter.StatusCompleted" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="RouteDocuments">
+	</qp-grid>
+</template>

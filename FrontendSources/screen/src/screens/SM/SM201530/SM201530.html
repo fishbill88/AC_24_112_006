@@ -1,0 +1,117 @@
+<template>
+			
+	<qp-tabbar id="MainTabControl" >
+		<qp-tab id="MainTabControl_0" caption="RUNNING PROCESSES">
+			<qp-template id="RunningProcessesForm_0_0" name="1" wg-container="Filter_RunningProcessesForm"> 
+				<qp-fieldset id="RunningProcessesForm_0" view.bind="Filter" class="no-label" slot="A" >
+					<field name="ShowAllUsers"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="gridProcesses" view.bind="Items" wg-container="Items_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_1" caption="ACTIVE USERS">
+			<qp-template id="ActiveUsersForm_0_0"  name="1-1" wg-container="Filter_ActiveUsersForm"> 
+				<qp-fieldset id="ActiveUsersForm_0" view.bind="Filter" slot="A">
+					<field name="LoginType" class="col-auto" ></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="ActiveUsersGrid" view.bind="ActiveUsers" wg-container="ActiveUsers_ActiveUsersGrid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_2" caption="RESOURCE USAGE">
+			<qp-template id="ResourceUsageForm_0" name="1-1" wg-container="Filter_ResourceUsageForm">
+				<qp-fieldset id="Column0_0" view.bind="Filter" caption="MEMORY USAGE" slot="A">
+					<field name="GCTotalMemory"></field>
+					<field name="WorkingSet"></field>
+					<field name="GCCollection"></field>
+					<field name="GCRefresh" replace-content unbound>
+						<qp-button id="buttonRefresh" caption="Refresh" state.bind="ActionUpdateData"></qp-button>
+					</field>
+					<field name="GCCollect" replace-content unbound>
+						<qp-button id="buttonGC" wg-name="COLLECTMEMORY" state.bind="ActionGC"></qp-button>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset id="Column1_0" view.bind="Filter" caption="CPU USAGE" slot="B">
+					<field name="CurrentUtilization"></field>
+					<field name="UpTime"></field>
+					<field name="ActiveRequests"></field>
+					<field name="RequestsSumLastMinute"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_3" caption="SYSTEM EVENTS">
+			<qp-template id="SystemEventsForm_0" name="1-1" wg-container="Filter_SystemEventsForm">
+				<qp-fieldset id="SystemEventsForm_0" view.bind="Filter" slot="A">
+					<field name="Source"></field>
+					<field name="Level"></field>
+				</qp-fieldset>
+				<qp-fieldset id="SystemEventsForm_1" view.bind="Filter" slot="B">
+					<field name="FromDate"></field>
+					<field name="ToDate"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="gridSystemEvents" view.bind="SystemEvents"></qp-grid>
+
+			<qp-template id="SystemEventsForm_1" name="1">
+				<qp-fieldset id="EventDetailsFormView" view.bind="CurrentSystemEvent" slot="A">
+					<field name="FormattedProperties" config-type.bind="1" config-rows.bind="5"></field>
+				</qp-fieldset>
+			</qp-template>
+
+
+
+		</qp-tab>
+
+		<qp-tab id="MainTabControl_4" caption="REQUESTS IN PROGRESS">
+			<qp-grid id="gridProfiler" view.bind="Samples"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+    <qp-panel id="CurrentThreadsPanel" caption="Active Threads" width="90vw">
+         
+		<qp-template id="frmCurrentThreads_0_0" name="1" wg-container="CurrentThreadsPanel_frmCurrentThreads"> 
+			<qp-fieldset id="frmCurrentThreads_0" view.bind="CurrentThreadsPanel" slot="A" >
+				<field name="CurrentThreads" class="no-label" config-type.bind="1" config-rows.bind="25"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="btnCurrentThreadsCancel" caption="Ok" dialog-result="Cancel"></qp-button>
+		</footer>
+</qp-panel>
+
+    <qp-panel id="Sql" caption="View SQL" auto-repaint="true" width="90vw" height="90vh">
+		<qp-grid id="GridSqlProfiler" view.bind="Sql" ></qp-grid>
+    </qp-panel>
+
+    <qp-panel id="TraceExceptions" caption="Exception Profiler" auto-repaint="true" width="90vw" height="90vh">
+		<qp-grid id="ExceptionsGrid" view.bind="TraceExceptions" ></qp-grid>
+    </qp-panel>
+
+    <qp-panel id="TraceEvents" caption="View Event Log" auto-repaint="true" width="90vw" height="90vh">
+		<qp-grid id="TraceEventsGrid" view.bind="TraceEvents" wg-container="TraceEvents_TraceEventsGrid"></qp-grid>
+    </qp-panel>
+
+    <qp-panel id="ViewMemoryDumpOptions" caption="Create Memory Dump" auto-repaint="true" width="50vw" height="50vh">
+		<qp-template id="ViewMemoryDumpOptions_0_0" name="1" wg-container="ViewMemoryDumpOptions_ViewMemoryDumpOptions"> 
+			<qp-fieldset id="ViewMemoryDumpOptions_0" view.bind="ViewMemoryDumpOptions" slot="A" class="no-label">
+				<field name="DumpContentType" control-type="qp-radio"
+					config-class.bind="'vertical'"
+					config-options.bind="[{ value: '0', text: MemoryDumpMode.MiniDump }, { value: '1', text: MemoryDumpMode.FullDump }]">
+				</field>
+				<field name="InformationMessage" config-type.bind="1" config-rows.bind="3"></field>
+				<field name="WarningMessage" config-type.bind="1" config-rows.bind="3"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButtonCreateMemoryDumpCreate" caption="Create" dialog-result="Yes"></qp-button>
+			<qp-button id="PXButtonCreateMemoryDumpCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+    </qp-panel>
+</template>

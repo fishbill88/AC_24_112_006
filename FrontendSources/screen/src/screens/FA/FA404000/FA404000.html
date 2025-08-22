@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="formFilter" name="17-17-14" wg-container="Filter_form">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="AssetID"></field>
+			<field name="StartPeriodID"></field>
+			<field name="EndPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="BookID"></field>
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Transactions"></qp-grid>
+</template>

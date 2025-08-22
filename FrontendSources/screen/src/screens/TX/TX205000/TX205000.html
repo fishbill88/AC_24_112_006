@@ -1,0 +1,76 @@
+<template>
+	<qp-template id="formTaxSettings" name="1-1" wg-container="Tax_tab" class="equal-height">
+		<qp-fieldset id="columnFirstTaxSettings" view.bind="Tax" slot="A">
+			<field name="TaxID" config-allow-edit.bind="true"></field>
+			<field name="Descr"></field>
+			<field name="TaxType"></field>
+			<field name="DeductibleVAT">
+				<qp-field no-label="true" control-state.bind="Tax.PendingTax"></qp-field>
+			</field>
+			<field name="ReverseTax">
+				<qp-field no-label="true" control-state.bind="Tax.DirectTax"></qp-field>
+			</field>
+			<field name="StatisticalTax"></field>
+			<field name="ExemptTax"></field>
+			<field name="IncludeInTaxable"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnTaxSettings" view.bind="Tax" slot="B">
+			<field name="TaxCalcRule"></field>
+			<field name="TaxApplyTermsDisc"></field>
+			<field name="TaxCalcLevel2Exclude"></field>
+			<field name="TaxVendorID" config-allow-edit.bind="true"></field>
+			<field name="OutDate"></field>
+			<field name="TaxUOM"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabsBottom">
+		<qp-tab id="tabTaxSchedule" caption="Tax Schedule">
+			<qp-grid id="gridTaxRevisions" view.bind="TaxRevisions" wg-container="TaxRevisions_grid1"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCategories" caption="Categories">
+			<qp-grid id="gridCategories" view.bind="Categories" wg-container="Categories_grid2"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabZones" caption="Zones">
+			<qp-grid id="gridZones" view.bind="Zones" wg-container="Zones_grid3">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template id="formGLAccounts" name="1-1" wg-container="CurrentTax_GLAccountsLocation" class="label-size-xm">
+				<qp-fieldset id="columnFirstGLAccounts" view.bind="CurrentTax" slot="A">
+					<field name="PerUnitTaxPostMode"></field>
+					<field name="SalesTaxAcctID"></field>
+					<field name="SalesTaxAcctIDOverride"></field>
+					<field name="SalesTaxSubID"></field>
+					<field name="SalesTaxSubIDOverride"></field>
+					<field name="PurchTaxAcctID"></field>
+					<field name="PurchTaxAcctIDOverride"></field>
+					<field name="PurchTaxSubID"></field>
+					<field name="PurchTaxSubIDOverride"></field>
+					<field name="ReportExpenseToSingleAccount"></field>
+					<field name="ExpenseAccountID"></field>
+					<field name="ExpenseSubID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="columnSecondGLAccounts" view.bind="CurrentTax" slot="B">
+					<field name="PendingSalesTaxAcctID"></field>
+					<field name="PendingSalesTaxSubID"></field>
+					<field name="PendingPurchTaxAcctID"></field>
+					<field name="PendingPurchTaxSubID"></field>
+					<field name="RetainageTaxPayableAcctID"></field>
+					<field name="RetainageTaxPayableSubID"></field>
+					<field name="RetainageTaxClaimableAcctID"></field>
+					<field name="RetainageTaxClaimableSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPrintingParameters" caption="Printing Parameters">
+			<qp-template name="1-1" id="formPrintingParameters" class="label-size-xm">
+				<qp-fieldset slot="A" id="panelPrintParameters" view.bind="TaxForPrintingParametersTab" wg-container="TaxForPrintingParametersTab_edPrintingParameters">
+					<field name="ShortPrintingLabel"></field>
+					<field name="LongPrintingLabel"></field>
+					<field name="PrintingSequence"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,13 @@
+<template>
+	<!-- It must be "using" tag here because the BankFeed.StatementImportSource field must appear in the "BankFeed_PXPanel1" wg container.
+	Unfortunately, the only "using" tag does not work in the extension. Uncomment and try-->
+
+	<using after="#panelCashAccount [name='StatementImportTypeName']" view="BankFeed" wg-container="BankFeed_PXPanel1">
+		<field name="StatementImportSource"></field>
+	</using>
+
+	<!-- This code works but breaks the field order-->
+	<!--<qp-fieldset id="panelBankFeed" after="#panelCashAccount" view.bind="BankFeed" wg-container="BankFeed_PXPanel1">
+		<field name="StatementImportSource"></field>
+	</qp-fieldset> -->
+</template>

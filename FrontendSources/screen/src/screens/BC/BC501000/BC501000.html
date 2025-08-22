@@ -1,0 +1,14 @@
+﻿<template>
+    <qp-template name="17-17-14" id="ProcessFilter_form" wg-container>
+        <qp-fieldset id="first" view.bind="ProcessFilter" slot="A">
+            <field name="BindingID"></field>
+            <field name="EntityType"></field>
+        </qp-fieldset>
+        <qp-fieldset id="second" view.bind="ProcessFilter" slot="B">
+            <field name="PrepareMode"></field>
+            <field name="StartDate"></field>
+            <field name="EndDate"></field>
+        </qp-fieldset>
+    </qp-template>
+    <qp-grid id="grid" view.bind="Entities"></qp-grid>
+</template>

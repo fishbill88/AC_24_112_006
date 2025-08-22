@@ -1,0 +1,103 @@
+<template>
+	<qp-tabbar id="tab" >
+		<qp-tab id="tabGeneral" caption="General" class="label-size-xm">
+			<qp-template name="1-1" id="Setup_tab" wg-container>
+				<div slot="A">
+					<qp-fieldset id="POSetup_Numbering" view.bind="Setup" caption="Purchase Order Numbering Settings">
+						<field name="StandardPONumberingID" config-allow-edit.bind="true"></field>
+						<field name="RegularPONumberingID" config-allow-edit.bind="true"></field>
+						<field name="ReceiptNumberingID" config-allow-edit.bind="true"></field>
+						<field name="LandedCostDocNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="POSetup_DataEntry" view.bind="Setup" caption="Validate Total on Entry">
+						<field name="RequireReceiptControlTotal"></field>
+						<field name="RequireOrderControlTotal"></field>
+						<field name="RequireBlanketControlTotal"></field>
+						<field name="RequireDropShipControlTotal"></field>
+						<field name="RequireProjectDropShipControlTotal"></field>
+						<field name="RequireLandedCostsControlTotal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="POSetup_PPVAlloc" view.bind="Setup" caption="Purchase Price Variance Allocation">
+						<field name="PPVAllocationMode"></field>
+						<field name="PPVReasonCodeID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="POSetup_CopySettings" view.bind="Setup" caption="Copying Settings">
+						<field name="CopyLineDescrSO"></field>
+						<field name="CopyLineNoteSO"></field>
+						<field name="CopyLineNotesFromServiceOrder"></field>
+						<field name="CopyLineAttachmentsFromServiceOrder"></field>
+						<field name="CopyLineNotesToReceipt"></field>
+						<field name="CopyLineFilesToReceipt"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="POSetup_PPVAlloc" view.bind="Setup" caption="Three-Way Match Validation">
+						<field name="APInvoiceValidation"></field>
+					</qp-fieldset>
+					<qp-fieldset id="POSetup_Other" view.bind="Setup" caption="Other">
+						<field name="AutoCreateInvoiceOnReceipt"></field>
+						<field name="AutoCreateLCAP"></field>
+						<field name="FreightExpenseAcctID"></field>
+						<field name="FreightExpenseSubID"></field>
+						<field name="RCReturnReasonCodeID" config-allow-edit.bind="true"></field>
+						<field name="TaxReasonCodeID" config-allow-edit.bind="true"></field>
+						<field name="AutoReleaseIN"></field>
+						<field name="AutoReleaseLCIN"></field>
+						<field name="AutoReleaseAP"></field>
+						<field name="HoldReceipts"></field>
+						<field name="HoldLandedCosts"></field>
+						<field name="AddServicesFromNormalPOtoPR"></field>
+						<field name="AddServicesFromDSPOtoPR"></field>
+						<field name="UpdateSubOnOwnerChange"></field>
+						<field name="AutoAddLineReceiptBarcode"></field>
+						<field name="ReceiptByOneBarcodeReceiptBarcode"></field>
+						<field name="ReturnOrigCost"></field>
+						<field name="ChangeCuryRateOnReceipt"></field>
+						<field name="DefaultReceiptAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="ShipDestType"></field>
+						<field name="DefaultReceiptQty"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-fieldset id="POSetup_RequestApproval" view.bind="Setup" wg-container="Setup_tab" class="transparent-section">
+				<field name="OrderRequestApproval" no-label="true"></field>
+			</qp-fieldset>
+			<qp-grid id="gridApproval" view.bind="SetupApproval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingAndPrinting" caption="Mailing & Printing">
+			<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources" class="framed-section"></qp-grid>
+			<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients" class="framed-section"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabWarehouseManagement" caption="Warehouse Management" class="label-size-xm">
+			<qp-label caption="These settings are specific to the current branch."></qp-label>
+			<qp-template name="1-1" id="ReceivePutAwaySetup_formScanSetup" wg-container>
+				<div slot="A" class="h-stack">
+					<qp-fieldset id="ReceivePutAwaySetup_Workflow" view.bind="ReceivePutAwaySetup" caption="Receiving Workflow">
+						<field name="ShowReceivingTab"></field>
+						<field name="ShowPutAwayTab"></field>
+						<field name="ShowReturningTab"></field>
+						<field name="ShowScanLogTab"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ReceivePutAwaySetup_Settings" view.bind="ReceivePutAwaySetup" caption="Receiving Settings">
+						<field name="UseDefaultQty"></field>
+						<field name="ExplicitLineConfirmation"></field>
+						<field name="UseCartsForPutAway"></field>
+						<field name="DefaultLotSerialNumber"></field>
+						<field name="DefaultExpireDate"></field>
+						<field name="SingleLocation"></field>
+						<field name="DefaultReceivingLocation"></field>
+						<field name="RequestLocationForEachItemInReceive"></field>
+						<field name="RequestLocationForEachItemInPutAway"></field>
+						<field name="RequestLocationForEachItemInReturn"></field>
+						<field name="PrintPurchaseReceiptAutomatically"></field>
+						<field name="PrintInventoryLabelsAutomatically"></field>
+						<field name="InventoryLabelsReportID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

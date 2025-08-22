@@ -1,0 +1,96 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="Task_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="Task">
+			<field name="ProjectID" ></field>
+			<field name="TaskCD" config-display-mode.bind="'id'"></field>
+			<field name="Type" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="Task">
+			<field name="IsDefault"></field>
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar active-tab-id="SummaryTab" id="TaskProperties_tab" wg-container>
+		<qp-tab id="SummaryTab" caption="Summary">
+			<qp-template id="Summary-form" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="SummaryTab01" view.bind="TaskProperties" caption="Task Properties">
+						<field name="AutoIncludeInPrj" ></field>
+						<field name="CompletedPctMethod" ></field>
+						<field name="ApproverID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTab02" view.bind="TaskProperties" caption="Billing And Allocation Settings">
+						<field name="BillSeparately" ></field>
+						<field name="AllocationID" ></field>
+						<field name="BillingID" ></field>
+						<field name="DefaultBranchID" ></field>
+						<field name="RateTableID" ></field>
+						<field name="BillingOption" ></field>
+						<field name="WipAccountGroupID" ></field>
+						<field name="ProgressBillingBase" ></field>
+						<field name="TaxCategoryID" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="SummaryTab03" view.bind="TaskProperties" caption="GL Accounts">
+						<field name="DefaultSalesAccountID" ></field>
+						<field name="DefaultSalesSubID" ></field>
+						<field name="DefaultExpenseAccountID" ></field>
+						<field name="DefaultExpenseSubID" ></field>
+						<field name="DefaultAccrualAccountID" ></field>
+						<field name="DefaultAccrualSubID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTab04" view.bind="TaskProperties" caption="GL Accounts for Payroll">
+						<field name="EarningsAcctID" ></field>
+						<field name="EarningsSubID" ></field>
+						<field name="BenefitExpenseAcctID" ></field>
+						<field name="BenefitExpenseSubID" ></field>
+						<field name="TaxExpenseAcctID" ></field>
+						<field name="TaxExpenseSubID" ></field>
+						<field name="PTOExpenseAcctID" ></field>
+						<field name="PTOExpenseSubID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTab05" view.bind="TaskProperties" caption="Visibility Settings">
+						<field name="TaskVisibilitySettingsRow01" unbound no-label="true">
+							<qp-field control-state.bind="TaskProperties.VisibleInGL" no-label="true" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInAP" no-label="true" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInAR" no-label="true" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInSO" no-label="true" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInPO" no-label="true" class="col-2">
+							</qp-field>
+						</field>
+						<field name="TaskVisibilitySettingsRow02" unbound>
+							<qp-field control-state.bind="TaskProperties.VisibleInIN" no-label="true" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInCA" no-label="true" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInCR" no-label="true" class="col-4">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInPROD" no-label="true" class="col-4">
+							</qp-field>
+						</field>
+						<field name="TaskVisibilitySettingsRow03" unbound>
+							<qp-field control-state.bind="TaskProperties.VisibleInTA" no-label="true" class="col-4">
+							</qp-field>
+							<qp-field control-state.bind="TaskProperties.VisibleInEA" no-label="true" class="col-4">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="RecurringBillingTab" caption="Recurring Billing">
+			<qp-grid id="GridBillingItems" view.bind="BillingItems">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

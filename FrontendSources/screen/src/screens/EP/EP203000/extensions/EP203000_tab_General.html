@@ -1,0 +1,102 @@
+<template>
+	<template id="tabGeneral_Content">
+		<qp-template id="General-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset
+					id="tabGeneral_ContactInfo"
+					caption="Contact Info"
+					view.bind="Contact"
+					wg-container="Contact_ContactInfo"
+				>
+					<field name="Title"></field>
+					<field name="FirstName"></field>
+					<field name="MidName"></field>
+					<field name="LastName"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Contact.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Contact.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Phone3">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Contact.Phone3Type"
+						></qp-field>
+					</field>
+					<field name="Fax">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Contact.FaxType"
+						></qp-field>
+					</field>
+					<field name="EMail" control-type="qp-mail-editor"></field>
+					<field name="WebSite" control-type="qp-link-editor"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="tabGeneral_AddressInfo"
+					caption="Address info"
+					view.bind="Address"
+					wg-container="Address_AddressInfo"
+				>
+					<field name="FakeField" unbound>
+						<qp-address-lookup class="col-12" view.bind="Address">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="CountryID"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="tabGeneral_EmployeeSettings_Time"
+					caption="Employee Settings"
+					view.bind="CurrentEmployee"
+				>
+					<field name="ParentBAccountID" config-allow-edit.bind="true"></field>
+					<field name="DepartmentID" config-allow-edit.bind="true"></field>
+					<field name="Contact.Salutation"></field>
+					<field name="SupervisorID" config-allow-edit.bind="true"></field>
+					<field name="CalendarID" config-allow-edit.bind="true"></field>
+					<field name="DefaultWorkgroupID"></field>
+					<field name="AcctReferenceNbr"></field>
+					<field name="UserID" config-allow-edit.bind="true"></field>
+					<using wg-container="Contact_PersonalInfo" view="Contact">
+						<field name="DateOfBirth"></field>
+					</using>
+				</qp-fieldset>
+
+				<qp-fieldset
+					id="tabGeneral_EmployeeSettings_Additional"
+					caption="Additional Settings"
+					view.bind="CurrentEmployee"
+				>
+					<field name="HoursValidation"></field>
+					<field name="TimeCardRequired"></field>
+					<field name="AMProductionEmployee"></field>
+					<field name="SDEnabled"></field>
+					<field name="SalesPersonID" config-allow-edit.bind="true"></field>
+					<field name="LabourItemID" config-allow-edit.bind="true"></field>
+					<field name="RouteEmails"></field>
+					<using wg-container="Contact_frmEmployeeContact" view="Contact">
+						<field name="Synchronize"></field>
+					</using>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

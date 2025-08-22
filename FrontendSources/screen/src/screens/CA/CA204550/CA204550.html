@@ -1,0 +1,51 @@
+<template>
+
+	<qp-template id=formRule name="1-1" wg-container="Rule_form">
+		<qp-fieldset id="panelRule" view.bind="Rule" slot="A">
+			<field name="Description"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="Rule_tab">
+		<qp-tab id="tabMatchingCriteria" caption="Matching Criteria">
+			<qp-template id="formMatchingCriteria" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="groupGeneral" view.bind="Rule" caption="General">
+						<field name="BankDrCr"></field>
+						<field name="BankTranCashAccountID"></field>
+						<field name="TranCuryID"></field>
+						<field name="TranCode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDescription" view.bind="Rule" caption="Description">
+						<field name="BankTranDescription"></field>
+						<field name="MatchDescriptionCase"></field>
+						<field name="UseDescriptionWildcards"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="groupPayeePayer" caption="Payee/Payer" view.bind="Rule">
+						<field name="PayeeName"></field>
+						<field name="UsePayeeNameWildcards"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupAmount" caption="Amount" view.bind="Rule">
+						<field name="AmountMatchingMode"></field>
+						<field name="CuryTranAmt"></field>
+						<field name="CuryMinTranAmt"></field>
+						<field name="MaxCuryTranAmt"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabOutput" caption="Output">
+			<qp-template id="formOutput" name="1-1">
+				<qp-fieldset id="panelOutput" slot="A" view.bind="Rule">
+					<field name="Action"></field>
+					<field name="DocumentEntryTypeID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+
+	</qp-tabbar>
+
+</template>

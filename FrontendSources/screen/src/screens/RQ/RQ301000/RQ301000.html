@@ -1,0 +1,145 @@
+<template>
+	<qp-template name="7-10-7" id="document_form" wg-container qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="first" view.bind="Document">
+			<field name="OrderNbr"></field>
+			<field name="ReqClassID"></field>
+			<field name="Status"></field>
+			<field name="OrderDate"></field>
+			<field name="Priority"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Document">
+			<field name="EmployeeID"></field>
+			<field name="LocationID"></field>
+			<field name="DepartmentID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_RQRequest_CurrencyInfo_"></field>
+			<field name="Description" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="summary" view.bind="Document" class="highlights-section">
+			<field name="CuryEstExtCostTotal"></field>
+			<field name="OpenOrderQty"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="Lines">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping">
+			<qp-template name="17-17-14" id="shipping-form">
+				<div slot="A">
+					<qp-fieldset id="formShipTo" view.bind="CurrentDocument" caption="Ship To:" wg-container="CurrentDocument_tab">
+						<field name="ShipDestType"></field>
+						<field name="ShipToBAccountID"></field>
+						<field name="SiteID"></field>
+						<field name="ShipToLocationID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formShipToContact" caption="Ship-To Contact" view.bind="Shipping_Contact" wg-container="Shipping_Contact_fShipping_Contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="formShipToAddress" caption="Ship-To Address" view.bind="Shipping_Address" wg-container="Shipping_Address_fShipping_Address">
+					<field name="OverrideAddress">
+						<qp-address-lookup class="col-12" view.bind="Shipping_Address">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="CountryID"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="IsValidated"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabVendorInfo" caption="Vendor Info" if.bind="CurrentDocument.VendorHidden.value == false">
+			<qp-template name="17-17-14" id="vendorinfo-form" wg-container>
+				<div slot="A">
+					<qp-fieldset id="formRemitContact" view.bind="Remit_Contact" wg-container="Remit_Contact_formVC">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formRemitAddress" view.bind="Remit_Address" wg-container="Remit_Address_formVA">
+						<field name="OverrideAddress"></field>
+						<field name="IsValidated"></field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formVendor" view.bind="CurrentDocument" caption="Vendor" wg-container="CurrentDocument_tab">
+						<field name="VendorID"></field>
+						<field name="VendorLocationID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formHidden" view.bind="CurrentDocument">
+						<field name="VendorHidden"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBudget" caption="Budget" if.bind="CurrentDocument.BudgetValidation.value == true">
+			<qp-template name="17-17-14" id="shipping-form">
+				<qp-fieldset slot="A" id="budgetHeader" view.bind="CurrentDocument" class="transparent-section">
+					<field name="FinPeriodID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridBudget" view.bind="Budget" caption="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOther" caption="Other">
+			<qp-template name="17-17-14" id="shipping-form">
+				<qp-fieldset slot="A" id="formOther" wg-container view.bind="CurrentDocument">
+					<field name="WorkgroupID"></field>
+					<field name="OwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="Contents" caption="Requisition Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridContent" view.bind="Contents">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnCancel" caption="OK" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter" class="h-stack"
+			wg-container="ReassignApprovalFilter_formReassignApproval">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReassignApprovalFilter" wg-name="btnReassignApprovalOK" caption="Reassign"
+				dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReassignApprovalFilter" wg-name="btnReassignApprovalCancel"
+				dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason">
+		<qp-fieldset id="formReasonApproveRejectParams" view.bind="ReasonApproveRejectParams"
+			wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+			<field name="Reason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReasonApproveRejectParams" wg-name="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReasonApproveRejectParams" wg-name="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

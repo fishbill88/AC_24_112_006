@@ -1,0 +1,11 @@
+<template>
+
+	<qp-tab after="#tabApplications" id="tabJointPayees" caption="Joint Payees" if.bind="Document.IsJointPayees.value==true">
+		<qp-grid id="gridJointPayees" view.bind="JointPayees" wg-container="JointPayees_grdJointPayees"></qp-grid>
+	</qp-tab>
+
+	<qp-tab after="#tabJointPayees" id="tabJointAmountApp" caption="Joint Amount Application" if.bind="Document.IsJointPayees.value==true">
+		<qp-grid id="gridJointAmountApplications" view.bind="JointAmountApplications" wg-container="JointAmountApplications_grdJointAmountApplications"></qp-grid>
+	</qp-tab>
+
+</template>

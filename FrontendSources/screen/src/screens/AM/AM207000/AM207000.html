@@ -1,0 +1,138 @@
+<template>
+	<qp-template id="WCRecords_form" wg-container name="1-1-1">
+		<qp-fieldset slot="A" id="WCRecords1" view.bind="WCRecords">
+			<field name="WcID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="WCRecords2" view.bind="WCRecords">
+			<field name="SiteID"></field>
+			<field name="LocationID"></field>
+			<field name="ActiveFlg"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="WCRecordsSelected_FormGeneral" wg-container name="1-1-1">
+				<qp-fieldset slot="A" id="WCRecordsSelected1" view.bind="WCRecordsSelected">
+					<using wg-container="CurySettings_AMWC_curySettingsForm" view="CurySettings_AMWC">
+						<field name="StdCost"></field>
+					</using>
+					<field name="WcBasis"></field>
+					<field name="ScrapAction"></field>
+					<field name="BflushMatl"></field>
+					<field name="BflushLbr"></field>
+					<field name="AllowMultiClockEntry"></field>
+					<field name="ControlPoint"></field>
+					<field name="OutsideFlg"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="WCRecordsSelected2" view.bind="WCRecordsSelected">
+					<field name="DefaultQueueTime"></field>
+					<field name="DefaultFinishTime"></field>
+					<field name="DefaultMoveTime"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabShifts" caption="Shifts">
+			<qp-grid id="grid" view.bind="WCShifts"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOverhead" caption="Overhead">
+			<qp-grid id="gridOverhead" view.bind="WCOverheads"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMachines" caption="Machines">
+			<qp-grid id="gridMachines" view.bind="WCMachines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabWhereUsed" caption="Where Used">
+			<qp-grid id="gridWhereUsed" view.bind="WCWhereUsed"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSubstitutes" caption="Substitutes">
+			<qp-grid id="gridSubstituteWorkCenters" view.bind="SubstituteWorkCenters"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="MassUpdateFilter" caption="Operation Mass Update" auto-repaint="true">
+		<qp-template id="MassUpdateFilter_UpdateOperationForm" wg-container name="1-1-1">
+			<qp-fieldset slot="A" id="MassUpdateFilter1" view.bind="MassUpdateFilter">
+				<field name="BFlush"></field>
+				<field name="ScrapAction"></field>
+				<field name="OperDescription"></field>
+				<field name="OutsideProcess"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnMassUpdateOK" state.bind="MassUpdate" dialog-result="OK" caption="Update"></qp-button>
+			<qp-button id="btnMassUpdateCancel" dialog-result="Cancel" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CalendarInquiryFilter" caption="Calculated Calendar" auto-repaint="true" width="60vw">
+		<qp-fieldset id="CalendarInquiryFilter_CalendarForm" wg-container view.bind="CalendarInquiryFilter" no-label="true">
+			<field name="Day0Row" unbound replace-content>
+				<qp-label caption="Date" class="col-2"></qp-label>
+				<qp-label caption="Day of week" class="col-2"></qp-label>
+				<qp-label caption="Start time" class="col-2"></qp-label>
+				<qp-label caption="End time" class="col-2"></qp-label>
+				<qp-label caption="Work time" class="col-2"></qp-label>
+				<qp-label caption="Break time" class="col-2"></qp-label>
+			</field>
+			<field name="Day1Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day1Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day1DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day1StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day1EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day1WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day1BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+			<field name="Day2Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day2Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day2DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day2StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day2EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day2WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day2BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+			<field name="Day3Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day3Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day3DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day3StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day3EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day3WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day3BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+			<field name="Day4Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day4Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day4DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day4StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day4EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day4WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day4BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+			<field name="Day5Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day5Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day5DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day5StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day5EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day5WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day5BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+			<field name="Day6Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day6Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day6DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day6StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day6EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day6WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day6BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+			<field name="Day7Row" unbound replace-content>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day7Date" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day7DayOfWeek" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day7StartTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day7EndTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day7WorkTime" no-label="true" class="col-2"></qp-field>
+				<qp-field control-state.bind="CalendarInquiryFilter.Day7BreakTime" no-label="true" class="col-2"></qp-field>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnCalendarPanelOk" dialog-result="OK" caption="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

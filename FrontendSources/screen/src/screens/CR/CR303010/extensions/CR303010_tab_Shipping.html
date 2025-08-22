@@ -1,0 +1,40 @@
+<template>
+	<template id="tabShipping_Content">
+		<qp-template id="Shipping-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset
+					id="tabShipping_ShippingInstructions"
+					caption="Shipping Instructions"
+					view.bind="LocationCurrent"
+				>
+					<field name="CSiteID" config-allow-edit.bind="true"></field>
+					<field name="CCarrierID" config-allow-edit.bind="true"></field>
+					<field name="CShipTermsID" config-allow-edit.bind="true"></field>
+					<field name="CShipZoneID" config-allow-edit.bind="true"></field>
+					<field name="CFOBPointID" config-allow-edit.bind="true"></field>
+					<field name="CResedential"></field>
+					<field name="CSaturdayDelivery"></field>
+					<field name="CInsurance"></field>
+					<field name="CGroundCollect"></field>
+					<field name="CShipComplete"></field>
+					<field name="COrderPriority"></field>
+					<field name="CLeadTime"></field>
+					<field name="CCalendarID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="tabShipping_TaxSettings"
+					caption="Tax Settings"
+					view.bind="LocationCurrent"
+				>
+					<field name="TaxRegistrationID"></field>
+					<field name="CTaxZoneID" config-allow-edit.bind="true"></field>
+					<field name="CTaxCalcMode"></field>
+					<field name="CAvalaraExemptionNumber"></field>
+					<field name="CAvalaraCustomerUsageType"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

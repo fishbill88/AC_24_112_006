@@ -1,0 +1,17 @@
+<template>
+
+	<qp-template id="form" name="1-1" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A" caption="Expiration Window">
+			<field name="BeginDate"></field>
+			<field name="EndDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field no-label="true" name="ShowAutoRenewable"></field>
+			<field name="CustomerClassID"></field>
+			<field name="TemplateID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridContracts" view.bind="Contracts" wg-container="Contracts_grid"> </qp-grid>
+
+</template>

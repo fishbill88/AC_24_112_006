@@ -1,0 +1,59 @@
+<template>
+	<qp-template id="ProdItemRecs_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="ProdItemRecs1" view.bind="ProdItemRecs">
+			<field name="OrderType" config-allow-edit.bind="true"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="ProdItemRecs2" view.bind="ProdItemRecs" no-label="true">
+			<field name="ShowAll"></field>
+			<field name="ShowAllocated"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ProdMatlRecs"></qp-grid>
+	<qp-panel id="TransferOrderFilter" caption="Create Transfer" auto-repaint="true">
+		<qp-template id="TransferOrderFilter_formCreateTransfer" wg-container name="1-1">
+			<qp-fieldset slot="A" id="TransferOrderFilter1" view.bind="TransferOrderFilter">
+				<field name="FromSiteID"></field>
+				<field name="ToSiteID"></field>
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="UseFullQty"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="createTransferButtonOK" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="createTransferButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CreateProductionOrderFilter" caption="Create Production Order" auto-repaint="true">
+		<qp-template id="CreateProductionOrderFilter_FormCreateProdOrder" wg-container name="1-1">
+			<qp-fieldset slot="A" id="CreateProductionOrderFilter1" view.bind="CreateProductionOrderFilter">
+				<field name="OrderType" config-allow-edit.bind="true"></field>
+				<field name="ProdOrdID"></field>
+				<field name="CreateLinkedOrders"></field>
+				<field name="OverrideWarehouse"></field>
+				<field name="SiteID"></field>
+				<field name="LocationID"></field>
+				<field name="UseFullQty"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="CreateProdOrderButton1" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="CreateProdOrderPXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CreatePurchaseOrderFilter" caption="Create Purchase Order" auto-repaint="true">
+		<qp-template id="CreatePurchaseOrderFilter_FormCreatePurchaseOrder" wg-container name="1-1">
+			<qp-fieldset slot="A" id="CreatePurchaseOrderFilter1" view.bind="CreatePurchaseOrderFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="VendorID" config-allow-edit.bind="true"></field>
+				<field name="VendorLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="CreatePurchaseOrderButton1" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="CreatePurchaseOrderButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

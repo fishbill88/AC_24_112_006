@@ -1,0 +1,36 @@
+<template>
+	<qp-template name="17-17-14" id="Equipment_form" class="equal-height" wg-container>
+		<qp-fieldset id="formSlotA01" slot="A" view.bind="Equipment">
+			<field name="EquipmentCD"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="formSlotB01" slot="B" view.bind="Equipment">
+			<field name="Description" config-rows.bind="3"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="EquipmentProperties_tab" wg-container>
+		<qp-tab id="GeneralInfoTab" caption="General Info">
+			<qp-template id="GeneralInfo-form" name="17-17-14">
+				<qp-fieldset id="formSlotA01" slot="A" view.bind="EquipmentProperties">
+					<field name="FixedAssetID"></field>
+					<field name="RunRateItemID"></field>
+					<field name="SetupRateItemID"></field>
+					<field name="SuspendRateItemID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="formSlotB01" slot="B" view.bind="EquipmentProperties">
+					<field name="RunRate"></field>
+					<field name="SetupRate"></field>
+					<field name="SuspendRate"></field>
+					<field name="DefaultAccountID"></field>
+					<field name="DefaultSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ProjectRatesTab" caption="Project Rates">
+			<qp-grid id="ProjectRatesGrid" view.bind="Rates"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

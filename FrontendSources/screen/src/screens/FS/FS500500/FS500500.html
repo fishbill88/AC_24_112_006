@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="Filter_10" slot="A" view.bind="Filter" caption="Filters Options">
+			<field name="CutOffDate"></field>
+			<field name="RouteDocumentID"></field>
+			<field name="AppointmentID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_20" slot="B" view.bind="Filter" caption="Generation Options">
+			<field name="DocumentDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridAppointments" view.bind="Appointments">
+	</qp-grid>
+</template>

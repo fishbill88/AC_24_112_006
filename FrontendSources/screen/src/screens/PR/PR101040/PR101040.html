@@ -1,0 +1,24 @@
+<template>
+	<qp-template name="1-1" id="form">
+		<div slot="A" class="v-stack">
+			<qp-fieldset id="form" view.bind="Locations" class="label-size-m">
+				<field name="LocationCD"></field>
+				<field name="Description"></field>
+				<field name="IsActive"></field>
+				<field name="BranchID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="PXFormView2" view.bind="Address" caption="Main Address" class="label-size-m">
+				<field name="FakeField" unbound>
+					<qp-address-lookup class="col-12" view.bind="Address">
+					</qp-address-lookup>
+				</field>
+				<field name="AddressLine1"></field>
+				<field name="AddressLine2"></field>
+				<field name="City"></field>
+				<field name="CountryID"></field>
+				<field name="State"></field>
+				<field name="PostalCode"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

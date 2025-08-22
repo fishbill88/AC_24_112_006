@@ -1,0 +1,22 @@
+﻿<template>
+
+    <qp-tab after="#tab1099Settings" id="tabT5018Settings" caption="Canadian Tax Reporting">
+        <qp-template name="1-1" id="formT5018Settings" wg-container="TaxReportingAccount_frmCanadaTaxReport">
+
+            <div slot="A" id="columnFirst-T5018Settings">
+                <qp-fieldset id="groupCRA" view.bind="TaxReportingAccount" caption="CRA">
+                    <field name="CRAPayrollAccountNumber"></field>
+                </qp-fieldset>
+
+                <qp-fieldset id="groupRL1" view.bind="TaxReportingAccount" caption="RL1">
+                    <field name="RL1IdentificationNumber"></field>
+                    <field name="RL1FileNumber"></field>
+                    <field name="RL1QuebecEnterpriseNumber"></field>
+                    <field name="RL1QuebecTransmitterNumber"></field>
+                </qp-fieldset>
+            </div>
+
+        </qp-template>
+    </qp-tab>
+
+</template>

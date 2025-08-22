@@ -1,0 +1,116 @@
+<template>
+	<qp-template name="17-17-14" id="Document_form" class="equal-height" wg-container>
+		<qp-fieldset id="formA" view.bind="Document" slot="A">
+			<field name="BatchNbr" ></field>
+			<field name="Status" ></field>
+			<field name="Hold" ></field>
+			<field name="PayrollType" ></field>
+			<field name="PayGroupID" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="formB" view.bind="Document" slot="B">
+			<field name="PayPeriodID"></field>
+			<field name="StartDate"></field>
+			<field name="EndDate"></field>
+			<field name="TransactionDate"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<div slot="C">
+			<qp-fieldset id="formC" view.bind="Document" class="highlights-section">
+				<field name="NumberOfEmployees"></field>
+			</qp-fieldset>
+			<qp-fieldset id="filter" view.bind="PRBatchTotalsFilter" class="highlights-section">
+				<field name="TotalHourQty"></field>
+				<field name="TotalEarnings"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="tab" view.bind="Transactions">
+		<qp-tab id="EmployeeTab" caption="Employee">
+			<qp-grid id="PXGrid1" view.bind="Transactions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="EarningTab" caption="Earning">
+			<qp-grid id="gridEarningDetails" view.bind="EarningDetails">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="DeductionsandBenefitsTab" caption="Deductions and Benefits">
+			<qp-grid id="PXGrid2" view.bind="Deductions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="OvertimeRulesTab" caption="Overtime Rules">
+			<qp-fieldset id="formOvertimeRules" view.bind="CurrentDocument" class="transparent-section">
+				<field name="ApplyOvertimeRules" class="no-label" ></field>
+			</qp-fieldset>
+			<qp-grid id="PXGridOvertimeRules" view.bind="BatchOvertimeRules">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="Employees" caption="Add Employees" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1" id="AddEmployeeFilter_formEmployees" wg-container>
+			<qp-fieldset id="employeeFormA" view.bind="AddEmployeeFilter" slot="A">
+				<field name="EmployeeClassID"></field>
+				<field name="EmployeeType"></field>
+			</qp-fieldset>
+			<qp-fieldset id="employeeFormB" view.bind="AddEmployeeFilter" slot="B">
+				<field name="UseQuickPay" class="no-label"></field>
+				<field name="UseTimeSheets" class="no-label"></field>
+				<field name="UseSalesComm" class="no-label"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridEmployees" view.bind="Employees">
+		</qp-grid>
+		<footer id="addEmployeesButtonPanel">
+			<qp-button id="addSelectedEmployeesBtn" state.bind="AddSelectedEmployees" caption="Add">
+			</qp-button>
+			<qp-button id="addSelectedEmployeesAndCloseBtn" state.bind="AddSelectedEmployeesAndClose" caption="Add and Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton6" caption="Close" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="EmployeeEarningDetails" caption="Employee Earning Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1" id="CurrentTransaction_formEarningDetails" wg-container>
+			<qp-fieldset id="tranFormA" view.bind="CurrentTransaction" slot="A">
+				<field name="AcctCD"></field>
+				<field name="EmpType"></field>
+				<field name="RegularAmount">
+					<qp-field control-state.bind="CurrentTransaction.ManualRegularAmount" config-enabled.bind="false" class="no-label"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="tranFormB" view.bind="CurrentTransaction" slot="B">
+				<field name="HourQty"></field>
+				<field name="Amount"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridEmployeeEarningDetails" view.bind="EmployeeEarningDetails">
+		</qp-grid>
+		<footer id="PXPanel1">
+			<qp-button id="PXButton2" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="TimeActivities" caption="Import Time Activities" auto-repaint="true" width="85vw" height="85vh">
+		<qp-fieldset id="formTimeActivities" view.bind="ImportTimeActivitiesFilter">
+			<field name="ShowImportedActivities" class="no-label" ></field>
+		</qp-fieldset>
+		<qp-grid id="gridTimeActivities" view.bind="TimeActivities">
+		</qp-grid>
+		<footer id="PXPanel2">
+			<qp-button id="PXButton1" state.bind="AddSelectedTimeActivities" caption="Add" >
+			</qp-button>
+			<qp-button id="PXButton3" state.bind="AddSelectedTimeActivitiesAndClose" caption="Add and Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton4" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="UpdateTaxesPopupView" caption="Taxes need to be updated" auto-repaint="true" width="80vw">
+		<qp-fieldset id="formUpdateTaxesWarning" view.bind="UpdateTaxesPopupView">
+			<field name="Message" ></field>
+		</qp-fieldset>
+		<footer id="pnlUpdateTaxesWarningButtons">
+			<qp-button id="btnGoToTaxMaintenance" state.bind="RedirectTaxMaintenance" caption="Tax Maintenance" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,24 @@
+<template>
+
+	<qp-template id="formHeader" name="10-7-7" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" view.bind="Header" slot="A">
+			<field name="CashAccountID" config-allow-edit.bind="true"></field>
+			<field name="RefNbr"></field>
+			<field name="TranType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHEader" view.bind="Header" slot="B">
+			<field name="DocDate"></field>
+			<field name="StartBalanceDate"></field>
+			<field name="EndBalanceDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdHeader" view.bind="Header" slot="C" class="highlights-section">
+			<field name="CuryBegBalance"></field>
+			<field name="CuryEndBalance"></field>
+			<field name="CuryDetailsEndBalance"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Details"></qp-grid>
+
+</template>

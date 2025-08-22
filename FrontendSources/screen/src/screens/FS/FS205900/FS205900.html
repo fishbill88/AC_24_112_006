@@ -1,0 +1,21 @@
+﻿<template>
+	<qp-grid id="grid" view.bind="CalendarWeekCodeRecords">
+	</qp-grid>
+
+	<qp-panel id="CalendarWeekCodeGenerationOptions" caption="Calendar Week Code Generation Options" auto-repaint="true" width="70vw" height="25vh">
+		<qp-template id="CalendarWeekCodeGenerationOptions_formChangeID" wg-container name="1-1" class="equal-height">
+			<qp-fieldset id="CalendarWeekCodeGenerationOptions_10" slot="A" view.bind="CalendarWeekCodeGenerationOptions">
+				<field name="DefaultStartDate"></field>
+				<field name="StartDate"></field>
+			</qp-fieldset>
+			<qp-fieldset id="CalendarWeekCodeGenerationOptions_20" slot="B" view.bind="CalendarWeekCodeGenerationOptions">
+				<field name="InitialWeekCode"></field>
+				<field name="EndDate"></field>
+			</qp-fieldset>
+			<footer>
+				<qp-button id="btnOk" caption="Generate Week Codes" dialog-result="OK"></qp-button>
+				<qp-button id="btnClose" caption="Close" dialog-result="Cancel"></qp-button>
+			</footer>
+		</qp-template>
+	</qp-panel>
+</template>

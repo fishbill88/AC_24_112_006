@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="formSetup" name="1-1" wg-container="TXSetupRecord_form">
+		<div slot="A">
+			<qp-fieldset id="groupNumberingSettings" view.bind="TXSetupRecord" caption="Numbering Settings">
+				<field name="TaxAdjustmentNumberingID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupRoundingSettings" view.bind="TXSetupRecord" caption="Rounding Settings">
+				<field name="TaxRoundingGainAcctID"></field>
+				<field name="TaxRoundingGainSubID"></field>
+				<field name="TaxRoundingLossAcctID"></field>
+				<field name="TaxRoundingLossSubID"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

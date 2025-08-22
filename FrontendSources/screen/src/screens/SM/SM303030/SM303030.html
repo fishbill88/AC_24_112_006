@@ -1,0 +1,16 @@
+<template>
+
+	<qp-grid id="gridKeys" view.bind="AllKeys"></qp-grid>
+
+	<qp-panel id="GenerateOAuthServerKeyView" caption="Generate New Key" auto-repaint="true">
+		<qp-fieldset id="formGenerateKey" view.bind="GenerateOAuthServerKeyView">
+			<field name="DeactivateImmediatly" class="no-label"></field>
+			<field name="ExpirationPeriod" class="label-size-xm"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnActionOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnActionCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

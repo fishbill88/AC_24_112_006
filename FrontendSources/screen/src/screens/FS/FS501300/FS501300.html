@@ -1,0 +1,15 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="Filter_10" slot="A" view.bind="Filter" caption="Filtering Options">
+			<field name="CustomerID"></field>
+			<field name="ServiceContractID"></field>
+			<field name="UpToDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Filter_20" slot="B" view.bind="Filter" caption="Billing Options">
+			<field name="InvoiceDate"></field>
+			<field name="InvoiceFinPeriodID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridContracts" view.bind="Contracts">
+	</qp-grid>
+</template>

@@ -1,0 +1,29 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height" qp-collapsible>
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="ProcessAction" pinned="true"></field>
+			<field name="SOOrderType"></field>
+			<field name="SOOrderNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter" caption="CTP Acceptance Settings" class="label-size-m">
+			<field name="DefaultOrderType"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ProcessingRecords"></qp-grid>
+	<qp-panel id="QtyAvailableFilter" caption="Quantity Available" auto-repaint="true">
+		<qp-template id="QtyAvailableFilter_FormQtyAvailable" wg-container name="1-1">
+			<div slot="A">
+				<qp-fieldset id="QtyAvailableFilter1" view.bind="QtyAvailableFilter">
+					<field name="RequestQty"></field>
+					<field name="QtyAvail"></field>
+				</qp-fieldset>
+				<qp-fieldset id="QtyAvailableFilter2" view.bind="QtyAvailableFilter" caption="Details">
+					<field name="QtyHardAvail"></field>
+					<field name="SupplyAvail"></field>
+					<field name="ProdAvail"></field>
+					<field name="TotalAvail"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</qp-panel>
+</template>

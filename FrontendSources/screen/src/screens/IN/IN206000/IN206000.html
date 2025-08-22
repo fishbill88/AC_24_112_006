@@ -1,0 +1,71 @@
+<template>
+	<qp-template name="1-1" id="postclass_form" wg-container class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="first" view.bind="postclass">
+			<field name="PostClassID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template name="1-1" id="general_form" class="label-size-l" wg-container="postclassaccounts_tab">
+		<qp-fieldset slot="A" id="general_first" view.bind="postclassaccounts" caption="Posting Settings">
+			<field name="InvtAcctDefault"></field>
+			<field name="InvtSubMask"></field>
+			<field name="SalesAcctDefault"></field>
+			<field name="SalesSubMask"></field>
+			<field name="COGSAcctDefault"></field>
+			<field name="COGSSubFromSales"></field>
+			<field name="COGSSubMask"></field>
+			<field name="StdCstVarAcctDefault"></field>
+			<field name="StdCstVarSubMask"></field>
+			<field name="StdCstRevAcctDefault"></field>
+			<field name="StdCstRevSubMask"></field>
+			<field name="POAccrualAcctDefault"></field>
+			<field name="POAccrualSubMask"></field>
+			<field name="PPVAcctDefault"></field>
+			<field name="PPVSubMask"></field>
+			<field name="LCVarianceAcctDefault"></field>
+			<field name="LCVarianceSubMask"></field>
+			<field name="PIReasonCode"></field>
+			<field name="AMWIPAccountDefault"></field>
+			<field name="AMWIPSubMask"></field>
+			<field name="AMWIPVarianceAccountDefault"></field>
+			<field name="AMWIPVarianceSubMask"></field>
+		</qp-fieldset>
+		<div slot="B" class="v-stack">
+			<qp-fieldset id="glaccounts" view.bind="postclassaccounts" caption="Default GL Accounts">
+				<field name="InvtAcctID"></field>
+				<field name="InvtSubID"></field>
+				<field name="ReasonCodeSubID"></field>
+				<field name="SalesAcctID"></field>
+				<field name="SalesSubID"></field>
+				<field name="COGSAcctID"></field>
+				<field name="COGSSubID"></field>
+				<field name="StdCstVarAcctID"></field>
+				<field name="StdCstVarSubID"></field>
+				<field name="StdCstRevAcctID"></field>
+				<field name="StdCstRevSubID"></field>
+				<field name="POAccrualAcctID"></field>
+				<field name="POAccrualSubID"></field>
+				<field name="PPVAcctID"></field>
+				<field name="PPVSubID"></field>
+				<field name="LCVarianceAcctID"></field>
+				<field name="LCVarianceSubID"></field>
+				<field name="DeferralAcctID"></field>
+				<field name="DeferralSubID"></field>
+				<field name="AMWIPAcctID"></field>
+				<field name="AMWIPSubID"></field>
+				<field name="AMWIPVarianceAcctID"></field>
+				<field name="AMWIPVarianceSubID"></field>
+			</qp-fieldset>
+			<qp-fieldset id="payrollaccounts" caption="Default Payroll Accounts" view.bind="postclassaccounts">
+				<field name="EarningsAcctID"></field>
+				<field name="EarningsSubID"></field>
+				<field name="BenefitExpenseAcctID"></field>
+				<field name="BenefitExpenseSubID"></field>
+				<field name="TaxExpenseAcctID"></field>
+				<field name="TaxExpenseSubID"></field>
+				<field name="PTOExpenseAcctID"></field>
+				<field name="PTOExpenseSubID"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

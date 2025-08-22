@@ -1,0 +1,6 @@
+<template>
+	<qp-tab before="#tabApplicationHistory" id="tabServiceOrders" caption="Service Orders" if.bind="Document.ChkServiceManagement.value == true">
+		<qp-grid id="gridServiceOrders" wg-container="FSAdjustments_detgridFS" view.bind="FSAdjustments">
+		</qp-grid>
+	</qp-tab>
+</template>

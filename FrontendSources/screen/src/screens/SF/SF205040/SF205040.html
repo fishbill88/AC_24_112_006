@@ -1,0 +1,15 @@
+<template>
+	<qp-template
+		id="Filter_template"
+		name="17-17-14"
+		class="equal-height"
+		wg-container="Filter_form"
+	>
+		<qp-fieldset id="filterA" slot="A" view.bind="Filter">
+			<field name="Entity"></field>
+			<field name="Status"></field>
+			<field name="ErrorsOnly"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="Records_grid" view.bind="Records"></qp-grid>
+</template>

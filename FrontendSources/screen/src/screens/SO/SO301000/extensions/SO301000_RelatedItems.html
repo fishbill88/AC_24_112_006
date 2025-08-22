@@ -1,0 +1,63 @@
+<template>
+	<qp-panel after="#copyparamfilter" id="RelatedItemsFilter" caption.bind="RelatedItemsPanelHeaders.AddRelatedItems" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="17-17-14" id="RelatedItemsFilter_fvRelatedItemsHeader" wg-container class="equal-height">
+			<qp-fieldset slot="A" id="ss-first" view.bind="RelatedItemsFilter" >
+				<field name="InventoryID"></field>
+				<field name="CuryUnitPrice">
+					<qp-field control-state.bind="RelatedItemsFilter.CuryID"
+						config-enabled.bind="false" no-label="true" class="col-5">
+					</qp-field>
+				</field>
+				<field name="Qty">
+					<qp-field control-state.bind="RelatedItemsFilter.UOM"
+						config-enabled.bind="false" no-label="true" class="col-5">
+					</qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="ss-second" view.bind="RelatedItemsFilter">
+				<field name="CuryExtPrice">
+					<qp-field id="CuryID2" control-state.bind="RelatedItemsFilter.CuryID"
+						config-enabled.bind="false" no-label="true" class="col-5">
+					</qp-field>
+				</field>
+				<field name="AvailableQty">
+					<qp-field id="UOM2" control-state.bind="RelatedItemsFilter.UOM"
+						config-enabled.bind="false" no-label="true" class="col-5">
+					</qp-field>
+				</field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="C" id="mx-third" view.bind="RelatedItemsFilter">
+				<field name="KeepOriginalPrice" no-label="true"></field>
+				<field name="OnlyAvailableItems" no-label="true"></field>
+				<field name="ShowForAllWarehouses" no-label="true"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-tabbar active-tab-id="tabAllRelatedItems" id="tabAllRelatedItems">
+			<qp-tab id="tabAllRelatedItems" caption="All Related Items">
+				<qp-grid id="gridAllRelatedItems" view.bind="allRelatedItems">
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="tabSubstituteItems" caption="Substitute Items">
+				<qp-grid id="gridSubstituteItems" view.bind="substituteItems">
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="tabUpSellItems" caption="Up-Sell Items">
+				<qp-grid id="gridUpSellItems" view.bind="upSellItems">
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="tabCrossSellItems" caption="Cross-Sell Items">
+				<qp-grid id="gridCrossSellItems" view.bind="crossSellItems">
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="tabOtherRelatedItems" caption="Other Related Items">
+				<qp-grid id="gridOtherRelatedItems" view.bind="otherRelatedItems">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button id="RelatedItemsPanelButtonOK" caption="Add and Close" dialog-result="OK"></qp-button>
+			<qp-button id="RelatedItemsPanelButtonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

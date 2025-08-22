@@ -1,0 +1,62 @@
+<template>
+	<qp-template id="formAssetClass" name="1-1" wg-container="AssetClass_form" class="equal-height">
+		<qp-fieldset id="columnFirstAssetClass" view.bind="AssetClass" slot="A">
+			<field name="AssetCD"></field>
+			<field name="ParentAssetID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondAssetClass" view.bind="AssetClass" slot="B">
+			<field no-label="true" name="Active"></field>
+			<field no-label="true" name="HoldEntry"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs" wg-container="CurrentAssetClass_tab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template name="1-1" id="formCurrentAssetClass">
+				<qp-fieldset id="panelCurrentAssetClass" view.bind="CurrentAssetClass" slot="A">
+					<field name="AssetTypeID" config-allow-edit.bind="true"></field>
+					<field name="IsTangible"></field>
+					<field name="Depreciable"></field>
+					<field name="UnderConstruction"></field>
+					<field name="UsefulLife"></field>
+					<field name="AcceleratedDepreciation"></field>
+					<field name="UsageScheduleID" config-allow-edit.bind="true"></field>
+					<field name="ServiceScheduleID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabDepreciation" caption="Depreciation">
+			<qp-grid id="gridDepriciationSettings" view.bind="DepreciationSettings"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template id="formGLAccounts" name="1-1">
+				<qp-fieldset id="panelGLAccounts" view.bind="CurrentAssetClass" slot="A">
+					<field name="ConstructionAccountID"></field>
+					<field name="ConstructionSubID"></field>
+					<field name="FAAccountID"></field>
+					<field name="FASubID"></field>
+					<field name="FASubMask"></field>
+					<field name="AccumulatedDepreciationAccountID"></field>
+					<field name="AccumulatedDepreciationSubID"></field>
+					<field name="UseFASubMask"></field>
+					<field name="AccumDeprSubMask"></field>
+					<field name="DepreciatedExpenseAccountID"></field>
+					<field name="DepreciatedExpenseSubID"></field>
+					<field name="DeprExpenceSubMask"></field>
+					<field name="DisposalAccountID"></field>
+					<field name="DisposalSubID"></field>
+					<field name="ProceedsSubMask"></field>
+					<field name="GainAcctID"></field>
+					<field name="GainSubID"></field>
+					<field name="LossAcctID"></field>
+					<field name="LossSubID"></field>
+					<field name="GainLossSubMask"></field>
+					<field name="RentAccountID"></field>
+					<field name="RentSubID"></field>
+					<field name="LeaseAccountID"></field>
+					<field name="LeaseSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

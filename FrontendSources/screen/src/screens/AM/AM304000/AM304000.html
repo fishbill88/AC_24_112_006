@@ -1,0 +1,81 @@
+<template>
+	<qp-template id="EstimateOperationRecords_form" wg-container name="17-14-17"  qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="DocLayoutLeft" view.bind="EstimateOperationRecords">
+			<field name="EstimateID" config-allow-edit.bind="true"></field>
+			<field name="RevisionID"></field>
+			<field name="OperationCD"></field>
+			<field name="WorkCenterID" config-allow-edit.bind="true"></field>
+	
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="DocLayoutMiddle" view.bind="EstimateOperationRecords">
+			<field name="SetupTime"></field>
+			<field name="RunUnits"></field>
+			<field name="RunUnitTime"></field>
+			<field name="MachineUnits"></field>
+			<field name="MachineUnitTime"></field>
+			<field name="QueueTime"></field>
+			<field name="FinishTime"></field>
+			<field name="MoveTime"></field>
+			<field name="BackflushLabor"></field>
+			<field name="ControlPoint"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="DocLayoutRight" view.bind="EstimateOperationRecords" class="highlights-section">
+			<field name="FixedLaborCost">
+				<qp-field control-state.bind="EstimateOperationRecords.FixedLaborOverride"></qp-field>
+			</field>
+			<field name="VariableLaborCost">
+				<qp-field control-state.bind="EstimateOperationRecords.VariableLaborOverride"></qp-field>
+			</field>
+			<field name="MachineCost">
+				<qp-field control-state.bind="EstimateOperationRecords.MachineOverride"></qp-field>
+			</field>
+			<field name="MaterialCost">
+				<qp-field control-state.bind="EstimateOperationRecords.MaterialOverride"></qp-field>
+			</field>
+			<field name="ToolCost">
+				<qp-field control-state.bind="EstimateOperationRecords.ToolOverride"></qp-field>
+			</field>
+			<field name="FixedOverheadCost">
+				<qp-field control-state.bind="EstimateOperationRecords.FixedOverheadOverride"></qp-field>
+			</field>
+			<field name="VariableOverheadCost">
+				<qp-field control-state.bind="EstimateOperationRecords.VariableOverheadOverride"></qp-field>
+			</field>
+			<field name="SubcontractCost">
+				<qp-field control-state.bind="EstimateOperationRecords.SubcontractOverride"></qp-field>
+			</field>
+			<field name="ExtCost">
+				<div></div>
+			</field>
+			<field name="ReferenceMaterialCost">
+				<div></div>
+			</field>
+		
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="Etab">
+		<qp-tab id="tabMaterial" caption="Material">
+			<qp-grid id="gridMaterial" view.bind="EstimateOperMatlRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSteps" caption="Steps">
+			<qp-grid id="gridSteps" view.bind="EstimateOperStepRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTools" caption="Tools">
+			<qp-grid id="gridTools" view.bind="EstimateOperToolRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOverhead" caption="Overhead">
+			<qp-grid id="gridOverhead" view.bind="EstimateOperOvhdRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOutside" caption="Outside Process">
+			<qp-template id="OutsideProcessTemplate" name="17-17-14">
+				<qp-fieldset slot="A" id="EstimateOperationRecords1" view.bind="EstimateOperationRecords" caption="General Settings">
+					<field name="OutsideProcess"></field>
+					<field name="DropShippedToVendor"></field>
+					<field name="VendorID" config-allow-edit.bind="true"></field>
+					<field name="VendorLocationID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

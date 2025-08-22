@@ -1,0 +1,38 @@
+<template>
+	<qp-tabbar id="mainTab" active-tab-id="tabGeneral">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="EquipmentSetupRecord_edEquipmentSetup" wg-container name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="EquipmentSetupRecord_10" caption="Numbering Settings" view.bind="EquipmentSetupRecord">
+						<field name="EquipmentNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ServiceContractNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ScheduleNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="EquipmentSetupRecord_20" caption="General Settings" view.bind="EquipmentSetupRecord">
+						<field name="EnableAllTargetEquipment"></field>
+					</qp-fieldset>
+					<qp-fieldset id="EquipmentSetupRecord_30" caption="Contract Settings" view.bind="EquipmentSetupRecord">
+						<field name="EnableSeasonScheduleContract"></field>
+					</qp-fieldset>
+					<qp-fieldset id="EquipmentSetupRecord_40" caption="Equipment Settings" view.bind="EquipmentSetupRecord">
+						<field name="EquipmentCalculateWarrantyFrom" control-type="qp-radio" config-class.bind="'vertical'"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset id="EquipmentSetupRecord_50" slot="B" caption="Billing Settings" view.bind="EquipmentSetupRecord">
+					<field name="ContractPostTo"></field>
+					<field name="ContractPostOrderType" config-allow-edit.bind="true"></field>
+					<field name="DfltContractTermIDARSO" config-allow-edit.bind="true"></field>
+					<field name="ContractSalesAcctSource"></field>
+					<field name="ContractCombineSubFrom"></field>
+					<field name="EnableContractPeriodWhenInvoice"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailing" caption="Mailing & Printing">
+			<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources">
+			</qp-grid>
+			<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

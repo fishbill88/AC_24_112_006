@@ -1,0 +1,13 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" view.bind="Filter" id="panelFilter">
+			<field name="ExecutionDate"></field>
+			<field name="LimitTypeSel" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			<field name="RunLimit"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid_Schedule_List" view.bind="Schedule_List" wg-container="Schedule_List_grid"></qp-grid>
+
+</template>

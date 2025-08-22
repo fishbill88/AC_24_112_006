@@ -1,0 +1,13 @@
+<template>
+	<qp-include url="../../barcodeProcessing/BarcodeProcessingScreen.html"></qp-include>
+
+	<template modify="#main">
+		<field name="SiteID"></field>
+		<field name="NextPathIndex"></field>
+	</template>
+
+	<qp-tab before="#tabLogs" id="tabWarehouse" caption="Warehouse">
+		<qp-grid id="grid" view.bind="location">
+		</qp-grid>
+	</qp-tab>
+</template>

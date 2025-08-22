@@ -1,0 +1,16 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="WcID"></field>
+			<field name="ShiftCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter">
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Filter3" no-label="true" view.bind="Filter">
+			<field name="ShowAll"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ScheduleDetail"></qp-grid>
+</template>

@@ -1,0 +1,51 @@
+<template>
+	<qp-template id="formFilter" name="1-1" wg-container="Filter_form">
+		<qp-fieldset id="columnFirst-formFilter" view.bind="Filter" slot="A">
+			<field name="BranchID"></field>
+			<field name="LedgerId"></field>
+			<field name="FinYear"></field>
+			<field name="ShowTree"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond-formFilter" view.bind="Filter" slot="B">
+			<field name="CompareToBranchID"></field>
+			<field name="CompareToLedgerID"></field>
+			<field name="CompareToFinYear"></field>
+			<field name="SubIDFilter"></field>
+			<field name="TreeNodeFilter"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitterGLBudgetTree" initial-split="15%" class="stretch" splitter-state.bind="Filter.ShowTree.value == true ? 'normal' : 'collapsed-first'" disabled.bind="Filter.ShowTree.value == true ? false : true">
+		<split-pane>
+			<qp-tree id="tree" view.bind="Tree" if.bind="Filter.ShowTree.value == true"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="grid" view.bind="BudgetArticles"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="DistrFilter" caption="Distribute Year Amount by Periods" auto-repaint="true">
+		<qp-template id="formDistributeYearAmountByPeriods" name="1-1" wg-container="DistrFilter_DistributePrm">
+			<qp-fieldset slot="A" id="panelDistributeYearAmountByPeriods" view.bind="DistrFilter">
+				<field name="Method"></field>
+				<field name="ApplyToAll"></field>
+				<field name="ApplyToSubGroups"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOk-formDistributeYearAmountByPeriods" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-formDistributeYearAmountByPeriods" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ManageDialog" caption="Manage Budget" auto-repaint="true">
+		<qp-template id="formManageBudget" name="1-1" wg-container="ManageDialog_ManagePrm">
+			<qp-fieldset slot="A" id="panelManageBudget" view.bind="ManageDialog">
+				<field name="Method"></field>
+				<field name="Message"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOk-formManageBudget" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-formManageBudget" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

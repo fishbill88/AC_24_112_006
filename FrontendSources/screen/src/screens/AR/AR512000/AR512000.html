@@ -1,0 +1,18 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter" caption='Expiration Period'>
+			<field name="BeginDate"></field>
+			<field name="ExpireXDays"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+			<field name="CustomerClassID"></field>
+			<field name="ActiveOnly"></field>
+			<field name="DefaultOnly"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Cards">
+	</qp-grid>
+
+</template>

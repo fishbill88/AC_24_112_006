@@ -1,0 +1,50 @@
+<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabLicense" caption="License">
+			<qp-template id="tmpl_license_details" name="1-1" class="label-size-xxl" wg-container="MainInformationFilter_mainFormView">
+				<div slot="A">
+					<qp-fieldset id="license_general_status" view.bind="MainInformationFilter">
+						<field name="Status"></field>
+						<field name="ResourceLevel"></field>
+					</qp-fieldset>
+					<qp-fieldset id="phf_tab_Items_0_mainFormView_PXLayoutRule_6" view.bind="MainInformationFilter" caption="License details">
+						<field name="CommerceTransactionLimitMonthly"></field>
+						<field name="ERPTransactionLimitMonthly"></field>
+						<field name="DataIncluded"></field>
+					</qp-fieldset>
+					<qp-fieldset id="phf_tab_Items_0_mainFormView_PXLayoutRule_11" view.bind="MainInformationFilter" caption="Recommended maximums">
+						<field name="CommerceTransactionsLimitDaily"></field>
+						<field name="ERPTransactionsLimitDaily"></field>
+						<field name="maximumRecommendedERPUsers"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="phf_tab_Items_0_mainFormView_PXLayoutRule_18" view.bind="MainInformationFilter" caption="System constraints">
+						<field name="WEBServicesAPIUsers"></field>
+						<field name="WebServiceProcessingUnits"></field>
+						<field name="WEBServicesAPIRequestsPerMinute"></field>
+						<field name="MaximumNumberOfLinesPerTransaction"></field>
+						<field name="MaximumNumberOfSerialNumbersPerDocument"></field>
+						<field name="MaximumNumberOfPayrollEmployees"></field>
+						<field name="maximumNumberOfStaffMembersAndVehicles"></field>
+						<field name="MaximumNumberOfAppointmentsPerMonth"></field>
+						<field name="MaximumNumberOfExpenseReceiptsRecognizedPerMonth"></field>
+						<field name="MaximumNumberOfDocumentsRecognizedPerMonth"></field>
+						<field name="MaximumNumberOfBusinessCardsRecognizedPerMonth"></field>
+						<field name="MaximumNumberOfBankFeedAccounts"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabStatistics" caption="Statistics">
+			<qp-grid id="monthlyLicenseHistory" view.bind="LicenseStatisticMonthly" wg-container="LicenseStatisticMonthly_gridMonthly"></qp-grid>
+			<qp-grid id="dailyLicenseHistory" view.bind="LicenseStatisticDaily" wg-container="LicenseStatisticDaily_gridDaily"></qp-grid>
+		</qp-tab>			
+		<qp-tab id="tabWarnings" caption="Warnings">
+			<qp-grid id="violationHistory" view.bind="Violations"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabConstraintHistory" caption="Constraint History">
+			<qp-grid id="gridConstraintHistory" view.bind="ConstraintHistory"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

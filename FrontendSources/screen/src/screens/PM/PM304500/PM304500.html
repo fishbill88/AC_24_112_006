@@ -1,0 +1,235 @@
+<template>
+	<qp-template name="7-10-7" class="equal-height" id="Quote_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="form01" view.bind="Quote">
+			<field name="QuoteNbr"></field>
+			<field name="OpportunityID" config-allow-edit.bind="true"></field>
+			<field name="IsPrimary"></field>
+			<field name="Status"></field>
+			<field name="DocumentDate"></field>
+			<field name="ExpirationDate"></field>
+			<field name="ExternalRef"></field>
+			<field name="QuoteProjectID" config-allow-edit.bind="true"></field>
+			<field name="QuoteProjectCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Quote">
+			<field name="TemplateID" config-allow-edit.bind="true"></field>
+			<field name="ProjectManager"></field>
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="ContactID" config-allow-edit.bind="true"></field>
+			<field name="OwnerID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="Subject" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form03" view.bind="Quote" class="summary-pane">
+			<field name="CuryAmount"></field>
+			<field name="CuryCostTotal"></field>
+			<field name="CuryGrossMarginAmount"></field>
+			<field name="GrossMarginPct"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryQuoteTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="EstimationTab" caption="Estimation">
+			<qp-grid id="Products_ProductsGrid" view.bind="Products"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ProjectTasksTab" caption="Project Tasks">
+			<qp-grid id="Tasks_TasksGrid" view.bind="Tasks"></qp-grid>
+		</qp-tab>
+		<qp-tab id="FinancialTab" caption="Financial">
+			<qp-template name="7-17" id="financial-form">
+				<qp-fieldset slot="A" id="PXFormView1" view.bind="QuoteCurrent" wg-container>
+					<field name="BranchID"></field>
+					<field name="LocationID" config-allow-edit.bind="true"></field>
+					<field name="TaxZoneID"></field>
+					<field name="TermsID"></field>
+					<field name="CreatedByID_Creator_Username"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ActivitiesTab" caption="Activities">
+			<qp-grid id="Activities_Activities_Grid" view.bind="Activities"></qp-grid>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-grid id="grid1" view.bind="Taxes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="ApprovalsTab" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="AddressesTab" caption="Addresses">
+			<qp-template name="1-1" id="addresses-form">
+				<qp-fieldset
+					id="formA"
+					slot="A"
+					view.bind="Shipping_Address"
+					caption="Project Address">
+					<field name="OverrideAddress">
+						<qp-address-lookup class="col-12" view.bind="Shipping_Address"></qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="CountryID"></field>
+					<field name="Latitude"></field>
+					<field name="Longitude"></field>
+					<field name="IsValidated"></field>
+				</qp-fieldset>
+				<div slot="B">
+					<qp-fieldset
+						id="edQuote_Contact"
+						view.bind="Quote_Contact"
+						caption="Bill-to Contact">
+						<field name="QuoteCurrent.AllowOverrideContactAddress"></field>
+						<field name="FullName"></field>
+						<field name="FirstNameGroup" unbound caption="First Name">
+							<qp-field
+								control-state.bind="Quote_Contact.Title"
+								no-label="true">
+							</qp-field>
+							<qp-field
+								control-state.bind="Quote_Contact.FirstName"
+								class="col-9"
+								no-label="true">
+							</qp-field>
+						</field>
+						<field name="LastName"></field>
+						<field name="Salutation"></field>
+						<field name="EMail"></field>
+						<field name="WebSite"></field>
+						<field name="Phone1">
+							<qp-field slot="label" control-state.bind="Quote_Contact.Phone1Type" no-label="true"></qp-field>
+						</field>
+						<field name="Phone2">
+							<qp-field slot="label" control-state.bind="Quote_Contact.Phone2Type" no-label="true"></qp-field>
+						</field>
+						<field name="Phone3">
+							<qp-field slot="label" control-state.bind="Quote_Contact.Phone3Type" no-label="true"></qp-field>
+						</field>
+						<field name="Fax">
+							<qp-field slot="label" control-state.bind="Quote_Contact.FaxType" no-label="true"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="edQuote_Address" view.bind="Quote_Address" caption="Bill-to Address">
+						<field name="AddressLookupPlaceholder" unbound>
+							<qp-address-lookup class="col-12" view.bind="Quote_Address"></qp-address-lookup>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="CountryID" config-allow-edit.bind="true"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CopyQuoteInfo" caption="Copy Quote" auto-repaint="true">
+		<qp-fieldset id="formCopyQuote" view.bind="CopyQuoteInfo">
+			<field name="Description"></field>
+			<field name="RecalculatePrices"></field>
+			<field name="OverrideManualPrices"></field>
+			<field name="RecalculateDiscounts"></field>
+			<field name="OverrideManualDiscounts"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel
+		id="ConvertQuoteInfo"
+		caption="Convert to Project"
+		auto-repaint="true">
+		<qp-fieldset id="formConvertQuote" view.bind="ConvertQuoteInfo" no-label="true">
+			<field name="CreateLaborRates"></field>
+			<field name="ActivateProject"></field>
+			<field name="ActivateTasks"></field>
+			<field name="CopyNotes"></field>
+			<field name="CopyFiles"></field>
+			<field name="MoveActivitiesGroup" unbound replace-content>
+				<qp-field
+					control-state.bind="ConvertQuoteInfo.MoveActivities"
+					class="col-8"
+					no-label="true">
+				</qp-field>
+				<qp-field control-state.bind="ConvertQuoteInfo.TaskCD" no-label="true"></qp-field>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton3" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton4" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="recalcdiscountsfilter" caption="Recalculate Prices" auto-repaint="true">
+		<qp-fieldset id="formRecalculate" view.bind="recalcdiscountsfilter">
+			<field name="RecalcTarget"></field>
+			<field name="RecalcUnitPrices"></field>
+			<field name="OverrideManualPrices"></field>
+			<field name="RecalcDiscounts"></field>
+			<field name="OverrideManualDiscounts"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel
+		id="TasksForAddition"
+		caption="Add Tasks"
+		auto-repaint="true"
+		width="90vw"
+		height="90vh">
+		<qp-grid id="gridAddCommonTasks" view.bind="TasksForAddition"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonAddCommonTasksOk" state.bind="AddCommonTasks" dialog-result="OK"></qp-button>
+			<qp-button id="PXButtonAddCommonTasksCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" dialog-result="OK"></qp-button>
+			<qp-button id="btnReasonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="btnReassignApprovalCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddressLookupFilter" caption="Address Lookup" auto-repaint="true">
+		<qp-fieldset id="AddressLookupPanelformAddress" view.bind="AddressLookupFilter">
+			<field name="SearchAddress"></field>
+			<field name="ViewName"></field>
+			<field name="AddressLine1"></field>
+			<field name="AddressLine2"></field>
+			<field name="AddressLine3"></field>
+			<field name="City"></field>
+			<field name="CountryID"></field>
+			<field name="State"></field>
+			<field name="PostalCode"></field>
+			<field name="Latitude"></field>
+			<field name="Longitude"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="AddressLookupSelectAction" state.bind="AddressLookupSelectAction"></qp-button>
+			<qp-button id="AddressEntityBtnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

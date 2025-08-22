@@ -1,0 +1,48 @@
+<template>
+	<qp-tabbar id="tabBar">
+		<qp-tab id="tabGeneral" caption="General" class="label-size-m">
+			<qp-template name="1-1" id="formGeneralLedgerPreferences" wg-container="GLSetupRecord_tab">
+				<div id="columnFirst" slot="A">
+					<qp-fieldset id="groupNumberingSettings" view.bind="GLSetupRecord" caption="Numbering Settings">
+						<field name="BatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="TBImportNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ScheduleNumberingID" config-allow-edit.bind="true"></field>
+						<field name="AllocationNumberingID" config-allow-edit.bind="true"></field>
+						<field name="DocBatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ReuseRefNbrsInVouchers"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupChartOfAccountsSettings" view.bind="GLSetupRecord" caption="Chart of Accounts Settings">
+						<field name="YtdNetIncAccountID"></field>
+						<field name="RetEarnAccountID"></field>
+						<field name="TrialBalanceSign"></field>
+						<field name="COAOrder"
+							control-type="qp-radio"
+							config-class.bind="'vertical'"
+							   >
+						</field>
+					</qp-fieldset>
+				</div>
+				<div id="columnSecond" slot="B">
+					<qp-fieldset id="groupPostingSettings" view.bind="GLSetupRecord" caption="Posting Settings">
+						<field name="AutoRevOption"></field>
+						<field name="AutoPostOption"></field>
+						<field name="RestrictAccessToClosedPeriods"></field>
+						<field name="ConsolidatedPosting"></field>
+						<field name="AutoReleaseReclassBatch"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDataEntrySettings"view.bind="GLSetupRecord" caption="Data Entry Settings">
+						<field name="HoldEntry"></field>
+						<field name="VouchersHoldEntry"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="RequireRefNbrForTaxEntry"></field>
+						<field name="DefaultSubID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="SetupApproval">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

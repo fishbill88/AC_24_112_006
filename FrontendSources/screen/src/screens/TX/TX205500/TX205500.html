@@ -1,0 +1,15 @@
+<template>
+
+	<qp-template name="1-1" id="formTaxCategory" wg-container="TxCategory_form">
+		<qp-fieldset id="panelTaxCategory" view.bind="TxCategory" slot="A">
+			<field name="TaxCategoryID"></field>
+			<field name="Descr"></field>
+			<field name="Active"></field>
+			<field name="TaxCatFlag"></field>
+			<field name="Exempt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridDetails" view.bind="Details" wg-container="Details_grid"> </qp-grid>
+
+</template>

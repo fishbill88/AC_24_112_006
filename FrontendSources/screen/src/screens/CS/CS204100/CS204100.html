@@ -1,0 +1,22 @@
+<template>
+	<qp-template
+		name="1-1"
+		class="equal-height label-size-xm"
+		id="SalesTerritory_form"
+		wg-container
+	>
+		<qp-fieldset
+			slot="A"
+			id="SalesTerritory_form_left"
+			view.bind="SalesTerritory"
+		>
+			<field name="SalesTerritoryID"></field>
+			<field name="Name"></field>
+			<field name="SalesTerritoryType"></field>
+			<field name="CountryID" config-allow-edit.bind="true"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="CountryStates_gridStates" view.bind="CountryStates"> </qp-grid>
+	<qp-grid id="Countries_gridCountries" view.bind="Countries"> </qp-grid>
+</template>

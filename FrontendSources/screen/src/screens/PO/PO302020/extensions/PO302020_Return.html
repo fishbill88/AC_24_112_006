@@ -1,0 +1,10 @@
+<template>
+	<qp-tab before="#tabLogs" id="tabReturn" caption="Return" if.bind="HeaderView.ShowReturn.value == true">
+		<qp-grid id="gridReturned" view.bind="Returned">
+		</qp-grid>
+	</qp-tab>
+	<qp-tab before="#tabLogs" id="tabReturnedNotZero" caption="Returned Above Zero" if.bind="false">
+		<qp-grid id="gridReturnedNotZero" view.bind="ReturnedNotZero">
+		</qp-grid>
+	</qp-tab>
+</template>

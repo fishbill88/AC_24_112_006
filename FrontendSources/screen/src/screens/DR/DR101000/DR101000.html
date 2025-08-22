@@ -1,0 +1,15 @@
+﻿<template>
+    <qp-template name="1-1" id="formDRSetupRecord" wg-container="DRSetupRecord_form" class="label-size-xm">
+        <div id="columnFirst" slot="A">
+            <qp-fieldset id="groupNumberingSettings" view.bind="DRSetupRecord" caption="Numbering Settings">
+                <field name="ScheduleNumberingID" config.bind="{allowEdit:true}"></field>
+            </qp-fieldset>
+            <qp-fieldset id="groupOther" view.bind="DRSetupRecord" caption="Other">
+                <field name="SuspenseAccountID"></field>
+                <field name="SuspenseSubID" control-type="qp-selector"></field>
+                <field name="UseFairValuePricesInBaseCurrency"></field>
+                <field name="RecognizeAdjustmentsInPreviousPeriods"></field>
+            </qp-fieldset>
+        </div>
+    </qp-template>
+</template>

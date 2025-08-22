@@ -1,0 +1,99 @@
+<template>
+
+	<qp-template name="7-10-7" id="formSummary" wg-container="Document_form" class="equal-height">
+		<qp-fieldset slot="A" id="columnFirst-Summary" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<!--<px:PXSelector ID="edRefNbr" runat="server" DataField="" AutoRefresh="True">
+				<GridProperties FastFilterFields="APPayment__ExtRefNbr, VendorID, VendorID_Vendor_acctName, APInvoice__InvoiceNbr, DocDesc" />
+			</px:PXSelector>-->
+			<field name="Status"></field>
+			<field name="AdjDate"></field>
+			<field name="AdjFinPeriodID"></field>
+			<field name="ExtRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond-Summary" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="CashAccountID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="DepositAfter"></field>
+			<field name="DocDesc" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThird-Summary" view.bind="Document" class="highlights-section">
+			<field name="CuryOrigDocAmt"></field>
+			<field name="CuryPOApplAmt"></field>
+			<field name="CuryUnappliedBal"></field>
+			<field name="CuryInitDocBal"></field>
+			<field name="CuryApplAmt"></field>
+			<field name="CuryChargeAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDocumentsToApply" caption="Documents to Apply">
+			<qp-grid id="gridDocumentsToApply" view.bind="Adjustments" wg-container="Adjustments_detgrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApplicationHistory" caption="Application History">
+			<qp-grid id="gridApplicationHistory" view.bind="APPost" wg-container="APPost_detgrid2"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template name="17-17-14" id="formFinancial">
+				<qp-fieldset slot="A" id="columnFirstFinancial" view.bind="CurrentDocument" wg-container="CurrentDocument_tab" caption="GL Link">
+					<field name="BatchNbr" config-allow-edit.bind="true"></field>
+					<field name="DisplayCuryInitDocBal"></field>
+					<field name="BranchID"></field>
+					<field name="APAccountID"></field>
+					<field name="APSubID"></field>
+					<field name="DocDate"></field>
+					<field name="FinPeriodID"></field>
+					<field name="Cleared"></field>
+					<field name="ClearDate"></field>
+					<field name="DepositAsBatch"></field>
+					<field name="Deposited"></field>
+					<field name="DepositDate"></field>
+					<field name="DepositNbr" config-allow-edit.bind="true"></field>
+					<field name="OrigRefNbr" config.bind="{linkCommand: 'ViewOriginalDocument', hasEditLink: true}"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabRemittance" caption="Remittance">
+			<qp-template name="17-17-14" id="formRemittance">
+				<div slot="A">
+					<qp-fieldset id="columnFirstRemittance" view.bind="Remittance_Contact" wg-container="Remittance_Contact_Remittance_Contact" caption="Remittance Contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="columnSecondRemittance" view.bind="Remittance_Address" wg-container="Remittance_Address_Remittance_Address" caption="Remittance Address">
+						<!-- only one way I found to work as requested by PM is nested controls -->
+						<field name="OverrideAddress"></field>
+						<field unbound name="buttonAddressLookup">
+							<qp-button id="buttonAddressLookup-Remittance" state.bind="AddressLookup"></qp-button>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="columnThirdRemittance" view.bind="CurrentDocument" wg-container="CurrentDocument_tab" caption="Print Options">
+					<field name="PrintCheck"></field>
+					<field name="BatchPaymentRefNbr" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabCharges" caption="Charges">
+			<qp-grid id="gridPaymentCharges" view.bind="PaymentCharges" wg-container="PaymentCharges_detgrid3"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+</template>

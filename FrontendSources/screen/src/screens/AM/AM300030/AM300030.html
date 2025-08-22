@@ -1,0 +1,46 @@
+<template>
+	<qp-template id="HeaderView_formHeader" wg-container name="17-31" class="equal-height">
+		<qp-fieldset slot="A" id="HeaderView1" view.bind="HeaderView">
+			<field name="Barcode"
+			       control-type="qp-barcode-input"
+			       config-sound-control.bind="Info.MessageSoundFile"
+			       config-submit-command.bind="Scan">
+			</field>
+			<field name="RefNbr" config-allow-edit.bind="true"></field>
+			<field name="SiteID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="HeaderView2" view.bind="HeaderView">
+			<field name="Message" config-type.bind="1" config-rows.bind="3" class="no-label"></field>
+			<field name="Mode"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="Info_formInfo" wg-container name="1-1-1">
+		<qp-fieldset slot="A" id="Info1" view.bind="Info">
+			<field name="Mode"></field>
+			<field name="Message"></field>
+			<field name="MessageSoundFile"></field>
+			<field name="Prompt"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabIssue" caption="Issue">
+			<qp-grid id="gridPicked" view.bind="transactions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabScanLog" caption="Scan Log">
+			<qp-grid id="grid4" view.bind="Logs"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="UserSetupView" caption="Settings" auto-repaint="true">
+		<qp-template id="UserSetupView_frmSettings" name="1">
+			<qp-fieldset slot="A" id="UserSetupView1" view.bind="UserSetupView" class="no-label" caption="General">
+				<field name="DefaultWarehouse"></field>
+				<field name="DefaultLotSerialNumber"></field>
+				<field name="DefaultExpireDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

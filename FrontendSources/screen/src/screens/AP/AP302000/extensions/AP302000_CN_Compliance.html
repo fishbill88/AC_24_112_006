@@ -1,0 +1,14 @@
+<template>
+
+	<qp-tab after="#tabCharges" id="tabCompliance" caption="Compliance">
+		<qp-grid id="gridComplianceDocuments" view.bind="ComplianceDocuments" wg-container="ComplianceDocuments_grdComplianceDocuments"></qp-grid>
+	</qp-tab>
+
+	<qp-panel id="ComplianceDetails" caption="Line Details" auto-repaint="true" width="85vw" height="90vh">
+		<qp-grid id="gridComplianceDetails" view.bind="ComplianceDetails" wg-container="ComplianceDetails_ComplianceDetailGrid"></qp-grid>
+		<footer>
+			<qp-button id="btnCloseComplianceDetail" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

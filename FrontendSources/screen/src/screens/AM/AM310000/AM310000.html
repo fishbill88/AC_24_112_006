@@ -1,0 +1,90 @@
+<template>
+	<qp-template id="Document_form" wg-container name="7-10-7" class="equal-height">
+		<qp-fieldset slot="A" id="Document1" view.bind="Document">
+			<field name="ShipmentNbr"></field>
+			<field name="ShipmentType"></field>
+			<field name="Status"></field>
+			<field name="ShipmentDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Document2" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="SiteID"></field>
+			<field name="WorkgroupID"></field>
+			<field name="EmployeeID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Document3" view.bind="Document" class="highlights-section">
+			<field name="ShipmentQty"></field>
+			<field name="ControlQty"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="Transactions"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabShipping" caption="Shipping">
+			<qp-template id="ShippingTemplate" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="formD" view.bind="ShippingContact" caption="Ship-To Contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formB" view.bind="ShippingAddress" caption="Ship-To Address">
+						<field name="OverrideAddress"></field>
+						<field name="IsValidated"></field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="formF" view.bind="CurrentDocument" caption="Shipping Information">
+						<field name="ShipVia"></field>
+						<field name="FOBPoint"></field>
+						<field name="ShipTermsID"></field>
+						<field name="ShipZoneID"></field>
+						<field name="Residential"></field>
+						<field name="SaturdayDelivery"></field>
+						<field name="Insurance"></field>
+						<field name="GroundCollect"></field>
+						<field name="CuryFreightCost"></field>
+						<field name="OverrideFreightAmount"></field>
+						<field name="FreightAmountSource"></field>
+						<field name="CuryFreightAmt"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="AMVendorShipmentLineSplittingExtension_lsselect" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="AMVendorShipmentLineSplittingExtension_LotSerOptions_optform" wg-container name="14-17-17" class="equal-height">
+			<qp-fieldset slot="A" id="AMVendorShipmentLineSplittingExtension_LotSerOptions1" view.bind="AMVendorShipmentLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="AMVendorShipmentLineSplittingExtension_LotSerOptions2" view.bind="AMVendorShipmentLineSplittingExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="AMVendorShipmentLineSplittingExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grid2" view.bind="Splits"></qp-grid>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ShipmentProdOrders" caption="Production Order Lookup" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="ShipLinesProdGrid" view.bind="ShipmentProdOrders"></qp-grid>
+		<footer>
+			<qp-button id="btnAddShipLines" state.bind="AddShipLines"></qp-button>
+			<qp-button id="btnAddAndCloseShipLines" state.bind="AddShipLinesClose"></qp-button>
+			<qp-button id="btnCancelLink" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

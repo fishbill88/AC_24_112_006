@@ -1,0 +1,35 @@
+<template>
+	<qp-panel id="AddMembersToNewListFilterView" auto-repaint="true" caption="Add Members to a New Marketing List">
+		<qp-tabbar id="AddMembersToNewList_tabbar">
+			<qp-tab id="AddMembersToNewListFilterView_form" caption="Main">
+				<qp-template name="1-1-1">
+					<qp-fieldset slot="A" id="AddMembersToNewListFilterView_form" view.bind="AddMembersToNewListFilterView">
+						<field name="MailListCode"></field>
+						<field name="Name"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+				</qp-template>
+			</qp-tab>
+			<qp-tab id="AddMembrsUdf" caption="User-Defined Fields">
+				<qp-grid id="grdAddMembersToNewListUdf" view.bind="AddMembersToNewListFilterUdfView"></qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="btnAddMembersToNewListCreateAndReview"
+				caption="Create and Review"
+				dialog-result="Yes">
+			</qp-button>
+			<qp-button
+				id="btnAddMembersToNewListCreate"
+				caption="Create"
+				dialog-result="OK">
+			</qp-button>
+			<qp-button
+				id="btnAddMembersToNewListCancel"
+				caption="Cancel"
+				dialog-result="Abort">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

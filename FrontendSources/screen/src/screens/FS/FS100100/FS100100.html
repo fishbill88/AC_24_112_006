@@ -1,0 +1,85 @@
+<template>
+	<qp-tabbar id="tab" wg-container="SetupRecord_tab" active-tab-id="tabGeneral">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="SetupTemplate" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="SetupRecord_10" caption="Numbering Settings" view.bind="SetupRecord">
+						<field name="PostBatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="EmpSchdlNumberingID" config-allow-edit.bind="true"></field>
+						<field name="EquipmentNumberingID" config-allow-edit.bind="true"></field>
+						<field name="LicenseNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupRecord_20" caption="General Settings" view.bind="SetupRecord">
+						<field name="EnableEmpTimeCardIntegration"></field>
+						<field name="ManageRooms"></field>
+						<field name="EnableDfltStaffOnServiceOrder"></field>
+						<field name="EnableDfltResEquipOnServiceOrder"></field>
+						<field name="ShowWorkflowStageField"></field>
+						<field name="CustomerMultipleBillingOptions"></field>
+						<field name="AlertBeforeCloseServiceOrder"></field>
+						<field name="FilterInvoicingManually"></field>
+						<field name="TrackAppointmentLocation"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="SetupRecord_30" caption="Default Settings" view.bind="SetupRecord">
+						<field name="DfltSrvOrdType" config-allow-edit.bind="true"></field>
+						<field name="DfltSOSrvOrdType" config-allow-edit.bind="true"></field>
+						<field name="DfltCasesSrvOrdType" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupRecord_40" caption="Appointment Validation Settings" view.bind="SetupRecord">
+						<field name="DenyWarnBySkill"></field>
+						<field name="DenyWarnByGeoZone"></field>
+						<field name="DenyWarnByLicense"></field>
+						<field name="DenyWarnByAppOverlap"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupRecord_50" caption="Schedule Optimization Settings" view.bind="SetupRecord">
+						<field name="ROWWApiEndPoint"></field>
+						<field name="ROWWLicensekey"></field>
+						<field name="ROLunchBreakDuration"></field>
+						<field name="ROLunchBreakStartTimeFrame_Time" config-time-mode.bind="true"></field>
+						<field name="ROLunchBreakEndTimeFrame_Time" config-time-mode.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabCalendar" caption="Calendars & Maps">
+			<qp-template id="CalendarTemplate" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="SetupRecord_60" caption="Calendar Settings" view.bind="SetupRecord">
+						<field name="CalendarID" config-allow-edit.bind="true"></field>
+						<field name="AppResizePrecision"></field>
+						<field name="AppAutoConfirmGap"></field>
+						<field name="DfltCalendarPageSize"></field>
+						<field name="ShowServiceOrderDaysGap"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupRecord_70" caption="Map Settings" view.bind="SetupRecord">
+						<field name="MapApiKey"></field>
+						<field name="GPSRefreshTrackingTime"></field>
+						<field name="HistoryTimeAccuracy"></field>
+						<field name="HistoryDistanceAccuracy"></field>
+						<field name="EnableGPSTracking"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="SetupRecord_80" caption="Default Calendar Settings" view.bind="SetupRecord">
+						<field name="DfltCalendarViewMode"></field>
+						<field name="TimeRange"></field>
+						<field name="TimeFilter"></field>
+						<field name="DfltCalendarStartTime_Time" config-time-mode.bind="true"></field>
+						<field name="DfltCalendarEndTime_Time" config-time-mode.bind="true"></field>
+						<field name="DayResolution"></field>
+						<field name="WeekResolution"></field>
+						<field name="MonthResolution"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailing" caption="Mailing & Printing">
+			<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources">
+			</qp-grid>
+			<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

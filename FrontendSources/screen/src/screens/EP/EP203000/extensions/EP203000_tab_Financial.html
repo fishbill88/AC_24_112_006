@@ -1,0 +1,66 @@
+<template>
+	<template id="tabFinancial_Content">
+		<qp-template id="Financial-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset
+					id="tabFinancial_GLAccounts"
+					caption="GL Accounts"
+					view.bind="DefLocation"
+					wg-container="DefLocation_frmPmtDefLocation"
+				>
+					<field name="VAPAccountID"></field>
+					<field name="VAPSubID"></field>
+					<using wg-container="CurrentEmployee_tab" view="CurrentEmployee">
+						<field name="PrepaymentAcctID"></field>
+						<field name="PrepaymentSubID"></field>
+						<field name="ExpenseAcctID"></field>
+						<field name="ExpenseSubID"></field>
+						<field name="SalesAcctID"></field>
+						<field name="SalesSubID"></field>
+					</using>
+				</qp-fieldset>
+
+				<qp-fieldset
+					id="tabFinancial_FinancialSettings"
+					caption="Financial Settings"
+					view.bind="DefLocation"
+					wg-container="DefLocation_PXFormView1"
+				>
+					<field name="VTaxZoneID" config-allow-edit.bind="true"></field>
+					<using wg-container="CurrentEmployee_tab" view="CurrentEmployee">
+						<field name="TermsID" config-allow-edit.bind="true"></field>
+					</using>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="tabFinancial_PaymentSettings"
+					caption="Payment Settings"
+					view.bind="DefLocation"
+					wg-container="DefLocation_PXFormView3"
+				>
+					<field name="VPaymentMethodID" config-allow-edit.bind="true"></field>
+					<field name="VCashAccountID" config-allow-edit.bind="true"></field>
+					<using wg-container="CurrentEmployee_tab" view="CurrentEmployee">
+						<field name="CuryID" config-allow-edit.bind="true"></field>
+						<field name="AllowOverrideCury"></field>
+						<field name="CuryRateTypeID" config-allow-edit.bind="true"></field>
+						<field name="AllowOverrideRate"></field>
+						<field name="BaseCuryID" config-enabled.bind="false"></field>
+						<field name="ShiftID" config-allow-edit.bind="true"></field>
+						<field name="UnionID" config-allow-edit.bind="true"></field>
+					</using>
+				</qp-fieldset>
+
+				<qp-grid
+					id="gridFinancial_PaymentDetails"
+					view.bind="PaymentDetails"
+					class="framed-section"
+					caption="Payment Instructions"
+					wg-container="PaymentDetails_PXGrid1"
+				>
+				</qp-grid>
+			</div>
+		</qp-template>
+	</template>
+</template>
