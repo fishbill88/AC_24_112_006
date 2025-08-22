@@ -1,0 +1,19 @@
+<template>	 
+	<qp-template id="Filter_form" name="17-17-14" class="equal-height" wg-container>
+		<qp-fieldset id="filter" view.bind="Filter" slot="A">
+			<field name="DetailType"></field>
+			<field name="VendorID"></field>
+			<field name="BranchID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="settings" view.bind="Filter" slot="B">
+			<field name="DocDate"></field>
+			<field name="SingleLineInvoices"></field>
+			<field name="CreateZeroAmountLines"></field>
+		</qp-fieldset>
+		<qp-fieldset id="total" view.bind="Filter" class="highlights-section" slot="C">
+			<field name="Total"></field>
+		</qp-fieldset>
+	</qp-template>	 
+	<qp-grid id="grid1" view.bind="Details">
+	</qp-grid>	
+</template>

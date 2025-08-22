@@ -1,0 +1,27 @@
+<template>
+	<qp-template
+		id="Filter_form"
+		name="1-1-1"
+		class="equal-height"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset id="form_0" view.bind="Filter" slot="A" >
+			<field name="Action" ></field>
+			<field name="ProjectId" ></field>
+			<field name="VendorId" ></field>
+			<field name="LienWaiverType" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_1" view.bind="Filter" slot="B" >
+			<field name="StartDate" ></field>
+			<field name="EndDate" ></field>
+			<field name="ShouldShowProcessed" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="form_2" view.bind="Filter" slot="C" >
+			<field name="PrintWithDeviceHub" ></field>
+			<field name="DefinePrinterManually" ></field>
+			<field name="PrinterID" ></field>
+			<field name="NumberOfCopies" ></field>
+		</qp-fieldset>
+	</qp-template>
+ 	<qp-grid id="LienWaivers_grid" view.bind="LienWaivers"></qp-grid>
+</template>

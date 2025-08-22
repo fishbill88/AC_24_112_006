@@ -1,0 +1,71 @@
+<template>
+	<qp-grid id="grid" view.bind="GLTranForReclass"></qp-grid>
+
+	<qp-panel id="LoadOptionsView" caption="Load Transactions" auto-repaint="true">
+		<qp-template name="1-1" id="formLoadTransactions" wg-container="LoadOptionsView_loform">
+			<qp-fieldset slot="A" id="columnFirst-formLoadTransactions" view.bind="LoadOptionsView">
+				<field name="BranchID"></field>
+				<field name="FromAccountID"></field>
+				<field name="ToAccountID"></field>
+				<field name="FromSubID"></field>
+				<field name="ToSubID"></field>
+				<field name="FromFinPeriodID"></field>
+				<field name="ToFinPeriodID"></field>
+				<field name="FromDate"></field>
+				<field name="ToDate"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecond-formLoadTransactions" view.bind="LoadOptionsView">
+				<field name="Module"></field>
+				<field name="BatchNbr"></field>
+				<field name="RefNbr"></field>
+				<field name="ReferenceID"></field>
+				<field name="ProjectID"></field>
+				<field name="FromTaskID"></field>
+				<field name="ToTaskID"></field>
+				<field name="FromCostCodeID"></field>
+				<field name="ToCostCodeID"></field>
+				<field name="MaxTrans"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<!-- wg-name - a workaround for generating wrappers with button name like in old UI (AC-297107) -->
+			<qp-button id="buttonReload-LoadTransactions" caption="Reload" dialog-result="Cancel" state.bind="ReloadTrans" wg-name="Reload"></qp-button>
+			<qp-button id="buttonLoad-LoadTransactions" caption="Load" dialog-result="Cancel" state.bind="LoadTrans" wg-name="Load"></qp-button>
+			<qp-button id="buttonCancel-LoadTransactions" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReplaceOptionsView" caption="Find and Replace" auto-repaint="true">
+		<qp-template name="1-1" id="formFindReplace" wg-container="ReplaceOptionsView_roform">
+			<qp-fieldset slot="A" id="panelFind-FindReplace" view.bind="ReplaceOptionsView" caption="FIND">
+				<field name="WithBranchID"></field>
+				<field name="WithAccountID"></field>
+				<field name="WithSubID"></field>
+				<field name="WithProjectID"></field>
+				<field name="WithTaskID"></field>
+				<field name="WithCostCodeID"></field>
+				<field name="WithDate"></field>
+				<field name="WithFinPeriodID"></field>
+				<field name="WithTranDescFilteringValue"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="panelReplaceWith-FindReplace" view.bind="ReplaceOptionsView" caption="REPLACE WITH">
+				<field name="NewBranchID"></field>
+				<field name="NewAccountID"></field>
+				<field name="NewSubID"></field>
+				<field name="NewProjectID"></field>
+				<field name="NewTaskID"></field>
+				<field name="NewCostCodeID"></field>
+				<field name="NewDate"></field>
+				<field name="NewTranDesc"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-FindReplace" caption="Replace" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-FindReplace" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+
+
+
+</template>

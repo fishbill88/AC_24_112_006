@@ -1,0 +1,152 @@
+<template>
+	<qp-tabbar id="mainTabbar">
+		<qp-tab id="setup_tab" wg-container caption="General" class="label-size-xm">
+			<qp-template id="setup-form" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="pnlNumberingSettings" view.bind="setup" caption="Numbering Settings">
+						<field name="BatchNumberingID"></field>
+						<field name="ReceiptNumberingID"></field>
+						<field name="IssueNumberingID"></field>
+						<field name="AdjustmentNumberingID"></field>
+						<field name="KitAssemblyNumberingID"></field>
+						<field name="PINumberingID"></field>
+						<field name="ReplenishmentNumberingID"></field>
+						<field name="ServiceItemNumberingID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlInventoryOptions" view.bind="setup" caption="Inventory Options">
+						<field name="UseInventorySubItem"></field>
+						<field name="ReplanBackOrders"></field>
+						<field name="AllocateDocumentsOnHold"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlAccountSettings" view.bind="setup" caption="Account Settings">
+						<field name="ARClearingAcctID"></field>
+						<field name="ARClearingSubID"></field>
+						<field name="TransitBranchID"></field>
+						<field name="INTransitAcctID"></field>
+						<field name="INTransitSubID"></field>
+						<field name="INProgressAcctID"></field>
+						<field name="INProgressSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlPostingSettings" view.bind="setup" caption="Posting Settings">
+						<field name="UpdateGL"></field>
+						<field name="SummPost"></field>
+						<field name="AutoPost"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="pnlDataEntrySettings" view.bind="setup" caption="Data Entry Settings">
+						<field name="HoldEntry"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="AddByOneBarcode"></field>
+						<field name="AutoAddLineBarcode"></field>
+						<field name="DfltStkItemClassID"></field>
+						<field name="DfltNonStkItemClassID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlDefaultReasonCodes" view.bind="setup" caption="Default Reason Codes">
+						<field name="ReceiptReasonCode"></field>
+						<field name="IssuesReasonCode"></field>
+						<field name="AdjustmentReasonCode"></field>
+						<field name="PIReasonCode"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlPhysicalInventorySettings" view.bind="setup"
+						caption="Physical Inventory Settings">
+						<field name="PIUseTags"></field>
+						<field name="PILastTagNumber"></field>
+						<field name="TurnoverPeriodsPerYear"></field>
+						<field name="AutoReleasePIAdjustment"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlInventoryTurnoverSettings" view.bind="setup"
+						caption="Inventory Turnover Settings">
+						<field name="IncludeSaleInTurnover">
+							<qp-label slot="label" caption="Calculation Rules:"></qp-label>
+						</field>
+						<field name="IncludeProductionInTurnover"></field>
+						<field name="IncludeAssemblyInTurnover"></field>
+						<field name="IncludeIssueInTurnover"></field>
+						<field name="IncludeTransferInTurnover"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabRestrictionGroups" caption="Subitem/Restriction Groups" if.bind="setup.UseInventorySubItem.value == true">
+			<qp-grid id="gridGroups" view.bind="Groups">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingAndPrinting" caption="Mailing & Printing">
+			<qp-grid id="gridNS" view.bind="Notifications">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabWarehouseManagement" caption="Warehouse Management">
+			<qp-label caption="These settings are specific to the current branch."></qp-label>
+			<qp-template name="1-1" id="ScanSetup_formScanSetup" wg-container>
+				<div slot="A">
+					<!-- <qp-label caption="These settings are specific to the current branch."></qp-label> -->
+					<qp-fieldset id="groupGeneral" view.bind="ScanSetup" caption="General">
+						<field name="ExplicitLineConfirmation"></field>
+						<field name="DefaultWarehouse"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReceiptSettings" view.bind="ScanSetup" caption="Receipt Settings">
+						<field name="UseDefaultQtyInReceipt"></field>
+						<field name="UseDefaultReasonCodeInReceipt"></field>
+						<field name="RequestLocationForEachItemInReceipt"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupIssueSettings" view.bind="ScanSetup" caption="Issue Settings">
+						<field name="UseDefaultQtyInIssue"></field>
+						<field name="UseDefaultReasonCodeInIssue"></field>
+						<field name="RequestLocationForEachItemInIssue"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="groupFulfillmentWorkflow" view.bind="ScanSetup" caption="Transfer Settings">
+						<field name="UseDefaultQtyInTransfer"></field>
+						<field name="UseDefaultReasonCodeInTransfer"></field>
+						<field name="UseDefaultLotSerialNbrInTransfer"></field>
+						<field name="RequestLocationForEachItemInTransfer"></field>
+						<field name="UseCartsForTransfers"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPICountSettings" view.bind="ScanSetup" caption="PI Count Settings">
+						<field name="UseDefaultQtyInCount"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabGS1Setup" caption="GS1 Units">
+			<qp-template name="1-1-1" id="gs1setup_formGS1Setup" wg-container>
+				<div slot="A">
+					<qp-fieldset id="groupWeight" view.bind="gs1setup" caption="Weight">
+						<field name="Kilogram"></field>
+						<field name="Pound"></field>
+						<field name="Ounce"></field>
+						<field name="TroyOunce"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPressure" view.bind="gs1setup" caption="Pressure">
+						<field name="KilogramPerSqrMetre"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="groupLinearSize" view.bind="gs1setup" caption="Linear Size">
+						<field name="Metre"></field>
+						<field name="Inch"></field>
+						<field name="Foot"></field>
+						<field name="Yard"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupArea" view.bind="gs1setup" caption="Area">
+						<field name="SqrMetre"></field>
+						<field name="SqrInch"></field>
+						<field name="SqrFoot"></field>
+						<field name="SqrYard"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="C" id="groupVolume" view.bind="gs1setup" caption="Volume">
+					<field name="CubicMetre"></field>
+					<field name="CubicInch"></field>
+					<field name="CubicFoot"></field>
+					<field name="CubicYard"></field>
+					<field name="Litre"></field>
+					<field name="Quart"></field>
+					<field name="GallonUS"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

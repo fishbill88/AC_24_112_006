@@ -1,0 +1,41 @@
+<template>
+	<qp-include url="../../barcodeProcessing/BarcodeProcessingScreen.html"></qp-include>
+
+	<template modify="#main">
+		<field name="RefNbr"></field>
+		<field name="TransferRefNbr"></field>
+		<field name="CartID"></field>
+	</template>
+
+	<template modify="#secondary">
+		<field name="header-flags" unbound replace-content class="no-label">
+			<qp-field control-state.bind="HeaderView.Remove"></qp-field>
+			<qp-field control-state.bind="HeaderView.CartLoaded"></qp-field>
+		</field>
+	</template>
+
+	<template modify="#tabLogs" if.bind='HeaderView.ShowLog.value == true'></template>
+
+	<qp-panel id="UserSetupView" wg-container="UserSetupView_frmSettings" caption="Settings" auto-repaint="true">
+		<qp-fieldset id="UserSettingGeneral" view.bind="UserSetupView" caption="General">
+			<field name="DefaultLotSerialNumber"></field>
+			<field name="DefaultExpireDate"></field>
+			<field name="SingleLocation"></field>
+		</qp-fieldset>
+		<qp-fieldset id="UserSettingPrinting" view.bind="UserSetupView" caption="Printing">
+			<field name="PrintInventoryLabelsAutomatically"></field>
+			<field name="InventoryLabelsReportID"></field>
+			<field name="PrintPurchaseReceiptAutomatically"></field>
+		</qp-fieldset>
+		<qp-fieldset id="UserSettingScale" view.bind="UserSetupView" caption="Scale">
+			<field name="UseScale"></field>
+			<field name="ScaleDeviceID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="pbClose" dialog-result="OK" caption="Save">
+			</qp-button>
+			<qp-button id="pbCancel" dialog-result="Abort" caption="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

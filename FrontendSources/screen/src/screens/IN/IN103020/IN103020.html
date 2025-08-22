@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="formItem" wg-container="Item_form">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="Item">
+			<field name="InventoryCD"></field>
+			<field name="Descr"></field>
+			<field name="ItemClassID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id='headerColumn2' view.bind='Item'>
+			<field name="ItemStatus"></field>
+			<field name="StkItem"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Groups"></qp-grid>
+</template>

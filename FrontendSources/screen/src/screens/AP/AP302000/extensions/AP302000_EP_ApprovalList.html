@@ -1,0 +1,26 @@
+<template>
+
+	<!--#include file="~\Pages\Includes\CRApprovalReasonPanel.inc"-->
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason">
+		<qp-fieldset id="panelReasonApproveRejectParams" view.bind="ReasonApproveRejectParams" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+			<field name="Reason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="Yes"></qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--#include file="~\Pages\Includes\EPReassignApproval.inc"-->
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval">
+		<qp-fieldset id="panelReassignApprovalFilter" view.bind="ReassignApprovalFilter" wg-container="ReassignApprovalFilter_formReassignApproval">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="btnReassignApprovalCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,60 @@
+<template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template name="1-1" id="CRSetupRecord_form" wg-container="CRSetupRecord_tab" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="CRSetupRecord_Numbering" view.bind="CRSetupRecord" caption="Numbering Sequences">
+						<field name="OpportunityNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CaseNumberingID" config-allow-edit.bind="true"></field>
+						<field name="MassMailNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CampaignNumberingID" config-allow-edit.bind="true"></field>
+						<field name="QuoteNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CRSetupRecord_Assignment" view.bind="CRSetupRecord" caption="Assignment Settings">
+						<field name="LeadDefaultAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="ContactDefaultAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="DefaultBAccountAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="DefaultOpportunityAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="DefaultCaseAssignmentMapID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CRSetupRecord_Approval" view.bind="CRSetupRecord" caption="Quote Approval Settings">
+						<field name="QuoteApprovalMapID" config-allow-edit.bind="true"></field>
+						<field name="QuoteApprovalNotificationID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CRSetupRecord_DataEntry" view.bind="CRSetupRecord" caption="Data Entry Settings">
+						<field name="DefaultLeadClassID" config-allow-edit.bind="true"></field>
+						<field name="DefaultContactClassID" config-allow-edit.bind="true"></field>
+						<field name="DefaultCustomerClassID" config-allow-edit.bind="true"></field>
+						<field name="DefaultOpportunityClassID" config-allow-edit.bind="true"></field>
+						<field name="DefaultCaseClassID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CRSetupRecord_Misc" view.bind="CRSetupRecord" caption="Miscellaneous Settings">
+						<field name="AMEstimateEntry"></field>
+						<field name="AMConfigurationEntry"></field>
+						<field name="DuplicateScoresNormalization"></field>
+						<field name="CopyNotes"></field>
+						<field name="CopyFiles"></field>
+						<field name="DefaultRateTypeID" config-allow-edit.bind="true"></field>
+						<field name="AllowOverrideRate"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabMailing" caption="Mailing & Printing">
+			<qp-template id="tabMailing_template" name="1">
+				<div slot="A">
+					<qp-splitter id="splitter" split="height" initial-split="50%">
+						<split-pane>
+							<qp-grid id="notificationsGrid" view.bind="Notifications" caption="Mailings" class="framed-section" wg-container="Notifications_gridNS"></qp-grid>
+						</split-pane>
+						<split-pane>
+							<qp-grid id="recipientsGrid" view.bind="Recipients" caption="Recipients" class="framed-section" wg-container="Recipients_gridNR"></qp-grid>
+						</split-pane>
+					</qp-splitter>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

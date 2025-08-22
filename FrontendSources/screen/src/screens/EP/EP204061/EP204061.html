@@ -1,0 +1,22 @@
+<template>
+	<qp-template name="1-1" id="SelectedFolders_template">
+		<qp-fieldset slot="A" id="formtemp" view.bind="SelectedFolders">
+			<field name="WorkGroupID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter initial-split="300px" split="width" id="splitterId">
+	<split-pane>
+		<qp-tree id="tree" view.bind="Folders" caption="Tree"></qp-tree>
+	</split-pane>
+	<split-pane>
+		<qp-template name="1" id="CurrentFolder_template">
+			<div id="CurrentFolder_content" slot="A">
+				<qp-fieldset id="form" view.bind="CurrentWorkgroup">
+					<field name="Description"></field>
+				</qp-fieldset>
+				<qp-grid id="gridMembers" view.bind="Members"></qp-grid>
+			</div>
+		</qp-template>
+	</split-pane>
+</qp-splitter>
+</template>

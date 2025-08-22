@@ -1,0 +1,27 @@
+<template>
+
+	<qp-template id="formFilter" name="17-17-14" wg-container="Filter_form">
+		<qp-fieldset id="panelFilter" view.bind="Filter" slot="A">
+			<field name="AccountID"></field>
+			<field name="StartDate"></field>
+			<field name="EndDate"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="CAReconRecords"></qp-grid>
+
+	<qp-panel id="cashAccountFilter" caption="Create Reconciliation" auto-repaint="true">
+
+		<qp-template name="1" id="formCreateReconciliation" wg-container="cashAccountFilter_addReconForm">
+			<qp-fieldset id="panelCreateReconciliation" view.bind="cashAccountFilter">
+				<field name="CashAccountID"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<footer>
+			<qp-button id="buttonOK-cashAccountFilter" dialog-result="OK" caption="Add Reconciliation"></qp-button>
+			<qp-button id="buttonCancel-cashAccountFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

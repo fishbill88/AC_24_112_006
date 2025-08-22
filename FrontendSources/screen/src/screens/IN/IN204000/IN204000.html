@@ -1,0 +1,128 @@
+<template>
+	<qp-template name="1-1" id="site_form" wg-container class="label-size-m equal-height">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="site">
+			<field name="SiteCD"></field>
+			<field name="BranchID"></field>
+			<field name="Descr"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="headerColumn2" view.bind="site">
+			<field name="ReplenishmentClassID"></field>
+			<field name="LocationValid"></field>
+			<field name="AvgDefaultCost"></field>
+			<field name="FIFODefaultCost"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTabBar">
+		<qp-tab id="tabLocations" caption="Locations">
+			<qp-grid id="grid" view.bind="location">
+				</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLocationsDefaults" caption="Location Defaults">
+			<qp-template name="1-1" id="locationsTabHeader" wg-container="siteaccounts_tab" class="label-size-m">
+				<qp-fieldset slot="A" id="groupLocationsColumn1" view.bind="siteaccounts" caption="Default Locations">
+					<field name="ReceiptLocationID"></field>
+					<field name="ShipLocationID"></field>
+					<field name="ReturnLocationID"></field>
+					<field name="DropShipLocationID"></field>
+					<field name="NonStockPickingLocationID"></field>
+					<field name="UseItemDefaultLocationForPicking"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabCarts" caption="Carts">
+			<qp-grid id="gridCarts" view.bind="carts">
+				</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTotes" caption="Totes">
+			<qp-grid id="gridTotes" view.bind="totes">
+				</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template name="1-1" id="accountsForm" class="label-size-xm">
+				<qp-fieldset slot="A" id="groupAccountsColumn1" wg-container="siteaccounts_tab" view.bind="siteaccounts">
+					<field name="OverrideInvtAccSub"></field>
+					<field name="InvtAcctID"></field>
+					<field name="InvtSubID"></field>
+					<field name="ReasonCodeSubID"></field>
+					<field name="SalesAcctID"></field>
+					<field name="SalesSubID"></field>
+					<field name="COGSAcctID"></field>
+					<field name="COGSSubID"></field>
+					<field name="StdCstVarAcctID"></field>
+					<field name="StdCstVarSubID"></field>
+					<field name="StdCstRevAcctID"></field>
+					<field name="StdCstRevSubID"></field>
+					<field name="POAccrualAcctID"></field>
+					<field name="POAccrualSubID"></field>
+					<field name="PPVAcctID"></field>
+					<field name="PPVSubID"></field>
+					<field name="LCVarianceAcctID"></field>
+					<field name="LCVarianceSubID"></field>
+					<field name="AMWIPAcctID"></field>
+					<field name="AMWIPSubID"></field>
+					<field name="AMWIPVarianceAcctID"></field>
+					<field name="AMWIPVarianceSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAddress" caption="Address">
+			<qp-template name="1-1" id="addressForm" class="label-size-m">
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="colForm" wg-container view.bind="Contact" caption="Contact">
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="EMail"></field>
+						<field name="WebSite"></field>
+						<field name="Phone1"></field>
+						<field name="Phone2"></field>
+						<field name="Fax"></field>
+					</qp-fieldset>
+					<qp-fieldset id="buildForm" wg-container view.bind="siteaccounts" caption="Building">
+						<field name="BuildingID"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="addrForm" wg-container view.bind="Address" caption="Address">
+					<field name="AddressLookupPlaceholder" unbound>
+						<qp-address-lookup class="col-12" view.bind="Address">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="CountryID" config-allow-edit.bind="true"></field>
+					<field name="State" config-allow-edit.bind="true"></field>
+					<field name="PostalCode"></field>
+					<using view="siteaccounts" wg-container="Siteaccounts_formCarrierFacility">
+						<field name="CarrierFacility"></field>
+					</using>
+					<field name="IsValidated"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="totesInCart" caption="Assigned Totes" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridTotesInCart" view.bind="totesInCart">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-template name="1" id="changeIDSettings">
+			<qp-fieldset slot="A" id="formChangeID" wg-container view.bind="ChangeIDDialog">
+				<field name="CD"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

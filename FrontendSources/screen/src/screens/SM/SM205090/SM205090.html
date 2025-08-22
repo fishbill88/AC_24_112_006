@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="1-1" id="ServiceInformationFilter_form" wg-container>
+		<qp-fieldset slot="A" id="first" view.bind="ServiceInformationFilter">
+			<field name="DiscoveryUri"></field>
+			<field name="CloudTenantID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="ServiceInformationFilter">
+			<field name="ClientId"></field>
+			<field name="ClientSecret"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="edDiagnosticResults" view.bind="DiagnosticResults" caption="Results"></qp-grid>
+</template>

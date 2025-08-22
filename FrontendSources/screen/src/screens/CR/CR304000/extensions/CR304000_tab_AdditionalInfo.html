@@ -1,0 +1,57 @@
+<template>
+	<template id="tabCRMInfo_Content">
+		<qp-template name="17-17-14" id="CRMInfo-form" wg-container>
+			<div slot="A">
+				<qp-fieldset
+					id="CRMInfo_CRM"
+					caption="Details"
+					view.bind="OpportunityCurrent"
+				>
+					<field name="Resolution"></field>
+					<field name="WorkgroupID"></field>
+					<field name="OverrideSalesTerritory"></field>
+					<field name="SalesTerritoryID"></field>
+					<field name="ParentBAccountID" config-allow-edit.bind="true"></field>
+					<field name="LanguageID"></field>
+					<field name="IsActive"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="CRMInfo_Activities"
+					caption="Activities"
+					view.bind="ActivityStatistics"
+				>
+					<field name="LastIncomingActivityDate"></field>
+					<field name="LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="CRMInfo_Forecasting"
+					caption="Forecasting"
+					view.bind="ProbabilityCurrent"
+				>
+					<field name="Probability"></field>
+					<field name="OpportunityCurrent.CuryWgtAmount"></field>
+					<field name="OpportunityCurrent.ClosingDate"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="CRMInfo_Source"
+					caption="Source"
+					view.bind="OpportunityCurrent"
+				>
+					<field name="Source"></field>
+					<field name="CampaignSourceID" config-allow-edit.bind="true"></field>
+					<field name="LeadID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<qp-rich-text-editor
+			class="stretch"
+			id="edDetails"
+			state.bind="OpportunityCurrent.Details"
+			wg-field
+			value.bind="OpportunityCurrent.Details.value"
+		>
+		</qp-rich-text-editor>
+	</template>
+</template>

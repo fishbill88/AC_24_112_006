@@ -1,0 +1,53 @@
+<template>
+	<qp-panel
+		id="AccountInfo"
+		auto-repaint="true"
+		caption="Create Account"
+		height="310px"
+	>
+		<qp-tabbar id="panel_CreateAccount_mainTabBar">
+			<qp-tab id="panel_CreateAccount_tabMain" caption="Main">
+				<qp-fieldset
+					id="formCreateAccount"
+					view.bind="AccountInfo"
+				>
+					<field name="BAccountID"></field>
+					<field name="AccountName"></field>
+					<field name="AccountClass"></field>
+					<field name="LinkContactToAccount"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateAccount_tabAttributes" caption="Attributes">
+				<qp-grid
+					id="grdAccountInfoAttributes"
+					view.bind="AccountInfoAttributes"
+				>
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateAccount_tabUDFS" caption="User-Defined Fields">
+				<qp-grid id="grdAcountInfoUDF" view.bind="AccountInfoUDF">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="CreateAccountBtnReview"
+				caption="Create and review"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateAccountBtnConvert"
+				caption="Create"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateAccountBtnCancel"
+				caption="Cancel"
+				dialog-result="Cancel"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

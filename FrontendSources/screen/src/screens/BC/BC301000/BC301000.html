@@ -1,0 +1,33 @@
+﻿<template>
+    <qp-template name="17-17-14" id="MasterView_form" wg-container>
+        <qp-fieldset id="filter_firstColumn" view.bind="MasterView" slot="A">
+            <field name="BindingID"></field>
+            <field name="EntityType"></field>
+        </qp-fieldset>
+    </qp-template>
+    <qp-grid id="grid" view.bind="DetailsView"></qp-grid>
+    <qp-panel id="StatusEditPanel"
+              caption="Add or Edit Sync Status"
+              auto-repaint="true"
+              hideMaximizer=true>
+        <qp-fieldset id="CstFormView17" view.bind="StatusEditPanel" wg-container>
+            <field name="ConnectorType"></field>
+            <field name="BindingID"></field>
+            <field name="EntityType"></field>
+            <field name="LocalID"></field>
+            <field name="ExternID"></field>
+            <field name="NeedSync"></field>
+        </qp-fieldset>
+        <footer>
+            <qp-button id="btnStatusEditPanelOK" caption="OK" dialog-result="OK"></qp-button>
+        </footer>
+    </qp-panel>
+    <qp-panel id="StatusDetailsPanel"
+              caption="Sync Record Details"
+              auto-repaint="true">
+        <qp-grid id="gridRecordDetails" view.bind="StatusDetailsPanel"></qp-grid>
+        <footer>
+            <qp-button id="btnStatusDetailsPanelOK" caption="OK" dialog-result="OK"></qp-button>
+        </footer>
+    </qp-panel>
+</template>

@@ -1,0 +1,18 @@
+<template>
+
+	<qp-template id="formFilter" name="1-1" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="FinPeriodID"></field>
+			<field name="CuryEffDate"></field>
+			<field name="CuryID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="TotalRevalued"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridGLAccountList" view.bind="GLAccountList" wg-container="GLAccountList_grid"> </qp-grid>
+
+</template>

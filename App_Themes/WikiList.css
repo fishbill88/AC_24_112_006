@@ -1,0 +1,168 @@
+﻿body {
+	--header-font: normal bold 17px/20px Arial;
+	--description-font-size: 14px;
+	--description-line-height: 16px;
+	--description-line-count: 15;
+	--description-font: normal normal var(--description-font-size)/var(--description-line-height) Arial;
+	--link-font-size: 14px;
+	--link-line-height: 18px;
+	--link-font: normal normal var(--link-font-size)/var(--link-line-height) Arial;
+	--link-padding: 5px;
+	--show-more-font: normal bold var(--link-font-size)/var(--link-line-height) Arial;
+	--body-font: normal normal var(--link-font-size)/var(--link-line-height) Arial !important;
+	font: var(--body-font);
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	overflow: auto;
+}
+
+.wiki {
+	font: var(--body-font) !important;
+	padding: 0px 20px 20px 20px !important;
+}
+
+a {
+	font: var(--link-font) !important;
+	color: var(--primary-color, #007ACC);
+	margin: 0px;
+	padding: 0px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+p {
+	font: var(--description-font) !important;
+	margin: 0px;
+	padding: 0px;
+}
+
+p:has(a):not(:last-of-type) {
+	margin-bottom: var(--link-padding);
+}
+
+h1.wikiH1 {
+	font: var(--header-font) !important;
+	color: black;
+	border: none;
+	padding: 0px !important;
+	margin-top: 30px !important;
+	margin-bottom: 8px !important;
+}
+
+h1.wikiH1:first-of-type {
+	margin-top: 25px !important;
+}
+
+.section.sH1 {
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+/* WikiTooltip CSS classes */
+
+#wikiField, #wikiField div {
+	font: var(--description-font);
+}
+
+#wikiField-content.collapsable {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: var(--description-line-count);
+	overflow: hidden;
+}
+
+#wikiField div.show-more-button {
+	font: var(--show-more-font) !important;
+	color: var(--primary-color, #007ACC);
+	text-decoration: none;
+	cursor: pointer;
+	width: fit-content;
+	margin-top: calc(var(--link-padding) + var(--link-line-height) - var(--description-line-height));
+}
+
+div.wk-uicontrol {
+	display: inline;
+	font-weight: bold !important;
+}
+
+div.wk-ph {
+	display: inline;
+	text-decoration: none;
+}
+
+div.wk-xref {
+	display: inline;
+}
+
+div.wk-bold {
+	display: inline;
+	font-weight: bold !important;
+}
+
+div.wk-italic {
+	display: inline;
+	font-style: italic !important;
+}
+
+div.wk-link {
+	display: inline;
+	color: var(--primary-color, #007ACC) !important;
+	cursor: pointer;
+}
+
+div.show-more-data {
+	display: none;
+	margin-top: var(--link-padding);
+}
+
+div.show-more-button {
+	font: var(--show-more-font) !important;
+	color: var(--primary-color, #007ACC);
+	text-decoration: none;
+	cursor: pointer;
+	width: fit-content;
+	margin-top: var(--link-padding);
+}
+
+h1.wikiH1:not(:has(+div)) {
+	display: none;
+}
+
+span.s-h-arrow {
+	display: inline-block;
+	min-height: 10px;
+	min-width: 20px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' width='16' height='16' viewBox='0 0 16 16' fill='RGB(0,122,204)'><path d='M12 6.96776L11.04 6L8 9.14516L4.96001 6L4 6.96776L8 11L12 6.96773V6.96776Z' fill=''/></svg>");
+}
+
+.wiki ul, .wiki ol {
+	padding-block: 0em;
+	padding-inline-start: 1.5em;
+	padding-inline-end: 0em;
+	margin-inline: 0em;
+	margin-block: 0.5em;
+}
+
+.wiki li {
+	margin-bottom: var(--link-padding);
+}
+
+.wiki ul > li:last-of-type,
+.wiki ol > li:last-of-type {
+	margin-bottom: 0px !important;
+}
+
+.wiki p {
+	word-wrap: break-word;
+}
+
+.wiki wk-p {
+	display: block;
+}

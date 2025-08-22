@@ -1,0 +1,32 @@
+<template>
+
+	<qp-template id="formFilter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="columnFirstFilter" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="VendorID"></field>
+			<field name="FinPeriodID"></field>
+			<field name="AccountID"></field>
+			<field name="SubCD"></field>
+			<field name="CuryID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" slot="B" view.bind="Filter">
+			<field name="ShowAllDocs"></field>
+			<field name="IncludeUnreleased"></field>
+			<field name="UseMasterCalendar"></field>
+			<field name="BalanceSummary"></field>
+			<field name="VendorBalance"></field>
+			<field name="VendorDepositsBalance"></field>
+			<field name="Difference"></field>
+			<field name="VendorRetainedBalance"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdFilter" slot="C" view.bind="Filter">
+			<field name="CuryBalanceSummary"></field>
+			<field name="CuryVendorBalance"></field>
+			<field name="CuryVendorDepositsBalance"></field>
+			<field name="CuryDifference"></field>
+			<field name="CuryVendorRetainedBalance"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridDocuments" view.bind="Documents" wg-container="Documents_grid"></qp-grid>
+
+</template>

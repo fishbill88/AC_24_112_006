@@ -1,0 +1,47 @@
+<template>
+	<qp-template name="1-1-1" class="equal-height" id="Mappings_form" wg-container>
+		<qp-fieldset slot="A" id="formMappings_1" view.bind="Mappings">
+			<field name="Name"></field>
+			<field control-type="qp-selector" name="ScreenID" config.bind="{displayMode:'text'}"></field>
+			<field name="ProviderID"></field>
+			<field name="ProviderObject"></field>
+			<field name="SyncType"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formMappings_2" view.bind="Mappings">
+			<field name="IsActive" no-label="true">
+				<qp-field control-state.bind="Mappings.Visible" no-label="true"></qp-field>
+			</field>
+			<field name="SitemapTitle"></field>
+			<field name="WorkspaceID"></field>
+			<field name="SubcategoryID"></field>
+			<field control-type="qp-selector" name="FormatLocale" config.bind="{suggester:{descriptionName:'CultureReadableName'}}"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formMappings_3" view.bind="Mappings">
+			<field name="RepeatingData"></field>
+			<field name="IsExportOnlyMappingFields"></field>
+			<field name="DiscardResult"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabsMapping">
+		<qp-tab caption="Mapping" id="tabMapping">
+			<qp-grid id="gridMapping" view.bind="FieldMappings" >
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Source Restrictions" id="tabSourceRestrictions">
+			<qp-grid id="gridConditions" view.bind="MatchingConditions">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="InsertFromFilter" caption="Choose scenario to insert steps from" wg-container>
+		<qp-fieldset id="InsertFromFilter_frmInsertFrom" wg-container view.bind="InsertFromFilter" >
+			<field name="MappingID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel" ></qp-button>
+		</footer>
+	</qp-panel>
+	
+    <qp-include url="../panels/panel-publish-to-ui/panel-publish-to-ui.html"></qp-include>
+</template>

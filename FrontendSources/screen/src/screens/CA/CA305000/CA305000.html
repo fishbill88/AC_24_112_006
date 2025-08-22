@@ -1,0 +1,81 @@
+﻿<template>
+
+    <qp-template name="17-17-14" id="formFilter" wg-container="Document_form" class="equal-height">
+
+        <qp-fieldset slot="A" id="columnFirst" view.bind="Document">
+            <field name="TranType"></field>
+            <field name="RefNbr"></field>
+            <field name="CashAccountID"></field>
+            <field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+            <field name="Status"></field>
+            <field name="TranDesc" config-rows.bind="2"></field>
+        </qp-fieldset>
+        <qp-fieldset slot="B" id="columnSecond" view.bind="Document">
+            <field name="TranDate"></field>
+            <field name="FinPeriodID"></field>
+            <field name="ExtRefNbr"></field>
+            <field name="ExtraCashAccountID"></field>
+            <field name="CuryExtraCashTotal"></field>
+        </qp-fieldset>
+        <qp-fieldset slot="C" id="columnThird" view.bind="Document" class="highlights-section">
+            <field name="CuryDetailTotal"></field>
+            <field name="CuryChargeTotal"></field>
+            <field name="CuryTranAmt"></field>
+            <field name="CuryControlAmt"></field>
+        </qp-fieldset>
+
+    </qp-template>
+
+    <qp-tabbar id="tabs">
+        <qp-tab id="tabPayments" caption="Payments">
+            <qp-grid id="gridPayments" view.bind="DepositPayments" wg-container="DepositPayments_grid">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabCharges" caption="Charges">
+            <qp-grid id="gridCharges" view.bind="Charges">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabFinancial" caption="Financial">
+            <qp-template name="1-1" id="formFinancial" wg-container="DocumentCurrent_form2">
+                <qp-fieldset slot="A" id="columnFirst-DocumentCurrent" view.bind="DocumentCurrent">
+                    <field name="TranID_CATran_batchNbr" config-allow-edit.bind="true"></field>
+                    <field name="WorkgroupID"></field>
+                    <field name="OwnerID"></field>
+                    <field name="ClearDate">
+                        <qp-field control-state.bind="DocumentCurrent.Cleared"></qp-field>
+                    </field>
+                    <field name="ChargesSeparate"></field>
+                </qp-fieldset>
+            </qp-template>
+        </qp-tab>
+    </qp-tabbar>
+
+    <qp-panel id="AvailablePayments" caption="Add Payment to Deposit" auto-repaint="true">
+
+        <qp-template id="formAvailablePayments" name="1-1-1" wg-container="filter_frmPaymentFilter1" class="equal-height">
+            <qp-fieldset slot="A" id="columnFirstAvailablePayments" view.bind="filter">
+                <field name="CashAccountID"></field>
+                <field name="PaymentMethodID"></field>
+            </qp-fieldset>
+            <qp-fieldset slot="B" id="columnSecondAvailablePayments" view.bind="filter">
+                <field name="StartDate"></field>
+                <field name="EndDate"></field>
+            </qp-fieldset>
+            <qp-fieldset slot="C" id="columnThirdAvailablePayments" view.bind="filter">
+                <field name="SelectionTotal"></field>
+                <field name="NumberOfDocuments"></field>
+            </qp-fieldset>
+        </qp-template>
+
+        <qp-grid id="gridAvailablePayments" view.bind="AvailablePayments" wg-container="AvailablePayments_gridOL1">
+        </qp-grid>
+
+        <footer>
+            <qp-button id="buttonOK-AvailablePayments" caption="Add & Close" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-AvailablePayments" caption="Cancel" dialog-result="No"></qp-button>
+        </footer>
+    </qp-panel>
+
+</template>

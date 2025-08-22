@@ -1,0 +1,15 @@
+<template>
+	<qp-template name="top-7-10-7" id="formFilter" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="FinPeriodID"></field>
+			<field name="CustomerClassID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter" caption="Recalculate">
+			<field name="RecalcDocumentBalances"></field>
+			<field name="RecalcCustomerBalancesReleased"></field>
+			<field name="RecalcCustomerBalancesUnreleased"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ARCustomerList">
+	</qp-grid>
+</template>

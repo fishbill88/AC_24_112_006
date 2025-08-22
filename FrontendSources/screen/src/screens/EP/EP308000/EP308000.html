@@ -1,0 +1,78 @@
+<template>
+	<div id="Document_form" wg-container>
+		<qp-template name="1-1-1" id="DocumentForm">
+			<qp-fieldset slot="A" id="form01" view.bind="Document" class="label-size-xs">
+				<field name="TimeCardCD"></field>
+				<field name="Status"></field>
+				<field name="WeekID" config-display-mode.bind="'text'"></field>
+			</qp-fieldset>
+
+			<qp-fieldset slot="B" id="form02" view.bind="Document" class="label-size-s">
+				<field name="EquipmentID"></field>
+				<field name="TimecardType"></field>
+				<field name="OrigTimecardCD"></field>
+			</qp-fieldset>
+
+			<qp-fieldset slot="C" id="form03" view.bind="Document" class="highlights-section label-size-sm" caption="Total">
+				<field name="TimeTotalCalc" caption="Time Spent"></field>
+				<field name="TimeBillableTotalCalc" caption="Billable"></field>
+			</qp-fieldset>
+		</qp-template>
+	</div>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="SummaryTab" caption="Summary">
+			<qp-grid id="gridDetails" view.bind="Summary">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-grid id="gridActivities" view.bind="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ApprovalTab" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="TotalsTab" caption="Totals">
+			<qp-template name="1-1-1" id="DocumentFormTime">
+				<qp-fieldset slot="A" id="form11" view.bind="Document" caption="Setup" class="highlights-section label-size-sm">
+					<field name="TimeSetupCalc" caption="Time Spent"></field>
+					<field name="TimeBillableSetupCalc" caption="Billable"></field>
+				</qp-fieldset>
+
+				<qp-fieldset slot="B" id="form12" view.bind="Document" caption="Run" class="highlights-section label-size-sm">
+					<field name="TimeRunCalc" caption="Time Spent"></field>
+					<field name="TimeBillableRunCalc" caption="Billable"></field>
+				</qp-fieldset>
+
+				<qp-fieldset slot="C" id="form13" view.bind="Document" caption="Suspend" class="highlights-section label-size-sm">
+					<field name="TimeSuspendCalc" caption="Time Spent"></field>
+					<field name="TimeBillableSuspendCalc" caption="Billable"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field id="edReason" name="Reason" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field id="edNewApprover" name="NewApprover" ></field>
+			<field id="chkIgnoreApproversDelegations" name="IgnoreApproversDelegations" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReassignApprovalCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

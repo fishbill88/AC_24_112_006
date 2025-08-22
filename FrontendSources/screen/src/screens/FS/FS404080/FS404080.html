@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="RouteAppointmentGPSLocationFilter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset id="RouteAppointmentGPSLocationFilter_10" slot="A" view.bind="RouteAppointmentGPSLocationFilter">
+			<field name="RouteID"></field>
+			<field name="RouteDocumentID"></field>
+			<field name="ServiceID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="RouteAppointmentGPSLocationFilter_20" slot="B" view.bind="RouteAppointmentGPSLocationFilter">
+			<field name="CustomerID"></field>
+			<field name="CustomerLocationID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="RouteAppointmentGPSLocationFilter_30" slot="C" view.bind="RouteAppointmentGPSLocationFilter">
+			<field name="DateFrom"></field>
+			<field name="DateTo"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="RouteAppointmentGPSLocationRecords">
+	</qp-grid>
+</template>

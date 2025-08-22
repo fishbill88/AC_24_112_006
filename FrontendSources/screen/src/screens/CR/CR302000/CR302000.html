@@ -1,0 +1,91 @@
+<template>
+	<qp-template name="1-1" id="form" class="equal-height label-size-m" wg-container="Contact_form" qp-collapsible>
+		<qp-fieldset slot="A" id="form_ContactLeft" view.bind="Contact">
+			<field name="ContactID"></field>
+			<field name="Status"></field>
+			<field name="ClassID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form_ContactRight" view.bind="Contact">
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="OwnerID"></field>
+			<field name="DuplicateStatus"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="ContactCurrent_tab" class="label-size-m">
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content"></qp-tab>
+		<qp-tab
+			id="tabActivities"
+			caption="Activities"
+			ref="tabActivities_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabAdditionalInfo"
+			caption="Additional Info"
+			ref="tabAdditionalInfo_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabDuplicates"
+			caption="Duplicates"
+			ref="tabDuplicates_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabAttributes"
+			caption="Attributes"
+			ref="tabAttributes_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabRelations"
+			caption="Relations"
+			ref="tabRelations_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabLeads"
+			caption="Leads"
+			ref="tabLeads_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabOpportunities"
+			caption="Opportunities"
+			ref="tabOpportunities_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabCases"
+			caption="Cases"
+			ref="tabCases_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabCampaigns"
+			caption="Campaigns"
+			ref="tabCampaigns_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabMarketingLists"
+			caption="Marketing Lists"
+			ref="tabMarketingLists_Content"
+		></qp-tab>
+		<qp-tab
+			id="tabNotifications"
+			caption="Notifications"
+			ref="tabNotifications_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabUserInfo"
+			caption="User Info"
+			ref="tabUserInfo_Content"
+			load-on-demand="true"
+		></qp-tab>
+		<qp-tab
+			id="tabSalesforce"
+			caption="Salesforce"
+			ref="tabSalesforce_Content"
+		></qp-tab>
+		<qp-tab id="tabHubSpot" caption="HubSpot" ref="tabHubSpot_Content"></qp-tab>
+	</qp-tabbar>
+</template>

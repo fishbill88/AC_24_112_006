@@ -1,0 +1,46 @@
+<template>
+	<qp-splitter id="sp1" split="width" initial-split="20%" class="stretch">
+		<split-pane class="v-stack">
+			<qp-tree id="tree" view.bind="Folders" caption="Categories"></qp-tree>
+		</split-pane>
+		<split-pane class="v-stack">
+			<qp-template id="CurrentCategory_form" name="1-1" wg-container class="label-size-s equal-height">
+				<qp-fieldset id="first" view.bind="CurrentCategory" slot="A">
+					<field Name="Description"></field>
+				</qp-fieldset>
+				<qp-fieldset id="second" view.bind="ParentFolders" slot="B">
+					<field name="ParentID" control-type="qp-tree-selector" control-config.bind="{
+						treeSelectorId: 'tree_selector_edParentID',
+						treeConfig: {
+							idName: 'CategoryID',
+							dataMember: 'ParentFolders',
+							description: 'Description',
+							idParent: 'ParentID',
+							iconField: 'Icon',
+							mode: 'single'
+							},
+					}">
+					</field>
+					<!-- <field Name="ParentID"></field> -->
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridMembers" view.bind="Members" caption="Category Members">
+			</qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="ClassInfo" wg-container="ClassInfo_formCreateAccount" caption="Add Items" auto-repaint="true">
+		<qp-template name="1" id="templateAddItems">
+			<qp-fieldset slot="A" id="formAddItems" view.bind="ClassInfo">
+				<field Name="AddItemsTypes"></field>
+				<field Name="ItemClassID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButtonOK" dialog-result="OK" caption="Add">
+			</qp-button>
+			<qp-button id="PXButtonCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

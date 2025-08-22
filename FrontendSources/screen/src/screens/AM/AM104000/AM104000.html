@@ -1,0 +1,28 @@
+﻿<template>
+	<qp-template id="ConfigSetupRecord_form" wg-container name="1-1" class="label-size-xm">
+		<div slot="A">
+			<qp-fieldset id="ConfigSetupRecord_General" view.bind="ConfigSetupRecord" caption="General">
+				<field name="ConfigNumberingID" config-allow-edit.bind="true"></field>
+				<field name="DfltRevisionNbr"></field>
+				<field name="ConfigKeyFormat"></field>
+				<field name="DefaultKeyNumberingID" config-allow-edit.bind="true"></field>
+				<field name="IsCompletionRequired"></field>
+			</qp-fieldset>
+			<qp-fieldset id="ConfigSetupRecord_OrderFields" view.bind="ConfigSetupRecord" caption="Order Fields">
+				<field name="EnableWarehouse"></field>
+				<field name="EnableSubItem"></field>
+				<field name="EnableDiscount"></field>
+				<field name="EnablePrice"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="ConfigSetupRecord_Price" view.bind="ConfigSetupRecord" caption="Price">
+				<field name="HidePriceDetails"></field>
+				<field name="Rollup"></field>
+				<field name="AllowRollupOverride"></field>
+				<field name="Calculate"></field>
+				<field name="AllowCalculateOverride"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

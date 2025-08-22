@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="17-14-17" class="equal-height" id="Filter_form" wg-container>
+		<qp-fieldset slot="A" id="form01" view.bind="Filter">
+			<field name="Country" ></field>
+			<field name="DocumentType" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="form02" view.bind="Filter">
+			<field name="IsOverride" no-label="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid1" view.bind="DocumentAddresses">
+	</qp-grid>
+</template>

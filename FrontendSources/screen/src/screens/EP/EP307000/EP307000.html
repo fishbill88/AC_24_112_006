@@ -1,0 +1,37 @@
+<template>
+	<qp-template id='Filter_form' name='17-17-14' wg-container>
+		<div slot="A">
+			<qp-fieldset id="form_0" view.bind="Filter">
+				<field name="OwnerID"></field>
+				<field name="FromWeek"></field>
+				<field name="TillWeek"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="form_1" view.bind="Filter">
+				<field name="ProjectID"></field>
+				<field name="ProjectTaskID"></field>
+				<field name="IncludeReject"></field>
+			</qp-fieldset>
+		</div>
+
+		<div slot="B">
+			<qp-fieldset id="form_2_0" view.bind="Filter" caption="Regular">
+				<field name="RegularTime"></field>
+				<field name="BillableTime"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="form_3_0" view.bind="Filter" caption="Overtime">
+				<field name="RegularOvertime"></field>
+				<field name="BillableOvertime"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="C">
+			<qp-fieldset id="form_4_0" view.bind="Filter" caption="Total">
+				<field name="RegularTotal"></field>
+				<field name="BillableTotal"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Activity"></qp-grid>
+</template>

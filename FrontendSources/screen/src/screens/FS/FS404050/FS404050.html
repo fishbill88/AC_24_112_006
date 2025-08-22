@@ -1,0 +1,71 @@
+<template>
+	<qp-template id="LocationTemplate" name="17-17-14">
+		<qp-fieldset id="LocationRecords_form" slot="A" view.bind="LocationRecords">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="LocationSelected_10" slot="B" view.bind="LocationSelected">
+			<field name="Descr"></field>
+			<field name="IsActive"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="LocationSelected_tab" wg-container>
+		<qp-tab id="generalInfoTab" caption="General Info">
+			<qp-template id="GeneralTemplate" name="17-17-14">
+				<div slot="A">
+					<qp-fieldset id="LocationSelected_20" caption="Location Contact" view.bind="LocationSelected">
+						<field name="Contact__FullName"></field>
+						<field name="Contact__Attention"></field>
+						<field name="Contact__EMail"></field>
+						<field name="Contact__Website"></field>
+						<field name="Contact__Phone1"></field>
+						<field name="Contact__Phone2"></field>
+						<field name="Contact__Fax"></field>
+					</qp-fieldset>
+					<qp-fieldset id="LocationSelected_30" caption="Location Address" view.bind="LocationSelected">
+						<field name="Address__AddressLine1"></field>
+						<field name="Address__AddressLine2"></field>
+						<field name="Address__City"></field>
+						<field name="Address__CountryID"></field>
+						<field name="Address__State"></field>
+						<field name="Address__PostalCode"></field>
+						<field name="Address__IsValidated"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CustomerRecords_edCustomerRecords" caption="Customer" view.bind="CustomerRecords">
+						<field name="AcctCD" config-allow-edit.bind="true"></field>
+						<field name="AcctName"></field>
+						<field name="Status"></field>
+						<field name="LocationSelected.FSBillingCycle__BillingCycleCD"></field>
+						<field name="LocationSelected.FSBillingCycle__Descr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="LocationSelected_20" caption="Location Settings" view.bind="LocationSelected">
+						<field name="TaxRegistrationID"></field>
+						<field name="CTaxZoneID"></field>
+						<field name="CAvalaraExemptionNumber"></field>
+						<field name="CAvalaraCustomerUsageType"></field>
+						<field name="CBranchID"></field>
+						<field name="CPriceClassID"></field>
+						<using wg-container="PriceClass1_PricesClass1" view="PriceClass1">
+							<field name="Description"></field>
+						</using>
+						<field name="CDefProjectID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="routeContractsTab" caption="Route Contracts">
+			<qp-grid id="routeContractsGrid" view.bind="RouteContractSchedules">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="pickupTab" caption="Pickup/Delivery Items">
+			<qp-grid id="PXGridPickupDelivery" view.bind="PickUpDeliveryItems">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="servicesTab" caption="Services">
+			<qp-grid id="PXGridServices" view.bind="Services">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

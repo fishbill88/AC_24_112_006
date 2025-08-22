@@ -1,0 +1,41 @@
+<template>
+	<qp-template id="summary" name="17-17-14" class="equal-height">
+		<qp-fieldset id="form" slot="A" view.bind="AppointmentSelected">
+			<field name="SrvOrdType"></field>
+			<field name="RefNbr"></field>
+			<field name="SORefNbr"></field>
+			<using wg-container="ServiceOrderRelated_serviceOrderHeaderForm" view="ServiceOrderRelated">
+				<field name="CustomerID"></field>
+				<field name="LocationID"></field>
+				<field name="BranchLocationID"></field>
+			</using>
+		</qp-fieldset>
+		<qp-fieldset id="PXFormView1" slot="B" caption="Cloning Details" view.bind="Filter">
+			<field name="CloningType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			<field name="SingleGenerationDate"></field>
+			<field name="MultGenerationFromDate"></field>
+			<field name="MultGenerationToDate"></field>
+			<field name="fake01" unbound>
+				<qp-field control-state.bind="Filter.ActiveOnSunday" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="Filter.ActiveOnThursday" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake02" unbound>
+				<qp-field control-state.bind="Filter.ActiveOnMonday" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="Filter.ActiveOnFriday" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake03" unbound>
+				<qp-field control-state.bind="Filter.ActiveOnTuesday" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="Filter.ActiveOnSaturday" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake04" unbound>
+				<qp-field control-state.bind="Filter.ActiveOnWednesday" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="ScheduledStartTime_Time" config-time-mode.bind="true"></field>
+			<field name="ApptDuration">
+				<qp-field control-state.bind="Filter.OverrideApptDuration" config-enabled.bind="false"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="PXRouteEmployees" view.bind="AppointmentClones">
+	</qp-grid>
+</template>

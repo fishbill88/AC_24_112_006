@@ -1,0 +1,197 @@
+﻿<template>
+	<qp-template id="ProdMaintRecords_form" wg-container name="1-1-1" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="ProdMaintRecords1" view.bind="ProdMaintRecords">
+			<field name="OrderType" config-allow-edit.bind="true"></field>
+			<field name="ProdOrdID"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="ProdMaintRecords2" view.bind="ProdMaintRecords">
+			<field name="ProdDate"></field>
+			<field name="StatusID"></field>
+			<field name="Hold"></field>
+			<field name="ProductWorkgroupID"></field>
+			<field name="ProductManagerID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="ProdMaintRecords3" view.bind="ProdMaintRecords">
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="ProdItemSelected_tab" wg-container>
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="ProdItemSelected_GeneralTab" name="1-1-1">
+				<qp-fieldset slot="A" id="ProdItemSelected1" view.bind="ProdItemSelected">
+					<field name="QtytoProd"></field>
+					<field name="UOM"></field>
+					<field name="QtyComplete"></field>
+					<field name="QtyScrapped"></field>
+					<field name="QtyRemaining"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="ProdItemSelected2" view.bind="ProdItemSelected">
+					<field name="ScheduleStatus"></field>
+					<field name="SchedulingMethod"></field>
+					<field name="ConstDate"></field>
+					<field name="StartDate"></field>
+					<field name="EndDate"></field>
+					<field name="FMLTime"></field>
+					<field name="FMLTMRPOrdorOP"></field>
+					<field name="ExcludeFromMRP"></field>
+					<field name="AutoBackwardReporting"></field>
+					<field name="SchPriority"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="C" id="ProdItemSelected3" view.bind="ProdItemSelected">
+					<field name="CostMethod"></field>
+					<field name="ScrapOverride"></field>
+					<field name="ScrapSiteID" config-allow-edit.bind="true"></field>
+					<field name="ScrapLocationID" config-allow-edit.bind="true"></field>
+					<field name="PreassignLotSerial"></field>
+					<field name="ParentLotSerialRequired"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabReferences" caption="References">
+			<qp-template id="ProdItemSelected_SOReferencesTab" name="1-1-1">
+				<div slot="A">
+					<qp-fieldset id="ProdItemSelectedSOReferences" view.bind="ProdItemSelected" caption="SO References">
+						<field name="CustomerID" config-allow-edit.bind="true"></field>
+						<field name="OrdTypeRef" config-allow-edit.bind="true"></field>
+						<field name="OrdNbr" config-allow-edit.bind="true"></field>
+						<field name="OrdLineRef">
+							<qp-button id="btnlinkSalesOrder" class="col-12" state.bind="model.viewModel.linkSalesOrder"></qp-button>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="ProdItemSelectedLinkedOrders" view.bind="ProdItemSelected" caption="Linked orders">
+						<field name="ProductOrderType" config-allow-edit.bind="true"></field>
+						<field name="ProductOrdID" config-allow-edit.bind="true"></field>
+						<field name="ParentOrderType" config-allow-edit.bind="true"></field>
+						<field name="ParentOrdID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="ProdItemSelectedFinancialSettings" view.bind="ProdItemSelected" caption="Financial Settings">
+						<field name="BranchID"></field>
+						<field name="WIPAcctID"></field>
+						<field name="WIPSubID"></field>
+						<field name="WIPVarianceAcctID"></field>
+						<field name="WIPVarianceSubID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="C">
+					<qp-fieldset id="ProdItemSelectedSource" view.bind="ProdItemSelected" caption="Source">
+						<field name="DetailSource"></field>
+						<field name="BOMEffDate"></field>
+						<field name="BOMID" config-allow-edit.bind="true"></field>
+						<field name="BOMRevisionID"></field>
+
+						<field name="EstimateID" config-allow-edit.bind="true"></field>
+						<field name="EstimateRevisionID"></field>
+						<field name="SourceOrderType" config-allow-edit.bind="true"></field>
+						<field name="SourceProductionNbr" config-allow-edit.bind="true"></field>
+						<using wg-container="ItemConfiguration_FVConfigure" view="ItemConfiguration">
+							<field name="ConfigurationID"></field>
+							<field name="Revision"></field>
+							<field name="KeyID"></field>
+						</using>
+						<field name="btnConfigureEntry" replace-content unbound>
+							<qp-button id="btnConfigureEntry" class="col-6" state.bind="model.viewModel.ConfigureEntry"></qp-button>
+							<qp-button id="btnReconfigure" class="col-6" state.bind="model.viewModel.Reconfigure"></qp-button>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="ProdItemSelectedProject" view.bind="ProdItemSelected" caption="Project">
+						<field name="ProjectID" config-allow-edit.bind="true"></field>
+						<field name="TaskID"></field>
+						<field name="CostCodeID"></field>
+						<field name="UpdateProject"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabEvents" caption="Events">
+			<qp-grid id="grid" view.bind="ProdEventRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="ProductionAttributes"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTotals" caption="Totals">
+			<qp-template id="ProdTotalRecs_totalsform" wg-container name="1-1-1">
+				<qp-fieldset slot="A" id="ProdTotalRecsPlanned" view.bind="ProdTotalRecs" caption="Planned">
+					<field name="PlanLaborTime"></field>
+					<field name="PlanLabor"></field>
+					<field name="PlanMachine"></field>
+					<field name="PlanMaterial"></field>
+					<field name="PlanTool"></field>
+					<field name="PlanFixedOverhead"></field>
+					<field name="PlanVariableOverhead"></field>
+					<field name="PlanSubcontract"></field>
+					<field name="PlanQtyToProduce"></field>
+					<field name="PlanTotal"></field>
+					<field name="PlanUnitCost"></field>
+					<field name="PlanCostDate"></field>
+					<field name="PlanReferenceMaterial"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="ProdTotalRecsActual" view.bind="ProdTotalRecs" caption="Actual">
+					<field name="ActualLaborTime"></field>
+					<field name="ActualLabor"></field>
+					<field name="ActualMachine"></field>
+					<field name="ActualMaterial"></field>
+					<field name="ActualTool"></field>
+					<field name="ActualFixedOverhead"></field>
+					<field name="ActualVariableOverhead"></field>
+					<field name="ActualSubcontract"></field>
+					<field name="QtyComplete"></field>
+					<field name="WIPAdjustment"></field>
+					<field name="ScrapAmount"></field>
+					<field name="WIPTotal"></field>
+					<field name="WIPComp"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="C" id="ProdTotalRecsVariance" view.bind="ProdTotalRecs" caption="Variance">
+					<field name="VarianceLaborTime"></field>
+					<field name="VarianceLabor"></field>
+					<field name="VarianceMachine"></field>
+					<field name="VarianceMaterial"></field>
+					<field name="VarianceTool"></field>
+					<field name="VarianceFixedOverhead"></field>
+					<field name="VarianceVariableOverhead"></field>
+					<field name="VarianceSubcontract"></field>
+					<field name="QtyRemaining"></field>
+					<field name="VarianceTotal"></field>
+					<field name="WIPBalance"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabLineDetails" caption="Line Details">
+			<qp-template id="ItemLineSplittingExtension_LotSerOptions_lsoptform" wg-container name="1-1-1">
+				<qp-fieldset slot="A" id="ItemLineSplittingExtension_LotSerOptions1" view.bind="ItemLineSplittingExtension_LotSerOptions">
+					<field name="UnassignedQty"></field>
+					<field name="Qty"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="ItemLineSplittingExtension_LotSerOptions2" view.bind="ItemLineSplittingExtension_LotSerOptions">
+					<field name="StartNumVal">
+						<qp-button id="btnGenerate2" class="col-12" state.bind="ItemLineSplittingExtension_GenerateNumbers"></qp-button>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="serialNumbersGrid" view.bind="splits"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="LinkSOLineRecords" caption="SO Line Details" width="80vw" height="60vh" auto-repaint="true">
+		<qp-template id="linkSalesLinesFilter_formSalesLinkFilter" wg-container name="1-1-1">
+			<qp-fieldset slot="A" id="linkSalesLinesFilter1" view.bind="linkSalesLinesFilter">
+				<field name="CustomerID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="linkSalesLinesFilter2" view.bind="linkSalesLinesFilter">
+				<field name="OrderType" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="C" id="linkSalesLinesFilter3" view.bind="linkSalesLinesFilter">
+				<field name="OrderNbr" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="LinkSalesGrid" view.bind="LinkSOLineRecords"></qp-grid>
+		<footer>
+			<qp-button id="LinkSalesLine" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="CancelLink" dialog-result="Cancel" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

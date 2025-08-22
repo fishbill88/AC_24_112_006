@@ -1,0 +1,16 @@
+<template>
+
+	<qp-panel id="ReleaseRetainageOptions" caption="Release Retainage" auto-repaint="true">
+		<qp-fieldset id="panelReleaseRetainageOptions" view.bind="ReleaseRetainageOptions" wg-container="ReleaseRetainageOptions_frmRetainageOptions">
+			<field name="RetainagePct"></field>
+			<field name="CuryRetainageAmt"></field>
+			<field name="CuryRetainageUnreleasedAmt"></field>
+			<field name="InvoiceNbr"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonCancel-ReleaseRetainageOptions" dialog-result="Cancel"></qp-button>
+			<qp-button id="buttonRelease-ReleaseRetainageOptions" dialog-result="OK" caption="Release"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,10 @@
+<template>
+	<qp-splitter initial-split="300px" split="width" id="splitterId">
+		<split-pane>
+			<qp-tree id="tree" view.bind="Folders"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="grid" view.bind="Children"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

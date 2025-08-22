@@ -1,0 +1,29 @@
+<template>
+	<qp-panel
+		id="MassMailPrepare"
+		auto-repaint="true"
+		caption="Send Mass Email"
+	>
+		<qp-template id="MassMailSendTemplate" name="1">
+			<qp-fieldset slot="A" id="FormSendMassEmail" view.bind="MassMailPrepare">
+				<field name="fakeField" unbound replace-content>
+					<qp-label caption="Do you want to send the mass email now?"></qp-label>
+				</field>
+				<field name="CampaignUpdateListMembers"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="SendMassEmailOK"
+				caption="Send"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="SendMassEmailCancel"
+				dialog-result="Cancel"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

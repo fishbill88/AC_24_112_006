@@ -1,0 +1,73 @@
+<template>
+	<qp-template name="1-1" id="formTemplates">
+		<qp-fieldset slot="A" id="panelTemplates" view.bind="Templates" wg-container="Templates_form">
+			<field name="ContractCD"></field>
+			<field name="Description"></field>
+			<field name="Status" control-type="qp-check-box" config.bind="{trueValue: 'A', falseValue: 'D'}"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab" wg-container="CurrentTemplate_tab">
+		<qp-tab caption="Summary" id="tabSummary">
+			<qp-template name="1-1" id="formSummary">
+				<qp-fieldset slot="A" id="groupContractSettings" caption="Contract Settings" view.bind="CurrentTemplate">
+					<field name="Type"></field>
+					<field name="Duration">
+						<qp-field control-state.bind="CurrentTemplate.DurationType"></qp-field>
+					</field>
+					<field name="CurrentTemplate.Refundable"></field>
+					<field name="CurrentTemplate.RefundPeriod">
+						<qp-field control-state.bind="CurrentTemplate.Days"></qp-field>
+					</field>
+					<field name="AutoRenew"></field>
+					<field name="AutoRenewDays">
+						<qp-field control-state.bind="CurrentTemplate.DaysBeforeExpiration"></qp-field>
+					</field>
+					<field name="GracePeriod">
+						<qp-field control-state.bind="CurrentTemplate.Days"></qp-field>
+					</field>
+					<field name="CuryID"></field>
+
+					<field name="AllowOverride"></field>
+					<field name="AutomaticReleaseAR"></field>
+
+					<field name="EffectiveFrom"></field>
+					<field name="DiscontinueAfter"></field>
+				</qp-fieldset>
+				<div slot="B" id="columnSecondSummary">
+					<qp-fieldset id="groupBillingSettings" caption="Billing Settings" view.bind="CurrentTemplate">
+						<using wg-container="Billing_billingForm" view="Billing">
+							<field name="Type"></field>
+							<field name="BillTo"></field>
+						</using>
+						<using wg-container="CurrentTemplate_tab">
+							<field name="ScheduleStartsOn"></field>
+							<field name="DetailedBilling"></field>
+						</using>
+						<using wg-container="Billing_descriptionFormulaView" view="Billing">
+							<field name="InvoiceFormula" control-type="qp-formula-editor" config-parameters.bind="['@ActionInvoice']" config-dynamic-fields.bind="['Contract', 'ContractTemplate', 'Customer', 'Location', 'ContractBillingSchedule', 'AccessInfo']" config-dynamic-node-name.bind="'Objects'" config-preload-dynamic-node.bind="true"></field>
+							<field name="TranFormula" control-type="qp-formula-editor" config-parameters.bind="['@Prefix', '@ActionItem']" config-dynamic-fields.bind="['Contract', 'Customer', 'ContractItem', 'ContractDetail', 'InventoryItem', 'ContractBillingSchedule', 'PMTran', 'UsageData', 'AccessInfo']" config-dynamic-node-name.bind="'Objects'" config-preload-dynamic-node.bind="true"></field>
+						</using>
+						<using wg-container="CurrentTemplate_tab">
+							<field name="AllowOverrideFormulaDescription"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="groupCaseBillingSettings" caption="Case Billing Settings" view.bind="CurrentTemplate">
+						<field name="CaseItemID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Details" id="tabDetails">
+			<qp-grid id="gridContractDetails" view.bind="ContractDetails" wg-container="ContractDetails_detGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab caption="Contracts" id="tabContracts">
+			<qp-grid id="gridContracts" view.bind="Contracts" wg-container="Contracts_ContractsGrid"> </qp-grid>
+		</qp-tab>
+		<qp-tab caption="SLA Terms" id="tabSLATerms">
+			<qp-grid id="gridSLATerms" view.bind="SLAMapping" wg-container="SLAMapping_SLAMappingGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab caption="Attributes" id="tabAttributes">
+			<qp-grid id="gridAttributes" view.bind="AttributeGroup" wg-container="AttributeGroup_AttributeGrid"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

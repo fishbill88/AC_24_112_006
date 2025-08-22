@@ -1,0 +1,61 @@
+<template>
+	<qp-template name="17-7" id="Webhook_form" wg-container="Webhook_form">
+		<qp-fieldset slot="A" id="first" view.bind="Webhook">
+			<field name="Name"></field>
+			<field name="Handler"></field>
+			<field name="Url" control-type="qp-link-editor"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Webhook">
+			<field name="IsActive" no-label="true"></field>
+			<field name="IsSystem" no-label="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar active-tab-id="tabHistory" id="mainTab">
+		<qp-tab id="tabHistory" caption="Request History">
+			<qp-template name="17-7" id="grid_form" wg-container="Webhook_form1">
+				<qp-fieldset slot="A" id="fourth" view.bind="Webhook">
+					<field name="RequestLogLevel"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="fifth" view.bind="Webhook">
+					<field name="RequestRetainCount"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid1" view.bind="WebhookRequest">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+		<qp-panel id="WebhookRequestCurrent" caption="Request Details" auto-repaint="true" width="80vw" height="80vh" wg-container="WebhookRequestCurrent_formRequestDetails">
+			<qp-template id="WebhookRequestCurrent-form" name="1-1-1" class="equal-height">
+				<qp-fieldset id="rs-first" slot="A" view.bind="WebhookRequestCurrent">
+					<field name="Type"></field>
+				</qp-fieldset>
+				<qp-fieldset id="rs-second" slot="B" view.bind="WebhookRequestCurrent">
+					<field name="ResponseStatus" control-type="qp-text-editor"></field>
+				</qp-fieldset>
+				<qp-fieldset id="rs-third" slot="C" view.bind="WebhookRequestCurrent">
+					<field name="ProcessingTime"></field>
+				</qp-fieldset>
+			</qp-template>
+			<div class="v-stack">
+				<qp-fieldset id="rs-request" view.bind="WebhookRequestCurrent">
+					<field name="Request" config-type.bind="1" config-rows.bind="8" no-label="true"></field>
+				</qp-fieldset>
+			</div>
+			<qp-tabbar active-tab-id="tabResponse" id="panel_mainTab">
+				<qp-tab id="tabResponse" caption="Response" wg-container="WebhookRequestCurrent_tab">
+					<qp-fieldset id="rs-tab-first" view.bind="WebhookRequestCurrent">
+						<field name="Response" config-type.bind="1" config-rows.bind="8" no-label="true"></field>
+					</qp-fieldset>
+				</qp-tab>
+				<qp-tab id="tabError" caption="Exception Stack Trace" wg-container="WebhookRequestCurrent_tab">
+					<qp-fieldset id="rs-tab-second" view.bind="WebhookRequestCurrent">
+						<field name="Error" config-type.bind="1" config-rows.bind="8" no-label="true"></field>
+					</qp-fieldset>
+				</qp-tab>
+			</qp-tabbar>
+			<footer>
+				<qp-button id="btnClose" caption.bind="SysMessages.Confirm" dialog-result="OK">
+				</qp-button>
+			</footer>
+		</qp-panel>
+</template>

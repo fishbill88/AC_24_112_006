@@ -1,0 +1,21 @@
+<template>
+	<qp-template id="BucketLookup_form" wg-container name="1-1-1">
+		<qp-fieldset slot="A" id="BucketLookup1" view.bind="BucketLookup">
+			<field name="BucketID" config-allow-edit.bind="true"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="BucketLookup2" view.bind="BucketLookup">
+			<field name="QtyOnHand"></field>
+			<field name="ProductManagerID"></field>
+			<field name="SafetyStock"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="BucketLookup3" view.bind="BucketLookup">
+			<field name="ReplenishmentSource"></field>
+			<field name="PreferredVendorID" config-allow-edit.bind="true"></field>
+			<field name="LeadTime"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="BucketDetailRecords"></qp-grid>
+</template>

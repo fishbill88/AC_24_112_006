@@ -1,0 +1,86 @@
+<template>
+	<qp-template
+		id="CaseClasses_template"
+		name="1-1"
+		class="equal-height label-size-xm"
+	>
+		<qp-fieldset slot="A" id="CaseClasses_form" view.bind="CaseClasses">
+			<field name="CaseClassID"></field>
+			<field name="Description"></field>
+			<field name="IsInternal"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="CaseClasses_formRight" view.bind="CaseClasses">
+			<field name="CalendarID" config-allow-edit.bind="true"></field>
+			<field name="WorkCalendar.WorkdayTime"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template
+				id="CaseClasses_DataEntry_template"
+				name="1-1"
+				wg-container="CaseClassesCurrent_tab"
+			>
+				<div slot="A">
+					<qp-fieldset
+						id="CaseClasses_DataEntry"
+						view.bind="CaseClasses"
+						class="label-size-xm"
+						caption="Data Entry Settings"
+					>
+						<field name="RequireCustomer"></field>
+						<field name="RequireContact"></field>
+						<field name="RequireClosureNotes"></field>
+						<field name="AllowEmployeeAsContact"></field>
+						<field name="RequireContract"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CaseClasses_DataEntry"
+						view.bind="CaseClasses"
+						caption="Billing Settings"
+						class="label-size-xm"
+					>
+						<field name="IsBillable"></field>
+						<field name="AllowOverrideBillable"></field>
+						<field name="PerItemBilling"></field>
+						<field name="LabourItemID" config-allow-edit.bind="true"></field>
+						<field name="OvertimeItemID" config-allow-edit.bind="true"></field>
+						<field name="RoundingInMinutes"></field>
+						<field name="MinBillTimeInMinutes"></field>
+					</qp-fieldset>
+					<qp-fieldset
+						id="CaseClasses_DataEntry"
+						view.bind="CaseClasses"
+						class="label-size-xm"
+						caption="Email Settings"
+					>
+						<field name="DefaultEMailAccountID"></field>
+						<field name="TrackSolutionsInActivities"></field>
+						<field name="ReopenCaseTimeInDays"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabReaction" caption="Commitments">
+			<qp-template name="1-1-1" id="Commitments_template">
+				<qp-fieldset slot="A" id="Commitments_fieldset" view.bind="CaseClasses" caption="Resolution Time">
+					<field name="StopTimeCounterType"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="CaseClassesReaction_gridCaseClassesReaction" view.bind="CaseClassesReaction"></qp-grid>
+		</qp-tab>
+		<qp-tab
+			id="tabLaborItems"
+			caption="Labor Items"
+			if.bind="CaseClasses.PerItemBilling.value == 1"
+		>
+			<qp-grid
+				id="LaborMatrix_LaborClassesGrid"
+				view.bind="LaborMatrix"
+			></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="Mapping_AttributesGrid" view.bind="Mapping"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,17 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+
+		<qp-fieldset slot="A" id="groupFilterCashAccounts" view.bind="filterCashAccounts" wg-container="filterCashAccounts_form">
+			<field name="CashAccountCD"></field>
+			<field name="CuryID"></field>
+			<using view="filter" wg-container="filter_DateSelection">
+				<field name="StartDate"></field>
+			</using>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="cashForecastTrans"></qp-grid>
+
+</template>

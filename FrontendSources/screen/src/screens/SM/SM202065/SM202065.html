@@ -1,0 +1,27 @@
+<template>
+	<qp-template id="UserSelect_form" name="1-1" class="label-size-m" wg-container>
+		<div slot="A" class="h-stack">
+			<qp-fieldset id="user" view.bind="UserSelect">
+				<field name="State"></field>
+				<field name="FilterSelect.AccessStatus"></field>
+				<field name="SecurityPrefs.AllowSupportToLoginAsAnyUser"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar active-tab-id="tabRoles" id="mainTab">
+		<qp-tab id="tabRoles" caption="Roles Granted">
+			<qp-grid id="gridRoles" view.bind="AllowedRoles"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabHistory" caption="History">
+			<qp-grid id="gridHistory" view.bind="GrantHistory"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTraces" caption="Access History">
+			<qp-grid
+				id="gridTraces"
+				view.bind="LoginTraces"
+				wg-container="LoginTraces_grid"
+			>
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

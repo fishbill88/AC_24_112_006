@@ -1,0 +1,15 @@
+<template>
+	<qp-grid id="grid" view.bind="Items">
+	</qp-grid>
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-fieldset id="formChangeID" view.bind="ChangeIDDialog">
+			<field name="CD" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" state.bind="Save" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,20 @@
+<template>
+	<qp-template id="Filter_form" name="17-17-14" class="equal-height" wg-container>
+		<qp-fieldset id="FieldsLeft" view.bind="Filter" slot="A">
+			<field name="PaymentMethodID"></field>
+			<field name="CashAccountID"></field>
+			<field name="CuryID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="FieldsMiddle" view.bind="Filter" slot="B">
+			<field name="NextCheckNbr"></field>
+			<field name="PaymentBatchNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="FieldsRight" view.bind="Filter" class="highlights-section" slot="C">
+			<field name="SelCount"></field>
+			<field name="CashBalance"></field>
+			<field name="SelTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="PaymentList">
+	</qp-grid>
+</template>

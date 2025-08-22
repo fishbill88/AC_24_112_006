@@ -1,0 +1,28 @@
+<template>
+	<qp-fieldset
+		id="panel_CreateContact_Contact"
+		caption="Contact"
+		view.bind="ContactInfo"
+	>
+		<field name="FirstName"></field>
+		<field name="LastName"></field>
+		<field name="FullName"></field>
+		<field name="Salutation"></field>
+		<field name="Phone1">
+			<qp-field
+				slot="label"
+				no-label="true"
+				control-state.bind="ContactInfo.Phone1Type"
+			></qp-field>
+		</field>
+		<field name="Phone2">
+			<qp-field
+				slot="label"
+				no-label="true"
+				control-state.bind="ContactInfo.Phone2Type"
+			></qp-field>
+		</field>
+		<field name="Email" control-type="qp-mail-editor"></field>
+		<field name="ContactClass"></field>
+	</qp-fieldset>
+</template>

@@ -1,0 +1,72 @@
+<template>
+	<qp-template id="form" name="1-1" class="label-size-m equal-height" wg-container="CashAccount_form">
+		<qp-fieldset id="columnFirst" view.bind="CashAccount" slot="A">
+			<field name="CashAccountCD" config.bind="{displayMode: 'id'}"></field>
+			<field name="Active"></field>
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+			<field name="BranchID"></field>
+			<field name="CuryID"></field>
+			<field name="CuryRateTypeID" config-allow-edit.bind="true"></field>
+			<field name="ExtRefNbr"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<div id="columnSecond" slot="B">
+			<qp-fieldset id="panelCashAccount" view.bind="CashAccount">
+				<field name="ClearingAccount"></field>
+				<field name="Reconcile"></field>
+				<field name="RestrictVisibilityWithBranch"></field>
+				<field name="MatchToBatch"></field>
+				<field name="UseForCorpCard"></field>
+				<field name="ReconNumberingID" config-allow-edit.bind="true"></field>
+				<field name="ReferenceID" config-allow-edit.bind="true"></field>
+				<field name="StatementImportTypeName"></field>
+				<field name="AcctSettingsAllowed"></field>
+				<field name="PTInstancesAllowed"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabPaymentMethods" caption="Payment Methods">
+			<qp-grid id="gridPaymentMethods" view.bind="Details" wg-container="Details_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabClearingAccounts" caption="Clearing Accounts" if.bind="CashAccount.ClearingAccount.value == false">
+			<qp-grid id="gridDepositAccount" view.bind="Deposits" wg-container="Deposits_gridDepositAccount"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabEntryTypes" caption="Entry Types">
+			<qp-grid id="gridEntryTypes" view.bind="ETDetails" wg-container="ETDetails_grid2"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabRemittanceSettings" caption="Remittance Settings" if.bind="CashAccount.AcctSettingsAllowed.value == true">
+			<qp-splitter id="splitterRemittance">
+				<split-pane>
+					<qp-grid id="gridPaymentMethodForRemittance" caption="Payment Method" view.bind="PaymentMethodForRemittance"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="gridPaymentDetails" view.bind="PaymentDetails" caption="Remittance Details" wg-container="PaymentDetails_grdPaymentDetails"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+
+		<qp-tab id="tabSignature" caption="Signature" wg-container="CurrentCashAccount_tab">
+			<qp-template id="formSignature" name="1-1">
+				<qp-fieldset id="panelSignature" view.bind="CurrentCashAccount" slot="A">
+					<field name="SignatureDescr"></field>
+					<field name="Signature" control-type="qp-image-uploader" config.bind="{width: '640px', height: '480px'}"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-fieldset id="panelChangeID" view.bind="ChangeIDDialog" wg-container="ChangeIDDialog_formChangeID">
+			<field name="CD"> </field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ChangeID" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ChangeID" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,160 @@
+<template>
+	<qp-template id="ServiceContractRecords_form" name="17-17-14" wg-container class="equal-height">
+		<qp-fieldset id="ServiceContractRecords_10" slot="A" view.bind="ServiceContractRecords">
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="StatusEffectiveFromDate"></field>
+			<field name="UpcomingStatus"></field>
+			<field name="StatusEffectiveUntilDate"></field>
+			<field name="CustomerContractNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="ServiceContractRecords_20" slot="B" view.bind="ServiceContractRecords">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="MasterContractID"></field>
+			<field name="DocDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="ContractSchedules_cont3" view.bind="ContractSchedules" wg-container>
+		<qp-tab caption="Summary" id="summaryTab">
+			<qp-template id="ServiceContractRecords_ContractSummaryFormView" wg-container name="17-17-14">
+				<div slot="A">
+					<qp-fieldset id="ContractSchedules_10" view.bind="ServiceContractRecords" caption="Contract Settings">
+						<field name="StartDate"></field>
+						<field name="ExpirationType"></field>
+						<field name="Duration">
+							<qp-field name="DurationType" control-state.bind="ServiceContractRecords.DurationType" config-enabled.bind="false"></qp-field>
+						</field>
+						<field name="RenewalDate"></field>
+						<field name="EndDate"></field>
+						<field name="ScheduleGenType"></field>
+						<field name="VendorID" config-allow-edit.bind="true"></field>
+						<field name="CustomerContactID" config-allow-edit.bind="true"></field>
+						<field name="SalesPersonID" config-allow-edit.bind="true"></field>
+						<field name="Commissionable"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="ContractSchedules_20" view.bind="ServiceContractRecords" caption="Billing Type Settings">
+						<field name="BillingPeriod"></field>
+						<field name="LastBillingInvoiceDate"></field>
+						<field name="NextBillingInvoiceDate"></field>
+						<field name="SourcePrice"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ContractSchedules_30" view.bind="ServiceContractRecords" caption="Billing Settings">
+						<field name="BranchID"></field>
+						<field name="BranchLocationID" config-allow-edit.bind="true"></field>
+						<field name="BillingType"></field>
+						<field name="BillTo"></field>
+						<field name="BillCustomerID" config-allow-edit.bind="true"></field>
+						<field name="BillLocationID" config-allow-edit.bind="true"></field>
+						<field name="UsageBillingCycleID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ContractSchedules_40" view.bind="ServiceContractRecords" caption="Default Settings">
+						<field name="DfltProjectTaskID"></field>
+						<field name="DfltCostCodeID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Schedules" id="schedulesTab" if.bind="ServiceContractRecords.Mem_ShowScheduleTab.value == false">
+			<qp-grid id="PXGridSchedule" view.bind="ContractSchedules">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Services per Period" id="servicesPerPeriodTab" if.bind="ServiceContractRecords.Mem_ShowPriceTab.value == false">
+			<qp-template id="ContractPeriodFilterTemplate" name="17-17-14">
+				<qp-fieldset id="ContractPeriodFilter_SBP_form" wg-container slot="A" view.bind="ContractPeriodFilter">
+					<field name="Actions"></field>
+					<field name="ContractPeriodID"></field>
+					<field name="PostDocRefNbr"></field>
+					<field name="StandardizedBillingTotal"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridServBillingPeriod" view.bind="ContractPeriodDetRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="billingDocumentsTab" caption="Billing Documents" if.bind="ServiceContractRecords.Mem_ShowPriceTab.value == false">
+			<qp-grid id="PXGidInvoiceRecords" view.bind="InvoiceRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="pricesTab" caption="Prices" if.bind="ServiceContractRecords.Mem_ShowPriceTab.value == true">
+			<qp-grid id="SalespriceLines_PXGridSalesPriceLines" view.bind="SalesPriceLines">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="historyTab" caption="History">
+			<qp-grid id="PXGridContractHistory" view.bind="ContractHistoryItems">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="attributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="ActivationContractFilter" caption="Activate Contract" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="ActivationContractFilterTemplate" name="1-1">
+			<qp-fieldset id="ActivationContractFilter_PXFormActivateDate" slot="A" view.bind="ActivationContractFilter">
+				<field name="ActivationDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXGridSchedulesActivation" view.bind="ActiveScheduleRecords">
+		</qp-grid>
+		<footer>
+			<qp-button id="okActivationContract" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="closeActivationContract" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="TerminateContractFilter" caption="Terminate Contract" auto-repaint="true" width="80vw" height="40vh">
+		<qp-template id="TerminateContractFilterTemplate" name="1-1">
+			<qp-fieldset id="TerminateContractFilter_PXFormCancelationDate" slot="A" view.bind="TerminateContractFilter">
+				<field name="CancelationDate"></field>
+			</qp-fieldset>
+			<qp-label caption="Canceling a contract will delete the associated appointments and service orders with a date later than or equal to the effective date."></qp-label>
+		</qp-template>
+		<footer>
+			<qp-button id="okTerminateContractButton" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="cancelTerminateContractButton" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SuspendContractFilter" caption="Suspend Contract" auto-repaint="true" width="80vw" height="40vh">
+		<qp-template id="SuspendContractFilterTemplate" name="1-1">
+			<qp-fieldset id="SuspendContractFilter_PXFormSuspensionDate" slot="A" view.bind="SuspendContractFilter">
+				<field name="SuspensionDate"></field>
+			</qp-fieldset>
+			<qp-label caption="Suspending a contract will delete the associated appointments and service orders with a date later than or equal to the effective date."></qp-label>
+		</qp-template>
+		<footer>
+			<qp-button id="okSuspendContractButton" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="cancelSuspendContractButton" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CopyContractFilter" caption="Copy" auto-repaint="true" width="40vw" height="30vh">
+		<qp-template id="CopyContractFilterTemplate" name="1-1">
+			<qp-fieldset id="CopyContractFilter_PXFormCopyDate" slot="A" view.bind="CopyContractFilter">
+				<field name="StartDate"></field>
+				<field name="RefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="okCopyContractButton" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="cancelCopyContractButton" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ForecastFilter" caption="Contract Quote" auto-repaint="true" width="40vw" height="30vh">
+		<qp-template id="ForecastFilterTemplate" name="1-1">
+			<qp-fieldset id="ForecastFilter_PXFormForecastContract" slot="A" view.bind="ForecastFilter">
+				<field name="StartDate"></field>
+				<field name="EndDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="okForecastButton" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="cancelForecastButton" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

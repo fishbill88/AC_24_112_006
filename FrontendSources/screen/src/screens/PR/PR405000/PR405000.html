@@ -1,0 +1,12 @@
+<template>			
+	<qp-tabbar id='tab'>
+		<qp-tab id='payStubs_tab' caption='Pay Stubs'>      	
+			<qp-grid id='gridDocumentsPaystubs' view.bind="PayChecks">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id='annualForms_tab' caption='Annual Forms' if.bind='Filter.ShowTaxFormsTab.value == true'>        	 
+			<qp-grid id='gridTaxForms' view.bind="TaxForms">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,25 @@
+<template>
+	<qp-panel id="Vendor" caption="Vendor Address" auto-repaint="true">
+		<qp-template id="Vendors_form" name="1-1" class="equal-height">
+			<qp-fieldset id="Vendors_form_column1" view.bind="Remit_Contact" slot="A" wg-container="Remit_Contact_formVC">
+				<field name="OverrideContact"></field>
+				<field name="FullName"></field>
+				<field name="Attention"></field>
+				<field name="Phone1"></field>
+				<field name="Email"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Vendors_form_column2" view.bind="Remit_Address" slot="B" wg-container="Remit_Address_formVA">
+				<field name="OverrideAddress"></field>
+				<field name="AddressLine1"></field>
+				<field name="AddressLine2"></field>
+				<field name="City"></field>
+				<field name="CountryID"></field>
+				<field name="State"></field>
+				<field name="PostalCode"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnSave0" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,39 @@
+<template>
+	<qp-template id="Class_template" name="1-1" class="equal-height label-size-xm">
+		<qp-fieldset slot="A" id="Class_form" view.bind="Class">
+			<field name="ClassID"></field>
+			<field name="Description"></field>
+			<field name="IsInternal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template id="Class_DataEntry_template" name="1-1" class="v-stack label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="Class_DataEntry"
+									view.bind="Class"
+									caption="Data Entry Settings">
+						<field name="DefaultOwner"></field>
+						<field name="DefaultAssignmentMapID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="Class_Conversion"
+									view.bind="Class"
+									caption="Conversion Settings">
+						<field name="TargetLeadClassID" config-allow-edit.bind="true"></field>
+						<field name="TargetBAccountClassID" config-allow-edit.bind="true"></field>
+						<field name="TargetOpportunityClassID" config-allow-edit.bind="true"></field>
+						<field name="TargetOpportunityStage"></field>
+					</qp-fieldset>
+					<qp-fieldset id="Class_EmailSettings"
+									view.bind="Class"
+									caption="Email Settings">
+						<field name="DefaultEMailAccountID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="Mapping_grid" view.bind="Mapping"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

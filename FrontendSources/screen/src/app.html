@@ -1,0 +1,54 @@
+<template>
+	<require from="./app.css"></require>
+
+	<div class="splash ${!initialized ? 'initialization' : 'loading'}" if.bind="!initialized || loading">
+		<div class="message" if.bind="!initialized">Screen is loading...</div>
+	</div>
+	<qp-wait-cursor></qp-wait-cursor>
+	<qp-informer-rack></qp-informer-rack>
+
+	<qp-splitter class="page-container modern-ui" id="splitterVM"
+		disabled.bind="sidebarDisabled"
+		unmargin.bind="!sidebarDisabled"
+		splitter-state.bind="sidebarDisabled ? 'collapsed-second' : 'normal'"
+		reversed.bind="true"
+		collapse-mode="shrink"
+		disable-collapse.bind="true"
+		invisible.bind="true"
+	>
+		<split-pane id="mainWorkspace" class="page-content qp-collapsible-scope">
+			<div id="page-caption" class="page-caption">
+				<qp-screen-configuration-menu if.bind="editMode && isMainFrame"></qp-screen-configuration-menu>
+
+				<div id="pageHeader" class="pageHeader" if.bind="screenService">
+					<qp-data-component name="TitleData" screen.bind="viewModel" hidden.bind="!isMainFrame"></qp-data-component>
+					<qp-data-component name="SysMenu" screen.bind="viewModel" if.bind="isMainFrame"></qp-data-component>
+				</div>
+
+				<qp-translation-validation component.bind="translationValidationComponent"></qp-translation-validation>
+				<div id="InfoBannerContainer" if.bind="isMainFrame"></div>
+				<qp-data-component if.bind="screenService" name="ScreenToolbar" screen.bind="viewModel"></qp-data-component>
+			</div>
+
+			<div class="page-host" ref="contentElement">
+				<qp-data-components if.bind="screenService" category="page-host" screen.bind="viewModel"></qp-data-components>
+
+				<template if.bind="useStaticRendering">
+					<compose class="v-stack page-workspace" view-model.bind="screenName" model.bind="$this" ></compose>
+				</template>
+				<template else>
+					<customizable screen-name.bind="screenName"></customizable>
+				</template>
+			</div>
+		</split-pane>
+		<split-pane class="page-container-side-panel">
+			<qp-data-component if.bind="isMainFrame && screenService" name="SidePanelNavigationData"
+				screen.bind="viewModel" view-model.ref="sidePanelComponent"></qp-data-component>
+		</split-pane>
+	</qp-splitter>
+	<div if.bind="screenService">
+		<qp-data-component name="LongRunData" screen.bind="viewModel"></qp-data-component>
+		<qp-data-component name="QuickProcessingData" screen.bind="viewModel"></qp-data-component>
+		<qp-data-component name="ProcessingResultData" screen.bind="viewModel"></qp-data-component>
+	</div>
+</template>

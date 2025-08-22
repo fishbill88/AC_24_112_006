@@ -1,0 +1,24 @@
+<template>
+	<template id="tabRuleActions_Content">
+		<qp-template id="tabRuleActions_Content_template" name="1-1" class="label-size-xm"> 
+			<qp-fieldset id="PXFormConditions" view.bind="CurrentNode" slot="A">
+				<field name="RuleType"></field>
+				<field name="OwnerID"></field>
+				<field name="OwnerSource" control-type="qp-tree-selector"
+					control-config.bind="{
+						treeSelectorId: 'tree_selector_edownersource',
+						treeConfig: {
+							idName: 'Path',
+							dataMember: 'EntityItems',
+							description: 'Name',
+							idParent: 'Key',
+							iconField: 'Icon',
+							mode: 'single'
+					},
+				}">
+				</field>
+				<field name="WorkgroupID"></field>
+			</qp-fieldset>
+		</qp-template> 
+	</template>
+</template>

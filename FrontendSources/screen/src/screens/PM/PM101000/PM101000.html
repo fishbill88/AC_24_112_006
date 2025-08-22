@@ -1,0 +1,128 @@
+<template>
+	<qp-tabbar active-tab-id="GeneralTab" id="Setup_tab" wg-container>
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template name="1-1" id="GeneralForm">
+				<div slot="A">
+					<qp-fieldset id="SetupNumberingSequence" view.bind="Setup" caption="Numbering Sequence" class="label-size-xm">
+						<field name="TranNumbering" config-allow-edit.bind="true"></field>
+						<field name="BatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ProformaNumbering" config-allow-edit.bind="true"></field>
+						<field name="ChangeOrderNumbering" config-allow-edit.bind="true"></field>
+						<field name="ChangeRequestNumbering" config-allow-edit.bind="true"></field>
+						<field name="QuoteNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ProgressWorksheetNumbering" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupGeneralSettings" view.bind="Setup" caption="General Settings" class="label-size-xm">
+						<field name="IsActive" ></field>
+						<field name="NonProjectCode" ></field>
+						<field name="EmptyItemCode" ></field>
+						<field name="EmptyItemUOM" config-allow-edit.bind="true"></field>
+						<field name="DefaultChangeOrderClassID" config-allow-edit.bind="true"></field>
+						<field name="QuoteTemplateID" config-allow-edit.bind="true"></field>
+						<field name="ProformaAssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="ProformaAssignmentNotificationID" config-allow-edit.bind="true"></field>
+						<field name="CutoffDate" ></field>
+						<field name="OverLimitErrorLevel" ></field>
+						<field name="RevenueBudgetUpdateMode" ></field>
+						<field name="CostBudgetUpdateMode" ></field>
+						<field name="BudgetControl" ></field>
+						<field name="AutoPost" ></field>
+						<field name="AutoReleaseAllocation" ></field>
+						<field name="CostCommitmentTracking" ></field>
+						<field name="CalculateProjectSpecificTaxes" ></field>
+						<field name="MigrationMode" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupVisibilitySettings" view.bind="Setup" caption="Visibility Settings">
+						<field name="VisivilitySettingsRow01" unbound>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInGL" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInAP" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInAR" class="col-4"></qp-field>
+						</field>
+						<field name="VisivilitySettingsRow02" unbound>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInIN" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInSO" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInPO" class="col-4"></qp-field>
+						</field>
+						<field name="VisivilitySettingsRow03" unbound>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInCA" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInCR" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInPROD" class="col-4"></qp-field>
+						</field>
+						<field name="VisivilitySettingsRow04" unbound>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInTA" class="col-4"></qp-field>
+							<qp-field no-label="true" control-state.bind="Setup.VisibleInEA" class="col-4"></qp-field>
+						</field>
+						<field name="RestrictProjectSelectRow" unbound replace-content>
+							<qp-field control-state.bind="Setup.RestrictProjectSelect"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="SetupGLSettingsForUnbilledRemainders" view.bind="Setup" caption="GL Settings for Unbilled Remainders" class="label-size-xm">
+						<field name="UnbilledRemainderAccountID" ></field>
+						<field name="UnbilledRemainderSubID" ></field>
+						<field name="UnbilledRemainderOffsetAccountID" ></field>
+						<field name="UnbilledRemainderOffsetSubID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupDropShipPurchases" view.bind="Setup" caption="Drop-Ship Purchases" class="label-size-xm">
+						<field name="DropshipExpenseAccountSource" ></field>
+						<field name="DropshipExpenseSubMask" ></field>
+						<field name="DropshipReceiptProcessing" ></field>
+						<field name="DropshipExpenseRecording" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SetupAccountSettings" view.bind="Setup" caption="Account Settings" class="label-size-xm">
+						<field name="ExpenseAccountSource" ></field>
+						<field name="ExpenseSubMask" ></field>
+						<field name="ExpenseAccrualAccountSource" ></field>
+						<field name="ExpenseAccrualSubMask" ></field>
+					</qp-fieldset>
+					<div id="Setup_formMarkupGroup" wg-container class="v-stack">
+						<qp-fieldset id="formMarkupGroup" view.bind="Setup" caption="Markups" class="label-size-xm">
+							<field name="DefaultPriceMarkupPct" ></field>
+						</qp-fieldset>
+						<qp-grid id="gridMarkups" view.bind="Markups" caption="Change Request Document Markups" class="framed-section">
+						</qp-grid>
+					</div>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="MailingAndPrintingTab" caption="Mailing & Printing">
+			<qp-splitter id="splitterId"
+				split="height"
+				initial-split="50%"
+				state="normal"
+			>
+				<split-pane>
+					<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources">
+					</qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients">
+					</qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="ApprovalTab" caption="Approval">
+			<qp-template name="1-1" id="ApprovalForm" class="label-size-xm">
+				<qp-fieldset slot="A" id="Setup_tab07" view.bind="Setup" caption="Approval Settings">
+					<field name="AssignmentMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ProformaApprovalMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ChangeRequestApprovalMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ChangeOrderApprovalMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="QuoteApprovalMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="CostProjectionApprovalMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ProgressWorksheetApprovalMapID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="Setup_tab08" view.bind="Setup" caption="Pending Approval Notification">
+					<field name="AssignmentNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ProformaApprovalNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ChangeRequestApprovalNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ChangeOrderApprovalNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="QuoteApprovalNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="CostProjectionApprovalNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+					<field name="ProgressWorksheetApprovalNotificationID" config.bind="{allowEdit: true, displayMode: 'text'}"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

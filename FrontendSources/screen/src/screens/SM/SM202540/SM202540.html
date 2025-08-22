@@ -1,0 +1,20 @@
+<template>
+	<qp-template id="Filter_FormFilter" name="1-1" wg-container> 
+		<qp-fieldset id="FormFilter_0" view.bind="Filter" slot="A">
+			<field name="Provider"></field>
+			<field name="AllowWrite"></field>
+		</qp-fieldset>
+	</qp-template>
+	 
+	<qp-grid id="GridSettings" view.bind="Settings" caption="Provider Settings"></qp-grid>
+	
+	<qp-panel id="BlobStorageMessages" caption="Messages" auto-repaint="true">
+		<qp-fieldset id="frmMessages_0" view.bind="BlobStorageMessages" slot="A">
+			<field name="Messages"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnMessagesOk" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,11 @@
+<template>
+	<qp-template name="1-1" id="shipTermsTemplate" class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="form" wg-container view.bind="ShipTermsCurrent">
+			<field name="ShipTermsID"></field>
+			<field name="Description"></field>
+			<field name="FreightAmountSource"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ShipTermsDetail">
+	</qp-grid>
+</template>

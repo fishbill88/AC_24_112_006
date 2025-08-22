@@ -1,0 +1,11 @@
+<template>
+	<qp-template id="ServiceTemplate" name="1-1" class="label-size-m">
+		<qp-fieldset id="ServiceTemplateRecords_form" slot="A" view.bind="ServiceTemplateRecords">
+			<field name="ServiceTemplateCD"></field>
+			<field name="Descr"></field>
+			<field name="SrvOrdType" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="PXGridService" view.bind="ServiceTemplateDetails" caption="Details">
+	</qp-grid>
+</template>

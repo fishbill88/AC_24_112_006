@@ -1,0 +1,94 @@
+<template>
+	<qp-panel
+		id="OpportunityInfo"
+		auto-repaint="true"
+		caption="Create Opportunity"
+		height="930px"
+	>
+		<qp-tabbar id="panel_CreateOpportunityAll_mainTabBar">
+			<qp-tab id="panel_CreateOpportunityAll_tabMain" caption="Main">
+				<qp-fieldset
+					id="panel_CreateOpportunityAll_BusinessAccount"
+					caption="Opportunity"
+					view.bind="OpportunityInfo"
+				>
+					<field name="Subject"></field>
+					<field name="CloseDate"></field>
+					<field name="OpportunityClass"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="panel_CreateOpportunityAll_BusinessAccount"
+					caption="Business Account"
+					view.bind="AccountInfo"
+				>
+					<field name="BAccountID"></field>
+					<field name="AccountName"></field>
+					<field name="AccountClass"></field>
+					<field name="LinkContactToAccount"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="panel_CreateOpportunityAll_Contact"
+					caption="Contact"
+					view.bind="ContactInfo"
+				>
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="ContactInfo.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="ContactInfo.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Email" control-type="qp-mail-editor"></field>
+					<field name="ContactClass"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateOpportunityAll_tabAttributes" caption="Attributes">
+				<qp-grid id="grdOpportunityInfoAttributesAll" view.bind="OpportunityInfoAttributes" caption="Opportunity" class="framed-section">
+				</qp-grid>
+				<qp-grid id="frmAccountInfoAttributesAll" view.bind="AccountInfoAttributes" caption="Business Account" class="framed-section">
+				</qp-grid>
+				<qp-grid id="frmContactInfoAttributesAll" view.bind="ContactInfoAttributes" caption="Contact" class="framed-section">
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateOpportunityAll_tabUDFS" caption="User-Defined Fields">
+				<qp-grid id="grdOpportunityInfoUDFAll" view.bind="OpportunityInfoUDF" caption="Opportunity" class="framed-section">
+				</qp-grid>
+				<qp-grid id="grdAccountInfoUDFAll" view.bind="AccountInfoUDF" caption="Business Account" class="framed-section">
+				</qp-grid>
+				<qp-grid id="grdContactInfoUDFAll" view.bind="ContactInfoUDF" caption="Contact" class="framed-section">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="CreateOpportunityBtnReview"
+				caption="Create and review"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateOpportunityBtnConvert"
+				caption="Create"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateOpportunityBtnCancel"
+				caption="Cancel"
+				dialog-result="Cancel"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

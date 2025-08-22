@@ -1,0 +1,29 @@
+<template>
+	<qp-panel
+		id="LinkAccount"
+		auto-repaint="true"
+		caption="Associate Entities"
+	>
+		<qp-label caption="Select one of the following options to continue:">
+		</qp-label>
+
+		<qp-fieldset id="panel_AssociateEntities_Contact" view.bind="LinkAccount">
+			<field
+				name="LinkAccountOption"
+				control-type="qp-radio"
+				config-class.bind="'vertical'"
+				no-label="true"
+			></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button
+				id="btnLinkAccountCancel"
+				caption="Cancel"
+				dialog-result="Abort"
+			>
+			</qp-button>
+			<qp-button id="btnLinkAccountNext" caption="Next" dialog-result="Yes">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="CreateServiceOrderFilter" caption="Create Service Order">
+		<qp-template name="1-1-1" id="CreateServiceOrderFilter_template">
+			<qp-fieldset slot="A" id="CreateServiceOrderFilter_formCreateServiceOrder" view.bind="CreateServiceOrderFilter">
+				<field name="SrvOrdType"></field>
+				<field name="BranchLocationID"></field>
+				<field name="AssignedEmpID"></field>
+				<field name="ProblemID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="btnSave2"
+				dialog-result="OK">
+			</qp-button>
+			<qp-button
+				id="btnCancel2"
+				dialog-result="Cancel">
+			</qp-button>
+		</footer>	
+	</qp-panel>
+</template>

@@ -1,0 +1,16 @@
+<template>
+	<qp-template id="filter_template" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="filterEmails" view.bind="Filter">
+			<field name="Account"></field>
+			<field name="OwnerID">
+				<qp-field
+					class="col-3 no-label"
+					control-state.bind="Filter.MyOwner"
+				></qp-field>
+			</field>
+			<field name="Type"></field>
+			<field name="IncludeFailed"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridEmails" view.bind="FilteredItems" wg-container="FilteredItems_grid"></qp-grid>
+</template>

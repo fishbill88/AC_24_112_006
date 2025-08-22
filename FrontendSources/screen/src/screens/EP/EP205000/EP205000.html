@@ -1,0 +1,38 @@
+<template>
+	<qp-template id="mapForm" name="1-1" class="label-size-xm equal-height" wg-container="AssigmentMap_mapForm">
+		<qp-fieldset id="mapForm_0" view.bind="AssigmentMap" slot="A">
+			<field name="AssignmentMapID"></field>
+			<field name="Name"></field>
+		</qp-fieldset>
+		<qp-fieldset id="mapForm_1" view.bind="AssigmentMap" slot="B">
+			<field name="GraphType"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter
+		id="splitterId"
+		split="width"
+		initial-split="270px"
+		state="normal"
+	>
+		<split-pane>
+			<qp-tree id="tree" view.bind="Nodes" caption="Tree"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-template name="1" id="CurrentItem_template">
+				<div id="CurrentItem_div" slot="A">
+					<qp-splitter id="splitter2Id" split="height" state="normal">
+						<split-pane>
+							<qp-grid id="topGrid" view.bind="Items" caption="Rules"></qp-grid>
+							<qp-fieldset id="formRuleType" view.bind="CurrentItem">
+								<field name="RuleType"></field>
+							</qp-fieldset>
+						</split-pane>
+						<split-pane>
+							<qp-grid id="bottomGrid" view.bind="Rules" caption="Conditions"></qp-grid>
+						</split-pane>
+					</qp-splitter>
+				</div>
+			</qp-template>
+		</split-pane>
+	</qp-splitter>
+</template>

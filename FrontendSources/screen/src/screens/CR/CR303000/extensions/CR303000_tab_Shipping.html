@@ -1,0 +1,94 @@
+<template>
+	<template id="tabShipping_Content">
+		<qp-template id="Shipping-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset
+					id="tabShipping_AddressLookup"
+					caption="Ship-to Address"
+					view.bind="DefLocationAddress"
+				>
+					<field name="DefLocation.OverrideAddress"></field>
+					<field name="FakeField" unbound>
+						<qp-address-lookup class="col-12" view.bind="DefLocationAddress">
+						</qp-address-lookup>
+					</field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="State"></field>
+					<field name="PostalCode"></field>
+					<field name="CountryID"></field>
+					<field name="Latitude"></field>
+					<field name="Longitude"></field>
+
+					<field name="IsValidated" config-enabled.bind="false"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="tabShipping_Info"
+					caption="Ship-to Info"
+					view.bind="DefLocationContact"
+				>
+					<field name="DefLocation.OverrideContact"></field>
+					<field name="FullName"></field>
+					<field name="Attention"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Lead.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Lead.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Fax">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="Lead.FaxType"
+						></qp-field>
+					</field>
+					<field name="EMail" control-type="qp-mail-editor"></field>
+					<field name="WebSite" control-type="qp-link-editor"></field>
+				</qp-fieldset>
+			</div>
+			<div slot="B">
+				<qp-fieldset
+					id="tabShipping_TaxSettings"
+					caption="Tax Settings"
+					view.bind="DefLocation"
+				>
+					<field name="TaxRegistrationID"></field>
+					<field name="CTaxZoneID" config-allow-edit.bind="true"></field>
+					<field name="CTaxCalcMode"></field>
+					<field name="CAvalaraExemptionNumber"></field>
+					<field name="CAvalaraCustomerUsageType"></field>
+					<field name="CPriceClassID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="tabShipping_ShippingInstructions"
+					caption="Shipping Instructions"
+					view.bind="DefLocation"
+				>
+				<field name="CBranchID" config-allow-edit.bind="true"></field>
+					<field name="CSiteID" config-allow-edit.bind="true"></field>
+					<field name="CCarrierID" config-allow-edit.bind="true"></field>
+					<field name="CShipTermsID" config-allow-edit.bind="true"></field>
+					<field name="CShipZoneID" config-allow-edit.bind="true"></field>
+					<field name="CFOBPointID" config-allow-edit.bind="true"></field>
+					<field name="CResedential"></field>
+					<field name="CSaturdayDelivery"></field>
+					<field name="CInsurance"></field>
+					<field name="CShipComplete"></field>
+					<field name="COrderPriority"></field>
+					<field name="CLeadTime"></field>
+					<field name="CCalendarID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

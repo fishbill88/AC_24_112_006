@@ -1,0 +1,49 @@
+<template>
+	<qp-template id="ManufacturerTemplate" name="1-1" class="label-size-m">
+		<div slot="A">
+			<qp-fieldset id="ManufacturerRecords_form" view.bind="ManufacturerRecords">
+				<field name="ManufacturerCD"></field>
+				<field name="Descr"></field>
+				<field name="ContactID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset id="CurrentManufacturer_edManufacturerCurrent" view.bind="CurrentManufacturer" class="transparent-section no-label">
+				<field name="AllowOverrideContactAddress"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-template id="GeneralTemplate" name="1-1" class="label-size-m">
+		<div slot="A">
+			<qp-fieldset id="Manufacturer_Contact_edManufacturer_Contact" caption="Main Contact" view.bind="Manufacturer_Contact">
+				<field name="FullName"></field>
+				<field name="Attention"></field>
+				<field name="EMail"></field>
+				<field name="WebSite"></field>
+				<field name="Phone1">
+					<qp-field slot="label" control-state.bind="Manufacturer_Contact.Phone1Type" class="no-label"></qp-field>
+				</field>
+				<field name="Phone2">
+					<qp-field slot="label" control-state.bind="Manufacturer_Contact.Phone2Type" class="no-label"></qp-field>
+				</field>
+				<field name="Fax">
+					<qp-field slot="label" control-state.bind="Manufacturer_Contact.FaxType" class="no-label"></qp-field>
+				</field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="Manufacturer_Address_edManufacturer_Address" caption="Main Address" view.bind="Manufacturer_Address">
+				<field name="actionAddressLookup" unbound>
+					<qp-address-lookup view.bind="BranchLocation_Address" class="col-12"></qp-address-lookup>
+				</field>
+				<field name="actionViewMainOnMap" unbound>
+					<qp-button id="btnViewMainOnMap" state.bind="ViewMainOnMap" caption="View on Map"></qp-button>
+				</field>
+				<field name="AddressLine1"></field>
+				<field name="AddressLine2"></field>
+				<field name="City"></field>
+				<field name="CountryID" config-allow-edit.bind="true"></field>
+				<field name="State"></field>
+				<field name="PostalCode"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

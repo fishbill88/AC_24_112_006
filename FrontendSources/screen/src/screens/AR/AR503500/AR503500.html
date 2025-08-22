@@ -1,0 +1,31 @@
+<template>
+
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form">
+
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="StatementCycleId"></field>
+			<field name="StatementDate"></field>
+			<field name="StatementMessage" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+
+		<qp-fieldset slot="B" id="columnSecond" view.bind="Filter">
+			<field name="BranchID"></field>
+			<field name="OrganizationID"></field>
+			<field name="CuryStatements"></field>
+			<field name="ShowAll"></field>
+		</qp-fieldset>
+
+		<qp-fieldset slot="C" id="columnThird" view.bind="Filter">
+			<field name="PrintWithDeviceHub"></field>
+			<field name="DefinePrinterManually"></field>
+			<field name="PrinterID"></field>
+			<field name="NumberOfCopies"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Details">
+	</qp-grid>
+
+</template>

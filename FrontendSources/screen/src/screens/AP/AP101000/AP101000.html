@@ -1,0 +1,92 @@
+<template>
+	<qp-tabbar id="tabs" wg-container="Setup_tab">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="formGeneral" name="1-1">
+				<div slot="A">
+					<qp-fieldset id="groupNumberingSettings" caption="Numbering Settings" view.bind="Setup">
+						<field name="BatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="InvoiceNumberingID" config-allow-edit.bind="true"></field>
+						<field name="DebitAdjNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CreditAdjNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CheckNumberingID" config-allow-edit.bind="true"></field>
+						<field name="PriceWSNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPostingSettings" caption="Posting Settings" view.bind="Setup">
+						<field name="AutoPost"></field>
+						<field name="SummaryPost"></field>
+						<field name="MigrationMode"></field>
+						<field name="ReclassifyInvoices"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupAgingSettings" caption="Aging Settings" view.bind="Setup">
+						<field name="PastDue00"></field>
+						<field name="PastDue01"></field>
+						<field name="PastDue02"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="groupDataEntrySettings" caption="Data Entry Settings" view.bind="Setup">
+						<field name="DfltVendorClassID" config-allow-edit.bind="true"></field>
+						<field name="ExpenseSubMask"></field>
+						<field name="IntercompanyExpenseAccountDefault"></field>
+						<field name="InvoiceRounding"></field>
+						<field name="InvoicePrecision"></field>
+						<field name="PaymentLeadTime"></field>
+						<field name="HoldEntry"></field>
+						<field name="RequireApprovePayments"></field>
+						<field name="EarlyChecks"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="RequireControlTaxTotal"></field>
+						<field name="SuggestPaymentAmount"></field>
+						<field name="RequireVendorRef"></field>
+						<field name="RaiseErrorOnDoubleInvoiceNbr"></field>
+						<field name="RequireSingleProjectPerDocument"></field>
+						<field name="TermsInDebitAdjustments"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRetainageSettings" caption="Retainage Settings" view.bind="Setup">
+						<field name="RetainTaxes"></field>
+						<field name="RetainageBillsAutoRelease"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATRecalculationSettings" caption="VAT Recalculation Settings" view.bind="Setup">
+						<field name="PPDDebitAdjustmentDescr"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPricing" caption="Pricing">
+			<qp-template name="1-1" id="formPricing">
+				<div slot="A">
+					<qp-fieldset id="groupPriceMaintencance" caption="Price Maintenance" view.bind="Setup">
+						<field name="VendorPriceUpdate"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPriceRetention" caption="Price Retention" view.bind="Setup">
+						<field name="RetentionType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDiscountApplication" caption="Discount Application" view.bind="Setup">
+						<field name="ApplyQuantityDiscountBy"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="SetupApproval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab1099" caption="1099 Settings">
+			<qp-template name="1-1" id="form1099Settings">
+				<qp-fieldset slot="A" id="group1099" wg-container="Setup_DiscountParameters" view.bind="Setup">
+					<field name="PrintDirectSalesOn" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridBoxes1099" view.bind="Boxes1099" wg-container="Boxes1099_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing">
+			<qp-splitter id="splitter" split="height">
+				<split-pane>
+					<qp-grid id="gridNotifications" view.bind="Notifications" wg-container="Notifications_gridNS"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="gridRecipients" wg-container="Recipients_gridNR" view.bind="Recipients"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+	</qp-tabbar>
+</template>

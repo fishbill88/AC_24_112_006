@@ -1,0 +1,27 @@
+<template>
+	<qp-template name="1-1" id="Filter_form" wg-container class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="column1" view.bind="Filter">
+			<field name="SiteID"></field>
+			<field name="ItemClassID"></field>
+			<field name="InventoryID">
+				<qp-button id="btnItemList" class="col-auto" state.bind="SelectItems">
+				</qp-button>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="column2" view.bind="Filter" no-label="true">
+			<field name="RebuildHistory" replace-content>
+				<qp-field control-state.bind="Filter.RebuildHistory" no-label="true">
+					<qp-field control-state.bind="Filter.FinPeriodID" no-label="true" class="col-4"></qp-field>
+				</qp-field>
+			</field>
+			<field name="ReplanBackorders"></field>
+			<field name="ShowOnlyAllocatedItems"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="INItemList">
+	</qp-grid>
+	<qp-panel id="SelectedItems" caption="Inventory Item List" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridItemList" view.bind="SelectedItems">
+		</qp-grid>
+	</qp-panel>
+</template>

@@ -1,0 +1,160 @@
+<template>
+
+	<qp-template name="17-17-14" id="formHeader" wg-container="Document_form" class="equal-height">
+		<qp-fieldset slot="A" id="columnFirstHeader" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="AdjDate"></field>
+			<field name="AdjFinPeriodID"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondHeader" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="PaymentMethodID"></field>
+			<field name="CashAccountID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="ExtRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThirdHeader" view.bind="Document" class="highlights-section">
+			<field name="CuryLineTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryOrigWhTaxAmt"></field>
+			<field name="CuryRoundDiff"></field>
+			<field name="CuryOrigDocAmt"></field>
+			<field name="CuryDocBal"></field>
+			<field name="CuryTaxAmt"></field>
+			<field name="CuryOrigDiscAmt"></field>
+			<field name="CuryChargeAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="CurrentDocument_tab">
+
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridTransactions" view.bind="Transactions" wg-container="Transactions_grid"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabFinancial" caption="Financial">
+
+			<qp-template name="17-17-14" id="formFinancial">
+				<qp-fieldset id="columnFirstFinancial" slot="A" view.bind="CurrentDocument" caption="GL Link">
+					<field name="BatchNbr" config-allow-edit.bind="true"></field>
+					<field name="PrebookBatchNbr" config-allow-edit.bind="true"></field>
+					<field name="VoidBatchNbr" config-allow-edit.bind="true"></field>
+					<field name="BranchID"></field>
+					<field name="APAccountID"></field>
+					<field name="APSubID"></field>
+					<field name="PrebookAcctID"></field>
+					<field name="PrebookSubID"></field>
+					<field name="DocDate"></field>
+					<field name="FinPeriodID"></field>
+					<field name="Cleared"></field>
+					<field name="ClearDate"></field>
+					<field name="OrigRefNbr" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<div slot="B" id="columnSecondFinancial">
+					<qp-fieldset id="groupTaxAndTerms" caption="Tax and Terms" view.bind="CurrentDocument">
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+						<field name="TermsID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATTotals" caption="VAT Totals" view.bind="CurrentDocument">
+						<field name="CuryVatTaxableTotal" config-allow-edit.bind="true"></field>
+						<field name="CuryVatExemptTotal" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabTaxes" caption="Taxes">
+			<qp-grid id="gridTaxes" view.bind="Taxes" wg-container="Taxes_grid1"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabApprovals" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabRemittance" caption="Remittance">
+			<qp-template name="17-17-14" id="formRemittance">
+				<div slot="A" id="columnFirstRemittance">
+					<qp-fieldset id="groupRemittanceContact" caption="Remittance Contact" view.bind="Remittance_Contact" wg-container="Remittance_Contact_Remittance_Contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRemittanceAddress" caption="Remittance Address" view.bind="Remittance_Address" wg-container="Remittance_Address_Remittance_Address">
+						<field name="OverrideAddress"></field>
+						<field name="buttonAddressLookup" unbound>
+							<qp-button id="buttonAddressLookup-RemittanceAddress" state.bind="AddressLookup" caption="Address Lookup"></qp-button>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPrintOptions" view.bind="CurrentDocument" caption="Print Options">
+						<field name="PrintCheck"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabCharges" caption="Charges">
+			<qp-grid id="gridPaymentCharges" view.bind="PaymentCharges" wg-container="PaymentCharges_detgrid3"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+	<!--#include file="~\Pages\Includes\CRApprovalReasonPanel.inc"-->
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason">
+		<qp-fieldset id="panelReasonApproveRejectParams" view.bind="ReasonApproveRejectParams" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+			<field name="Reason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReasonApproveRejectParams" caption="OK" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonCancel-ReasonApproveRejectParams" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--#include file="~\Pages\Includes\EPReassignApproval.inc"-->
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval">
+		<qp-fieldset id="panelReassignApprovalFilter" view.bind="ReassignApprovalFilter" wg-container="ReassignApprovalFilter_formReassignApproval">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonReassign-ReassignApprovalFilter" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReassignApprovalFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--#include file="~\Pages\Includes\AddressLookupPanel.inc"-->
+	<!-- TODO apply js sxripts -->
+	<qp-panel id="AddressLookupFilter" caption="Address Lookup">
+		<qp-fieldset id="panelAddressLookupFilter" view.bind="AddressLookupFilter" wg-container="AddressLookupFilter_AddressLookupPanelformAddress">
+			<field name="SearchAddress"></field>
+			<field name="ViewName"></field>
+			<field name="AddressLine1"></field>
+			<field name="AddressLine2"></field>
+			<field name="AddressLine3"></field>
+			<field name="City"></field>
+			<field name="CountryID"></field>
+			<field name="State"></field>
+			<field name="PostalCode"></field>
+			<field name="Latitude"></field>
+			<field name="Longitude"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonSelect-AddressLookupFilter" state.bind="AddressLookupSelectAction" caption="Select" dialog-result="Cancel"></qp-button>
+			<qp-button id="buttonCancel-AddressLookupFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

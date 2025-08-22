@@ -1,0 +1,20 @@
+<template>
+	<qp-template
+		name="14-17-17"
+		class="equal-height"
+		id="Filter_form"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="Filter">
+			<field name="InvoiceDate"></field>
+			<field name="InvFinPeriodID"></field>
+			<field name="StatementCycleId"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB01" view.bind="Filter">
+			<field name="CustomerClassID"></field>
+			<field name="CustomerID"></field>
+			<field name="TemplateID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Items"></qp-grid>
+</template>

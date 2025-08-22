@@ -1,0 +1,23 @@
+<template>
+	<qp-template id="Settings_filter" wg-container name="17-17-14" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="Settings1" view.bind="Settings">
+			<field name="ForecastDate"></field>
+			<field name="Type"></field>
+			<field name="Seasonality" config-allow-edit.bind="true"></field>
+			<field name="GrowthRate"></field>
+			<field name="GrowthFactor"></field>
+			<field name="CalculateByMonth"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Settings2" view.bind="Settings">
+			<field name="Years"></field>
+			<field name="Dependent"></field>
+			<field name="BAccountID" config-allow-edit.bind="true"></field>
+			<field name="ProcessByCustomer"></field>
+			<field name="SiteId" config-allow-edit.bind="true"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID" config-allow-edit.bind="true"></field>
+			<field name="ItemClassID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="SelectedRecs"></qp-grid>
+</template>

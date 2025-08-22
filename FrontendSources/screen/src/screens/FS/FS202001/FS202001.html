@@ -1,0 +1,116 @@
+﻿<template>
+	<qp-template name="1-1" id="StaffScheduleRecords_form" class="label-size-m" wg-container>
+		<div slot="A">
+			<qp-fieldset id="StaffScheduleRecords_10" view.bind="StaffScheduleRecords">
+				<field name="RefNbr"></field>
+				<field name="EmployeeID"></field>
+				<field name="BranchID"></field>
+				<field name="BranchLocationID"></field>
+				<field name="StaffScheduleDescription"></field>
+			</qp-fieldset>
+			<qp-fieldset id="StaffScheduleRecords_20" caption="Scheduling Time" view.bind="StaffScheduleRecords">
+				<field name="StartDate_Date"></field>
+				<field name="EndDate_Date">
+					<qp-field control-state.bind="StaffScheduleRecords.EnableExpirationDate" config-enabled.bind="false"></qp-field>
+				</field>
+				<field name="StartTime_Time" config-time-mode.bind="true"></field>
+				<field name="EndTime_Time" config-time-mode.bind="true"></field>
+				<field name="ScheduleType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			</qp-fieldset>
+		</div>
+		<qp-fieldset id="StaffScheduleSelected_tab" caption="Recurrence" slot="B" view.bind="StaffScheduleSelected">
+			<field name="RecurrenceDescription" config-type.bind="1" config-rows.bind="2"></field>
+			<field name="FrequencyType"></field>
+			<field name="fake01" unbound>
+				<qp-label caption="Every" if.bind="StaffScheduleSelected.FrequencyType.value == 'D'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.DailyFrequency" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-label caption="day(s)" if.bind="StaffScheduleSelected.FrequencyType.value == 'D'"></qp-label>
+			</field>
+			<field name="fake02" unbound>
+				<qp-label caption="Every" if.bind="StaffScheduleSelected.FrequencyType.value == 'W'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyFrequency" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-label caption="week(s)" if.bind="StaffScheduleSelected.FrequencyType.value == 'W'"></qp-label>
+			</field>
+			<field name="fake03" unbound>
+				<qp-label caption="Day of Week" if.bind="StaffScheduleSelected.FrequencyType.value == 'W'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnSun" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnWed" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnSat" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake04" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnMon" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnThu" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake05" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnTue" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.WeeklyOnFri" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake06" unbound>
+				<qp-label caption="Every" if.bind="StaffScheduleSelected.FrequencyType.value == 'M'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyFrequency" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-label caption="month(s)" if.bind="StaffScheduleSelected.FrequencyType.value == 'M'"></qp-label>
+			</field>
+			<field name="fake07" unbound>
+				<qp-label caption="First Recurrence" if.bind="StaffScheduleSelected.FrequencyType.value == 'M'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyRecurrenceType1" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDay1" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnWeek1" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDayOfWeek1" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake08" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.Monthly2Selected" slot="label" config-enabled.bind="false" class="no-label"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyRecurrenceType2" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDay2" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnWeek2" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDayOfWeek2" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake09" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.Monthly3Selected" slot="label" config-enabled.bind="false" class="no-label"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyRecurrenceType3" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDay3" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnWeek3" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDayOfWeek3" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake10" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.Monthly4Selected" slot="label" config-enabled.bind="false" class="no-label"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyRecurrenceType4" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDay4" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnWeek4" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.MonthlyOnDayOfWeek4" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake11" unbound>
+				<qp-label caption="Every" if.bind="StaffScheduleSelected.FrequencyType.value == 'A'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualFrequency" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-label caption="year(s)" if.bind="StaffScheduleSelected.FrequencyType.value == 'A'"></qp-label>
+			</field>
+			<field name="fake12" unbound>
+				<qp-label caption="Month of Year" if.bind="StaffScheduleSelected.FrequencyType.value == 'A'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnJan" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnMay" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnSep" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake13" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnFeb" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnJun" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnOct" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake14" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnMar" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnJul" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnNov" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake15" unbound>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnApr" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnAug" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnDec" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+			<field name="fake16" unbound>
+				<qp-label caption="Schedule On" if.bind="StaffScheduleSelected.FrequencyType.value == 'A'" slot="label"></qp-label>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualRecurrenceType" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnDay" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnWeek" config-enabled.bind="false" class="col-4"></qp-field>
+				<qp-field control-state.bind="StaffScheduleSelected.AnnualOnDayOfWeek" config-enabled.bind="false" class="col-4"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+</template>

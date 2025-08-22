@@ -1,0 +1,316 @@
+<template>
+	<require from="./styles/schedulerpro.stockholm.css"></require>
+	<require from="./styles/qp-scheduler.css"></require>
+	<require from="./styles/qp-scheduler-splitters.css"></require>
+	<require from="./styles/qp-scheduler-popup.css"></require>
+	<require from="./styles/FS300300.css"></require>
+	<require from="./styles/FS300300-boxes.css"></require>
+	<require from="./bing-map"></require>
+
+	<div ref="serviceOrderPopupInnerHolder" class="qp-sch-popup-holder">
+		<div class="qp-sch-popup-data qp-sch-popup-view-data transparent" ref="serviceOrderPopupInner">
+			<ux-dialog class="dialog qp-dialog qp-collapsible-scope" id="serviceOrderPopupDialogID">
+				<div class="qp-dialog-header qp-collapsible-anchor">
+					<div class="qp-dialog-title">${Labels.ServiceOrder}</div>
+				</div>
+				<ux-dialog-body qp-collapsible class="v-stack gray-pane" id="serviceOrderPopupForm">
+					<qp-fieldset view.bind="SelectedSO" id="groupSOPopupMainID" caption="">
+						<field name="RefNbr" pinned config-allow-edit.bind="true"></field>
+						<field name="Status" pinned></field>
+						<field name="SLAETA"></field>
+						<field name="DocDesc" pinned></field>
+						<field name="BranchLocationCD" pinned config-allow-edit.bind="true"></field>
+						<field name="ServiceContractRefNbr" pinned="false" config-allow-edit.bind="true"></field>
+						<field name="CustPORefNbr" config-allow-edit.bind="true"></field>
+						<field name="ProjectID" config-allow-edit.bind="true"></field>
+						<field name="WaitingForParts"></field>
+						<field name="Priority"></field>
+					</qp-fieldset>
+					<qp-fieldset view.bind="SelectedSO" id="groupSOPopupCustomerID" caption="Customer">
+						<field name="CustomerID" pinned config-allow-edit.bind="true"></field>
+						<field name="FullAddress"></field>
+						<field name="ContactID" config-allow-edit.bind="true"></field>
+						<field name="Phone1" pinned></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<!-- TODO: Replace it when [AC-292107] is implemented -->
+					<div class="qp-fieldset qp-sch-grid-fieldset" id="groupSOPopupEmployeesID" >
+						<div class="qp-fieldset-caption"><legend class="qp-caption">${Captions.DefaultStaff}</legend></div>
+						<div id="serviceOrderEmployeesFormID" wg-container class="v-stack">
+							<qp-grid config.bind="popupSOEmployeesConfig" view.bind="SelectedSOEmployees">
+							</qp-grid>
+						</div>
+					</div>
+				</ux-dialog-body>
+			</ux-dialog>
+		</div>
+	</div>
+
+
+	<div ref="appointmentPopupInnerHolder" class="qp-sch-popup-holder">
+		<div class="qp-sch-popup-data qp-sch-popup-view-data transparent" ref="appointmentPopupInner">
+			<ux-dialog class="dialog qp-dialog qp-collapsible-scope" id="appointmentPopupDialogID">
+				<div class="qp-dialog-header qp-collapsible-anchor">
+					<div class="qp-dialog-title">${Labels.Appointment}</div>
+				</div>
+				<qp-tool-bar view-model.ref="appointmentToolBar" config.bind="topBarAppointmentConfig"></qp-tool-bar>
+				<ux-dialog-body qp-collapsible class="v-stack gray-pane" id="appointmentPopupForm">
+					<qp-fieldset view.bind="SelectedAppointment" id="groupAppointmentPopupMainID" caption="">
+						<field name="RefNbr" pinned config-allow-edit.bind="true"></field>
+						<field name="Status" pinned></field>
+						<field name="DocDesc" pinned></field>
+						<field name="ScheduledDateTimeBegin"></field>
+						<field name="ScheduledDateTimeEnd"></field>
+					</qp-fieldset>
+					<qp-fieldset view.bind="SelectedSO" id="groupAppointmentPopupSOID" caption="Service Order">
+						<field name="RefNbr" pinned config-allow-edit.bind="true"></field>
+						<field name="Status"></field>
+						<field name="SLAETA"></field>
+						<field name="BranchLocationCD" pinned config-allow-edit.bind="true"></field>
+						<field name="ServiceContractRefNbr" pinned="false" config-allow-edit.bind="true"></field>
+						<field name="CustPORefNbr" config-allow-edit.bind="true"></field>
+						<field name="ProjectID" config-allow-edit.bind="true"></field>
+						<field name="WaitingForParts"></field>
+						<field name="Priority"></field>
+					</qp-fieldset>
+					<qp-fieldset view.bind="SelectedSO" id="groupAppointmentPopupCustomerID" caption="Customer">
+						<field name="CustomerID" pinned config-allow-edit.bind="true"></field>
+						<field name="SelectedSO.FullAddress"></field>
+						<field name="SelectedSO.ContactID" config-allow-edit.bind="true"></field>
+						<field name="SelectedSO.Phone1" pinned></field>
+						<field name="SelectedSO.Email"></field>
+					</qp-fieldset>
+					<!-- TODO: Replace it when [AC-292107] is implemented -->
+					<div class="qp-fieldset qp-sch-grid-fieldset" id="groupAppointmentPopupEmployeesID">
+						<div class="qp-fieldset-caption"><legend class="qp-caption">${Captions.Staff}</legend></div>
+						<div id="appointmentPopupEmployeesFormID" wg-container class="v-stack">
+							<qp-grid config.bind="popupAppointmentEmployeesConfig" view.bind="SelectedAppointmentEmployees">
+							</qp-grid>
+						</div>
+					</div>
+				</ux-dialog-body>
+			</ux-dialog>
+		</div>
+	</div>
+
+	<div ref="editPopupInnerHolder" class="qp-sch-popup-holder">
+		<div class="qp-sch-popup-data qp-sch-popup-edit-data transparent" ref="editPopupInner">
+			<ux-dialog class="dialog qp-dialog qp-collapsible-scope" id="editPopupDialogID">
+				<ux-dialog-header show-close-button.bind="false">
+					<div class="qp-dialog-header">
+						<div class="qp-dialog-title">${Labels.NewAppointment}</div>
+						<div class="qp-collapsible-anchor"></div>
+						<qp-icon class="qp-dialog-close" imagesrc="svg:main@close"
+							click.delegate="closePopup()">
+						</qp-icon>
+					</div>
+				</ux-dialog-header>
+				<qp-tool-bar view-model.ref="newAppointmentToolBar" config.bind="topBarNewAppointmentConfig"></qp-tool-bar>
+				<ux-dialog-body qp-collapsible class="v-stack gray-pane" id="editPopupForm">
+					<qp-fieldset id="groupEditedAppointmentSOID" view.bind="MainAppointmentFilter" caption="Service Order">
+						<field name="SrvOrdType"></field>
+						<field name="SORefNbr" config.bind="{allowEdit: true}"></field>
+						<field name="Status"></field>
+						<field name="CustomerID" config.bind="{allowEdit: true}"></field>
+						<field name="LocationID" config.bind="{allowEdit: true}"></field>
+						<field name="ContactID" config.bind="{allowEdit: true}"></field>
+						<field name="BranchLocationID" config.bind="{allowEdit: true}"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupEditedAppointmentMainID" view.bind="MainAppointmentFilter" caption="Appointment">
+						<field name="Description"></field>
+						<field name="ScheduledDateTimeBegin_Date">
+							<qp-field control-state.bind="MainAppointmentFilter.ScheduledDateTimeBegin_Time" config-time-mode.bind="true"></qp-field>
+						</field>
+						<field name="Duration"></field>
+						<field name="LongDescr" config-type.bind="1" config-rows.bind="3"></field>
+						<!-- <field name="AddressLine1"></field>
+						<field name="EditedContact.Phone1"></field>
+						<field name="EditedContact.Email"></field> -->
+					</qp-fieldset>
+					<!-- TODO: Replace it when [AC-292107] is implemented -->
+					<div class="qp-fieldset qp-sch-grid-fieldset" id="groupEditedAppointmentPopupEmployeesID">
+						<div class="qp-fieldset-caption"><legend class="qp-caption">${Captions.Staff}</legend></div>
+						<div id="editedAppointmentPopupEmployeesFormID" wg-container class="v-stack">
+							<qp-grid config.bind="popupNewAppointmentEmployeesConfig" view.bind="EditedAppointmentEmployees">
+							</qp-grid>
+						</div>
+					</div>
+				</ux-dialog-body>
+			</ux-dialog>
+		</div>
+	</div>
+
+	<div pointerdown.delegate="closePopup($event)" class="stretch">
+		<qp-splitter id="mainSplitterId" class="horizontal-splitter" config.bind="mainSplitterConfig">
+			<split-pane slot="A">
+				<div class="main-tab-bar" id="mainTabBarHolderID">
+					<qp-tabbar view-model.ref="mainTabBar" id="mainTabBar">
+						<qp-tab id="tabServiceOrders" caption="Unscheduled" visible.from-view="tabServiceOrdersVisible">
+							<div class="qp-sch-grid-container">
+								<div class="qp-sch-hide-grid" wg-container>
+									<qp-grid id="serviceOrderGridID"
+										view.bind="ServiceOrders"
+										view-model.ref="serviceOrdersGrid"
+										on-data-ready.call="serviceOrdersDataReadyHandler(grid, args)"
+									/>
+								</div>
+								<div class="qp-sch-left-container qp-sch-so-container" id="schedulerSOContainer">
+									<div class="qp-sch-config-form">
+										<div class="v-stack">
+											<qp-fieldset class="qp-sch-config-left" id="serviceOrdersBrickLeftID" view.bind="SelectedSO"
+												view-model.ref="serviceOrdersBrickLeft" caption="Service Order - Left"
+											>
+												<field name="RefNbr"></field>
+												<field name="SelectedSO.CustomerAcctName"></field>
+												<field name="SelectedSO.FullAddress"></field>
+												<field name="DocDesc"></field>
+											</qp-fieldset>
+											<qp-fieldset class="qp-sch-config-right" id="serviceOrdersBrickRightID" view.bind="SelectedSO"
+												view-model.ref="serviceOrdersBrickRight" caption="Service Order - Right"
+											>
+												<field name="Severity"></field>
+												<field name="Priority"></field>
+											</qp-fieldset>
+										</div>
+									</div>
+								</div>
+							</div>
+						</qp-tab>
+						<qp-tab id="tabAppointments" caption="Scheduled" visible.from-view="tabSearchAppointmentsVisible">
+							<div class="qp-sch-grid-container">
+								<div class="qp-sch-hide-grid" wg-container>
+									<qp-grid id="searchAppointmentsGridID"
+										view.bind="SearchAppointments"
+										view-model.ref="searchAppointmentsGrid"
+										on-data-ready.call="searchAppointmentsDataReadyHandler(grid, args)"
+									/>
+								</div>
+								<div class="qp-sch-left-container qp-sch-search-container" id="searchAppointmentContainer">
+									<div class="qp-sch-config-form">
+										<div class="v-stack">
+											<qp-fieldset class="qp-sch-config-left" id="searchAppointmentBrickLeftID" view.bind="SelectedAppointment"
+												view-model.ref="searchAppointmentBrickLeft" caption="Appointment - Left"
+											>
+												<field name="Status"></field>
+												<field name="RefNbr" config-allow-edit.bind="true"></field>
+												<field name="SelectedSO.CustomerAcctName"></field>
+												<field name="SelectedSO.FullAddress"></field>
+												<field name="SelectedSO.DocDesc"></field>
+												<field name="ScheduledDateTimeBegin"></field>
+											</qp-fieldset>
+											<qp-fieldset class="qp-sch-config-right" id="searchAppointmentBrickRightID" view.bind="SelectedAppointment"
+												view-model.ref="searchAppointmentBrickRight" caption="Appointment - Right"
+											>
+												<field name="StaffCntr"></field>
+												<field name="SelectedSO.Severity"></field>
+												<field name="SelectedSO.Priority"></field>
+											</qp-fieldset>
+										</div>
+									</div>
+								</div>
+							</div>
+						</qp-tab>
+					</qp-tabbar>
+					<!-- TODO: This needs to be refactored -- we should manage loading of views from TS only -->
+					<div class="hidden" wg-container>
+						<qp-fieldset class="hidden" id="groupLastUpdatedAppointmentFilterID" view-model.ref="groupLastUpdatedAppointmentFilter"
+							view.bind="LastUpdatedAppointmentFilter">
+							<field name="AppointmentID" config-allow-edit.bind="true"></field>
+						</qp-fieldset>
+						<qp-grid view-model.ref="lastUpdatedGrid" view.bind="LastUpdatedAppointment"
+							id="lastUpdatedGridID"
+							on-data-ready.call="appointmentsDataReadyHandler(grid, args)"
+						/>
+					</div>
+					<div>
+						<qp-fieldset class="hidden" id="groupDatesFilterID" view.bind="DatesFilter">
+							<field name="DateSelected"></field>
+						</qp-fieldset>
+					</div>
+					<div>
+						<qp-fieldset class="hidden" id="groupInitDataID" view.bind="InitData">
+						</qp-fieldset>
+					</div>
+					<div>
+						<qp-fieldset class="hidden" id="groupSetupID" view.bind="Setup">
+						</qp-fieldset>
+					</div>
+					<div>
+						<qp-fieldset class="hidden" id="groupUpdatedAppointmentID" view.bind="UpdatedAppointment">
+							<field name="AppointmentID"></field>
+						</qp-fieldset>
+					</div>
+				</div>
+			</split-pane>
+			<split-pane slot="B">
+				<qp-splitter id="mapSplitterId" class="horizontal-splitter"
+					config.bind="mapSplitterConfig" view-model.ref="mapSplitter"
+					on-condition-changed.call="mapSplitterStateChanged()"
+				>
+					<split-pane slot="A">
+						<div class="qp-sch-grid-container qp-sch-calendar-container">
+							<qp-tabbar view-model.ref="schedulerTabBar" id="schedulerTabBarId">
+								<qp-tab repeat.for="tab of SchedulerGridFilters" id.to-view="tab.filterID" caption="${tab.filterName}" wg-exclude/>
+							</qp-tabbar>
+							<div class="qp-sch-grid-container-inner">
+								<div class="qp-sch-hide-grid" wg-container>
+									<qp-grid view-model.ref="schedulerGrid" view.bind="AppointmentsAllStaff"
+										id="appointmentsAllStaffGridID"
+										on-data-ready.call="appointmentsDataReadyHandler(grid, args)"
+										on-active-filter-changed.call="onActiveFilterChanged(args)"
+										on-filters-changed.call="onFiltersChanged(args)"
+									/>
+								</div>
+								<div class="qp-sch-main-container" id="schedulerMainContainer">
+									<div class="qp-sch-config-form">
+										<div class="v-stack">
+											<qp-fieldset class="qp-sch-config-left" id="appointmentsBrickLeftID" view.bind="SelectedAppointment"
+												view-model.ref="appointmentsBrickLeft" caption="Appointment - Left"
+											>
+												<field name="RefNbr" config-allow-edit.bind="true"></field>
+												<field name="SelectedSO.CustomerAcctName"></field>
+											</qp-fieldset>
+											<qp-fieldset class="qp-sch-config-right" id="appointmentsBrickRightID" view.bind="SelectedAppointment"
+												view-model.ref="appointmentsBrickRight" caption="Appointment - Right"
+											>
+												<field name="StaffCntr"></field>
+												<field name="SelectedSO.Severity"></field>
+												<field name="SelectedSO.Priority"></field>
+											</qp-fieldset>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</split-pane>
+					<split-pane slot="B">
+						<bing-map view-model.ref="mainMap" width="100%" height="100%" class="main-map"></bing-map>
+					</split-pane>
+				</qp-splitter>
+			</split-pane>
+		</qp-splitter>
+		<qp-tool-bar view-model.ref="rightToolBar" config.bind="rightToolBarConfig" portal="target.bind: schedulerFilter; position: afterbegin">
+		</qp-tool-bar>
+		<li class="date-picker qp-tool-bar-item" portal="target.bind: prevPeriodButton; position: afterend">
+			<qp-datetime-edit value.two-way="pickerDate | dateUTC:false" config.bind="startDatePickerConfig" containerless>
+			</qp-datetime-edit>
+		</li>
+	</div>
+	<div class="hidden">
+		<qp-hyper-icon view-model.ref="iconPriorityHigh" images.bind="{ normal: 'svg:fs@priorityHigh' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconPriorityMedium" images.bind="{ normal: 'svg:fs@priorityMedium' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconPriorityLow" images.bind="{ normal: 'svg:fs@priorityLow' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconSeverityHigh" images.bind="{ normal: 'svg:fs@severityHigh' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconSeverityMedium" images.bind="{ normal: 'svg:fs@severityMedium' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconSeverityLow" images.bind="{ normal: 'svg:fs@severityLow' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconPriorityDarkHigh" images.bind="{ normal: 'svg:fs@priorityDarkHigh' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconPriorityDarkMedium" images.bind="{ normal: 'svg:fs@priorityDarkMedium' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconPriorityDarkLow" images.bind="{ normal: 'svg:fs@priorityDarkLow' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconSeverityDarkHigh" images.bind="{ normal: 'svg:fs@severityDarkHigh' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconSeverityDarkMedium" images.bind="{ normal: 'svg:fs@severityDarkMedium' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconSeverityDarkLow" images.bind="{ normal: 'svg:fs@severityDarkLow' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconMultiEmployee" images.bind="{ normal: 'svg:fs@multiEmployee' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconMultiEmployeeDark" images.bind="{ normal: 'svg:fs@multiEmployeeDark' }"></qp-hyper-icon>
+		<qp-hyper-icon view-model.ref="iconDatePicker" images.bind="{ normal: 'svg:main@datePicker' }"></qp-hyper-icon>
+	</div>
+</template>

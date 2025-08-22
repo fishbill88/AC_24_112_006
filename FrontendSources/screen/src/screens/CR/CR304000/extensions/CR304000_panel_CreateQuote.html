@@ -1,0 +1,36 @@
+<template>
+	<qp-panel id="QuoteInfo" auto-repaint="true" caption="Create Quote" width="40vw" >
+		<qp-tabbar id="panel_CreateQuote_mainTabBar">
+			<qp-tab id="panel_CreateQuote_tabMain" caption="Main">
+				<qp-fieldset
+					id="panel_CreateQuote_Contact"
+					view.bind="QuoteInfo"
+				>
+					<field name="QuoteType"></field>
+					<field name="AddProductsFromOpportunity"></field>
+					<field name="MakeNewQuotePrimary"></field>
+					<field name="RecalculatePrices"></field>
+					<field name="OverrideManualPrices" class="qp-field-dependent"></field>
+					<field name="RecalculateDiscounts"></field>
+					<field name="OverrideManualDiscounts" class="qp-field-dependent"></field>
+					<field name="OverrideManualDocGroupDiscounts" class="qp-field-dependent"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateQuoteAll_tabUDFS" caption="User-Defined Fields">
+				<qp-grid id="grdCreateQuoteQuoteInfoUDF" view.bind="CreateQuoteInfoUDF">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="CreateQuoteBtnReview"
+				caption="Create and review"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button id="CreateQuoteBtnConvert" caption="Create" dialog-result="No">
+			</qp-button>
+			<qp-button id="CreateQuoteBtnCancel" dialog-result="Cancel"> </qp-button>
+		</footer>
+	</qp-panel>
+</template>

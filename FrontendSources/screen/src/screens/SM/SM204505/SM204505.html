@@ -1,0 +1,54 @@
+<template>
+	<qp-grid id="gridProjects" wg-container="Projects_grid" view.bind="Projects">
+	</qp-grid>
+
+	<qp-panel id="ViewCompanyList" wg-container="ViewPublishOptions_ViewPublishOptions" caption="Publish to Multiple Tenants" auto-repaint="true" width="60vw">
+		<qp-grid id="gridViewCompanyList" view.bind="ViewCompanyList" wg-container="ViewCompanyList_GridCompanyList">
+		</qp-grid>
+		<qp-fieldset id="formViewPublishOptions" view.bind="ViewPublishOptions">
+			<field name="PublishOnlyDB" class="no-label"></field>
+			<field name="DisableOptimization" class="no-label"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton5" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ViewValidateExtensions" caption="Validation Results" wg-container="ViewValidateExtensions_PXFormView4" width="60vw" height="80vh">
+		<qp-fieldset id="formViewValidateExtensions" view.bind="ViewValidateExtensions">
+			<field name="Messages" replace-content>
+				<span innerhtml="${ViewValidateExtensions.Messages.value | removeSCRIPT}"></span>
+			</field>
+		</qp-fieldset>
+		<footer>
+			<qp-button 	id="PXButtonValidateOK"
+						dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ProjectsChooser" caption="Choose projects" auto-repaint="true" wg-container="PanelChooseProjects" width="60vw">
+		<qp-grid id="gridProjectsChooser" view.bind="ProjectsChooser" wg-container="ProjectsChooser_gridChooser">
+		</qp-grid>
+		<footer>
+			<!-- Igor T. For some reason binded actions are not executed if dialog-result = OK, so kept Cancel for all.
+				We need dialog-result to hide the dialog after click -->
+			<qp-button 	id="PXPanelChooseProjectsOK"
+						dialog-result="Cancel"
+						state.bind="ActionPanelChooseProjects"
+						wg-name="VALIDATE">
+			</qp-button>
+			<qp-button 	id="PXPanelChooseProjectsAllMessagesOK"
+						dialog-result="Cancel"
+						state.bind="ActionPanelChooseProjectsAllMessages"
+						wg-name="VALIDATEANDSHOWALLMESSAGES">
+			</qp-button>
+			<qp-button 	id="PXPanelChooseProjectsCancel"
+						dialog-result="Cancel"
+						state.bind="ActionPanelChooseProjectsCancel"
+						wg-name="CANCEL">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

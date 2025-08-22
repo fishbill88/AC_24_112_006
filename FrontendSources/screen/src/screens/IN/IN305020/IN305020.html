@@ -1,0 +1,18 @@
+<template>
+	<qp-include url="../../barcodeProcessing/BarcodeProcessingScreen.html"></qp-include>
+
+	<template modify="#main">
+		<field name="RefNbr"></field>
+		<field name="SiteID"></field>
+	</template>
+
+	<template modify="#secondary">
+		<field name="Remove" class="no-label">
+		</field>
+	</template>
+
+	<qp-tab before="#tabLogs" id="tabPicked" caption="Count">
+		<qp-grid id="gridPIDetail" view.bind="PIDetail">
+		</qp-grid>
+	</qp-tab>
+</template>

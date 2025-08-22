@@ -1,0 +1,15 @@
+<template>
+
+	<qp-template id="formFilter" name="1-1" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="CuryID" ></field>
+			<field name="CuryEffDate" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="CuryRateTypeID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridCurrencyRateList" view.bind="CurrencyRateList" wg-container="CurrencyRateList_grid"> </qp-grid>
+
+</template>

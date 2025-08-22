@@ -1,0 +1,17 @@
+<template>
+
+	<qp-template id="formFilter" name="1-1">
+		<qp-fieldset id="panelFilter" view.bind="TaxYearFilterSelectView" wg-container="TaxYearFilterSelectView_form" slot="A">
+			<field name="OrganizationID"></field>
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="Year">
+				<qp-field no-label="true" control-state.bind="TaxYearFilterSelectView.ShortTaxYear" class="col-4"></qp-field>
+			</field>
+			<field name="StartDate"></field>
+			<field name="TaxPeriodType"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridPeriods" view.bind="TaxPeriodExSelectView" wg-container="TaxPeriodExSelectView_grid"></qp-grid>
+
+</template>

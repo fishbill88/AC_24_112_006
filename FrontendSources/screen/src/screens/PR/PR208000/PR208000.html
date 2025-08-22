@@ -1,0 +1,40 @@
+﻿<template>
+    <qp-tabbar active-tab-id="General" id="tab" view.bind="Filter">
+        <qp-tab id="TaxMaintenance" if.bind="false">
+            <qp-fieldset id="fakeFormForImport" view.bind="Filter">
+                <field name="FilterStates"></field>
+            </qp-fieldset>
+        </qp-tab>
+        <qp-tab id="TaxCodes" caption="Tax Codes">
+            <qp-template name="1-1" id="taxCodesTemplate">
+                <div slot="A">
+                      <qp-grid id="grdTaxes" caption="Tax Codes" view.bind="Taxes" class="framed-section">
+                    </qp-grid>
+                </div>
+                <div slot="B">
+                     <qp-grid id="grdTaxAttributes" caption="Tax Settings" view.bind="TaxAttributes" class="framed-section">
+                    </qp-grid>
+                </div>
+            </qp-template>
+        </qp-tab>
+        <qp-tab id="CompanyTax" caption="Company Tax">
+            <qp-fieldset id="filterForm" view.bind="Filter" class="no-label transparent-section">
+                <field name="FilterStates"></field>
+            </qp-fieldset>
+            <qp-grid id="grdCompanyAttributes" view.bind="CompanyAttributes">
+            </qp-grid>
+        </qp-tab>
+        <qp-tab id="Employees" if.bind="false">
+            <qp-grid id="grdEmployees" view.bind="Employees">
+            </qp-grid>
+        </qp-tab>
+        <qp-panel id="spTaxDetails" caption="Tax Details">
+            <qp-fieldset id="frmTaxDetails" view.bind="CurrentTax">
+            </qp-fieldset>
+            <footer id="spTaxDetailsButtons">
+                <qp-button id="taxDetailsOkButton" dialog-result="OK">
+                </qp-button>
+            </footer>
+        </qp-panel>
+    </qp-tabbar>
+</template>

@@ -1,0 +1,39 @@
+<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template id="GeneralTab-form" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="Setup_tab" view.bind="Setup" wg-container>
+						<field name="SubcontractNumberingID"
+							config-allow-edit.bind="true"
+							config-allow-null.bind="false">
+						</field>
+						<field name="RequireSubcontractControlTotal"></field>
+						<field name="SubcontractRequestApproval"></field>
+					</qp-fieldset>
+					<qp-fieldset id="edSetupApproval" view.bind="SetupApproval" caption="Approval">
+						<field name="AssignmentMapID" config-allow-edit.bind="true"></field>
+						<field name="AssignmentNotificationID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="MailingAndPrintingTab" caption="Mailing & Printing">
+			<qp-splitter id="mapSplitterId"
+				split="height"
+				initial-split="50%"
+				state="normal"
+			>
+				<split-pane>
+					<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients"></qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="grid" view.bind="Attributes"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

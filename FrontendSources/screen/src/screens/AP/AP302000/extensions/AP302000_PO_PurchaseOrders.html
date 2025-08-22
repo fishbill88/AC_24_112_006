@@ -1,0 +1,26 @@
+<template>
+
+	<qp-tab after="#tabDocumentsToApply" id="tabOrders" caption="Orders" if.bind="Document.DocType.value=='REF'">
+		<qp-grid id="gridPOAdjustments" view.bind="POAdjustments" wg-container="POAdjustments_detgrid4"></qp-grid>
+	</qp-tab>
+
+	<qp-panel id="LoadOrders" caption="Load Orders" auto-repaint="true">
+		<qp-template name="17-17-14" id="panelLoadOrders" class="equal-height" wg-container="LoadOrders_PXFormLoadPOOrders">
+			<qp-fieldset id="columnFirstLoadPOOrders" slot="A" view.bind="LoadOrders">
+				<field name="BranchID"></field>
+				<field name="FromDate"></field>
+				<field name="StartOrderNbr"></field>
+				<field name="MaxNumberOfDocuments"></field>
+			</qp-fieldset>
+			<qp-fieldset id="columnSecondLoadPOOrders" slot="B" view.bind="LoadOrders">
+				<field name="ToDate"></field>
+				<field name="EndOrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnReasonOk-LoadOrders" caption="OK" dialog-result="Yes"></qp-button>
+			<qp-button id="btnReasonCancel-LoadOrders" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="form" name="1-1">
+		<qp-fieldset slot="A" id="form" view.bind="UnionLocal" class="label-size-m">
+			<field name="UnionID"></field>
+			<field name="IsActive"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="EarningRatesTab" caption="Earning Rates">
+			<qp-grid id="PXGrid1" view.bind="EarningRates">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="DeductionsandBenefitsTab" caption="Deductions and Benefits">
+			<qp-grid id="PXGrid2" view.bind="DeductionsAndBenefitsPackage">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

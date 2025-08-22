@@ -1,0 +1,62 @@
+<template>
+	<qp-template id="BranchLocationRecords_form" name="1-1" class="label-size-m" wg-container>
+		<qp-fieldset id="first" slot="A" view.bind="BranchLocationRecords">
+			<field name="BranchLocationCD"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" slot="B" view.bind="BranchLocationRecords">
+			<field name="BranchID" config-allow-edit.bind="true"></field>
+			<field name="RoomFeatureEnabled"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="generalTab" caption="General">
+			<qp-template id="GeneralTemplate" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="BranchLocation_Contact_edBranchLocation_Contact" caption="Main Contact" view.bind="BranchLocation_Contact">
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="EMail"></field>
+						<field name="WebSite"></field>
+						<field name="Phone1">
+							<qp-field slot="label" control-state.bind="BranchLocation_Contact.Phone1Type" class="no-label"></qp-field>
+						</field>
+						<field name="Phone2">
+							<qp-field slot="label" control-state.bind="BranchLocation_Contact.Phone2Type" class="no-label"></qp-field>
+						</field>
+						<field name="Fax">
+							<qp-field slot="label" control-state.bind="BranchLocation_Contact.FaxType" class="no-label"></qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="BranchLocation_Address_edBranchLocation_Address" caption="Main Address" view.bind="BranchLocation_Address">
+						<field name="actionAddressLookup" unbound>
+							<qp-address-lookup view.bind="BranchLocation_Address" class="col-12"></qp-address-lookup>
+						</field>
+						<field name="actionViewMainOnMap" unbound>
+							<qp-button id="btnViewMainOnMap" state.bind="ViewMainOnMap" caption="View on Map"></qp-button>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID" config-allow-edit.bind="true"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+					</qp-fieldset>
+				</div>
+				<div id="CurrentBranchLocation_tab" wg-container slot="B">
+					<qp-fieldset id="CurrentBranchLocation_10" caption="Financial Settings" view.bind="CurrentBranchLocation">
+						<field name="SubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentBranchLocation_20" caption="Inventory Defaults" view.bind="CurrentBranchLocation">
+						<field name="DfltSiteID"></field>
+						<field name="DfltUOM"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="roomsTab" caption="Rooms" if.bind="BranchLocationRecords.RoomFeatureEnabled.value == true">
+			<qp-grid id="roomGrid" view.bind="RoomRecords">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

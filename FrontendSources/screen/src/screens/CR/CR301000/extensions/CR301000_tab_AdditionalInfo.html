@@ -1,0 +1,37 @@
+<template>
+	<template id="tabAdditionalInfo_Content">
+		<qp-template id="CRMInfo-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="CRMInfo_AdditionalInfo" caption="Lead Details" view.bind="Lead">
+					<field name="WorkgroupID"></field>
+					<field name="OverrideSalesTerritory"></field>
+					<field name="SalesTerritoryID"></field>
+					<field name="ExtRefNbr"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="CRMInfo_ActivitiesHistory"
+					caption="Activities History"
+					view.bind="LeadActivityStatistics"
+				>
+					<field name="LastIncomingActivityDate"></field>
+					<field name="LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+			</div>
+
+			<div slot="B">
+				<qp-fieldset
+					id="CRMInfo_ContactPreferences"
+					caption="Contact Preferences"
+					view.bind="Lead"
+				>
+					<field name="Method"></field>
+					<field name="NoCall"></field>
+					<field name="NoMarketing"></field>
+					<field name="NoEMail"></field>
+					<field name="NoMassMail"></field>
+					<field name="LanguageID"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

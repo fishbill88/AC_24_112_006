@@ -1,0 +1,40 @@
+<template>
+	<qp-template name="1-1" class="equal-height" id="formAllocationHeader" wg-container="AllocationHeader_frmHeader">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="AllocationHeader">
+			<field name="GLAllocationID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecond" view.bind="AllocationHeader">
+			<field name="Active"></field>
+			<field name="BranchID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs" >
+		<qp-tab id="tabAllocation" caption="Allocation">
+			<qp-template id="formAllocation" name="1-1">
+				<qp-fieldset id="panelAllocation" slot="A" view.bind="Allocation" wg-container="Allocation_tab">
+					<field name="StartFinPeriodID"></field>
+					<field name="EndFinPeriodID"></field>
+					<field name="Recurring"></field>
+					<field name="AllocCollectMethod"></field>
+					<field name="AllocMethod"></field>
+					<field name="AllocLedgerID"></field>
+					<field name="SourceLedgerID"></field>
+					<field name="BasisLederID"></field>
+					<field name="AllocateSeparately"></field>
+					<field name="SortOrder"></field>
+					<field name="LastRevisionOn"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabSource" caption="Source Accounts">
+			<qp-grid id="gridSource" wg-container="Source_grSource" view.bind="Source"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDest" caption="Destination Accounts">
+			<qp-grid id="gridDest" wg-container="Destination_grDest" view.bind="Destination"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBatches" caption="Allocation History">
+			<qp-grid id="gridBatches" wg-container="Batches_grBatches" view.bind="Batches"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,39 @@
+<template>
+	<qp-template id="form" name="1-1" wg-container="Buildings_form" class="label-size-m">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="Buildings">
+			<field name="BuildingCD"></field>
+			<field name="BranchID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template name="1-1" id="addrForm" class="label-size-m">
+		<qp-fieldset slot="A" id="addressColumn1" view.bind="Address" caption="Address" wg-container="Address_addrForm">
+			<field name="addressLookupButton" unbound>
+				<qp-address-lookup class="col-12" view.bind="Address">
+				</qp-address-lookup>
+			</field>
+			<field name="AddressLine1"></field>
+			<field name="AddressLine2"></field>
+			<field name="City"></field>
+			<field name="CountryID" config-allow-edit.bind="true"></field>
+			<field name="State" config-allow-edit.bind="true"></field>
+			<field name="PostalCode"></field>
+			<field name="IsValidated"></field>
+		</qp-fieldset>
+		<qp-grid slot="B" id="grid" view.bind="Sites" caption="Warehouses" class="framed-section"></qp-grid>
+	</qp-template>
+
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-template name="1" id="changeIDSettings">
+			<qp-fieldset slot="A" id="formChangeID" wg-container view.bind="ChangeIDDialog">
+				<field name="CD"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

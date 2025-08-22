@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="HeaderGroup_form" name="17-17-14" class="equal-height" wg-container>
+		<qp-fieldset id="headerGroup1" view.bind="HeaderGroup" slot="A">
+			<field name="GroupName"></field>
+			<field name="Active"></field>
+			<field name="GroupType"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="headerGroup2" view.bind="HeaderGroup" slot="B">
+			<field name="EntityTypeName"></field>
+			<field name="SpecificType"></field>
+			<field name="SpecificModule"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="DetailsGroup"></qp-grid>
+</template>

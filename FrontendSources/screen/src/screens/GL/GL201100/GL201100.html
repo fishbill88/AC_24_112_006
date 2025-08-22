@@ -1,0 +1,48 @@
+<template>
+
+	<qp-template name="17-17-14" class="equal-height" id="formOrgFinYear" wg-container="OrgFinYear_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="OrgFinYear">
+			<field name="OrganizationID"></field>
+			<field name="Year"></field>
+			<field name="StartDate"></field>
+			<field name="FinPeriods"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridOrgFinPeriods" wg-container="OrgFinPeriods_grid" view.bind="OrgFinPeriods">
+	</qp-grid>
+
+	<qp-panel id="NewCalendarParams" caption="Create First Year of Company Calendar" auto-repaint="true">
+		<qp-template name="1" id="formNewCalendarParams">
+			<qp-fieldset id="panelNewCalendarParams" wg-container="NewCalendarParams_NewCalendarParams" view.bind="NewCalendarParams">
+				<field name="OrganizationID"></field>
+				<field name="StartYear"></field>
+				<field name="StartMasterFinPeriodID"></field>
+				<field name="StartDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-NewCalendarParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-NewCalendarParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="GenerateParams" caption="Generate GL Calendar" auto-repaint="true">
+		<qp-template name="1-1" id="formGenerateParams" wg-container="GenerateParams_GenParams">
+			<qp-fieldset slot="A" id="columnFirstGenerateParams" view.bind="GenerateParams">
+				<field name="OrganizationID"></field>
+				<field name="FirstFinYear"></field>
+				<field name="LastFinYear"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecondGenerateParams" view.bind="GenerateParams">
+				<field name="FromYear"></field>
+				<field name="ToYear"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-GenerateParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-GenerateParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

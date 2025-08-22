@@ -1,0 +1,24 @@
+<template>
+	<qp-template id="formFilter" name="17-17-14"  class="equal-height" wg-container="Filter_form">
+		<qp-fieldset id="columnFirst-Filter" view.bind="Filter" slot="A">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="LedgerID"></field>
+			<field name="PeriodID"></field>
+			<field name="AccountID"></field>
+			<field name="SubID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond-Filter" view.bind="Filter" slot="B">
+			<field name="ScoreTreshold"></field>
+			<field name="AmountTreshold"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Transactions">
+	</qp-grid>
+
+	<qp-panel id="subspaces" caption="Anomaly Scores" auto-repaint="true">
+		<qp-grid id="gridSubspaces" view.bind="Subspaces">
+		</qp-grid>
+	</qp-panel>
+
+</template>

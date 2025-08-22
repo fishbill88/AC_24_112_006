@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="formHeader" name="1-1-1" wg-container="TranslHistRecords_form" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" view.bind="TranslHistRecords" slot="A">
+			<field name="ReferenceNbr"></field>
+			<field name="Status"></field>
+			<field name="DateEntered"></field>
+			<field name="CuryEffDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" view.bind="TranslHistRecords" slot="B">
+			<field name="TranslDefId"></field>
+			<field name="BranchID"></field>
+			<field name="LedgerID"></field>
+			<field name="DestCuryID"></field>
+			<field name="BatchNbr" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdHeader" view.bind="TranslHistRecords" slot="C">
+			<field name="DebitTot"></field>
+			<field name="CreditTot"></field>
+			<field name="ControlTot"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridTranslHistDetRecords" view.bind="TranslHistDetRecords" wg-container="TranslHistDetRecords_grid"></qp-grid>
+</template>

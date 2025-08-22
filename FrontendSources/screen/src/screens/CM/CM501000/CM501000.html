@@ -1,0 +1,22 @@
+<template>
+
+	<qp-template id="formFilter" name="1-1" wg-container="TranslationParamsFilter_form">
+		<qp-fieldset id="columnFirstFilter" view.bind="TranslationParamsFilter" slot="A">
+			<field name="TranslDefId"></field>
+			<field name="FinPeriodID"></field>
+			<field name="LastFinPeriodID"></field>
+			<field name="CuryEffDate"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="TranslationParamsFilter" slot="B">
+			<field name="BranchID"></field>
+			<field name="SourceLedgerId"></field>
+			<field name="DestLedgerId"></field>
+			<field name="SourceCuryID"></field>
+			<field name="DestCuryID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridTranslationCurrencyRateRecords" view.bind="TranslationCurrencyRateRecords" wg-container="TranslationCurrencyRateRecords_grid"> </qp-grid>
+
+</template>

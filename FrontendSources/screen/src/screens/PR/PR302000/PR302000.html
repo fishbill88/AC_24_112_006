@@ -1,0 +1,212 @@
+<template>
+	<qp-template name="7-10-7" id="Document_form" class="equal-height" wg-container>
+		<div slot="A">
+			<qp-fieldset id="Document1" view.bind="Document">
+				<field name="DocType" ></field>
+				<field name="RefNbr" ></field>
+				<field name="Status" ></field>
+				<field name="PayGroupID" ></field>
+				<field name="PayPeriodID" ></field>
+				<field name="FinPeriodID" ></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="Document2" view.bind="Document">
+				<field name="EmployeeID"></field>
+				<field name="PaymentMethodID"></field>
+				<field name="CashAccountID"></field>
+				<field name="StartDate"></field>
+				<field name="EndDate"></field>
+				<field name="TransactionDate"></field>
+				<field name="DocDesc"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="C">
+			<qp-fieldset id="Document3" view.bind="Document">
+				<field name="GrossAmount"></field>
+				<field name="DedAmount"></field>
+				<field name="TaxAmount"></field>
+				<field name="NetAmount"></field>
+				<field name="TerminationReason"></field>
+				<field name="IsRehirable"></field>
+				<field name="TerminationDate"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="tab" view.bind="CurrentDocument">
+		<qp-tab id="EarningTab" caption="Earning">
+			<qp-grid id="gridEarnings" view.bind="Earnings">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="SummaryTab" caption="Summary">
+			<qp-grid id="grdSummaryEarnings" view.bind="SummaryEarnings">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="DeductionsTab" caption="Deductions">
+			<qp-grid id="grdDeductions" view.bind="Deductions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-template name="1-1" id="taxesTemplate">
+				<div slot="A">
+					<qp-grid id="grdTaxes" view.bind="Taxes" class="framed-section">
+					</qp-grid>
+				</div>
+				<div slot="B">
+					<qp-grid id="taxSplitGrid" view.bind="TaxSplits" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="PaidTimeOffTab" caption="Paid Time Off">
+			<qp-grid id="grdPaymentPTOBanks" view.bind="PaymentPTOBanks">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="WCCTab" caption="Workers' Compensation">
+			<qp-grid id="grdWC" view.bind="WCPremiums">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="UnionTab" caption="Union">
+			<qp-grid id="grdUnion" view.bind="UnionPackageDeductions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="CertifiedProjectTab" caption="Certified Project">
+			<qp-template name="1-1" id="certPTemplate">
+				<div slot="A">
+					<qp-grid id="grdFringeBenefits" view.bind="PaymentFringeBenefits" class="framed-section">
+					</qp-grid>
+				</div>
+				<div slot="B" class="v-stack">
+					<qp-grid id="grdFringeBenefitsReducingRate" caption="Benefits Decreasing the Rate" view.bind="PaymentFringeBenefitsDecreasingRate" class="framed-section">
+					</qp-grid>
+					<qp-grid id="grdFringeEarningsReducingRate" caption="Excess Pay Rate Calculation" view.bind="PaymentFringeEarningsDecreasingRate" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="CurrentDocument_form" caption="Financial">
+			<qp-template name="17-17-14" id="financialTemplate">
+				<div slot="A">
+					<qp-fieldset id="linkToGL" view.bind="CurrentDocument" caption="Link To GL">
+						<field name="BatchNbr" config-enabled.bind="true"></field>
+						<field name="BranchID"></field>
+						<field name="OrigRefNbr"></field>
+						<field name="PaymentBatchNbr" config-enabled.bind="true"></field>
+						<field name="fakename" unbound>
+							<qp-button id="btnShowDDSplits" state.bind="ViewDirectDepositSplits" class="col-12"></qp-button>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="additionalDetails" view.bind="CurrentDocument" caption="Additional Details">
+						<field name="ChkVoidType"></field>
+						<field name="ExtRefNbr"></field>
+						<field name="EmpType"></field>
+						<field name="RegularAmount">
+							<qp-field control-state.bind="CurrentDocument.ManualRegularAmount" config-enabled.bind="false"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="RecordsofEmploymentTab" caption="Records of Employment" if.bind="Document.ShowROETab.value == true">
+			<qp-grid id="gridRecordsOfEmployment" view.bind="RecordsOfEmployment">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="PaymentOvertimeRules" caption="Overtime Rules Used for Calculation" auto-repaint="true" width="80vw" height="40vh">
+		<qp-fieldset id="OvertimeRulesForm" view.bind="CurrentDocument">
+			<field name="ApplyOvertimeRules" ></field>
+		</qp-fieldset>
+		<qp-grid id="OvertimeRulesGrid" view.bind="PaymentOvertimeRules">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnRevertOvertimeCalculation" state.bind="RevertOvertimeCalculation" caption="Revert Overtime Calculations and Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="TimeActivities" caption="Import Time Activities" auto-repaint="true" width="80vw" height="40vh">
+		<qp-fieldset id="formTimeActivities" view.bind="ImportTimeActivitiesFilter">
+			<field name="ShowImportedActivities" ></field>
+		</qp-fieldset>
+		<qp-grid id="gridTimeActivities" view.bind="TimeActivities">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton1" state.bind="AddSelectedTimeActivities" >
+			</qp-button>
+			<qp-button id="PXButton2" state.bind="AddSelectedTimeActivitiesAndClose" caption="Add and Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton3" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ExistingPayment" caption="Existing Paycheck" auto-repaint="true" width="80vw" height="40vh">
+		<qp-fieldset id="ExistingPaymentForm" view.bind="ExistingPayment">
+			<field name="Message" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnViewExistingPayment" state.bind="ViewExistingPayment" caption="View Existing Paycheck" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnContinueEditingPayment1" caption="Continue Editing" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ExistingPayrollBatch" caption="Existing Payroll Batch" auto-repaint="true" width="80vw" height="40vh">
+		<qp-fieldset id="ExistingPayrollBatchForm" view.bind="ExistingPayrollBatch">
+			<field name="Message" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnViewExistingPayrollBatch" state.bind="ViewExistingPayrollBatch" caption="View Existing Payroll Batch" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnContinueEditingPayment2" caption="Continue Editing" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="DeductionDetails" caption="Deduction Details" auto-repaint="true" width="80vw" height="40vh">
+		<qp-grid id="DeductionDetailsGrid" view.bind="DeductionDetails">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="BenefitDetails" caption="Benefit Details" auto-repaint="true" width="80vw" height="40vh">
+		<qp-grid id="BenefitDetailsGrid" view.bind="BenefitDetails">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="TaxDetails" caption="Tax Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="TaxDetailsGrid" view.bind="TaxDetails">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="PaymentTaxApplicableAmounts" caption="Taxable Wage Details" auto-repaint="true" width="80vw" height="40vh">
+		<qp-template name="1-1" id="paymentTaxTemplate">
+			<div slot="A">
+				<qp-grid id="grdTaxAdjGrsExmptAmt" caption="Tax Applicable Amounts" view.bind="Taxes">
+				</qp-grid>
+			</div>
+			<div slot="B">
+				<qp-grid id="grdTaxApplicablAmounts" caption="Wage Amounts Allowed" view.bind="PaymentTaxApplicableAmounts">
+				</qp-grid>
+			</div>
+		</qp-template>
+	</qp-panel>
+	<qp-panel id="PTODetails" caption="PTO Details" auto-repaint="true" width="80vw" height="40vh">
+		<qp-grid id="grdPTODetails" view.bind="PTODetails">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="DirectDepositSplits" caption="Direct Deposit Splits" auto-repaint="true" width="80vw" height="40vh">
+		<qp-grid id="gridDDSplits" view.bind="DirectDepositSplits">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="ProjectPackageDeductions" caption="Certified Project Deduction and Benefit Packages" auto-repaint="true" width="80vw" height="40vh">
+		<qp-grid id="grdProject" view.bind="ProjectPackageDeductions">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="UpdateTaxesPopupView" caption="Taxes need to be updated" auto-repaint="true" width="80vw" height="40vh">
+		<qp-fieldset id="formUpdateTaxesWarning" view.bind="UpdateTaxesPopupView">
+			<field name="Message" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnGoToTaxMaintenance" state.bind="RedirectTaxMaintenance" >
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

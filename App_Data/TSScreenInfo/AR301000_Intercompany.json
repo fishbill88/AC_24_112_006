@@ -1,0 +1,79 @@
+{
+	"name": "AR301000_Intercompany",
+	"graphName": null,
+	"extendsScreen": "AR301000",
+	"featureInstalled": [
+		"PX.Objects.CS.FeaturesSet+InterBranch"
+	],
+	"actions": [
+		{
+			"name": "ViewRelatedAPDocument",
+			"decorators": []
+		}
+	],
+	"views": [
+		{
+			"name": "RelatedIntercompanyAPDocument",
+			"dacClassName": null,
+			"displayName": "RelatedIntercompanyAPDocument",
+			"isCollection": false,
+			"featureInstalled": [],
+			"fields": [
+				{
+					"args": null,
+					"stateType": "default",
+					"name": "DocumentKey",
+					"bound": true,
+					"commitChanges": false,
+					"suppressLabel": false,
+					"invisible": false,
+					"readonly": false,
+					"disabled": false,
+					"multiLine": false,
+					"calculated": false,
+					"linkCommand": "ViewRelatedAPDocument",
+					"text": null,
+					"group": null,
+					"placeBeforeProperty": null,
+					"placeAfterProperty": null,
+					"decorators": [
+						{
+							"name": {
+								"name": "linkCommand"
+							},
+							"arguments": [
+								"ViewRelatedAPDocument"
+							]
+						}
+					],
+					"editorType": null
+				}
+			],
+			"extensions": [],
+			"decorators": [
+				{
+					"name": {
+						"name": "viewInfo"
+					},
+					"arguments": [
+						{
+							"containerName": "RelatedIntercompanyAPDocument"
+						}
+					]
+				}
+			],
+			"actions": []
+		}
+	],
+	"extensions": [],
+	"decorators": [
+		{
+			"name": {
+				"name": "featureInstalled"
+			},
+			"arguments": [
+				"PX.Objects.CS.FeaturesSet+InterBranch"
+			]
+		}
+	]
+}

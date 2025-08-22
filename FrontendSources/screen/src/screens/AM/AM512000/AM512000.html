@@ -1,0 +1,34 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter" no-label="true">
+			<field name="IsWorkCenterCalendarProcess"></field>
+			<field name="IsHistoryCleanupProcess"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabProcessHistory" caption="Process History">
+			<qp-template id="ProcessingRecords_tab" wg-container name="1-1">
+				<div slot="A">
+					<qp-fieldset id="ProcessingRecords1" view.bind="ProcessingRecords" caption="Work Center Schedule">
+						<field name="WorkCenterCalendarProcessLastRunDateTime"></field>
+						<field name="WorkCenterCalendarProcessLastRunByID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ProcessingRecords2" view.bind="ProcessingRecords" caption="Block Size Change">
+						<field name="BlockSizeSyncProcessLastRunDateTime"></field>
+						<field name="BlockSizeSyncProcessLastRunByID"></field>
+						<field name="LastBlockSize"></field>
+						<field name="CurrentBlockSize"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ProcessingRecords3" view.bind="ProcessingRecords" caption="History Cleanup">
+						<field name="HistoryCleanupProcessLastRunDateTime"></field>
+						<field name="HistoryCleanupProcessLastRunByID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ProcessingRecords4" view.bind="ProcessingRecords" caption="Work Calendar">
+						<field name="WorkCalendarProcessLastRunDateTime"></field>
+						<field name="WorkCalendarProcessLastRunByID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

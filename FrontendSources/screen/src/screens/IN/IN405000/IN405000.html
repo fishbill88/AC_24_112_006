@@ -1,0 +1,23 @@
+<template>
+	<qp-template name="17-17-14" id="form" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset slot="A" id="filterColumn1" view.bind="Filter">
+			<field name="OrgBAccountID"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SiteID"></field>
+			<field name="LocationID"></field>
+			<field name="LotSerialNbr"></field>
+			<field name="SubItemCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="filterColumn2" view.bind="Filter">
+			<field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="SummaryByDay"></field>
+			<field name="IncludeUnreleased"></field>
+			<field name="ShowAdjUnitCost"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ResultRecords" batchUpdate="True">
+	</qp-grid>
+</template>

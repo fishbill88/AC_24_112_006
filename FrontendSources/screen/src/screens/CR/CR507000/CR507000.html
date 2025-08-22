@@ -1,0 +1,14 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="form" wg-container>
+		<qp-fieldset slot="A" id="Filter_Left" view.bind="Filter">
+			<field name="CaseClassID"></field>
+			<field name="CustomerClassID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter_Right" view.bind="Filter">
+			<field name="CustomerID"></field>
+			<field name="ContractID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Items">
+	</qp-grid>
+</template>

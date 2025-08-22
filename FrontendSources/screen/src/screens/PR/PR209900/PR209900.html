@@ -1,0 +1,43 @@
+<template>
+	<qp-template id='CertifiedProject_form' name='1-1' wg-container>
+		<qp-fieldset slot="A" id='FirstFieldSet'>
+			<field name="CertifiedProject.ProjectID"></field>
+			<field name="CurrentProject.Status"></field>
+			<field name="CurrentProject.Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id='SecondFieldSet'>
+			<field name="CurrentProject.FileEmptyCertifiedReport" no-label="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id='tab' >
+		<qp-tab id='tabEarningRates' caption='Earning Rates'>
+			<qp-grid id='PXGrid1' view.bind="EarningRates">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id='tabDeductionsandBenefits' caption='Deductions and Benefits'>
+			<qp-grid id='PXGrid2' view.bind="DeductionsAndBenefitsPackage">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id='tabFringeBenefits' caption='Fringe Benefits'>
+			<qp-template id ="FringeBenefits_form" name="1-1">
+				<qp-fieldset slot="A" id='formFringeBenefits' view.bind='CurrentProject'>
+					<field name="WageAbovePrevailingAnnualizationException" no-label="true"></field>
+					<field name="ApplyOTMultiplierToFringeRate" no-label="true"></field>
+					<field name="BenefitCodeReceivingFringeRate"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-splitter id="splitContainerFringeBenefits" initial-split="50%">
+				<split-pane>
+					<qp-label caption="Rates"></qp-label>
+					<qp-grid id="PXGrid3" view.bind="FringeBenefitRates">
+					</qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-label caption="Benefits Reducing the Rate"></qp-label>
+					<qp-grid id="grdBenefitsReducingRate" view.bind="FringeBenefitRateReducingDeductions">
+					</qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+	</qp-tabbar>
+</template>

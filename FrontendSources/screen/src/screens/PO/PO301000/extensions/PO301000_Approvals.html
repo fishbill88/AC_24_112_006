@@ -1,0 +1,28 @@
+<template>
+	<qp-tab after="#tabVendorInfo" id="tabApprovals" caption="Approvals">
+		<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+	</qp-tab>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReasonCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover" ></field>
+			<field name="IgnoreApproversDelegations" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReassignApprovalCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

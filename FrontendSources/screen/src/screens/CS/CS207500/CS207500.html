@@ -1,0 +1,49 @@
+<template>
+	<qp-template name="1-1" id="Carrier_form" wg-container class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="phF_form_PXLayoutRule#0" view.bind="Carrier">
+			<field name="CarrierID"></field>
+			<field name="Description"></field>
+			<field name="IsExternal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab" class="label-size-m">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template name="1-1" id="detailsForm" wg-container="CarrierCurrent_tab">
+				<qp-fieldset slot="A" id="detailsFormColumn1" view.bind="CarrierCurrent">
+					<field name="CalendarID" config-allow-edit.bind="true"></field>
+					<field name="CarrierPluginID"></field>
+					<field name="CalcMethod"></field>
+					<field name="PluginMethod"></field>
+					<field name="BaseRate"></field>
+					<field name="IsCommonCarrier"></field>
+					<field name="CalcFreightOnReturn"></field>
+					<field name="ConfirmationRequired"></field>
+					<field name="PackageRequired"></field>
+					<field name="ReturnLabel"></field>
+					<field name="TaxCategoryID" config-allow-edit.bind="true"></field>
+					<field name="FreightSalesAcctID"></field>
+					<field name="FreightSalesSubID"></field>
+					<field name="FreightExpenseAcctID"></field>
+					<field name="FreightExpenseSubID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabFreightRates" caption="Freight Rates">
+			<qp-grid id="gridFreightRates" view.bind="FreightRates">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabPackages" caption="Packages" if.bind="Carrier.IsExternal.value == false">
+			<qp-grid id="gridCarrierPackages" view.bind="CarrierPackages">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAdvancedFulfillment" caption="Advanced Fulfillment">
+			<qp-template name="1-1" id="advFullfilmentForm" wg-container="CarrierCurrent_tab">
+				<qp-fieldset slot="A" id="advFullfilmentColumn1" view.bind="CarrierCurrent">
+					<field name="ValidatePackedQty" class="no-label"></field>
+					<field name="IsExternalShippingApplication" class="no-label"></field>
+					<field name="ShippingApplicationType"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

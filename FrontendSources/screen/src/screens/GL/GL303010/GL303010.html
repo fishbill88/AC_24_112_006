@@ -1,0 +1,32 @@
+<template>
+	<qp-template id="formMap" name="1-1-1" wg-container="Map_form">
+		<qp-fieldset id="columnFirst-formMap"  view.bind="Map" slot="A">
+			<field name="Number"></field>
+			<field name="Status"></field>
+			<field name="ImportDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond-formMap" view.bind="Map" slot="B">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="LedgerID"></field>
+			<field name="BatchNbr" config-allow-edit.bind="true"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThird-formMap" view.bind="Map" slot="C">
+			<field name="DebitTotalBalance"></field>
+			<field name="CreditTotalBalance"></field>
+			<field name="TotalBalance"></field>
+			<field name="IsEditable"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabTransactionDetails" caption="Transaction Details">
+			<qp-grid id="gridTransactionDetails" wg-container="MapDetails_grid" view.bind="MapDetails"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabExceptions" caption="Exceptions">
+			<qp-grid id="gridExceptions" wg-container="Exceptions_grid2" view.bind="Exceptions"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+</template>

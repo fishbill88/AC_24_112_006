@@ -1,0 +1,62 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="formBatch" wg-container="BatchModule_form">
+		<qp-fieldset slot="A" id="firstColumn" view.bind="BatchModule">
+			<field name="Module"></field>
+			<field name="BatchNbr"></field>
+			<field name="Status"></field>
+			<field name="DateEntered"></field>
+			<field name="FinPeriodID"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="secondColumn" view.bind="BatchModule">
+			<field name="BranchID"></field>
+			<field name="LedgerID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_Batch_CurrencyInfo_"></field>
+			<field name="AutoReverse">
+				<qp-field control-state.bind="BatchModule.AutoReverseCopy"></qp-field>
+			</field>
+			<field name="CreateTaxTrans"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="thirdColumn" view.bind="BatchModule">
+			<field name="BatchType"></field>
+			<field name="OrigBatchNbr" config-allow-edit.bind="true"></field>
+			<field name="CuryDebitTotal"></field>
+			<field name="CuryCreditTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabTransactions" caption="Details">
+			<qp-grid id="gridDetails" wg-container="GLTranModuleBatNbr_grid" view.bind="GLTranModuleBatNbr" caption="Transaction Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<!--Includes-->
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason">
+		<qp-fieldset id="formReasonApproveRejectParams" view.bind="ReasonApproveRejectParams" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+			<field name="Reason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReasonApproveRejectParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReasonApproveRejectParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter" class="h-stack" wg-container="ReassignApprovalFilter_formReassignApproval">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReassignApprovalFilter" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReassignApprovalFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<!--Includes-->
+
+</template>

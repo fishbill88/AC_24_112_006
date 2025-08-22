@@ -1,0 +1,30 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" qp-collapsible>
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter" caption="Filters">
+			<field name="SiteID"></field>
+			<field name="OrderType"></field>
+			<field name="ProdOrdId"></field>
+			<field name="OrderStatus"></field>
+			<field name="ScheduleStatus"></field>
+			<field name="ProductWorkgroupId"></field>
+			<field name="ProductManagerId"></field>
+			<field name="IncludeOnHold"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter" caption="Additional Filters">
+			<field name="InventoryID"></field>
+			<field name="SoOrderType"></field>
+			<field name="SoNumber"></field>
+			<field name="CustomerID"></field>
+		</qp-fieldset>
+		<div slot="C">
+			<qp-fieldset id="Filter3" view.bind="Filter" caption="Date Range">
+				<field name="DateFrom"></field>
+				<field name="DateTo"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Filter4" view.bind="Filter" caption="Display Settings">
+				<field name="ColorCodingOrders"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<!--PXManufacturingDiagram-->
+</template>

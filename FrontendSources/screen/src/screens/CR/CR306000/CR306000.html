@@ -1,0 +1,110 @@
+<template>
+	<qp-template name="7-10-7" id="Case_template" wg-container="Case_form" class="equal-height" qp-collapsible>
+		<qp-fieldset slot="A" id="Case_formLeft" view.bind="Case">
+			<field name="CaseCD"></field>
+			<field name="CaseClassID"></field>
+			<field name="Status"></field>
+			<field name="Resolution"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Case_formCenter" view.bind="Case">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" config-allow-edit.bind="true"></field>
+			<field name="ContactID" config-allow-edit.bind="true"></field>
+			<field name="OwnerID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Case_formRight" view.bind="Case">
+			<field name="ReportedOnDateTime"></field>
+			<field name="Severity"></field>
+			<field name="Priority"></field>
+			<field name="ResolutionDate"></field>
+			<field name="HeaderInitialResponseDueDateTime"></field>
+			<field name="HeaderResponseDueDateTime"></field>
+			<field name="HeaderResolutionDueDateTime"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="CaseCurrent_tab" wg-container caption="Details">
+			<qp-rich-text-editor id="edDescription" class="stretch" state.bind="Case.Description" wg-field value.two-way="Case.Description.value"></qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="additionalInfo_tab" caption="Additional Info">
+			<qp-template name="17-17-14" id="additionalInfo_template">
+				<div slot="A">
+					<qp-fieldset caption="CRM" id="CaseCurrent_CRM" view.bind="Case">
+						<field name="WorkgroupID"></field>
+						<field name="IsActive"></field>
+					</qp-fieldset>
+					<qp-fieldset caption="Business Account Details" id="CaseCurrent_BAccount" view.bind="Case">
+						<field name="ContractID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset caption="Billing" id="CaseCurrent_Billing" view.bind="Case">
+						<field name="IsBillable"></field>
+						<field name="ManualBillableTimes"></field>
+						<field name="TimeBillable"></field>
+						<field name="OvertimeBillable"></field>
+					</qp-fieldset>
+					<qp-fieldset caption="Statistics" id="CaseCurrent_Statistics" view.bind="Case">
+						<field name="InitResponse"></field>
+						<field name="TimeSpent"></field>
+						<field name="OvertimeSpent"></field>
+						<field name="TimeResolution"></field>
+					</qp-fieldset>
+					<qp-fieldset caption="Commitments" id="CaseCurrent_Commitments" view.bind="Case">
+						<field name="InitialResponseDueDateTime"></field>
+						<field name="ResponseDueDateTime"></field>
+						<field name="ResolutionDueDateTime"></field>
+						<field name="SolutionActivityNoteID"></field>
+					</qp-fieldset>
+					<qp-fieldset caption="Activities" id="CaseCurrent_Activities" view.bind="Case">
+						<field name="LastActivity"></field>
+						<field name="CaseActivityStatistics.LastIncomingActivityDate"></field>
+						<field name="CaseActivityStatistics.LastOutgoingActivityDate"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="attributes_tab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="activities_tab" wg-container caption="Activities">
+			<qp-splitter split="height" id="splitter">
+				<split-pane>
+					<qp-grid id="gridActivities" view.bind="Activities"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-rich-text-editor
+						id="edActivityBody"
+						state.bind="Activities.Body"
+						wg-field
+						value.bind="Activities.activeRow.Body.value"
+						config.bind="{readOnly: true}">
+					</qp-rich-text-editor>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="relCases_tab" caption="Related Cases">
+			<qp-grid id="gridCaseReferencesDependsOn" view.bind="CaseRefs"></qp-grid>
+		</qp-tab>
+		<qp-tab id="relations_tab" caption="Relations">
+			<qp-grid id="grdRelations" view.bind="Relations"></qp-grid>
+		</qp-tab>
+		<qp-tab id="closure_tab" caption="Closure Notes">
+			<qp-rich-text-editor
+				id="edClosureNote"
+				state.bind="Case.ClosureNotes"
+				wg-field
+				value.bind="Case.ClosureNotes.value"
+				config.bind="{readOnly: true}">
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="Salesforce_tab" caption="Salesforce">
+			<qp-grid id="syncGrid" view.bind="SyncRecs"></qp-grid>
+		</qp-tab>
+		<qp-tab id="owner_tab" caption="Owner User" if.bind="false">
+			<qp-template name="17-17-14" id="owner_template">
+				<qp-fieldset slot="A" id="owner_form" view.bind="OwnerUser">
+					<field name="PKID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

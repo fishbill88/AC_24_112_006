@@ -1,0 +1,120 @@
+<template>
+	<qp-template name="1-1" id="Prefs_form" class="label-size-xm" wg-container>
+		<div slot="A">
+			<qp-fieldset
+				id="generalDefaults"
+				view.bind="Prefs"
+				caption="General Defaults"
+			>
+				<field
+					control-type="qp-selector"
+					name="HomePage"
+					config.bind="{displayMode:'text'}"
+				></field>
+				<!-- <TODO change control type after Tree Selector will be implemebted/>  -->
+				<field
+					control-type="qp-tabbed-tree-selector"
+					name="HelpPage"
+					config.bind="{displayMode:'text'}"
+				></field>
+				<field name="UseMLSearch"></field>
+				<field
+					name="AddressLookupPluginID"
+					config-allow-edit.bind="true"
+				></field>
+				<field name="MapViewer"></field>
+				<field name="TimeZone"></field>
+				<field name="Theme"></field>
+				<field name="button" class="no-label" unbound>
+					<qp-button id="btnResetColors" state.bind="ResetColors"></qp-button>
+				</field>
+				<field name="PrimaryColor"></field>
+				<field name="BackgroundColor"></field>
+				<!-- <TODO change control type after Tree Selector will be implemebted/>  -->
+				<field
+					control-type="qp-tabbed-tree-selector"
+					name="GetLinkTemplate"
+				></field>
+				<field name="PortalExternalAccessLink"></field>
+				<field name="PersonNameFormat"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="tableSettings"
+				view.bind="Prefs"
+				caption="Table Settings"
+			>
+				<field name="GridFastFilterCondition"></field>
+				<field name="GridFastFilterMaxLength"></field>
+				<field name="GridActionsText"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="editorSettings"
+				view.bind="Prefs"
+				caption="Editor Settings"
+			>
+				<field name="SpellCheck" class="no-label"></field>
+			</qp-fieldset>
+		</div>
+
+		<div slot="B">
+			<qp-fieldset
+				id="menuUsageHistory"
+				view.bind="Prefs"
+				caption="Usage History for Search Optimization"
+			>
+				<field name="MLEventsRetentionAge" class="no-label">
+					<qp-field
+						slot="label"
+						control-state.bind="Prefs.DeletingMLEventsMode"
+						config-enabled.bind="false"
+						class="no-label"
+					>
+					</qp-field>
+				</field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="diagnosticsUsage"
+				view.bind="PrefsGlobal"
+				caption="Diagnostics & Usage"
+			>
+				<field name="PrefsGlobal.EnableTelemetry"></field>
+			</qp-fieldset>
+
+			<qp-fieldset
+				id="exportToExcel"
+				view.bind="Prefs"
+				caption="Export to Excel"
+			>
+				<field name="BorderColor">
+					<qp-field
+						slot="label"
+						control-state.bind="Prefs.Border"
+						config-enabled.bind="false"
+						class="no-label"
+					></qp-field>
+				</field>
+				<field name="HiddenSkip" class="no-label"></field>
+				<field name="ApplyToEmptyCells" class="no-label"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="header" view.bind="Prefs" caption="Header">
+				<field name="HeaderFont"></field>
+				<field name="HeaderFontSize"></field>
+				<field name="HeaderFontColor"></field>
+				<field name="HeaderFontType"></field>
+				<field name="HeaderFillColor"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="body" view.bind="Prefs" caption="Body">
+				<field name="BodyFont"></field>
+				<field name="BodyFontSize"></field>
+				<field name="BodyFontColor"></field>
+				<field name="BodyFontType"></field>
+				<field name="BodyFillColor"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

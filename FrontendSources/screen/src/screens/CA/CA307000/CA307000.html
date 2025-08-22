@@ -1,0 +1,51 @@
+<template>
+
+	<qp-template id="formBatchView" name="1-1-1" wg-container="BatchView_form">
+		<qp-fieldset id="columnFirstBatchView" view.bind="BatchView" slot="A">
+			<field name="BatchID"></field>
+			<field name="Status"></field>
+			<field name="ProcessingCenterID"></field>
+			<field name="ExtBatchID"></field>
+			<field name="SettlementTime"></field>
+			<field name="SettlementState"></field>
+			<field name="DepositNbr" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondBatchView" view.bind="BatchView" slot="B">
+			<field name="SettledAmount"></field>
+			<field name="SettledCount"></field>
+			<field name="RefundAmount"></field>
+			<field name="RefundCount"></field>
+			<field name="VoidCount"></field>
+			<field name="DeclineCount"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdBatchView" view.bind="BatchView" slot="C">
+			<field name="TransactionCount"></field>
+			<field name="ImportedTransactionCount"></field>
+			<field name="ProcessedCount"></field>
+			<field name="MissingCount"></field>
+			<field name="HiddenCount"></field>
+			<field name="ExcludedCount"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+
+		<qp-tab id="tabAllTransactions" caption="All Transactions">
+			<qp-grid id="gridAllTransactions" view.bind="Transactions" wg-container="Transactions_grdAllTransactions"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabMissingTransactions" caption="Missing Transactions">
+			<qp-grid id="gridMissingTransactions" view.bind="MissingTransactions" wg-container="MissingTransactions_grdMissingTransactions"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabExcludedTransactions" caption="Transactions Excluded from Deposit">
+			<qp-grid id="gridExcludedTransactions" view.bind="ExcludedFromDepositTransactions" wg-container="ExcludedFromDepositTransactions_grdExcludedTransactions"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabCardTypeSummary" caption="Card Type Summary">
+			<qp-grid id="gridCardTypeSummary" view.bind="CardTypeSummary" wg-container="CardTypeSummary_grdCardTypeSummary"></qp-grid>
+		</qp-tab>
+
+	</qp-tabbar>
+
+</template>

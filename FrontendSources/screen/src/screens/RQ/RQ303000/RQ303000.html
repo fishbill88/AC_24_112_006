@@ -1,0 +1,57 @@
+<template>
+	<qp-template id="Vendor_form" name="7-10-7" wg-container class="equal-height">
+		<qp-fieldset slot="A" id="first" view.bind="Vendor">
+			<field name="ReqNbr"></field>
+			<field name="EntryDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Vendor">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="_RQBiddingVendor_CurrencyInfo_"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="third" view.bind="Vendor" class="highlights-section">
+			<field name="TotalQuoteQty"></field>
+			<field name="CuryTotalQuoteExtCost"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabBiddingDetails" caption="Bidding Details">
+			<qp-grid id="grid" view.bind="Lines"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabVendorInfo" caption="Vendor Info">
+			<qp-template id="tabVendorInfoForm" name="17-17-14" wg-container="CurrentDocument_tab">
+				<div slot="A" id="tabVendorInfoForm-A">
+					<qp-fieldset id="tabVendorInfoForm-A-VendorContact"
+								view.bind="Remit_Contact"
+								caption="Vendor Contact"
+								wg-container="Remit_Contact_formVC">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="tabVendorInfoForm-A-VendorAddress"
+								view.bind="Remit_Address"
+								caption="Vendor Address"
+								wg-container="Remit_Address_formVA">
+						<field name="OverrideAddress"></field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="tabVendorInfoForm-B"
+						view.bind="CurrentDocument" caption="Vendor Bidding">
+					<field name="ExpireDate"></field>
+					<field name="PromisedDate"></field>
+					<field name="FOBPoint"></field>
+					<field name="ShipVia"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

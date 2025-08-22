@@ -1,0 +1,37 @@
+<template>
+	<template id="tabAdditionalInfo_Content">
+		<qp-template id="AdditionalInfo-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="AdditionalInfo_CRM" caption="Business Account Details" view.bind="CurrentBAccount">
+					<field name="Type"></field>
+					<field name="WorkgroupID"></field>
+					<field name="OverrideSalesTerritory"></field>
+					<field name="SalesTerritoryID"></field>
+					<field name="ParentBAccountID" config-allow-edit.bind="true"></field>
+					<field name="DefLocation.CDefProjectID" config-allow-edit.bind="true"></field>
+					<field name="AcctReferenceNbr"></field>
+					<field name="CampaignSourceID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_Activities" caption="Activities History" view.bind="BAccountActivityStatistics">
+					<field name="LastIncomingActivityDate"></field>
+					<field name="LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+			</div>
+
+			<div slot="B">
+				<qp-fieldset id="AdditionalInfo_ContactPreferences" caption="Contact Preferences" view.bind="DefContact">
+					<field name="Method"></field>
+					<field name="NoCall"></field>
+					<field name="NoMarketing"></field>
+					<field name="NoEMail"></field>
+					<field name="NoMassMail"></field>
+					<field name="LanguageID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_FinancialSettings" caption="Financial Settings" view.bind="CurrentBAccount">
+					<field name="CuryID"></field>
+					<field name="AllowOverrideCury"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

@@ -1,0 +1,25 @@
+<template>
+	<qp-template name="1-1-1" id="FiscalYearSetup_form" class="equal-height" wg-container>
+		<qp-fieldset id="leftForm" view.bind="FiscalYearSetup" caption="Calendar Summary" slot="A">
+			<field name="PayGroupID"></field>
+			<field name="FirstFinYear"></field>
+			<field name="BegFinYear"></field>
+			<field name="PeriodType"></field>
+			<field name="EndYearDayOfWeek"></field>
+			<field name="TranDayOfWeek"></field>
+			<field name="TranWeekDiff"></field>
+			<field name="PeriodsStartDate"></field>
+			<field name="SecondPeriodsStartDate"></field>
+			<field name="TransactionsStartDate"></field>
+			<field name="SecondTransactionsStartDate"></field>
+			<field name="IsSecondWeekOfYear"></field>
+			<field name="UserDefined"></field>
+		</qp-fieldset>
+		<qp-fieldset id="rightForm" view.bind="FiscalYearSetup" slot="B">
+			<field name="FinPeriods"></field>
+			<field name="PeriodLength"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Periods">
+	</qp-grid>
+</template>

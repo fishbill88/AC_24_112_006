@@ -1,0 +1,12 @@
+<template>
+	<qp-template id="CurrentBucket_form" wg-container name="1-1-1">
+		<qp-fieldset slot="A" id="CurrentBucket1" view.bind="CurrentBucket" class="stretch">
+			<field name="BucketID"></field>
+			<field name="ActiveFlg"></field>
+			<field name="Descr"></field>
+			<field name="FakeField" replace-content unbound>
+				<qp-grid id="grid" view.bind="BucketRecords" caption="Bucket Records"></qp-grid>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+</template>

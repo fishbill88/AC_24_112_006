@@ -1,0 +1,18 @@
+<template>
+	<qp-template id="form" name="1-1" class="label-size-xm">
+		<qp-fieldset slot="A" id="Restriction_form" view.bind="Group">
+			<field name="GroupName"></field>
+			<field name="Description"></field>
+			<field name="GroupType"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabUsers" caption="Users">
+			<qp-grid id="usersGrid" view.bind="Users"></qp-grid>
+		</qp-tab>
+		<qp-tab id="accountsTab" caption="Email Accounts">
+			<qp-grid id="accountsGrid" view.bind="Account"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

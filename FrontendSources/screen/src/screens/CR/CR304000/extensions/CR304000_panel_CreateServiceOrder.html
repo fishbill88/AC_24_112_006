@@ -1,0 +1,71 @@
+<template>
+	<qp-panel
+		id="DocumentSettings"
+		auto-repaint="true"
+		caption="Create Service Order/Appointment"
+	>
+		<qp-fieldset
+			id="panel_Create_Service_Order_Document"
+			caption="Document Settings"
+			view.bind="DocumentSettings"
+		>
+			<field name="SrvOrdType"></field>
+			<field name="BranchID"></field>
+			<field name="BranchLocationID"></field>
+			<field name="Description"></field>
+			<field name="ProjectID"></field>
+			<field name="ProjectTaskID"></field>
+		</qp-fieldset>
+
+		<qp-fieldset
+			id="panel_Create_Service_Order_Settings"
+			caption="Service Order Settings"
+			view.bind="DocumentSettings"
+		>
+			<field name="OrderDate"></field>
+			<field name="SLAETA_Date">
+				<qp-field
+					control-state.bind="DocumentSettings.SLAETA_Time"
+					config-time-mode.bind="true"
+				>
+				</qp-field>
+			</field>
+			<field name="AssignedEmpID"></field>
+			<field name="ProblemID"></field>
+			<field name="ContactID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+
+		<qp-fieldset
+			id="panel_Create_Service_Order_Appointment"
+			caption="Appointment Settings"
+			view.bind="DocumentSettings"
+		>
+			<field name="ScheduledDateTimeBegin_Date">
+				<qp-field
+					control-state.bind="DocumentSettings.ScheduledDateTimeBegin_Time"
+					config-time-mode.bind="true"
+				>
+				</qp-field>
+			</field>
+			<field name="ScheduledDateTimeEnd_Date">
+				<qp-field
+					control-state.bind="DocumentSettings.ScheduledDateTimeEnd_Time"
+					config-time-mode.bind="true"
+				>
+				</qp-field>
+			</field>
+			<field name="HandleManuallyScheduleTime"></field>
+		</qp-fieldset>
+
+		<footer>
+			<qp-button
+				id="CreateAndReview"
+				caption="Create and review"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button id="Create" caption="Create" dialog-result="OK"> </qp-button>
+			<qp-button id="Cancel" caption="Cancel" dialog-result="No"> </qp-button>
+		</footer>
+	</qp-panel>
+</template>

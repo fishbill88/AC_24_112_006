@@ -1,0 +1,22 @@
+<template>
+
+	<qp-template id="formFilter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirstFilter" view.bind="Filter">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="FinYear"></field>
+			<field name="FileFormat"></field>
+			<field name="Include"></field>
+			<field name="Box7"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondFilter" view.bind="Filter" no-label="true">
+			<field name="IsPriorYear"></field>
+			<field name="IsCorrectionReturn"></field>
+			<field name="IsLastFiling"></field>
+			<field name="ReportingDirectSalesOnly"></field>
+			<field name="IsTestMode"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridRecords" view.bind="Records" wg-container="Records_grid"></qp-grid>
+
+</template>

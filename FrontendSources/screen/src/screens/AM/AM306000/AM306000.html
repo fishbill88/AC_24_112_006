@@ -1,0 +1,40 @@
+<template>
+	<qp-splitter id="sp1" split="width" state="normal">
+		<split-pane class="v-stack">
+			<qp-tree id="tree" view.bind="Features"></qp-tree>
+		</split-pane>
+		<split-pane class="v-stack">
+			<qp-template id="Results_form" wg-container name="1-1">
+				<qp-fieldset slot="A" id="Results1" view.bind="Results">
+					<field name="InventoryID"></field>
+					<field name="SiteID" config-allow-edit.bind="true"></field>
+					<field name="Completed"></field>
+					<field name="IsConfigurationTesting"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="Results2" view.bind="Results">
+					<field name="_AMConfigurationResults_CurrencyInfo_.CuryID" control-type="qp-currency"></field>
+					<field name="DisplayPrice"></field>
+					<field name="CustomerID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-tabbar id="mainTab">
+				<qp-tab id="tabAttributes" caption="Attributes">
+					<qp-grid id="AttributesGrid" view.bind="Attributes"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOptions" caption="Options">
+					<qp-template id="Current" name="1-1" class="equal-height">
+						<qp-fieldset slot="A" id="CurrentFeature_FeatureForm" view.bind="CurrentFeature" caption="Feature">
+							<field name="MinMaxSelection"></field>
+							<field name="MinLotMaxQty"></field>
+							<field name="TotalQty"></field>
+						</qp-fieldset>
+						<qp-fieldset slot="B" id="CurrentOption_SelectedOptionForm" view.bind="CurrentOption" caption="Selected Option">
+							<field name="MinLotMaxQty"></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-grid id="SelectedOptionsGrid" view.bind="Options"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+</template>

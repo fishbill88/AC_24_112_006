@@ -1,0 +1,26 @@
+<template>
+	<qp-panel
+		id="NotificationInfo"
+		caption="Select Template"
+	>
+		<qp-template id="NotificationInfoTemplate" name="1">
+			<qp-fieldset slot="A" id="formSelectNotificationTemplate" view.bind="NotificationInfo">
+				<field name="NotificationName"></field>
+				<field name="ReplaceEmailContents"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="SelectNotificatonTemplateOK"
+				caption="Select"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="SelectNotificatonTemplateCancel"
+				dialog-result="Cancel"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

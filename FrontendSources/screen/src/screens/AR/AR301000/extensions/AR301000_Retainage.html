@@ -1,0 +1,23 @@
+<template>
+	<qp-tab after="#tabDiscounts" id="tabRetainage" caption="Retainage" if.bind="Document.RetainageApply.value == true">
+		<qp-template name="base-17-17-14" id="formRetainage" wg-container="CurrentDocument_formRetainage">
+			<qp-fieldset slot="A" id="columnFirst-Retainage" view.bind="CurrentDocument">
+				<field name="DefRetainagePct"></field>
+				<field name="CuryOrigDocAmtWithRetainageTotal"></field>
+				<field name="CuryRetainageTotal"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecond-Retainage" view.bind="CurrentDocument">
+				<field name="CuryRetainageUnreleasedAmt"></field>
+				<field name="CuryRetainageReleased"></field>
+				<field name="CuryRetainageUnpaidTotal"></field>
+				<field name="CuryRetainagePaidTotal"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="C" id="columnThird-Retainage" view.bind="CurrentDocument">
+				<field name="CuryRetainedTaxTotal"></field>
+				<field name="CuryRetainedDiscTotal"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridRetainageDocuments" view.bind="RetainageDocuments" wg-container="RetainageDocuments_gridRetainage">
+		</qp-grid>
+	</qp-tab>
+</template>

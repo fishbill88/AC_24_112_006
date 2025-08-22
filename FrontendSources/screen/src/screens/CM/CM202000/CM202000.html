@@ -1,0 +1,79 @@
+<template>
+	<qp-template name="17-17-14" id="formHeader" wg-container="CuryListRecords_newform" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" view.bind="CuryListRecords" slot="A" wg-container="CuryListRecords_newform">
+			<field name="CuryID"></field>
+			<field name="Description"></field>
+			<field name="CurySymbol"></field>
+			<field name="DecimalPlaces"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" view.bind="CuryListRecords" slot="B">
+			<field name="IsActive"></field>
+			<field name="IsFinancial"></field>
+			<using view="CuryRecords" wg-container="CuryRecords_RoundingLimit">
+				<field name="RoundingLimit"></field>
+			</using>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabGLAccounts" caption="GL Accounts">
+			<qp-template id="formGLAccounts" name="1-1" wg-container="CuryRecords_formGLAccounts">
+				<div slot="A" id="columnFirstGLAccounts">
+					<qp-fieldset id="groupRealizedGainLossAccounts" view.bind="CuryRecords" caption="Realized Gain and Loss Accounts">
+						<field name="RealGainAcctID"></field>
+						<field name="RealGainSubID"></field>
+						<field name="RealLossAcctID"></field>
+						<field name="RealLossSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupUnrealizedGainLossAccounts" caption="Unrealized Gain and Loss Accounts" view.bind="CuryRecords">
+						<field name="UnrealizedGainAcctID"></field>
+						<field name="UnrealizedGainSubID"></field>
+						<field name="UnrealizedLossAcctID"></field>
+						<field name="UnrealizedLossSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupUnrealizedGainLossProvisioningAccounts" view.bind="CuryRecords" caption="Unrealized Gain and Loss Provisioning Accounts">
+						<field name="APProvAcctID"></field>
+						<field name="APProvSubID"></field>
+						<field name="ARProvAcctID"></field>
+						<field name="ARProvSubID"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondGLAccounts">
+					<qp-fieldset id="groupRevaluationGainLossAccounts" view.bind="CuryRecords" caption="Revaluation Gain and Loss Accounts">
+						<field name="RevalGainAcctID"></field>
+						<field name="RevalGainSubID"></field>
+						<field name="RevalLossAcctID"></field>
+						<field name="RevalLossSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupTranslationGainLossAccounts" view.bind="CuryRecords" caption="Translation Gain and Loss Accounts">
+						<field name="TranslationGainAcctID"></field>
+						<field name="TranslationGainSubID"></field>
+						<field name="TranslationLossAcctID"></field>
+						<field name="TranslationLossSubID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupRoundingGainLossAccounts" view.bind="CuryRecords" caption="Rounding Gain and Loss Accounts">
+						<field name="RoundingGainAcctID"></field>
+						<field name="RoundingGainSubID"></field>
+						<field name="RoundingLossAcctID"></field>
+						<field name="RoundingLossSubID"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabRoundingSettings" caption="Rounding Settings">
+			<qp-template name="1-1" id="formRoundingSettings" wg-container="CuryRecords_formRoundingSettings">
+				<div slot="A" id="columnFirstRoundingSettings">
+					<qp-fieldset id="groupAccountsReceivable" caption="Accounts Receivable" view.bind="CuryRecords">
+						<field name="UseARPreferencesSettings"></field>
+						<field name="ARInvoiceRounding"></field>
+						<field name="ARInvoicePrecision"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupAccountsPayable" view.bind="CuryRecords" caption="Accounts Payable">
+						<field name="UseAPPreferencesSettings"></field>
+						<field name="APInvoiceRounding"></field>
+						<field name="APInvoicePrecision"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

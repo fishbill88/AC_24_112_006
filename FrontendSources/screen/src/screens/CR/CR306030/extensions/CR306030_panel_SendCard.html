@@ -1,0 +1,20 @@
+<template>
+	<qp-panel id="SendCardSettings" caption="Send vCard by Email">
+		<qp-template name="1-1-1" id="sendCardTemplate">
+			<qp-fieldset slot="A" id="SendCardSettings_frmSendCard" view.bind="SendCardSettings">
+				<field name="Email"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="btnSend"
+				dialog-result="OK">
+			</qp-button>
+			<qp-button
+				id="btnCancelSend"
+				caption="Cancel"
+				dialog-result="Abort">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

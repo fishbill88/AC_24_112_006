@@ -1,0 +1,45 @@
+<template>
+	<qp-template id="CustomerClass_template" name="1-1" class="equal-height label-size-xm">
+		<qp-fieldset slot="A" id="CustomerClass_form" view.bind="CustomerClass">
+			<field name="CRCustomerClassID"></field>
+			<field name="Description"></field>
+			<field name="IsInternal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabDetails" caption="Details" wg-container="CustomerClassCurrent_tab">
+			<qp-template id="CustomerClass_DataEntry_template" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="CustomerClass_DataEntry"
+									view.bind="CustomerClass"
+									caption="Data Entry Settings">
+						<field name="DefaultOwner"></field>
+						<field name="DefaultAssignmentMapID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CustomerClass_EmailSettings"
+									view.bind="CustomerClass"
+									caption="Email Settings">
+						<field name="DefaultEMailAccountID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CustomerClass_Financial"
+									view.bind="CustomerClass"
+									caption="Financial Settings">
+						<field name="CuryID"></field>
+						<field name="AllowOverrideCury"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="Mapping_grid" view.bind="Mapping"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailing" caption="Mailing & Printing">
+			<qp-template id="tabMailing_template" name="1" class="stretch">
+				<div slot="A">
+					<qp-grid id="NotificationSources_gridNS" view.bind="NotificationSources" caption="Mailings" class="framed-section"></qp-grid>
+					<qp-grid id="NotificationRecipients_gridNR" view.bind="NotificationRecipients" caption="Recipients" class="framed-section"></qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

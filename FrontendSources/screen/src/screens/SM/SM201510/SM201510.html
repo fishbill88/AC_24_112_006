@@ -1,0 +1,42 @@
+<template>
+	<qp-template id="pnl_licence" name="1-1" wg-container="License_form">
+		<qp-fieldset slot="A" id="PXLayoutRule1" view.bind="License">
+			<field name="Status"></field>
+			<field name="ValidFrom"></field>
+			<field name="Processors"></field>
+			<field name="Users"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="PXLayoutRule6" view.bind="License">
+			<field name="Valid"></field>
+			<field name="ValidTo"></field>
+			<field name="Version"></field>
+			<field name="Companies"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="licenseFeatures" view.bind="Features" wg-container="Features_grid"></qp-grid>
+	<qp-panel id="LicenseKeyPanel" auto-repaint="true" class="label-size-m col-12" wg-container="LicenseKeyPanel_frmInstall">
+		<qp-label caption.bind="LicenseDisclamer.LicenseText" class="col-12"></qp-label>
+		<qp-fieldset id="fs-add-license-key" view.bind="LicenseKeyPanel" class="col-12">
+			<field name="LicensingKey"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOk" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="LicenseAgreement" auto-repaint="true" class="label-size-m col-12" caption="Agree to proceed" wg-container="LicenseAgreement_frmAgreement">
+		<qp-label caption.bind="Eula.EulaText" class="col-12"></qp-label>
+		<qp-label caption.bind="Eula.EulaLinkText" class="col-12"></qp-label>
+		<footer>
+			<qp-button id="btnOk" wg-name="Agree" dialog-result="Yes" caption="Agree"></qp-button>
+			<qp-button id="btnCancel" wg-name="Disagree" dialog-result="No" caption="Disagree"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="LicenseWarning" auto-repaint="true" class="label-size-m col-12" caption="Warning" wg-container="LicenseWarning_frmWarning">
+		<qp-label caption.bind="LicenseDisclamer.LicenseWarning" class="col-12"></qp-label>
+		<footer>
+			<qp-button id="btnOk" dialog-result="Yes"></qp-button>
+			<qp-button id="btnCancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

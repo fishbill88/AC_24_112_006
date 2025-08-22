@@ -1,0 +1,43 @@
+<template>
+	<qp-template name="1-1" id="MailLists_template" wg-container="MailLists_form" qp-collapsible>
+		<qp-fieldset slot="A" id="MailLists_formLeft" view.bind="MailLists">
+			<field name="MailListCode"></field>
+			<field name="Name"></field>
+			<field name="Type"></field>
+			<field name="GIDesignID" config-allow-edit.bind="true"></field>
+			<field name="SharedGIFilter"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="MailLists_formRight" view.bind="MailLists">
+			<field name="Status"></field>
+			<field name="OwnerID"></field>
+			<field name="WorkgroupID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="MailListsCurrent_tab">
+		<qp-tab id="ListMembers_tab" caption="List Members">
+			<qp-grid id="grdSubscribers" view.bind="ListMembers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="MarketingCampaigns_tab" caption="Used in Campaigns">
+			<qp-grid id="grdCampaigns" view.bind="MarketingCampaigns"></qp-grid>
+		</qp-tab>
+		<qp-tab id="Activities_tab" caption="Activities" if.bind="false">
+			<qp-splitter id="splitter" split="height">
+				<split-pane>
+					<qp-grid id="gridActivities" view.bind="Activities"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-rich-text-editor
+						id="edActivityBody"
+						state.bind="Activities.Body"
+						wg-field
+						value.bind="Activities.activeRow.Body.value"
+						config.bind="{readOnly: true}">
+					</qp-rich-text-editor>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="HubSpotSyncRecs_tab" caption="HubSpot">
+			<qp-grid id="hsSyncGrid" view.bind="HubSpotSyncRecs"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

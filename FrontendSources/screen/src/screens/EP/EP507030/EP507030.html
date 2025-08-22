@@ -1,0 +1,32 @@
+<template>
+	<qp-template name="1-1-1" id="MainForm" class="equal-height">
+		<qp-fieldset slot="A" id="Filter_PXLayoutRule1" wg-container="Filter_form" view.bind="Filter">
+			<field name="ApproverID"></field>
+			<field name="FromWeek"></field>
+			<field name="TillWeek"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter_PXLayoutRule2" wg-container="Filter_form" view.bind="Filter">
+			<field name="ProjectID"></field>
+			<field name="ProjectTaskID"></field>
+			<field name="EmployeeID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form_2" wg-container="Filter_form" view.bind="Filter" caption="Total" class="highlights-section">
+			<field name="RegularTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tab_0" caption="Summary">
+			<qp-grid id="Summary_grid" wg-container view.bind="Summary"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tab_1" caption="Totals">
+			<qp-template name="1-1" id="TotalsForm">
+				<qp-fieldset slot="A" id="form_0" wg-container="Filter_form" view.bind="Filter" caption="Regular" class="highlights-section">
+					<field name="RegularTime"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="form_1" wg-container="Filter_form" view.bind="Filter" caption="Overtime" class="highlights-section">
+					<field name="RegularOvertime"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

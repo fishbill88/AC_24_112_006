@@ -1,0 +1,23 @@
+<template>
+
+	<qp-template id="formFiscalYearSetup" name="1-1" class="equal-height" wg-container="FiscalYearSetup_form">
+		<qp-fieldset id="columnFirstFiscalYearSetup" view.bind="FiscalYearSetup" slot="A">
+			<field name="BookID"></field>
+			<field name="FirstFinYear"></field>
+			<field name="BegFinYear"></field>
+			<field name="BelongsToNextYear"></field>
+			<field name="PeriodType"></field>
+			<field name="EndYearDayOfWeek"></field>
+			<field name="PeriodsStartDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFiscalYearSetup" view.bind="FiscalYearSetup" slot="B">
+			<field name="FinPeriods"></field>
+			<field name="PeriodLength"></field>
+			<field name="HasAdjustmentPeriod"></field>
+			<field name="UserDefined"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Periods"> </qp-grid>
+
+</template>

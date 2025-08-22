@@ -1,0 +1,26 @@
+<template>
+	<qp-template id="formFilter" name="top-17-17-14" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset id="columnFirst" slot="A" view.bind="Filter">
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="FinPeriodID"></field>
+			<field name="VendorClassID"></field>
+			<field name="AccountID"></field>
+			<field name="SubID" control-type="qp-segmented-selector"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond" slot="B" view.bind="Filter">
+			<field name="CuryID"></field>
+			<field name="SplitByCurrency"></field>
+			<field name="ShowWithBalanceOnly"></field>
+			<field name="UseMasterCalendar"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThird" slot="C" view.bind="Summary" wg-container="Summary_form2">
+			<field name="BalanceSummary"></field>
+			<field name="DepositsSummary"></field>
+			<field name="CuryBalanceSummary"></field>
+			<field name="CuryDepositsSummary"></field>
+			<field name="BalanceRetainedSummary"></field>
+			<field name="CuryBalanceRetainedSummary"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridHistory" view.bind="History" wg-container="History_grid"></qp-grid>
+</template>

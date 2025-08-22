@@ -1,0 +1,44 @@
+﻿<template>
+
+    <qp-template name="1-1" id="formDeferredCode" wg-container="deferredcode_form" class="label-size-m">
+
+        <div slot="A" id="columnFirst">
+            <qp-fieldset id="column1Row1" view.bind="DeferredCode">
+                <field name="DeferredCodeID"></field>
+                <field name="Description"></field>
+            </qp-fieldset>
+
+            <qp-fieldset id="column1Row2" view.bind="DeferredCode" caption='Deferral Settings'>
+                <field name="Method"></field>
+                <field name="RecognizeInPastPeriods"></field>
+                <field name="ReconNowPct"></field>
+                <field name="StartOffset"></field>
+                <field name="Occurrences"></field>
+                <field name="AccountType"></field>
+                <field name="AccountSource"></field>
+                <field name="DeferralSubMaskAR"></field>
+                <field name="DeferralSubMaskAP"></field>
+                <field name="CopySubFromSourceTran"></field>
+                <field name="AccountID"></field>
+                <field name="SubID"></field>
+            </qp-fieldset>
+        </div>
+
+        <div slot="B" id="columnSecond">
+            <qp-fieldset id="column2Row1" view.bind="DeferredCode">
+                <field name="Active" no-label="true"></field>
+                <field name="MultiDeliverableArrangement" no-label="true"></field>
+            </qp-fieldset>
+
+            <qp-fieldset id="column2Row2" view.bind="DeferredCode" caption='Recognize Deferrals'>
+                <field name="Frequency">
+                    <qp-label caption="Period(s)"></qp-label>
+                </field>
+                <field name="ScheduleOption" control-type="qp-radio" config-class.bind="'vertical'"></field>
+                <field name="FixedDay"></field>
+            </qp-fieldset>
+        </div>
+
+    </qp-template>
+
+</template>

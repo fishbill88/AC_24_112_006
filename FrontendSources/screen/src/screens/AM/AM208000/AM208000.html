@@ -1,0 +1,183 @@
+﻿<template>
+	<qp-template id="Documents_form" wg-container name="7-10-7" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="Documents1" view.bind="Documents">
+			<field name="BOMID"></field>
+			<field name="RevisionID"></field>
+			<field name="Status">
+				<qp-field id="HoldField" control-state.bind="Documents.Hold"></qp-field>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Documents2" view.bind="Documents">
+			<field name="Descr"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Documents3" view.bind="Documents">
+			<field name="EffStartDate"></field>
+			<field name="EffEndDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitterOperations" split="height" initial-split="40%">
+		<split-pane slot="A">
+			<qp-grid id="grid" view.bind="BomOperRecords"></qp-grid>
+		</split-pane>
+		<split-pane slot="B">
+			<qp-tabbar id="mainOperations">
+				<qp-tab id="tabMaterials" caption="Materials">
+					<qp-grid id="gridMatl" view.bind="BomMatlRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabSteps" caption="Steps">
+					<qp-grid id="gridStep" view.bind="BomStepRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTools" caption="Tools">
+					<qp-grid id="gridTool" view.bind="BomToolRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOverhead" caption="Overhead">
+					<qp-grid id="gridOvhd" view.bind="BomOvhdRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOutside" caption="Outside Process">
+					<qp-template id="OutsideProcessingOperationSelected_outsideProcessingform" wg-container name="17-17-14">
+						<qp-fieldset slot="A" id="OutsideProcessingOperationSelected1" view.bind="OutsideProcessingOperationSelected" caption="General Settings">
+							<field name="OutsideProcess"></field>
+							<field name="DropShippedToVendor"></field>
+							<using wg-container="CurySettings_AMBomOper_curySettingsForm" view="CurySettings_AMBomOper">
+								<field name="VendorID"></field>
+								<field name="VendorLocationID"></field>
+							</using>
+						</qp-fieldset>
+					</qp-template>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+
+	<!--# include file="~\Pages\AM\Includes\BOMReferenceDesignators.inc"-->
+	<qp-panel id="PanelRef" caption="Reference Designators" auto-repaint="true">
+		<qp-grid id="gridref" view.bind="BomRefRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--# include file="~\Pages\AM\Includes\CopyBom.inc"-->
+	<qp-panel id="copyBomFilter" caption="Copy BOM" auto-repaint="true" width="40vw">
+		<qp-template id="copybomfilter_formCopyBom" wg-container name="1-1">
+			<div slot="A">
+				<qp-fieldset id="copyBomFilter1" view.bind="copyBomFilter" caption="Copy From">
+					<field name="FromBOMID"></field>
+					<field name="FromRevisionID"></field>
+					<field name="FromInventoryID"></field>
+					<field name="FromSubItemID"></field>
+					<field name="FromSiteID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="copyBomFilter2" view.bind="copyBomFilter" caption="Copy To">
+					<field name="ToBOMID"></field>
+					<field name="ToRevisionID"></field>
+					<field name="ToInventoryID"></field>
+					<field name="ToSubItemCD"></field>
+					<field name="ToSiteID"></field>
+					<field name="UpdateMaterialWarehouse"></field>
+				</qp-fieldset>
+				<qp-fieldset id="copyBomFilter3" view.bind="copyBomFilter" caption="Copy Notes" class="no-label">
+					<field name="CopyNotesItem">
+						<qp-field id="CopyNotes2" control-state.bind="copyBomFilter.CopyNotesOper"></qp-field>
+					</field>
+					<field name="CopyNotesMatl">
+						<qp-field id="CopyNotes4" control-state.bind="copyBomFilter.CopyNotesStep"></qp-field>
+					</field>
+					<field name="CopyNotesTool">
+						<qp-field id="CopyNotes6" control-state.bind="copyBomFilter.CopyNotesOvhd"></qp-field>
+					</field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButton3" dialog-result="OK" caption="Copy"></qp-button>
+			<qp-button id="PXButton4" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--# include file="~\Pages\AM\Includes\BOMMakeDefault.inc"-->
+	<qp-panel id="DefaultBomLevelsFilter" caption="Default BOM Levels" auto-repaint="true">
+		<qp-template id="DefaultBomLevelsFilter_formDefaultBomLevels" wg-container name="1" class="no-label">
+			<qp-fieldset slot="A" id="DefaultBomLevelsFilter1" view.bind="DefaultBomLevelsFilter">
+				<field name="Item"></field>
+				<field name="Warehouse"></field>
+				<field name="SubItem"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButtonMakeDefaultOk" dialog-result="OK" caption="Update"></qp-button>
+			<qp-button id="PXButtonMakeDefaultCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--# include file="~\Pages\AM\Includes\BOMMakePlanning.inc"-->
+	<qp-panel id="PlanningBomLevelsFilter" caption="Planning BOM Levels" auto-repaint="true">
+		<qp-template id="PlanningBomLevelsFilter_formPlanningBomLevels" wg-container name="1" class="no-label">
+			<qp-fieldset slot="A" id="PlanningBomLevelsFilter1" view.bind="PlanningBomLevelsFilter">
+				<field name="Item"></field>
+				<field name="Warehouse"></field>
+				<field name="SubItem"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButtonMakePlanningOk" dialog-result="OK" caption="Update"></qp-button>
+			<qp-button id="PXButtonMakePlanningCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--# include file="~\Pages\AM\Includes\BOMCostSummary.inc"-->
+	<qp-panel id="BomCostRecs" caption="BOM Cost Summary" auto-repaint="true">
+		<qp-template id="bomcostrecs_formCostSummary" wg-container name="1">
+			<div slot="A">
+				<qp-fieldset id="BomCostRecs1" view.bind="BomCostRecs">
+					<field name="LotSize"></field>
+					<field name="MultiLevelProcess"></field>
+				</qp-fieldset>
+				<qp-fieldset id="BomCostRecs2" view.bind="BomCostRecs">
+					<field name="FLaborCost"></field>
+					<field name="VLaborCost"></field>
+				</qp-fieldset>
+				<qp-fieldset id="BomCostRecs3" view.bind="BomCostRecs">
+					<field name="FOvdCost"></field>
+					<field name="VOvdCost"></field>
+				</qp-fieldset>
+				<qp-fieldset id="BomCostRecs4" view.bind="BomCostRecs">
+					<field name="MachCost"></field>
+					<field name="ToolCost"></field>
+				</qp-fieldset>
+				<qp-fieldset id="BomCostRecs5" view.bind="BomCostRecs">
+					<field name="MatlCost"></field>
+				</qp-fieldset>
+				<qp-fieldset id="BomCostRecs6" view.bind="BomCostRecs">
+					<field name="UnitCost"></field>
+					<field name="TotalCost"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButton5" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--# include file="~\Pages\AM\Includes\BOMCostSummarySettings.inc"-->
+	<qp-panel id="rollsettings" caption="BOM Cost Settings" auto-repaint="true">
+		<qp-template id="rollsettings_RollSettingsForm" wg-container name="1">
+			<div slot="A">
+				<qp-fieldset id="rollsettings1" view.bind="rollsettings">
+					<field name="LotSize"></field>
+				</qp-fieldset>
+				<qp-fieldset id="rollsettings2" view.bind="rollsettings">
+					<field name="SnglMlti"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButton7" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton8" dialog-result="Abort" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

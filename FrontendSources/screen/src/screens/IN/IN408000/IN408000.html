@@ -1,0 +1,24 @@
+<template>
+	<qp-splitter id="sp1" split="width" initial-split="400" class="stretch label-size-s">
+		<split-pane slot="A" class="v-stack">
+			<qp-fieldset id="treeFilter" view.bind="ItemClassFilter">
+				<!-- <field id="sync" show.bind="false">
+					<qp-field control-state.bind="TreeViewAndPrimaryViewSynchronizationHelper.ItemClassCD"></qp-field>
+				</field> -->
+				<field Name="ItemClassCD"></field>
+			</qp-fieldset>
+			<qp-tree id="tree" view.bind="ItemClasses" caption="Item Class Tree"></qp-tree>
+		</split-pane>
+		<split-pane class="v-stack">
+			<qp-template id="InventoryFilter_gridFilter" name="1-1" wg-container class="equal-height">
+				<qp-fieldset id="filterByItem" view.bind="InventoryFilter" slot="A">
+					<field name="InventoryID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="filterByNesting" view.bind="InventoryFilter" slot="B">
+					<field name="ShowItems" control-type="qp-radio" config-class.bind="'vertical'"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridInventories" view.bind="Inventories" caption="Item Class Members"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

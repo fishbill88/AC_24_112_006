@@ -1,0 +1,17 @@
+<template>
+
+	<qp-template id="formBookYear" name="17-17-14" wg-container="BookYear_form" class="equal-height">
+		<qp-fieldset id="columnFirstBookYear" view.bind="BookYear" slot="A">
+			<field name="BookID"></field>
+			<field name="OrganizationID"></field>
+			<field name="Year"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondBookYear" view.bind="BookYear" slot="B">
+			<field name="StartDate"></field>
+			<field name="FinPeriods"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="BookPeriod"></qp-grid>
+
+</template>

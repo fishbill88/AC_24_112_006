@@ -1,0 +1,18 @@
+<template>
+
+	<qp-template id="form" name="1-1" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset id="columnFirstFilter" view.bind="Filter" slot="A">
+			<field name="Date"></field>
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="TaxAgencyID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondFilter" view.bind="Filter" slot="B">
+			<field name="TaxID"></field>
+			<field name="ReversalMethod"></field>
+			<field name="TotalTaxAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridDocuments" view.bind="SVATDocuments" wg-container="SVATDocuments_grid" ></qp-grid>
+
+</template>

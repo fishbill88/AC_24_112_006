@@ -1,0 +1,80 @@
+<template>
+	<qp-template name="1-1" id="Document_headerForm" wg-container>
+		<qp-fieldset id="formLeft" view.bind="Document" slot="A">
+			<field name="RefNbr" ></field>
+			<field name="Status" ></field>
+			<field name="EmployeeID" ></field>
+			<field name="Amendment" ></field>
+			<field name="AmendedRefNbr" ></field>
+		</qp-fieldset>
+		<qp-fieldset id="formRight" view.bind="Document" slot="B">
+			<field name="ReasonForROE"></field>
+			<field name="PeriodType"></field>
+			<field name="Comments"></field>
+			<field name="DocDesc"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab" view.bind="CurrentDocument">
+		<qp-tab id="AdministrativeTab" caption="Administrative">
+			<qp-template name="1-1" id="adminTemplate">
+				<div slot="A">
+					<qp-fieldset id="branchForm" view.bind="CurrentDocument">
+						<field name="BranchID"></field>
+						<field name="CRAPayrollAccountNumber"></field>
+					</qp-fieldset>
+					<qp-fieldset id="fAddressInfo" view.bind="Address" caption="Employer Info">
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="PeriodOfEmploymentTab" caption="Period Of Employment">
+			<qp-template name="1-1-1" id="poeTemplate">
+				<qp-fieldset id="poeForm" view.bind="CurrentDocument" slot="A">
+					<field name="FirstDayWorked"></field>
+					<field name="LastDayForWhichPaid"></field>
+					<field name="FinalPayPeriodEndingDate"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="SeparationPaymentsTab" caption="Separation Payments">
+			<qp-template name="1-1-1" id="paymentsTemplate">
+				<qp-fieldset id="vacationForm" view.bind="CurrentDocument" slot="A" class="transparent-section">
+					<field name="VacationPay"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-template name="1-1" id="gridsTemplate">
+				<div slot="A">
+					<qp-label caption="Statutory Holidays Pay For (Block 17B)"></qp-label>
+					<qp-grid id="gridStatutoryHolidays" view.bind="StatutoryHolidays" class="framed-section">
+					</qp-grid>
+				</div>>
+				<div slot="B">
+					<qp-label caption="Other Monies (Block 17C)"></qp-label>
+					<qp-grid id="gridOtherMonies" view.bind="OtherMonies" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="InsurableHoursTab" caption="Insurable Hours">
+			<qp-template name="1-1" id="hoursTemplate">
+				<div slot="A">
+					<qp-label caption="Insurable Earnings by Pay Period (Block 15C)"></qp-label>
+					<qp-grid id="gridInsurableEarnings" view.bind="InsurableEarnings" class="framed-section">
+					</qp-grid>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="insurableForm" view.bind="CurrentDocument">
+						<field name="TotalInsurableHours"></field>
+						<field name="TotalInsurableEarnings"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,77 @@
+<template>
+	<qp-template name="7-10-7" id="DocumentFormMain">
+		<qp-fieldset slot="A" id="form1" wg-container="Document_form" view.bind="Document">
+			<field name="TimeCardCD"></field>
+			<field name="Status"></field>
+			<field name="WeekID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Document_PXLayoutRule4" wg-container="Document_form" view.bind="Document">
+			<field name="EmployeeID"></field>
+			<field name="TimecardType"></field>
+			<field name="OrigTimecardCD"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="form4" wg-container="Document_form" caption="Total" class="highlights-section" view.bind="Document">
+			<field name="TotalSpentCalc"></field>
+			<field name="TotalBillableCalc"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tab_0" caption="Summary">
+			<qp-grid id="Summary_gridDetails" wg-container view.bind="Summary"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_1" caption="Details">
+			<qp-grid id="Activities_gridActivities" wg-container view.bind="Activities"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_2" caption="Materials">
+			<qp-grid id="Items_gridItems" wg-container view.bind="Items"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_3" caption="Approval">
+			<qp-grid id="Approval_gridApproval" wg-container view.bind="Approval"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tab_4" caption="Totals">
+			<qp-template name="1-1" id="DocumentFormTotals">
+				<qp-fieldset slot="A" id="form2" wg-container="Document_form" caption="Regular" class="highlights-section" view.bind="Document">
+					<field name="TimeSpentCalc"></field>
+					<field name="TimeBillableCalc"></field>
+				</qp-fieldset>
+
+				<qp-fieldset slot="B" id="form3" wg-container="Document_form" caption="Overtime" class="highlights-section" view.bind="Document">
+					<field name="OvertimeSpentCalc"></field>
+					<field name="OvertimeBillableCalc"></field>
+				</qp-fieldset>
+			</qp-template>	
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="Tasks" wg-container="Tasks_Tasks" caption="Preload from Tasks" auto-repaint="true">
+		<qp-grid id="Tasks_gridAddTasks" wg-container view.bind="Tasks"></qp-grid>
+		<footer>
+			<qp-button id="PXButton2" caption="Add " state.bind="PreloadFromTasks" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton3" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<div class="v-stack" id="ReasonApproveRejectParams_PXLayoutRulePanelReason_vStack" wg-container>
+			<qp-fieldset id="ReasonApproveRejectParams_PXLayoutRuleReason" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+				<field name="Reason"></field>
+			</qp-fieldset>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="Yes"></qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="No"></qp-button>
+		</div>
+		<footer></footer>
+	</qp-panel>
+
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval_0" wg-container="ReassignApprovalFilter_formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer></footer>
+	</qp-panel>
+
+</template>

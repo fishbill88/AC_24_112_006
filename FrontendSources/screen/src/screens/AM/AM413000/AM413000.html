@@ -1,0 +1,17 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="BOMID"></field>
+			<field name="RevisionID"></field>
+			<field name="InventoryID"></field>
+			<field name="BOMDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" view.bind="Filter" class="no-label">
+			<field name="IgnoreReplenishmentSettings"></field>
+			<field name="IncludeBomsOnHold"></field>
+			<field name="RollCosts"></field>
+			<field name="IgnoreMinMaxLotSizeValues"></field>
+			<field name="UseCurrentInventoryCost"></field>
+		</qp-fieldset>
+	</qp-template>
+</template>

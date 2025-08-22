@@ -1,0 +1,43 @@
+<template>
+	<qp-template id="Results_form" wg-container name="1-1-1">
+		<qp-fieldset slot="A" id="Results1" view.bind="Results">
+			<field name="ConfigResultsID"></field>
+			<field name="InventoryID"></field>
+			<field name="ConfigurationID"></field>
+			<field name="Revision"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="Completed"></field>
+			<field name="IsConfigurationTesting"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Results2" view.bind="Results">
+			<field name="OrdTypeRef"></field>
+			<field name="OrdNbrRef"></field>
+			<field name="OrdLineRef"></field>
+			<field name="OpportunityQuoteID"></field>
+			<field name="OpportunityLineNbr"></field>
+			<field name="ProdOrderType"></field>
+			<field name="ProdOrderNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Results3" view.bind="Results">
+			<field name="_AMConfigurationResults_CurrencyInfo_.CuryID" control-type="qp-currency"></field>
+			<field name="DisplayPrice"></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="sp1" split="height">
+		<split-pane>
+			<qp-tabbar id="mainTab">
+				<qp-tab id="tabFeatures" caption="Features">
+					<qp-grid id="FeaturesGrid" view.bind="CurrentFeatures"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabAttributes" caption="Attributes">
+					<qp-grid id="AttributesGrid" view.bind="Attributes"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="SelectedOptionsGrid" view.bind="Options"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

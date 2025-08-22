@@ -1,0 +1,185 @@
+﻿<template>
+
+    <qp-template name="1-1" id="formBAccount" wg-container="BAccount_PXFormView1" class="label-size-m equal-height">
+
+        <qp-fieldset slot="A" id="columnFirst" view.bind="BAccount">
+            <field name="AcctCD"></field>
+            <field name="AcctName"></field>
+            <field name="OrganizationID"></field>
+        </qp-fieldset>
+
+        <qp-fieldset slot="B" id="columnSecond" view.bind="BAccount">
+            <field name="Active" no-label="true"></field>
+        </qp-fieldset>
+
+    </qp-template>
+
+    <qp-tabbar id="tabs">
+
+        <qp-tab id="tabBranchDetails" caption="Branch Details">
+            <qp-template name="1-1" id="formBranchDetails">
+                <div slot="A" id="columnFirst-BranchDetails">
+
+                    <qp-fieldset id="groupMainContact" view.bind="DefContact" caption="Main Contact" wg-container="DefContact_DefContact">
+                        <field name="FullName"></field>
+                        <field name="Attention"></field>
+                        <field name="EMail"></field>
+                        <field name="WebSite"></field>
+                        <field name="Phone1"></field>
+                        <field name="Phone2"></field>
+                        <field name="Fax"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupMainAddress" view.bind="DefAddress" caption="Main Address" wg-container="DefAddress_DefAddress">
+                        <field name="actionAddressLookup" unbound>
+                            <qp-button id="buttonAddressLookup" state.bind="AddressLookup"></qp-button>
+                        </field>
+                        <field name="actionViewMainOnMap" unbound>
+                            <qp-button id="buttonViewMainOnMap" state.bind="ViewMainOnMap"></qp-button>
+                        </field>
+                        <field name="AddressLine1"></field>
+                        <field name="AddressLine2"></field>
+                        <field name="City"></field>
+                        <field name="CountryID" config-allow-edit.bind="true"></field>
+                        <field name="State" config-allow-edit.bind="true"></field>
+                        <field name="PostalCode"></field>
+                        <field name="CurrentBAccount.CarrierFacility" wg-container="CurrentBAccount_formCarrierFacility"></field>
+                        <field name="IsValidated"></field>
+                    </qp-fieldset>
+
+                </div>
+
+                <div slot="B" id="columnSecond-BranchDetails">
+
+                    <qp-fieldset id="groupConfigurationSettings" view.bind="CurrentBAccount" caption="Configuration Settings" wg-container="CurrentBAccount_tab">
+                        <field name="BranchRoleName"></field>
+                        <field name="BranchCountryID" config-allow-edit.bind="true"></field>
+                        <field name="DefaultPrinterID"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupTaxRegistrationInfo" view.bind="CurrentBAccount" caption="Tax Registration Info" wg-container="CurrentBAccount_tab">
+                        <field name="LegalName"></field>
+                        <field name="TaxRegistrationID"></field>
+                        <field name="MTDApplicationID"></field>
+                        <using view="DefLocation" wg-container="DefLocation_PXFormViewLocation">
+                            <field name="CAvalaraExemptionNumber"></field>
+                            <field name="CAvalaraCustomerUsageType"></field>
+                        </using>
+                        <field name="Reporting1099"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupDunningProcessSettings" view.bind="CurrentBAccount" caption="Dunning Process Settings" wg-container="CurrentBAccount_tab">
+                        <field name="IsDunningCompanyBranchID"></field>
+                    </qp-fieldset>
+
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabDeliverySettings" caption="Delivery Settings">
+            <qp-template name="1-1" id="formDeliverySettings">
+                <div slot="A" id="columnFirst-DeliverySettings">
+
+                    <qp-fieldset id="groupDeliveryContact" view.bind="DefLocationContact" caption="Delivery Contact" wg-container="DefLocationContact_DefLocationContact">
+                        <using view="DefLocation" wg-container="DefLocation_frmDefLocation">
+                            <field name="OverrideContact"></field>
+                        </using>
+                        <field name="FullName"></field>
+                        <field name="Attention"></field>
+                        <field name="EMail"></field>
+                        <field name="WebSite"></field>
+                        <field name="Phone1"></field>
+                        <field name="Phone2"></field>
+                        <field name="Fax"></field>
+                    </qp-fieldset>
+
+                    <qp-fieldset id="groupDeliveryAddress" view.bind="DefLocationAddress" caption="Delivery Address" wg-container="DefLocationAddress_DefLocationAddress">
+                        <using view="DefLocation" wg-container="DefLocation_frmDefLocation">
+                            <field name="OverrideAddress"></field>
+                        </using>
+                        <field name="IsValidated"></field>
+                        <field name="actionDefLocationAddressLookup" unbound>
+                            <qp-button id="buttonDefLocationAddressLookup" state.bind="DefLocationAddressLookup"></qp-button>
+                        </field>
+                        <field name="AddressLine1"></field>
+                        <field name="AddressLine2"></field>
+                        <field name="City"></field>
+                        <field name="CountryID" config-allow-edit.bind="true"></field>
+                        <field name="State" config-allow-edit.bind="true"></field>
+                        <field name="PostalCode"></field>
+                    </qp-fieldset>
+
+                </div>
+
+                <div slot="B" id="columnSecond-DeliverySettings">
+
+                    <qp-fieldset id="groupShippingInstructions" view.bind="DefLocation" caption="Shipping Instructions" wg-container="DefLocation_frmDefLocation">
+                        <field name="VTaxZoneID" config-allow-edit.bind="true"></field>
+                        <field name="CShipComplete"></field>
+                    </qp-fieldset>
+
+                </div>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabEmployees" caption="Employees">
+            <qp-grid id="gridEmployees" view.bind="Employees" wg-container="Employees_grdEmployees">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabLedgers" caption="Ledgers">
+            <qp-grid id="gridLedgers" view.bind="LedgersView" wg-container="LedgersView_grdLedgers">
+            </qp-grid>
+        </qp-tab>
+
+        <qp-tab id="tabGLAccounts" caption="GL Accounts">
+            <qp-template name="1-1" id="formGLAccounts">
+                <qp-fieldset slot="A" id="columnFirst-GLAccounts" view.bind="DefLocation" wg-container="DefLocation_frmDefLocationGL">
+                    <field name="CMPSalesSubID"></field>
+                    <field name="CMPExpenseSubID"></field>
+                    <field name="CMPFreightSubID"></field>
+                    <field name="CMPDiscountSubID"></field>
+                    <field name="CMPGainLossSubID"></field>
+                    <field name="CMPPayrollSubID"></field>
+                </qp-fieldset>
+            </qp-template>
+        </qp-tab>
+
+        <qp-tab id="tabVisualAppearance" caption="Visual Appearance">
+            <qp-template name="1-1" id="formVisualAppearance" wg-container="CurrentBAccount_frmLogo">
+                <div slot="A" id="columnFirst-VisualAppearance">
+                    <qp-fieldset id="groupSiteLogo" view.bind="CurrentBAccount" caption="Site Logo">
+                        <field name="BranchLogoName"></field>
+                        <field name="BranchLogoNameGetter"></field>
+                    </qp-fieldset>
+                    <qp-fieldset id="groupTheme" view.bind="CurrentBAccount" caption="Theme">
+                        <field name="OverrideThemeVariables"></field>
+                        <field name="PrimaryColor"></field>
+                        <field name="BackgroundColor"></field>
+                    </qp-fieldset>
+                </div>
+
+                <div slot="B" id="columnSecond-VisualAppearance">
+                    <qp-fieldset id="groupReportLogo" view.bind="CurrentBAccount" caption="Report Logo">
+                        <field name="BranchLogoNameReport"></field>
+                        <field name="BranchLogoNameReportGetter"></field>
+                    </qp-fieldset>
+                </div>
+            </qp-template>
+        </qp-tab>
+
+    </qp-tabbar>
+
+    <qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+        <qp-template id="formChangeIDDialog" name="1-1" wg-container="ChangeIDDialog_formChangeID">
+            <qp-fieldset slot="A" id="groupFirstChangeIDDialog" caption="Source" view.bind="ChangeIDDialog">
+                <field name="CD"></field>
+            </qp-fieldset>
+        </qp-template>
+        <footer>
+            <qp-button id="buttonOK-ChangeIDDialog" dialog-result="OK"></qp-button>
+            <qp-button id="buttonCancel-ChangeIDDialog" dialog-result="Cancel"></qp-button>
+        </footer>
+    </qp-panel>
+
+</template>

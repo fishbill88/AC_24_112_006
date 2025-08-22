@@ -1,0 +1,32 @@
+<template>
+	<qp-template class="equal-height label-size-xm" name="1-1" id="Country_form" wg-container>
+		<div slot="A">
+			<qp-fieldset id="CountryDetails" view.bind="Country">
+				<field name="CountryID"></field>
+				<field name="Description"></field>
+				<field name="SalesTerritoryID" config-allow-edit.bind="true"></field>
+				<field name="AddressValidatorPluginID" config-allow-edit.bind="true"></field>
+				<field name="AutoOverrideAddress"></field>
+			</qp-fieldset>
+			<qp-fieldset id="PostalCode" caption="Postal Code" view.bind="Country">
+				<field name="ZipCodeMask"></field>
+				<field name="ZipCodeRegexp"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="CountryValidation" caption="Country Validation" view.bind="Country">
+				<field name="CountryValidationMethod"></field>
+				<field name="CountryRegexp"></field>
+			</qp-fieldset>
+			<qp-fieldset id="StateValidation" caption="State Validation" view.bind="Country">
+				<field name="StateValidationMethod"></field>
+			</qp-fieldset>
+			<qp-fieldset id="Language" caption="Language/Locale" view.bind="Country">
+				<field name="LanguageID"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-template class="stretch" name="1" id="States_form">
+		<qp-grid class="framed-section" id="grid" slot="A" caption="States" view.bind="CountryStates"></qp-grid>
+	</qp-template>
+</template>

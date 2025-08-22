@@ -1,0 +1,108 @@
+<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabSummary" caption="Summary" wg-container="MassMails_tab" >
+			<qp-template name="1-1" id="summary_template" class="equal-height">
+				<qp-fieldset slot="A" id="summary_form_left" view.bind="MassMails">
+					<field name="MassMailCD"></field>
+					<field name="MailAccountID"></field>
+					<field name="MailSubject" control-type="qp-tree-selector"
+						control-config.bind="{
+							treeSelectorId: 'tree_selector_edsubject',
+							treeConfig: {
+								idName: 'Path',
+								dataMember: 'EntityItems',
+								description: 'Name',
+								idParent: 'Key',
+								iconField: 'Icon',
+								mode: 'single',
+						},
+					}">
+					</field>
+					<field name="MailTo" control-type="qp-tree-selector"
+						control-config.bind="{
+							treeSelectorId: 'tree_selector_edmailto',
+							treeConfig: {
+								idName: 'Path',
+								dataMember: 'EntityItems',
+								description: 'Name',
+								idParent: 'Key',
+								iconField: 'Icon',
+								mode: 'single',
+						},
+					}">
+					</field>
+					<field name="MailCc" control-type="qp-tree-selector"
+						control-config.bind="{
+							treeSelectorId: 'tree_selector_edmailcc',
+							treeConfig: {
+								idName: 'Path',
+								dataMember: 'EntityItems',
+								description: 'Name',
+								idParent: 'Key',
+								iconField: 'Icon',
+								mode: 'single',
+						},
+					}">
+					</field>
+					<field name="MailBcc" control-type="qp-tree-selector"
+						control-config.bind="{
+							treeSelectorId: 'tree_selector_edmailbcc',
+							treeConfig: {
+								idName: 'Path',
+								dataMember: 'EntityItems',
+								description: 'Name',
+								idParent: 'Key',
+								iconField: 'Icon',
+								mode: 'single',
+						},
+					}">
+					</field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="summary_form_right" view.bind="MassMails">
+					<field name="Source"></field>
+					<field name="PlannedDate"></field>
+					<field name="Status"></field>
+					<field name="SentDateTime"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-rich-text-editor
+				id="edBody"
+				class="stretch"
+				value.bind="MassMails.MailContent.value"
+				wg-field
+			>
+			</qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="tabLeadsContactsEmployees" caption="Leads/Contacts/Employees" if.bind="MassMails.Source.value == 2">
+			<qp-grid id="leads" view.bind="Leads"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCampaigns" caption="Campaigns" if.bind="MassMails.Source.value == 1">
+			<qp-grid
+				id="campaigns"
+				view.bind="Campaigns"
+			>
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMarketingList" caption="Marketing List" if.bind="MassMails.Source.value == 0">
+			<qp-grid
+				id="mailList"
+				view.bind="MailLists"
+			>
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMessages" caption="Messages">
+			<qp-grid
+				id="mailHistory"
+				view.bind="History"
+			>
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabActivities" caption="Activities">
+			<qp-grid
+				id="activities"
+				view.bind="Activities"
+			>
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

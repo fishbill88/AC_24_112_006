@@ -1,0 +1,20 @@
+<template>
+
+	<qp-template name="1-1" id="formReport" class="label-size-m">
+		<qp-fieldset id='panelReport' view.bind='Report' wg-container="Report_form" slot="A">
+			<field name="VendorID" config-allow-edit.bind='true'></field>
+			<field name="RevisionID"></field>
+			<field name="ValidFrom" config-allow-edit.bind='true'></field>
+			<field name="ShowNoTemp"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id='tabs'>
+		<qp-tab id='tabReportLines' caption='Report Lines'>
+			<qp-grid id='gridReportLines' view.bind="ReportLine" wg-container="ReportLine_grid1"> </qp-grid>
+		</qp-tab>
+		<qp-tab id='tabpReportingGroups' caption='Reporting Groups'>
+			<qp-grid id='gridReportGroups' view.bind="Bucket" wg-container="Bucket_grid2"> </qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

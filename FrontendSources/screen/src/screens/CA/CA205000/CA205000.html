@@ -1,0 +1,76 @@
+<template>
+
+	<qp-template id="form" name="1-1" class="equal-height label-size-m" wg-container="ProcessingCenter_form">
+		<qp-fieldset id="columnFirstGroupHead" view.bind="ProcessingCenter" slot="A">
+			<field name="ProcessingCenterID"></field>
+			<field name="Name"></field>
+			<field name="CashAccountID" config-allow-edit.bind="true"></field>
+			<field name="CashAccount.CuryID"></field>
+			<field name="ProcessingTypeName"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondGroupHead" view.bind="ProcessingCenter" class="no-label" slot="B">
+			<field name="IsActive"></field>
+			<field name="AllowDirectInput"></field>
+			<field name="AllowSaveProfile"></field>
+			<field name="SyncronizeDeletion"></field>
+			<field name="UseAcceptPaymentForm"></field>
+			<field name="AllowUnlinkedRefund"></field>
+			<field name="AllowPayLink"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabPluginParameters" caption="Plug-In Parameters">
+			<qp-grid id="gridDetails" view.bind="Details" wg-container="Details_grdDetails"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabPaymentMethods" caption="Payment Methods">
+			<qp-grid id="gridPaymentMethods" view.bind="PaymentMethods" wg-container="PaymentMethods_grdPaymentMethods"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabPreferences" caption="Preferences">
+			<qp-template id="formPreferences" name="1-1" wg-container="CurrentProcessingCenter_tab">
+				<div id="columnFirstPreferences" class="label-size-l" slot="A">
+					<qp-fieldset id="groupConnection" view.bind="CurrentProcessingCenter" caption="Connection">
+						<field name="OpenTranTimeout"></field>
+						<field name="SyncRetryAttemptsNo"></field>
+						<field name="SyncRetryDelayMs"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReauthorization" view.bind="CurrentProcessingCenter" caption="Reauthorization">
+						<field name="ReauthRetryNbr"></field>
+						<field name="ReauthRetryDelay"></field>
+					</qp-fieldset>
+				</div>
+				<div id="columnSecondPreferences" slot="B" class="label-size-m">
+					<qp-fieldset id="groupProfileCreation" view.bind="CurrentProcessingCenter" caption="Profile Creation">
+						<field name="CreateAdditionalCustomerProfiles"></field>
+						<field name="CreditCardLimit"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupSettlement" view.bind="CurrentProcessingCenter" caption="Settlement">
+						<field name="ImportSettlementBatches"></field>
+						<field name="ImportStartDate"></field>
+						<field name="LastSettlementDate"></field>
+						<field name="DepositAccountID" config-allow-edit.bind="true"></field>
+						<field name="AutoCreateBankDeposit"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+
+		<qp-tab id="tabFees" caption="Fees">
+			<qp-grid id="gridFeeTypes" view.bind="FeeTypes" wg-container="FeeTypes_grdFeeTypes"></qp-grid>
+		</qp-tab>
+
+		<qp-tab id="tabPaymentLinks" caption="Payment Links" wg-container="CurrentProcessingCenter_tab"
+				if.bind="ProcessingCenter.AllowPayLink.value == true">
+			<qp-template id="formPaymentLinks" name="17-17-14">
+				<qp-fieldset slot="A" id="panelPaymentLinks" view.bind="CurrentProcessingCenter">
+					<field name="AllowPartialPayment"></field>
+					<field name="WebhookID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridProcCenterBranch" view.bind="ProcCenterBranch"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+</template>

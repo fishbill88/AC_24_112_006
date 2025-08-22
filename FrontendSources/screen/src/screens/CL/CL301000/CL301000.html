@@ -1,0 +1,72 @@
+<template>
+	<qp-tabbar id="tab">
+		<qp-tab id="LienWaiverSetup_tab" caption="Lien Waiver Settings" wg-container>
+			<qp-fieldset
+				id="LienWaiverSetup_form_0"
+				view.bind="LienWaiverSetup"
+				caption="Actions for Outstanding Lien Waivers">
+				<field name="ShouldWarnOnBillEntry"></field>
+				<field name="ShouldWarnOnPayment"></field>
+				<field name="ShouldStopPayments"></field>
+			</qp-fieldset>
+
+			<qp-template id="LienWaiverSetup_template" name="1-1">
+				<qp-fieldset
+					id="LienWaiverSetup_form_1"
+					view.bind="LienWaiverSetup"
+					slot="A"
+					caption="Conditional Lien Waivers">
+					<field name="ShouldGenerateConditional"></field>
+					<field name="GenerateWithoutCommitmentConditional"></field>
+					<field name="GenerationEventConditional"></field>
+					<field name="ThroughDateSourceConditional"></field>
+					<field name="GroupByConditional"></field>
+				</qp-fieldset>
+
+				<qp-fieldset
+					id="LienWaiverSetup_form_2"
+					view.bind="LienWaiverSetup"
+					slot="B"
+					caption="Unconditional Lien Waivers">
+					<field name="ShouldGenerateUnconditional"></field>
+					<field name="GenerateWithoutCommitmentUnconditional"></field>
+					<field name="GenerationEventUnconditional"></field>
+					<field name="ThroughDateSourceUnconditional"></field>
+					<field name="GroupByUnconditional"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="LienWaiverMailing_tab" caption="Lien Waiver Mailing & Printing">
+			<qp-splitter id="split" initial-split="350" split="height">
+				<split-pane>
+					<qp-grid
+						id="ComplianceNotifications_gridNS"
+						view.bind="ComplianceNotifications"
+						caption="Default Sources"
+						wg-container>
+					</qp-grid>
+				</split-pane>
+
+				<split-pane>
+					<qp-grid
+						id="Recipients_gridNR"
+						view.bind="Recipients"
+						caption="Default Recipients"
+						wg-container>
+					</qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="CustomAttributes_tab" caption="Custom Attributes">
+			<qp-template name="14-17-17" id="CustomAttributes_filter">
+				<qp-fieldset id="Filter_form" wg-container view.bind="Filter" slot="A">
+					<field name="Type"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="Mapping_gridCustom" wg-container view.bind="Mapping"></qp-grid>
+		</qp-tab>
+		<qp-tab id="CommonAttributes_tab" caption="Common Attributes">
+			<qp-grid id="MappingCommon_gridCommon" wg-container view.bind="MappingCommon"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

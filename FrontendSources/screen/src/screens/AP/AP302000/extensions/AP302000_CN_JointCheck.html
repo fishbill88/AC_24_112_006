@@ -1,0 +1,25 @@
+<template>
+
+	<!--<field after="#columnSecond-Summary [name='VendorLocationID']" name="SelectedJointPayee.Name"></field>-->
+
+	<!-- TODO: This is workaround for AC-302860. It must be fixed by AC-302864 after AC-302860 fix -->
+	<field after="#columnSecond-Summary [name='VendorLocationID']" name="TempSelectedJointPayeeNameContainer" unbound>
+		<qp-label slot="label" caption.bind="SelectedJointPayee.Name.text"></qp-label>
+		<qp-field if.bind="featuresService.features['PX.Objects.CS.FeaturesSet']['Construction']" control-state.bind="SelectedJointPayee.Name">
+		</qp-field>
+	</field>
+
+	<qp-panel id="BillWithJointPayee" caption="Select Joint Payee" auto-repaint="true">
+		<qp-fieldset id="panelAvailableJointPayeesFilter" view.bind="BillWithJointPayeeFilter" wg-container="BillWithJointPayeeFilter_AvailableJointPayeesFilter">
+			<field name="RefNbr"></field>
+		</qp-fieldset>
+		<qp-grid id="gridAvailableJointPayeesGrid" view.bind="BillWithJointPayee" wg-container="BillWithJointPayee_AvailableJointPayeesGrid"></qp-grid>
+		<footer>
+			<qp-button id="btnAddJointPayee" caption="Add"></qp-button>
+			<qp-button id="btnAddCloseJointPayee" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="btnCloseJointPayee" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+
+</template>

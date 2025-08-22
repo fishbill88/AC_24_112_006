@@ -1,0 +1,34 @@
+<template>
+	<qp-template name="17-17-14" id="Items_form" class="equal-height" wg-container>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="Items">
+			<field name="NoteID"></field>
+			<field name="ApprovalStatus"></field>
+			<field name="Date_Date">
+				<qp-field
+					control-state.bind="Items.Date_Time"
+					config-time-mode.bind="true">
+				</qp-field>
+			</field>
+			<field name="OwnerID"></field>
+			<field name="ApproverID"></field>
+			<field name="CertifiedJob"></field>
+			<field name="ProjectID"></field>
+			<field name="ProjectTaskID"></field>
+			<field name="CostCodeID"></field>
+			<field name="LabourItemID"></field>
+			<field name="UnionID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB01" view.bind="Items">
+			<field name="EarningTypeID"></field>
+			<field name="WorkCodeID"></field>
+			<field name="TimeSpent"></field>
+			<field name="OvertimeSpent"></field>
+			<field name="IsBillable"></field>
+			<field name="Released"></field>
+			<field name="TimeBillable"></field>
+			<field name="OvertimeBillable"></field>
+			<field name="EmployeeRate"></field>
+			<field name="Summary" config-rows.bind="3"></field>
+		</qp-fieldset>
+	</qp-template>
+</template>

@@ -1,0 +1,43 @@
+<template>
+	<qp-grid id="grid" view.bind="Locales">
+	</qp-grid>
+
+	<qp-panel caption="Languages" id="AlternativeHeader" auto-repaint="true">
+		<qp-fieldset id="frmAlternativeHeader" view.bind="AlternativeHeader">
+			<field name="DefaultLanguageName"></field>
+		</qp-fieldset>
+		<qp-grid id="gridAlternativeDetails" view.bind="AlternativeDetails">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton1" caption="Apply" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel caption="Locale Preferences" id="Formats" auto-repaint="true">
+		<qp-template name="1-1" id="Formats_formEditFormat" wg-container>
+			<div slot="A">
+				<qp-fieldset id="col11" view.bind="Formats">
+					<field name="TemplateLocale"></field>
+				</qp-fieldset>
+				<qp-fieldset id="col12" view.bind="Formats" caption="Date and Time Formats">
+					<field name="DateTimePattern"></field>
+					<field name="TimeShortPattern"></field>
+					<field name="TimeLongPattern"></field>
+					<field name="DateShortPattern"></field>
+					<field name="DateLongPattern"></field>
+					<field name="AMDesignator"></field>
+					<field name="PMDesignator"></field>
+				</qp-fieldset>
+			</div>
+			<qp-fieldset slot="B" id="col2" view.bind="Formats" caption="Number Format">
+				<field name="NumberDecimalSeporator"></field>
+				<field name="NumberGroupSeparator"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnEditFormatOK" caption="Close" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

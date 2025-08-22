@@ -1,0 +1,300 @@
+<template>
+	<qp-template id="ServiceOrderRecords_mainForm" name="7-10-7" class="equal-height" qp-collapsible wg-container>
+		<qp-fieldset id="first" slot="A" view.bind="ServiceOrderRecords">
+			<field name="SrvOrdType" config-allow-edit.bind="true"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="OrderDate"></field>
+			<field name="CustPORefNbr"></field>
+			<field name="CustWorkOrderRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" slot="B" view.bind="ServiceOrderRecords">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="currencyinfo"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="DfltProjectTaskID"></field>
+			<field name="DocDesc" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="summary" slot="C" view.bind="ServiceOrderRecords" class="highlights-section">
+			<field name="EstimatedDurationTotal"></field>
+			<field name="CuryEstimatedBillableTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryDocTotal"></field>
+			<field name="CuryEffectiveBillableDocTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentServiceOrder_tab" wg-container>
+		<qp-tab caption="Settings" id="settingsTab">
+			<qp-template id="SettingsTemplate" name="17-17-14">
+				<div slot="A">
+					<qp-fieldset id="ServiceOrder_Contact_edServiceOrder_Contact" wg-container view.bind="ServiceOrder_Contact" caption="Contact">
+						<field name="OverrideContact"></field>
+						<using wg-container="CurrentServiceOrder_edContactForm" view="CurrentServiceOrder">
+							<field name="ContactID"></field>
+						</using>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1">
+							<qp-field slot="label" control-state.bind="ServiceOrder_Contact.Phone1Type" class="no-label"></qp-field>
+						</field>
+						<field name="EMail" control-type="qp-mail-editor"></field>
+					</qp-fieldset>
+					<qp-fieldset id="ServiceOrder_Address_edServiceOrder_Address" wg-container view.bind="ServiceOrder_Address" caption="Address">
+						<field name="OverrideAddress">
+							<qp-address-lookup class="col-12" view.bind="ServiceOrder_Address">
+							</qp-address-lookup>
+						</field>
+						<using wg-container="CurrentServiceOrder_edRoomForm" view="CurrentServiceOrder">
+							<field name="RoomID"></field>
+						</using>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID" config-allow-edit.bind="true"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="Latitude"></field>
+						<field name="Longitude"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CurrentServiceOrder_20" caption="Workflow" view.bind="ServiceOrderRecords" wg-container="ServiceOrderRecords_mainForm">
+						<field name="WFStageID" config-allow-edit.bind="true"></field>
+						<field name="WaitingForParts"></field>
+						<field name="AppointmentsNeeded"></field>
+						<field name="IsPrepaymentEnable"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentServiceOrder_30" caption="Service Settings" view.bind="CurrentServiceOrder">
+						<using wg-container="ServiceOrderRecords_mainForm" view="ServiceOrderRecords">
+							<field name="BranchLocationID" config-allow-edit.bind="true"></field>
+							<field name="BillServiceContractID" config-allow-edit.bind="true"></field>
+							<field name="BillContractPeriodID"></field>
+						</using>
+						<field name="AssignedEmpID"></field>
+						<field name="ProblemID" config-allow-edit.bind="true"></field>
+						<field name="Severity"></field>
+						<field name="Priority"></field>
+						<field name="SLAETA_Date">
+							<qp-field control-state.bind="CurrentServiceOrder.SLAETA_Time" config-time-mode.bind="true" config-enabled.bind="false">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentServiceOrder_SourceInfoForm" wg-container caption="Source Info" view.bind="CurrentServiceOrder">
+						<field name="SourceType"></field>
+						<field name="SourceReferenceNbr"></field>
+						<field name="ServiceContractID"></field>
+						<field name="ScheduleID"></field>
+						<field name="ScheduleRecord.RecurrenceDescription"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Details" id="detailsTab">
+			<qp-grid id="PXGridDetails" view.bind="ServiceOrderDetails">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Taxes" id="taxesTab">
+			<qp-grid id="gridTaxDetails" view.bind="Taxes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Appointments" id="appointmentsTab">
+			<qp-grid id="PXGridAppointments" view.bind="ServiceOrderAppointments">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Financial" id="financialTab">
+			<qp-template id="FinancialTemplate" name="17-17-14">
+				<qp-fieldset slot="A" id="CurrentServiceOrder_30" view.bind="CurrentServiceOrder">
+					<field name="BranchID" config-allow-edit.bind="true"></field>
+					<field name="BillCustomerID" config-allow-edit.bind="true"></field>
+					<field name="BillLocationID" config-allow-edit.bind="true"></field>
+					<field name="TaxZoneID" config-allow-edit.bind="true"></field>
+					<field name="TaxCalcMode"></field>
+					<field name="BillingBy"></field>
+					<field name="SalesPersonID"></field>
+					<field name="Commissionable"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Profitability" id="profitabilityTab">
+			<qp-grid id="PXGridProfitability" view.bind="ProfitabilityRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Default Staff" id="defaultStaffTab">
+			<qp-grid id="PXGridStaff" view.bind="ServiceOrderEmployees">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Default Resource Equipment" id="defaultResourceEquipmentTab">
+			<qp-grid id="PXGridResourceEquipment" view.bind="ServiceOrderEquipment">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Attributes" id="attributesTab">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Related Documents" id="relatedDocumentsTab">
+			<qp-grid id="PXGridRelatedServiceOrders" view.bind="RelatedServiceOrders">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Prepayments" id="prepaymentsTab" if.bind="CurrentServiceOrder.IsPrepaymentEnable.value == true">
+			<qp-template id="CurrentServiceOrder_PrepaymentTotals" name="17-7" class="stretch full-width" wg-container>
+				<qp-grid id="detgrid" slot="A" view.bind="Adjustments">
+				</qp-grid>
+				<div slot="B">
+					<qp-fieldset id="CurrentServiceOrder_40" view.bind="CurrentServiceOrder" caption="Prepayment Summary">
+						<field name="SOPrepaymentReceived"></field>
+						<field name="SOPrepaymentApplied"></field>
+						<field name="SOPrepaymentRemaining"></field>
+						<field name="SOCuryUnpaidBalanace"></field>
+						<field name="SOCuryBillableUnpaidBalanace"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Totals" id="totalsTab">
+			<qp-template id="CurrentServiceOrder_formG" wg-container name="17-17-14">
+				<qp-fieldset id="CurrentServiceOrder_serviceOrderTotalsForm" slot="A" view.bind="CurrentServiceOrder" caption="Service Order Totals">
+					<field name="EstimatedDurationTotal"></field>
+					<field name="CuryEstimatedOrderTotal"></field>
+					<field name="CuryBillableOrderTotal"></field>
+					<field name="CuryTaxTotal"></field>
+					<field name="CuryDocTotal"></field>
+					<field name="CuryVatExemptTotal"></field>
+					<field name="CuryVatTaxableTotal"></field>
+					<field name="CuryEffectiveCostTotal"></field>
+				</qp-fieldset>
+				<div slot="B">
+					<qp-fieldset id="CurrentServiceOrder_appointmentTotalsForm" view.bind="CurrentServiceOrder" caption="Appointment Totals">
+						<field name="ApptDurationTotal"></field>
+						<field name="CuryApptOrderTotal"></field>
+						<field name="CuryAppointmentTaxTotal"></field>
+						<field name="CuryAppointmentDocTotal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentServiceOrder_profitRatiosForm" view.bind="CurrentServiceOrder" caption="Profit Ratios">
+						<field name="ProfitPercent"></field>
+						<field name="ProfitMarginPercent"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab caption="Billing Documents" id="billingDocumentsTab">
+			<qp-template id="BillingTemplate" name="17-17-14">
+				<qp-fieldset id="CurrentServiceOrder_edInvoiceInfoForm2" wg-container slot="A" view.bind="CurrentServiceOrder" class="no-label">
+					<field name="AllowInvoice"></field>
+					<field name="Mem_Invoiced"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="PXGridInvoiceRecords" view.bind="InvoiceRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab caption="Other" id="otherTab" wg-container="CurrentServiceOrder_edCommentsForm">
+			<qp-rich-text-editor id="edLongDescr" state.bind="CurrentServiceOrder.LongDescr" value.two-way="CurrentServiceOrder.LongDescr.value" wg-field class="stretch">
+			</qp-rich-text-editor>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="QuickProcessParameters" caption="Process Service Order" width="70vw" height="70vh" auto-repaint="true">
+		<qp-template id="QuickProcessParameters_formQuickProcess" name="1-1" wg-container>
+			<div slot="A">
+				<qp-fieldset id="QuickProcessParameters_10" caption="Service Order Actions" view.bind="QuickProcessParameters">
+					<field name="AllowInvoiceServiceOrder"></field>
+					<field name="CompleteServiceOrder"></field>
+					<field name="CloseServiceOrder"></field>
+					<field name="GenerateInvoiceFromServiceOrder"></field>
+				</qp-fieldset>
+				<qp-fieldset id="QuickProcessParameters_20" caption="Sales Order Actions" view.bind="QuickProcessParameters">
+					<field name="PrepareInvoice"></field>
+					<field name="SOQuickProcess"></field>
+					<field name="EmailSalesOrder"></field>
+				</qp-fieldset>
+			</div>
+			<qp-fieldset id="QuickProcessParameters_30" caption="Invoice Actions" slot="B" view.bind="QuickProcessParameters">
+				<field name="ReleaseInvoice"></field>
+				<field name="EmailInvoice"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnOK" state.bind="QuickProcessOk" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="StaffSelectorFilter" caption="Add Staff" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="StaffSelectorTemplate" name="17-17-14" class="stretch">
+			<div slot="A">
+				<qp-fieldset id="StaffSelectorFilter_form" view.bind="StaffSelectorFilter">
+					<field name="ServiceLineRef"></field>
+					<field name="PostalCode"></field>
+					<field name="GeoZoneID"></field>
+				</qp-fieldset>
+				<qp-grid id="PXGridServiceSkills" caption="Skills" view.bind="SkillGridFilter" class="framed-section">
+				</qp-grid>
+				<qp-grid id="PXGridLicenseType" caption="Licenses" view.bind="LicenseTypeGridFilter" class="framed-section">
+				</qp-grid>
+			</div>
+			<qp-grid id="PXGridAvailableStaff" caption="Staff" slot="B" view.bind="StaffRecords" class="framed-section">
+			</qp-grid>
+		</qp-template>
+		<footer>
+			<qp-button caption="OK" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ItemInfo" caption="Inventory Lookup" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="ItemFilter_formSitesStatus" name="17-17-14" class="equal-height" wg-container>
+			<qp-fieldset id="sitestatusfilterForm1" slot="A" view.bind="sitestatusfilter">
+				<field name="LineType"></field>
+				<field name="Inventory"></field>
+				<field name="BarCode"></field>
+				<field name="SiteID"></field>
+				<field name="ItemClass"></field>
+				<field name="SubItem"></field>
+			</qp-fieldset>
+			<qp-fieldset id="sitestatusfilterForm2" slot="B" view.bind="ItemFilter">
+				<field name="Mode" control-type="qp-radio"></field>
+					<qp-field control-state.bind="ItemFilter.Mode"
+							  control-type="qp-radio"
+							  config-class.bind="'vertical'">
+					</qp-field>
+				</field>
+				<field name="OnlyAvailable"></field>
+				<field name="HistoryDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="siteStatus_gripSiteStatus" view.bind="ItemInfo">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnAdd" state.bind="AddSelectedItems"></qp-button>
+			<qp-button id="btnAddClose" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ServiceOrderTypeSelector" caption="Select the New Service Order Type" auto-repaint="true" width="40vw" height="25vh">
+		<qp-template id="ServiceOrderTypeTemplate" name="1-1">
+			<qp-fieldset id="ServiceOrderTypeSelector_DriverRouteForm" slot="A" view.bind="ServiceOrderTypeSelector">
+				<field name="SrvOrdType"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer id="PXPanelCopyToServiceOrder">
+			<qp-button caption="Proceed" dialog-result="OK"></qp-button>
+			<qp-button caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="FSServiceOrderLineSplittingExtension_lsselect" caption="Line Details" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="FSServiceOrderLineSplittingExtensionTemplate" name="1-1">
+			<qp-fieldset id="FSServiceOrderLineSplittingExtension_LotSerOptions_optform" slot="A" view.bind="FSServiceOrderLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="FSServiceOrderLineSplittingExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="Splits_PXGridAllocations" view.bind="Splits">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnSave" caption="OK" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

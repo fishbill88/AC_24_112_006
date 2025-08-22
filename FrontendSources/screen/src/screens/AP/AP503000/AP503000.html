@@ -1,0 +1,54 @@
+<template>
+	<qp-template name="17-17-14" id="formFilter" wg-container="Filter_form" class="equal-height">
+		<qp-fieldset slot="A" view.bind="Filter" id="columnFirstFilter">
+			<field name="BranchID"></field>
+			<field name="PayTypeID"></field>
+			<field name="PayAccountID"></field>
+			<field name="PayDate"></field>
+			<field name="PayFinPeriodID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" view.bind="Filter" id="columnSecondFilter">
+			<field name="VendorClassID"></field>
+			<field name="VendorID"></field>
+			<field name="ProjectID"></field>
+			<field name="ShowPayInLessThan" replace-content>
+				<qp-field control-state.bind="Filter.ShowPayInLessThan" no-label="true">
+					<qp-field control-state.bind="Filter.PayInLessThan" no-label="true" class="col-4">
+						<qp-label caption="Days"></qp-label>
+					</qp-field>
+				</qp-field>
+			</field>
+			<field name="ShowDueInLessThan" replace-content>
+				<qp-field control-state.bind="Filter.ShowDueInLessThan" no-label="true">
+					<qp-field control-state.bind="Filter.DueInLessThan" no-label="true" class="col-4">
+						<qp-label caption="Days"></qp-label>
+					</qp-field>
+				</qp-field>
+			</field>
+			<field name="ShowDiscountExpiresInLessThan" replace-content>
+				<qp-field control-state.bind="Filter.ShowDiscountExpiresInLessThan" no-label="true">
+					<qp-field control-state.bind="Filter.DiscountExpiresInLessThan" no-label="true" class="col-4">
+						<qp-label caption="Days"></qp-label>
+					</qp-field>
+				</qp-field>
+			</field>
+			<field no-label="true" name="TakeDiscAlways"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" view.bind="Filter" id="columnThirdFilter">
+			<field name="GLBalance"></field>
+			<field name="CashBalance"></field>
+			<field name="CurySelTotal"></field>
+			<field name="SelCount"></field>
+			<field name="APQuickBatchGeneration"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDocumentsToPay" caption="Documents to Pay">
+			<qp-grid id="gridAPDocumentList" view.bind="APDocumentList" wg-container="APDocumentList_grid1"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabException" caption="Exceptions">
+			<qp-grid id="gridAPExceptionsList" view.bind="APExceptionsList" wg-container="APExceptionsList_grid2"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

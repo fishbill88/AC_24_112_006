@@ -1,0 +1,31 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="formLedger" wg-container="LedgerRecords_Ledger">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="LedgerRecords">
+			<field name="LedgerCD"></field>
+			<field name="Descr"></field>
+			<field name="BalanceType"></field>
+			<field name="BaseCuryID"></field>
+			<field name="ConsolAllowed"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabsMain">
+		<qp-tab id="tabCompanies" caption="Companies">
+			<qp-grid id="gridOrganizaionLinks" wg-container="OrganizationLedgerLinkWithOrganizationSelect_grdOrganizaionLinks" view.bind="OrganizationLedgerLinkWithOrganizationSelect">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBranches" caption="Branches">
+			<qp-grid id="gridBranches" wg-container="BranchesView_grdBranches" view.bind="BranchesView">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-fieldset id="formChangeID" view.bind="ChangeIDDialog" wg-container="ChangeIDDialog_formChangeID">
+			<field name="CD"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ChangeIDDialog" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ChangeIDDialog" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

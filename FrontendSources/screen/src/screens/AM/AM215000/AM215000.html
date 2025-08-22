@@ -1,0 +1,82 @@
+<template>
+	<qp-template id="Documents_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset slot="A" id="Documents1" view.bind="Documents">
+			<field name="ECOID"></field>
+			<field name="RevisionID"></field>
+			<field name="BOMID" config-allow-edit.bind="true"></field>
+			<field name="BOMRevisionID" config-allow-edit.bind="true"></field>
+			<field name="Status"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Documents2" view.bind="Documents">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="RequestDate"></field>
+			<field name="EffectiveDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="Documents3" view.bind="Documents">
+			<field name="Requestor"></field>
+			<field name="Priority"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="sp1" split="height">
+		<split-pane slot="A">
+			<qp-tabbar id="tabTop">
+				<qp-tab id="tabOperations" caption="Operations">
+					<qp-grid id="grid" view.bind="BomOperRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabAttributes" caption="Attributes">
+					<qp-grid id="AttributesGrid" view.bind="BomAttributes"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabApprovals" caption="Approvals">
+					<qp-grid id="gridApproval" view.bind="Approval"></qp-grid>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+		<split-pane slot="B">
+			<qp-tabbar id="tabBottom">
+				<qp-tab id="tabMaterials" caption="Materials">
+					<qp-grid id="gridMatl" view.bind="BomMatlRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabSteps" caption="Steps">
+					<qp-grid id="gridStep" view.bind="BomStepRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabTools" caption="Tools">
+					<qp-grid id="gridTool" view.bind="BomToolRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOverhead" caption="Overhead">
+					<qp-grid id="gridOvhd" view.bind="BomOvhdRecords"></qp-grid>
+				</qp-tab>
+				<qp-tab id="tabOutsideProcess" caption="Outside Process">
+					<qp-template id="OutsideProcessingOperationSelected_outsideProcessingform" wg-container name="17-17-14">
+						<qp-fieldset slot="A" id="SelectedConfiguration1" view.bind="OutsideProcessingOperationSelected">
+							<field name="OutsideProcess"></field>
+							<field name="DropShippedToVendor"></field>
+							<field name="VendorID" config-allow-edit.bind="true"></field>
+							<field name="VendorLocationID"></field>
+						</qp-fieldset>
+					</qp-template>
+				</qp-tab>
+			</qp-tabbar>
+		</split-pane>
+	</qp-splitter>
+	<qp-panel id="PanelRef" caption="Reference Designators" auto-repaint="true">
+		<qp-grid id="gridref" view.bind="BomRefRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<!--# include file="~\Pages\Includes\EPReassignApproval.inc"-->
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" dialog-result="OK" caption="Reassign"></qp-button>
+			<qp-button id="btnReassignApprovalCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

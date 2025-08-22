@@ -1,0 +1,74 @@
+<template>
+	<qp-template id="formSequence" name="1-1" class="equal-height label-size-m" wg-container="Sequence_form">
+		<qp-fieldset id="columnFirst-formSequence" view.bind="Sequence" slot="A">
+			<field name="DiscountID"></field>
+			<field name="DiscountSequenceID"></field>
+			<field name="IsActive"></field>
+			<field name="IsPromotion"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond-formSequence" view.bind="Sequence" slot="B">
+			<field name="DiscountedFor"></field>
+			<field name="Prorate"></field>
+			<field name="BreakBy"></field>
+			<field name="StartDate"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThird-formSequence" view.bind="Sequence" slot="C">
+			<field name="EndDate"></field>
+			<field name="ShowFreeItem" class="no-label"></field>
+		</qp-fieldset>
+
+		<!--if.bind doesn't work. There is the WA - a hidden view with flags for if.binds,
+		bugs https://jira.acumatica.com/browse/AC-296784 and https://jira.acumatica.com/browse/AC-287583-->
+		<qp-fieldset id="columnHiddenFlags" view.bind="Discount" style="display: none;">
+			<field name="ShowCustomers"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDiscountBreakpoints" caption="Discount Breakpoints">
+			<qp-grid id="gridDiscountBreakpoints" view.bind="Details" wg-container="Details_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabItems" caption="Items" if.bind="Discount.showListOfItems.value == true">
+			<qp-grid id="gridItems" view.bind="Items" wg-container="Items_itemsGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCustomers" caption="Customers" if.bind="Discount.ShowCustomers.value == true">
+			<qp-grid id="gridCustomers" view.bind="Customers" wg-container="Customers_customersGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCustomerPriceClasses" caption="Customer Price Classes" if.bind="Discount.ShowCustomerPriceClass.value == true">
+			<qp-grid id="gridCustomerPriceClasses" view.bind="CustomerPriceClasses" wg-container="CustomerPriceClasses_customerPriceClassGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabItemPriceClasses" caption="Item Price Classes" if.bind="Discount.ShowInventoryPriceClass.value == true">
+			<qp-grid id="gridItemPriceClasses" view.bind="InventoryPriceClasses" wg-container="InventoryPriceClasses_inventoryPriceClassGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBranches" caption="Branches" if.bind="Discount.ShowBranches.value == true">
+			<qp-grid id="gridBranches" view.bind="Branches" wg-container="Branches_branchesGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabWarehouses" caption="Warehouses" if.bind="Discount.ShowSites.value == true">
+			<qp-grid id="gridWarehouses" view.bind="Sites" wg-container="Sites_sitesGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFreeItem" caption="Free Item" if.bind="Sequence.ShowFreeItem.value == true">
+			<qp-template id="formFreeItem" name="1-1" wg-container="CurrentSequence_form2">
+				<qp-fieldset id="columnFirst-formFreeItem" view.bind="CurrentSequence" slot="A">
+					<field name="FreeItemID" config-allow-edit.bind="true"></field>
+					<field name="PendingFreeItemID" config-allow-edit.bind="true"></field>
+					<field name="LastFreeItemID" config-allow-edit.bind="true"></field>
+					<field name="UpdateDate"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="UpdateSettings" caption="Update Discounts" auto-repaint="true">
+		<qp-template id="formUpdateSettings" name="1" wg-container="UpdateSettings_formUpdateSettings">
+			<qp-fieldset id="columnFirst-formUpdateSettings" view.bind="UpdateSettings" slot="A" class="label-size-m">
+				<field name="FilterDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

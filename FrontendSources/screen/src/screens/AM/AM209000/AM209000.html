@@ -1,0 +1,131 @@
+<template>
+	<qp-template id="ProdItemRecords_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset slot="A" id="ProdItemRecords1" view.bind="ProdItemRecords">
+			<field name="OrderType" config-allow-edit.bind="true"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+			<field name="StatusID"></field>
+			<field name="Hold"></field>
+			<field name="ProdDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="ProdItemRecords2" view.bind="ProdItemRecords">
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="SubItemID"></field>
+			<field name="SiteId" config-allow-edit.bind="true"></field>
+			<field name="BranchID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridOperations" view.bind="ProdOperRecords"></qp-grid>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabMaterials" caption="Materials">
+			<qp-grid id="gridMatl" view.bind="ProdMatlRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSteps" caption="Steps">
+			<qp-grid id="gridStep" view.bind="ProdStepRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTools" caption="Tools">
+			<qp-grid id="gridTool" view.bind="ProdToolRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOverhead" caption="Overhead">
+			<qp-grid id="gridOvhd" view.bind="ProdOvhdRecords"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTotals" caption="Totals">
+			<qp-template id="ProdOperSelected_totalsform" wg-container name="1-1-1">
+				<qp-fieldset slot="A" id="ProdOperSelectedPlanned" view.bind="ProdOperSelected" caption="Planned">
+					<field name="PlanLaborTime"></field>
+					<field name="PlanLabor"></field>
+					<field name="PlanMachine"></field>
+					<field name="PlanMaterial"></field>
+					<field name="PlanTool"></field>
+					<field name="PlanFixedOverhead"></field>
+					<field name="PlanVariableOverhead"></field>
+					<field name="PlanSubcontract"></field>
+					<field name="PlanQtyToProduce"></field>
+					<field name="PlanTotal"></field>
+					<field name="PlanCostDate"></field>
+					<field name="PlanReferenceMaterial"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="ProdOperSelectedActual" view.bind="ProdOperSelected" caption="Actual">
+					<field name="ActualLaborTime"></field>
+					<field name="ActualLabor"></field>
+					<field name="ActualMachine"></field>
+					<field name="ActualMaterial"></field>
+					<field name="ActualTool"></field>
+					<field name="ActualFixedOverhead"></field>
+					<field name="ActualVariableOverhead"></field>
+					<field name="ActualSubcontract"></field>
+					<field name="QtyComplete"></field>
+					<field name="WIPAdjustment"></field>
+					<field name="ScrapAmount"></field>
+					<field name="WIPTotal"></field>
+					<field name="WIPComp"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="C" id="ProdOperSelectedVariance" view.bind="ProdOperSelected" caption="Variance">
+					<field name="VarianceLaborTime"></field>
+					<field name="VarianceLabor"></field>
+					<field name="VarianceMachine"></field>
+					<field name="VarianceMaterial"></field>
+					<field name="VarianceTool"></field>
+					<field name="VarianceFixedOverhead"></field>
+					<field name="VarianceVariableOverhead"></field>
+					<field name="VarianceSubcontract"></field>
+					<field name="QtyRemaining"></field>
+					<field name="VarianceTotal"></field>
+					<field name="WIPBalance"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabOutsideProcess" caption="Outside Process">
+			<qp-template id="OutsideProcessingOperationSelected_outsideProcessingform" wg-container name="1-1-1">
+				<qp-fieldset slot="A" id="OutsideProcessingOperationSelectedGeneralSettings" view.bind="OutsideProcessingOperationSelected" caption="General Settings">
+					<field name="OutsideProcess"></field>
+					<field name="DropShippedToVendor"></field>
+					<field name="VendorID" config-allow-edit.bind="true"></field>
+					<field name="VendorLocationID"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="OutsideProcessingOperationSelectedPurchaseOrder" view.bind="OutsideProcessingOperationSelected" caption="Purchase Order">
+					<field name="POOrderNbr"></field>
+					<field name="POLineNbr"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="C" id="OutsideProcessingOperationSelectedOperationQuantity" view.bind="OutsideProcessingOperationSelected" caption="Operation Quantity">
+					<field name="QtytoProd"></field>
+					<field name="ShippedQuantity"></field>
+					<field name="ShipRemainingQty"></field>
+					<field name="AtVendorQuantity"></field>
+					<field name="QtyComplete"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="MatlLineSplittingExtension_lsselect" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="MatlLineSplittingExtension_LotSerOptions_optform" wg-container name="14-17-17" class="equal-height">
+			<qp-fieldset slot="A" id="MatlLineSplittingExtension_LotSerOptions1" view.bind="MatlLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="MatlLineSplittingExtension_LotSerOptions2" view.bind="MatlLineSplittingExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="MatlLineSplittingExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grid2" view.bind="ProdMatlSplits"></qp-grid>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="currentposupply" caption="Purchasing Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="currentposupplyTemplate" name="1-1">
+			<qp-fieldset slot="A" id="currentposupply1" view.bind="currentposupply">
+				<field name="VendorID"></field>
+				<field name="SiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridPOSupply" view.bind="posupply"></qp-grid>
+		<footer>
+			<qp-button id="PXButton7" dialog-result="OK" caption="Save"></qp-button>
+			<qp-button id="PXButton8" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

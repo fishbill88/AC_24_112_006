@@ -1,0 +1,14 @@
+<template>
+	<template id="tabMailingAndPrinting_Content">
+		<qp-splitter id="splitMailingAndPrinting" split="height" initial-split="50%">
+			<split-pane>
+				<qp-grid id="gridNS" view.bind="Notifications" caption="Default Sources">
+				</qp-grid>
+			</split-pane>
+			<split-pane>
+				<qp-grid id="gridNR" view.bind="Recipients" caption="Default Recipients">
+				</qp-grid>
+			</split-pane>
+		</qp-splitter>
+	</template>
+</template>

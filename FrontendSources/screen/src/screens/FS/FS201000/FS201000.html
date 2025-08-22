@@ -1,0 +1,14 @@
+<template>
+	<qp-template id="LicenseTemplate" name="1-1" class="label-size-m">
+		<qp-fieldset id="LicenseRecords_form" slot="A" view.bind="LicenseRecords">
+			<field name="RefNbr"></field>
+			<field name="LicenseTypeID" config-allow-edit.bind="true"></field>
+			<field name="Descr"></field>
+			<field name="EmployeeID" config-allow-edit.bind="true"></field>
+			<field name="IssueDate"></field>
+			<field name="ExpirationDate">
+				<qp-field control-state.bind="LicenseRecords.NeverExpires" config-enabled.bind="false"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+</template>

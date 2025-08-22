@@ -1,0 +1,20 @@
+<template>
+	<qp-template
+		name="1-1-1"
+		class="equal-height no-label"
+		id="Filter_form"
+		wg-container
+		qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA01" view.bind="Filter">
+			<field name="RecalculateProjectBalances"></field>
+			<field name="RecalculateUnbilledSummary"></field>
+			<field name="RebuildCommitments"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB01" view.bind="Filter">
+			<field name="RecalculateDraftInvoicesAmount"></field>
+			<field name="RecalculateChangeOrders"></field>
+			<field name="RecalculateInclusiveTaxes"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Items"></qp-grid>
+</template>

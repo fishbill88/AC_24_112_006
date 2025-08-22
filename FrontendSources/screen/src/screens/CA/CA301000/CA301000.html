@@ -1,0 +1,69 @@
+<template>
+
+	<qp-template id="formTransferCommon" name="1-1" class="equal-height" wg-container="Transfer_form">
+		<qp-fieldset id="columnFirstTransferCommon" view.bind="Transfer" slot="A">
+			<field name="TransferNbr"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondTransferCommon" view.bind="Transfer" slot="B" >
+			<field name="OrigTransferNbr" config-allow-edit.bind="true"></field>
+			<field name="ReverseCount"></field>
+			<field name="Descr"></field>
+			<field name="RGOLAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-template id="formTransferSource" name="1-1" class="equal-height" wg-container="Transfer_form">
+		<qp-caption caption="Source Account"></qp-caption>
+		<qp-fieldset id="columnFirstTransferSource" view.bind="Transfer" slot="A">
+			<field name="OutAccountID"></field>
+			<field name="OutDate">
+				<qp-field control-state.bind="Transfer.ClearedOut" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="OutPeriodID"></field>
+			<field name="OutExtRefNbr"></field>
+			<field name="OutCuryID" control-type="qp-currency" view.bind="CurrencyInfoOut"></field>
+			<field name="CuryTranOut"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="columnSecondTransferSource" view.bind="Transfer" slot="B" >
+			<field name="TranIDOut_CATran_batchNbr" config-allow-edit.bind="true"></field>
+			<field name="ClearDateOut"></field>
+			<field name="OutGLBalance"></field>
+			<field name="CashBalanceOut"></field>
+			<field name="TranOut"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-template id="formTransferDestination" name="1-1" class="equal-height" wg-container="Transfer_form">
+		<qp-caption caption="Destination Account"></qp-caption>
+		<qp-fieldset id="columnFirstTransferDestination" view.bind="Transfer" slot="A">
+			<field name="InAccountID"></field>
+			<field name="InDate">
+				<qp-field control-state.bind="Transfer.ClearedIn" config-enabled.bind="false"></qp-field>
+			</field>
+			<field name="InPeriodID"></field>
+			<field name="InExtRefNbr"></field>
+			<field name="InCuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="CuryTranIn"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="columnSecondTransferDestination" view.bind="Transfer" slot="B">
+			<field name="TranIDIn_CATran_batchNbr" config-allow-edit.bind="true"></field>
+			<field name="ClearDateIn"></field>
+			<field name="InGLBalance"></field>
+			<field name="CashBalanceIn"></field>
+			<field name="TranIn"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="Expenses"></qp-grid>
+
+	<qp-panel id="ExpenseTaxTrans" caption="Expense Taxes" auto-repaint="true">
+		<qp-grid id="gridExpenseTaxTrans" view.bind="ExpenseTaxTrans" wg-container="ExpenseTaxTrans_PXGrid1"></qp-grid>
+		<footer>
+			<qp-button id="buttonOkExpenseTaxTrans" dialog-result="Yes" caption="Ok"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

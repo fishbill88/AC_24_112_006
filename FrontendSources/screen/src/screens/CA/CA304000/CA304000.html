@@ -1,0 +1,96 @@
+<template>
+
+	<qp-template id="formDocHeader" name="17-17-14" class="equal-height" wg-container="CAAdjRecords_form">
+		<qp-fieldset id="columnFirstDocHeader" view.bind="CAAdjRecords" slot="A">
+			<field name="AdjTranType"></field>
+			<field name="AdjRefNbr"></field>
+			<field name="CashAccountID"></field>
+			<field name="currencyinfo.CuryID" control-type="qp-currency" view.bind="currencyinfo"></field>
+			<field name="Status"></field>
+			<field name="Approved"></field>
+			<field name="TranDesc" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondDocHeader" view.bind="CAAdjRecords" slot="B">
+			<field name="TranDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="EntryTypeID"></field>
+			<field name="DrCr"></field>
+			<field name="ExtRefNbr"></field>
+			<field name="EmployeeID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdDocHeader" view.bind="CAAdjRecords" slot="C">
+			<field name="OrigAdjRefNbr" config-allow-edit.bind="true"></field>
+			<field name="ReverseCount"></field>
+			<field name="CuryTranAmt"></field>
+			<field name="CuryVatTaxableTotal"></field>
+			<field name="CuryVatExemptTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryTaxRoundDiff"></field>
+			<field name="CuryControlAmt"></field>
+			<field name="CuryTaxAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridDetails" view.bind="CASplitRecords" wg-container="CASplitRecords_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTaxes" caption="Taxes">
+			<qp-grid id="gridTaxes" view.bind="Taxes" wg-container="Taxes_grid1"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template id="formFinancial" name="1-1" wg-container="CurrentDocument_tab">
+
+				<div id="columnFirstFinancial" slot="A">
+					<qp-fieldset view.bind="CurrentDocument" id="groupLinkToGL" caption="Link to GL">
+						<field name="TranID_CATran_batchNbr" config-allow-edit.bind="true"></field>
+						<field name="BranchID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPaymentInformation" view.bind="CurrentDocument" caption="Payment Information">
+						<field name="DepositAfter"></field>
+						<field name="Cleared"></field>
+						<field name="ClearDate"></field>
+						<field name="DepositAsBatch"></field>
+						<field name="Deposited"></field>
+						<field name="DepositDate"></field>
+						<field name="DepositNbr"></field>
+					</qp-fieldset>
+				</div>
+
+				<qp-fieldset slot="B" caption="Tax Settings" id="groupTaxSettings" view.bind="CurrentDocument">
+					<field name="TaxZoneID"></field>
+					<field name="UsesManualVAT"></field>
+					<field name="TaxCalcMode"></field>
+				</qp-fieldset>
+			</qp-template>
+
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals">
+			<qp-grid id="gridApprovals" view.bind="Approval" wg-container="Approval_gridApproval"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<!--#include file="~\Pages\Includes\CRApprovalReasonPanel.inc"-->
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason">
+		<qp-fieldset id="formReasonApproveRejectParams" view.bind="ReasonApproveRejectParams" wg-container="ReasonApproveRejectParams_PXFormViewPanelReason">
+			<field name="Reason"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonOK-ReasonApproveRejectParams" caption="OK" dialog-result="Yes"></qp-button>
+			<qp-button id="buttonCancel-ReasonApproveRejectParams" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<!--#include file="~\Pages\Includes\EPReassignApproval.inc"-->
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval">
+		<qp-fieldset id="formReassignApprovalFilter" view.bind="ReassignApprovalFilter" wg-container="ReassignApprovalFilter_formReassignApproval">
+			<field name="NewApprover"></field>
+			<field name="IgnoreApproversDelegations"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="buttonREassign-ReassignApprovalFilter" caption="Reassign" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ReassignApprovalFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

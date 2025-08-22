@@ -1,0 +1,33 @@
+<template>
+	<qp-panel
+		id="Link_Filter"
+		auto-repaint="true"
+		caption="Associate the Contact with the Lead"
+		width="750px"
+	>
+		<qp-fieldset id="frmLinkContact" view.bind="Link_Filter" class="transparent-section">
+			<field name="ProcessLink" no-label="true"></field>
+		</qp-fieldset>
+
+		<qp-grid
+			id="grdLinkContact"
+			view.bind="Link_VisibleComparisonRows"
+			caption="Select the field values that you want to use for the contact."
+		>
+		</qp-grid>
+		<footer>
+			<qp-button
+				id="btnProcessMergeEntities"
+				caption="Associate"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="btnCancelMergeEntities"
+				caption="Cancel"
+				dialog-result="Abort"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

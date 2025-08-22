@@ -1,0 +1,32 @@
+<template>
+	<template id="tabRuleActions_Content">
+		<qp-fieldset id="PXFormConditions" view.bind="CurrentNode">
+			<field name="RuleType"></field>
+		</qp-fieldset>
+		<qp-grid id="ruleApproversGrid" view.bind="RuleApprovers"></qp-grid>
+		<qp-grid id="employeeApproveGrid" view.bind="EmployeeCondition"></qp-grid>
+		<qp-fieldset id="PXFormViewBottom" view.bind="CurrentNode" caption="Approval Settings">
+			<field name="OwnerSource" control-type="qp-tree-selector"
+				control-config.bind="{
+					treeSelectorId: 'tree_selector_edownersource',
+					treeConfig: {
+						idName: 'Path',
+						dataMember: 'EntityItems',
+						description: 'Name',
+						idParent: 'Key',
+						iconField: 'Icon',
+						mode: 'single'
+				},
+			}">
+			</field>
+			<field name="WorkgroupID"></field>
+			<field name="AllowReassignment"></field>
+			<field name="WaitTime"></field>
+			<field name="ApproveType"></field>
+		</qp-fieldset>
+		<qp-fieldset id="PXFormView1" view.bind="CurrentNode" caption="Reason Settings">
+			<field name="ReasonForApprove"></field>
+			<field name="ReasonForReject"></field>
+		</qp-fieldset>
+	</template>
+</template>

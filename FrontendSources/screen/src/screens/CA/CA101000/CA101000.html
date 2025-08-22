@@ -1,0 +1,114 @@
+<template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template name="1-1" id="formGeneral" wg-container="CASetupRecord_tab">
+				<div slot="A" id="columnFirstFormGeneral" class="label-size-l">
+					<qp-fieldset id="groupNumberingSettings" view.bind="CASetupRecord" caption="Numbering Settings">
+						<field name="BatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="RegisterNumberingID" config-allow-edit.bind="true"></field>
+						<field name="TransferNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CABatchNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CAStatementNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CAImportPaymentsNumberingID" config-allow-edit.bind="true"></field>
+						<field name="CorpCardNumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReconciliation" view.bind="CASetupRecord" caption="Reconciliation Settings">
+						<field name="UnknownPaymentEntryTypeID"></field>
+						<field name="TransitAcctId"></field>
+						<field name="TransitSubID"></field>
+						<field name="SkipVoided"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReceiptsToAdd" view.bind="CASetupRecord" caption="Receipts to Add to Available Balances">
+						<field name="CalcBalDebitUnclearedUnreleased"></field>
+						<field name="CalcBalDebitClearedUnreleased"></field>
+						<field name="CalcBalDebitUnclearedReleased"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDisbursementsToDeduct" view.bind="CASetupRecord" caption="Disbursements to Deduct From Available Balances">
+						<field name="CalcBalCreditUnclearedUnreleased"></field>
+						<field name="CalcBalCreditClearedUnreleased"></field>
+						<field name="CalcBalCreditUnclearedReleased"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondFormGeneral" class="label-size-m">
+					<qp-fieldset id="groupPostingSettings" view.bind="CASetupRecord" caption="Posting and Release Settings">
+						<field name="AutoPostOption"></field>
+						<field name="ReleaseAP"></field>
+						<field name="ReleaseAR"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupDataEntrySettings" view.bind="CASetupRecord" caption="Data Entry Settings">
+						<field name="HoldEntry"></field>
+						<field name="RequireControlTotal"></field>
+						<field name="RequireControlTaxTotal"></field>
+						<field name="RequireExtRefNbr"></field>
+						<field name="ValidateDataConsistencyOnRelease"></field>
+						<field name="DateRangeDefault"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApprovals" caption="Approvals">
+			<qp-grid id="gridApprovals" view.bind="Approval" wg-container="Approval_gridApproval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBankStatements" caption="Bank Statements">
+			<qp-template name="1-1" id="formBankStatements" wg-container="CASetupRecord_tab">
+				<div slot="A" id="columnFirstFormBankStatements" class="label-size-l">
+					<qp-fieldset id="groupDisbursement" view.bind="CASetupRecord" caption="Disbursement Matching">
+						<field name="DisbursementTranDaysBefore"></field>
+						<field name="DisbursementTranDaysAfter"></field>
+						<field name="AllowMatchingCreditMemo"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupReceipt" view.bind="CASetupRecord" caption="Receipt Matching">
+						<field name="ReceiptTranDaysBefore"></field>
+						<field name="ReceiptTranDaysAfter"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupInvoice" view.bind="CASetupRecord" caption="Invoice Matching">
+						<field name="InvoiceFilterByCashAccount"></field>
+						<field name="InvoiceFilterByDate"></field>
+						<field name="DaysBeforeInvoiceDiscountDate"></field>
+						<field name="DaysBeforeInvoiceDueDate"></field>
+						<field name="DaysAfterInvoiceDueDate"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="columnSecondFormBankStatements" class="label-size-m">
+					<qp-fieldset id="groupOtherMatching" view.bind="CASetupRecord" caption="Other Matching Settings">
+						<field name="AllowMatchingToUnreleasedBatch"></field>
+						<field name="SkipReconciled"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupThresholds" view.bind="CASetupRecord" caption="Auto-Match Thresholds">
+						<field name="MatchThreshold"></field>
+						<field name="RelativeMatchThreshold"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupImport" view.bind="CASetupRecord" caption="Import Settings">
+						<field name="IgnoreCuryCheckOnImport"></field>
+						<field name="AllowEmptyFITID"></field>
+						<field name="ImportToSingleAccount"></field>
+						<field name="StatementImportTypeName"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabRelevanceCalculations" caption="Relevance Calculation">
+			<qp-template name="1-1" id="formRelevance" wg-container="CASetupRecord_tab" class="label-size-l">
+				<div slot="A" id="columnFirstFormRelevance">
+					<qp-fieldset id="groupPaymentRelevance" view.bind="CASetupRecord" caption="Payment and Expense Receipt Relevance">
+						<field name="RefNbrCompareWeight"></field>
+						<field name="EmptyRefNbrMatching"></field>
+						<field name="DateCompareWeight"></field>
+						<field name="PayeeCompareWeight"></field>
+						<field name="AmountWeight"></field>
+						<field name="CuryDiffThreshold"></field>
+						<field name="DateMeanOffset"></field>
+						<field name="DateSigma"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupInvoiceRelevance" view.bind="CASetupRecord" caption="Invoice Relevance">
+						<field name="InvoiceRefNbrCompareWeight"></field>
+						<field name="InvoiceDateCompareWeight"></field>
+						<field name="InvoicePayeeCompareWeight"></field>
+						<field name="AveragePaymentDelay"></field>
+						<field name="InvoiceDateSigma"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

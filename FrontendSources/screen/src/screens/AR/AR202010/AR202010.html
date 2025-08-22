@@ -1,0 +1,106 @@
+<template>
+	<qp-template id="formDocument" name="1-1-1" class="equal-height" wg-container="Document_form">
+		<qp-fieldset id="columnFirst-formDocument" view.bind="Document" slot="A">
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="TaxCalcMode"></field>
+			<field name="Descr" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecond-formDocument" view.bind="Document" slot="B">
+			<field name="EffectiveDate"></field>
+			<field name="ExpirationDate"></field>
+			<field name="OverwriteOverlapping"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThird-formDocument" view.bind="Document" slot="C" class="no-label">
+			<field name="IsPromotional"></field>
+			<field name="SkipLineDiscounts"></field>
+			<field name="IsFairValue"></field>
+			<field name="IsProrated"></field>
+			<field name="Discountable"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Details"></qp-grid>
+
+	<qp-panel id="ItemInfo" caption="Add Item to Worksheet" auto-repaint="true">
+		<qp-template id="formAddItemToWorksheet" name="1-1" class="equal-height" wg-container="ItemFilter_formAddItem">
+			<qp-fieldset slot="A" id="columnFirst-ItemInfo" view.bind="ItemFilter">
+				<field name="Inventory"></field>
+				<field name="ItemClass"></field>
+				<field name="PriceClassID"></field>
+				<field name="OwnerID">
+					<qp-field control-state.bind="ItemFilter.MyOwner" class="col-3"></qp-field>
+				</field>
+				<field name="WorkGroupID">
+					<qp-field control-state.bind="ItemFilter.MyWorkGroup" class="col-3"></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecond-ItemInfo" view.bind="addItemParameters" wg-container="addItemParameters_PanelAddItemParametrs" caption="Price Type to Add">
+				<field name="PriceType"></field>
+				<field name="PriceCode"></field>
+				<field name="CuryID"></field>
+				<field name="SiteID"></field>
+				<field name="SkipLineDiscounts"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridAddItemLookup" view.bind="ItemInfo"></qp-grid>
+		<footer>
+			<qp-button id="buttonAddSelectedItems-ItemInfo" caption="Add" state.bind="AddSelectedItems"></qp-button>
+			<qp-button id="buttonAddAllItems-ItemInfo" caption="Add All" state.bind="AddAllItems"></qp-button>
+			<qp-button id="buttonAddClose-ItemInfo" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ItemInfo" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CopyPricesSettings" caption="Copy Prices" auto-repaint="true">
+		<qp-template id="formCopyPricesSettings" name="1-1" wg-container="CopyPricesSettings_massCopyForm">
+			<div slot="A" id="columnFirst-CopyPricesSettings">
+				<qp-fieldset id="groupSource-CopyPricesSettings" view.bind="CopyPricesSettings" caption="Source">
+					<field name="SourcePriceType"></field>
+					<field name="SourcePriceCode"></field>
+					<field name="SourceCuryID"></field>
+					<field name="SourceSiteID"></field>
+					<field name="EffectiveDate"></field>
+					<field name="IsPromotional"></field>
+					<field name="IsFairValue"></field>
+					<field name="IsProrated"></field>
+					<field name="Discountable"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupDestination-CopyPricesSettings" view.bind="CopyPricesSettings" caption="Destination">
+					<field name="DestinationPriceType"></field>
+					<field name="DestinationPriceCode"></field>
+					<field name="DestinationCuryID"></field>
+					<field name="DestinationSiteID"></field>
+					<field name="RateTypeID"></field>
+					<field name="CurrencyDate"></field>
+				</qp-fieldset>
+				<qp-fieldset id="groupCurrencyConversion-CopyPricesSettings" view.bind="CopyPricesSettings" caption="Currency Conversion">
+					<field name="RateTypeID"></field>
+					<field name="CurrencyDate"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonCopy-CopyPricesSettings" caption="Copy" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CopyPricesSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="CalculatePricesSettings" caption="Calculate Pending Prices" auto-repaint="true">
+		<qp-template id="formCalculatePendingPrices" name="1-1" wg-container="CalculatePricesSettings_massUpdateForm">
+			<qp-fieldset slot="A" id="groupPriceAdjustments-CalculatePricesSettings" view.bind="CalculatePricesSettings" caption="Price Adjustment">
+				<field name="CorrectionPercent"></field>
+				<field name="Rounding"></field>
+				<field name="UpdateOnZero"></field>
+				<field name="PriceBasis" caption="Price Basis"
+					   control-type="qp-radio"
+					   config-class.bind="'vertical'">
+				</field>
+				<field name="BaseCuryID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonCopy-CalculatePricesSettings" caption="Update" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-CalculatePricesSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,18 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-l" id="formBranches" wg-container="Branches_form">
+		<qp-fieldset slot="A" id="columnFirst" view.bind="Branches">
+			<field name="BranchCD"></field>
+			<field name="LedgerID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabMapFrom" caption="Transaction in Originating Branch">
+			<qp-grid id="gridMapFrom" wg-container="MapFrom_gridFrom" view.bind="MapFrom">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMapDest" caption="Transaction in Destination Branch">
+			<qp-grid id="gridMapTo" wg-container="MapTo_gridTo" view.bind="MapTo">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

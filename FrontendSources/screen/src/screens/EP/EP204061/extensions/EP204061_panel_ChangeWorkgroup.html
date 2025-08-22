@@ -1,0 +1,38 @@
+<template>
+	<qp-panel
+		id="SelectedParentFolders"
+		auto-repaint="true"
+		caption="Move Workgroup"
+	>
+		<qp-template name="1" id="SelectParentFolder_template">
+			<qp-fieldset slot="A" id="formMoveWorkGroup" view.bind="SelectedParentFolders">
+				<field name="ParentFolders" control-type="qp-tree-selector"
+					control-config.bind="{
+						treeSelectorId: 'tree_selector_edWorkgroupID',
+						treeConfig: {
+							idName: 'WorkGroupID',
+							dataMember: 'ParentFolders',
+							description: 'Description',
+							idParent: 'Key',
+							iconField: 'Icon',
+							mode: 'single',
+						},
+					}">
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="PXButtonOK"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="PXButtonCancel"
+				caption="Cancel"
+				dialog-result="No"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

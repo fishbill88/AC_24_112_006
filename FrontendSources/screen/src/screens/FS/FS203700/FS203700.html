@@ -1,0 +1,92 @@
+<template>
+	<qp-template id="RouteRecords_form" wg-container name="17-17-14" class="equal-height label-size-m">
+		<div slot="A">
+			<qp-fieldset id="RouteRecords_10" view.bind="RouteRecords">
+				<field name="RouteCD"></field>
+				<field name="OriginRouteID"></field>
+				<field name="RouteShort"></field>
+				<field name="Descr"></field>
+				<field name="WeekCode"></field>
+				<field name="MaxAppointmentQty">
+					<qp-field control-state.bind="RouteRecords.NoAppointmentLimit" config-enabled.bind="false"></qp-field>
+				</field>
+			</qp-fieldset>
+		</div>
+		<div slot="B">
+			<qp-fieldset id="RouteRecords_20" view.bind="RouteRecords" caption="Start Location">
+				<field name="BeginBranchID" config-allow-edit.bind="true"></field>
+				<field name="BeginBranchLocationID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset id="RouteRecords_40" view.bind="RouteRecords" caption="End Location">
+				<field name="EndBranchID" config-allow-edit.bind="true"></field>
+				<field name="EndBranchLocationID" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="mainTabBar">
+		<qp-tab id="executionTab" caption="Execution">
+			<qp-template id="RouteSelected" wg-container name="17-17-14" class="label-size-m">
+				<qp-fieldset id="RouteSelected_10" slot="A" view.bind="RouteSelected">
+					<field name="fake01" unbound replace-content>
+						<qp-label caption="Day of Week" class="col-4"></qp-label>
+						<qp-label caption="Start Time" class="col-4"></qp-label>
+						<qp-label caption="Nbr. Trips per Day" class="col-4"></qp-label>
+					</field>
+					<field name="fake02" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnSunday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnSunday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnSunday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+					<field name="fake03" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnMonday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnMonday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnMonday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+					<field name="fake04" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnTuesday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnTuesday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnTuesday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+					<field name="fake05" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnWednesday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnWednesday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnWednesday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+					<field name="fake06" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnThursday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnThursday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnThursday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+					<field name="fake07" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnFriday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnFriday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnFriday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+					<field name="fake08" unbound replace-content>
+						<qp-field control-state.bind="RouteSelected.ActiveOnSaturday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.BeginTimeOnSaturday_Time" config-enabled.bind="false" config-time-mode.bind="true" class="col-4 no-label"></qp-field>
+						<qp-field control-state.bind="RouteSelected.NbrTripOnSaturday" config-enabled.bind="false" class="col-4 no-label"></qp-field>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="employeesTab" caption="Employees">
+			<qp-grid id="PXRouteEmployees" view.bind="RouteEmployeeRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="attributesTab" caption="Attributes">
+			<qp-grid id="AttributesGrid" view.bind="Mapping">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="weekCodesTab" caption="Week Codes">
+			<qp-template id="WeekCodeTemplate" name="17-17-14" class="label-size-m">
+				<qp-fieldset id="WeekCodeFilter_WeekCodeFilterForm" slot="A" view.bind="WeekCodeFilter">
+					<field name="DateBegin"></field>
+					<field name="DateEnd"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="PXRouteWeekCodeDates" view.bind="WeekCodeDateRecords">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

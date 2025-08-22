@@ -1,0 +1,65 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="formScheduleHeader" wg-container="Schedule_Header_form">
+		<div slot="A" id="columnFirst">
+			<qp-fieldset id="column1Row1" view.bind="Schedule_Header">
+				<field name="ScheduleID">
+					<qp-field control-state.bind="Schedule_Header.Active" no-label></qp-field>
+				</field>
+				<field name="StartDate"></field>
+				<field name="EndDate">
+					<qp-field control-state.bind="Schedule_Header.NoEndDate" no-label></qp-field>
+				</field>
+				<field name="RunLimit">
+					<qp-field control-state.bind="Schedule_Header.NoRunLimit" no-label></qp-field>
+				</field>
+			</qp-fieldset>
+			<qp-fieldset id="groupSceduleType" view.bind="Schedule_Header" caption="Schedule Type">
+				<field name="FormScheduleType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			</qp-fieldset>
+		</div>
+		<div slot="B" id="columnSecond">
+			<qp-fieldset id="column2Row1" view.bind="Schedule_Header">
+				<field name="ScheduleName"></field>
+				<field name="LastRunDate"></field>
+				<field name="NextRunDate"></field>
+				<field name="RunCntr"></field>
+			</qp-fieldset>
+
+			<qp-fieldset id="groupMonthly" view.bind="Schedule_Header" caption="Monthly">
+				<field name="MonthlyFrequency"></field>
+				<field name="Months"></field>
+				<field name="MonthlyOnDay"></field>
+				<field name="MonthlyOnWeek"></field>
+				<field name="MonthlyOnDayOfWeek"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupByFinancialPeriod" view.bind="Schedule_Header" caption="By Financial Period">
+				<field name="PeriodDateSel"></field>
+				<field name="PeriodFrequency"></field>
+				<field name="Periods"></field>
+				<field name="PeriodFixedDay"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDaily" view.bind="Schedule_Header" caption="Daily">
+				<field name="DailyFrequency"></field>
+				<field name="Days"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupWeekly" view.bind="Schedule_Header" caption="Weekly">
+				<field name="WeeklyFrequency"></field>
+				<field name="WeeklyOnDay1"></field>
+				<field name="WeeklyOnDay2"></field>
+				<field name="WeeklyOnDay3"></field>
+				<field name="WeeklyOnDay4"></field>
+				<field name="WeeklyOnDay5"></field>
+				<field name="WeeklyOnDay6"></field>
+				<field name="WeeklyOnDay7"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="tabbar">
+		<qp-tab id="tabBatchList" caption="Batch List">
+			<qp-grid id="gridBatchDetail" view.bind="Batch_Detail" wg-container="Batch_Detail_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabGeneratedDocs" caption="Generated Documents">
+			<qp-grid id="gridBatchHistory" view.bind="Batch_History" wg-container="Batch_History_grid2"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

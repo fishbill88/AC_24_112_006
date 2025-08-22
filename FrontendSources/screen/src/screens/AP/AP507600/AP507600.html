@@ -1,0 +1,50 @@
+<template>
+
+	<qp-template id="formMasterView" name="17-17-14" class="equal-height" wg-container="MasterView_form">
+		<qp-fieldset slot="A" id="columnFirstMasterView" view.bind="MasterView">
+			<field name="OrganizationID"></field>
+			<field name="Year"></field>
+			<field name="Revision"></field>
+			<field name="FilingType"></field>
+			<field name="RevisionSubmitted"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondMasterView" view.bind="MasterView">
+			<field name="FromDate"></field>
+			<field name="ToDate"></field>
+			<field name="ThresholdAmount"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridDetailsView" view.bind="DetailsView" wg-container="DetailsView_grid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSummary" caption="Summary">
+			<qp-template name="17-17-14" id="formSummary" wg-container="MasterViewSummary_tab">
+				<qp-fieldset slot="A" id="groupSettings" view.bind="MasterViewSummary" caption="Settings">
+					<field name="Language"></field>
+					<field name="ProgramNumber"></field>
+					<field name="TransmitterNumber"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="groupCompany" view.bind="MasterViewSummary" caption="Company">
+					<field name="AcctName"></field>
+					<field name="AddressLine1"></field>
+					<field name="AddressLine2"></field>
+					<field name="City"></field>
+					<field name="Province"></field>
+					<field name="Country"></field>
+					<field name="PostalCode"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="C" id="groupContact" view.bind="MasterViewSummary" caption="Contact">
+					<field name="Name"></field>
+					<field name="AreaCode"></field>
+					<field name="Phone"></field>
+					<field name="ExtensionNbr"></field>
+					<field name="EMail"></field>
+					<field name="SecondEmail"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+</template>

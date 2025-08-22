@@ -1,0 +1,23 @@
+<template>
+
+	<qp-template id="formFilter" name="17-17-14" class="equal-height" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="columnFirstFilter" view.bind="Filter">
+			<field name="BranchID"></field>
+			<field name="PeriodFrom"></field>
+			<field name="VendorID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="columnSecondFilter" view.bind="Filter">
+			<field name="AccountID"></field>
+			<field name="SubCD"></field>
+			<field name="ShowOnlyWithDiscrepancy"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="columnThirdFilter" view.bind="Filter">
+			<field name="TotalGLAmount"></field>
+			<field name="TotalXXAmount"></field>
+			<field name="TotalDiscrepancy"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridRows" view.bind="Rows" wg-container="Rows_grid"></qp-grid>
+
+</template>

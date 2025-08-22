@@ -1,0 +1,53 @@
+<template>
+	<qp-template id="MRPDisplayFilters_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="MRPDisplayFilters1" view.bind="MRPDisplayFilters">
+			<field name="RefNbr"></field>
+			<field name="ParentRefNbr"></field>
+			<field name="ProductRefNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Detailrecs"></qp-grid>
+	<qp-panel id="PlanPurchaseOrderFilter" caption="Create Purchase Order" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="PlanPurchaseOrderFilter_formPurchaseOrder" wg-container name="17-17-14">
+			<qp-fieldset slot="A" id="PlanPurchaseOrderFilter1" view.bind="PlanPurchaseOrderFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="VendorID" config-allow-edit.bind="true"></field>
+				<field name="VendorLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridPurchaseDisplay" view.bind="ProcessRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonPurchaseOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="XButtonPurchaseCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="PlanManufactureOrderFilter" caption="Create Production Orders" auto-repaint="true" width="80vw" height="80vh">
+		<qp-grid id="gridManufactureDisplay" view.bind="ProcessRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonManufactureOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="PXButtonManufactureCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="PlanKitAssemblyFilter" caption="Create Kit Assemblies" auto-repaint="true" width="80vw" height="80vh">
+		<qp-grid id="gridKitAssemblyDisplay" view.bind="ProcessRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXPanelKitAssemblyOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="PXPanelKitAssemblyCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="PlanTransferOrderFilter" caption="Create Transfer Order" auto-repaint="true" width="80vw" height="80vh">
+		<qp-template id="PlanTransferOrderFilter_formTransferOrder" wg-container name="17-17-14">
+			<qp-fieldset slot="A" id="PlanTransferOrderFilter1" view.bind="PlanTransferOrderFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+				<field name="FromSiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridTransferDisplay" view.bind="ProcessRecords"></qp-grid>
+		<footer>
+			<qp-button id="PXButtonTransferOk" dialog-result="OK" caption="Create"></qp-button>
+			<qp-button id="PXButtonTransferCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

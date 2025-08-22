@@ -1,0 +1,63 @@
+<template>
+	<qp-tabbar id="mainTabbar">
+		<qp-tab id="tabGeneral" wg-container="sosetup_tab" caption="General" class="label-size-xm">
+			<qp-template name="1-1" id="generalSettingsTemplate">
+				<div slot="A">
+					<qp-fieldset id="pnlDataEntrySettings" view.bind="sosetup" caption="Data Entry Settings">
+						<field name="DefaultOrderType"></field>
+						<field name="TransferOrderType"></field>
+						<field name="ShipmentNumberingID"></field>
+						<field name="PickingWorksheetNumberingID"></field>
+						<field name="AdvancedAvailCheck"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlPriceSettings" view.bind="sosetup" caption="Price Settings">
+						<field name="MinGrossProfitValidation"></field>
+						<field name="UsePriceAdjustmentMultiplier"></field>
+						<field name="IgnoreMinGrossProfitCustomerPrice">
+							<qp-label slot="label" caption="Ignore Min. Markup Validation for Prices"></qp-label>
+						</field>
+						<field name="IgnoreMinGrossProfitCustomerPriceClass"></field>
+						<field name="IgnoreMinGrossProfitPromotionalPrice"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlShipmentSettings" view.bind="sosetup" caption="Shipment Settings">
+						<field name="FreeItemShipping"></field>
+						<field name="HoldShipments"></field>
+						<field name="RequireShipmentTotal"></field>
+						<field name="AddAllToShipment"></field>
+						<field name="CreateZeroShipments"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlInvoiceSettings" view.bind="sosetup" caption="Invoice Settings">
+						<field name="CreditCheckError"></field>
+						<field name="UseShipDateForInvoiceDate"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="pnlPostingSettings" view.bind="sosetup" caption="Posting Settings">
+						<field name="AutoReleaseIN"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlFreightCalc" view.bind="sosetup" caption="Freight Calculation Settings">
+						<field name="FreightAllocation"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlSalesProfitability" view.bind="sosetup" caption="Sales Profitability Settings">
+						<field name="SalesProfitabilityForNSKits"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlIntercompany" view.bind="sosetup" caption="Intercompany Order Settings">
+						<field name="DfltIntercompanyOrderType"></field>
+						<field name="DfltIntercompanyRMAType"></field>
+						<field name="DisableAddingItemsForIntercompany"></field>
+						<field name="DisableEditingPricesDiscountsForIntercompany"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlRelatedItemSettings" view.bind="sosetup" caption="Related Item Settings">
+						<field name="ShowOnlyAvailableRelatedItems"></field>
+					</qp-fieldset>
+					<qp-fieldset id="pnlRelatedCaseSettings" view.bind="sosetup" caption="Related Case Settings">
+						<field name="DefaultReturnOrderType"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabApproval" caption="Approval" ref="tabApproval_Content"></qp-tab>
+		<qp-tab id="tabMailingAndPrinting" caption="Mailing & Printing" ref="tabMailingAndPrinting_Content"></qp-tab>
+		<qp-tab id="tabWarehouseManagement" caption="Warehouse Management" ref="tabWarehouseManagement_Content" class="label-size-xm"></qp-tab>
+	</qp-tabbar>
+</template>

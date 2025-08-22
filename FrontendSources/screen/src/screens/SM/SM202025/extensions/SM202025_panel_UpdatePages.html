@@ -1,0 +1,26 @@
+<template>
+	<qp-panel id="fltArticlesProps" caption="Update Article Properties">
+		<qp-template id="frmUpdatePages_template" name="1">
+			<qp-fieldset slot="A" id="frmUpdatePages" view.bind="fltArticlesProps">
+				<field name="ParentUID" control-type="qp-tree-selector"
+					control-config.bind="{
+						treeSelectorId: 'tree_selector_edparent',
+						treeConfig: {
+							idname: 'PageID',
+							datamember: 'Folders',
+							description: 'Title',
+							idparent: 'Key',
+							iconfield: 'Icon',
+							mode: 'single',
+							hiderootnode: true
+					},
+				}">
+				</field>
+				<field name="TagID"></field>
+				<field name="Keywords" config-rows.bind="3"></field>
+				<field name="Hold"></field>
+				<field name="Versioned"></field>
+			</qp-fieldset>
+		</qp-template>
+	</qp-panel>
+</template>

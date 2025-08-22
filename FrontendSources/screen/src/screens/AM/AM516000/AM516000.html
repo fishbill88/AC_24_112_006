@@ -1,0 +1,27 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="EmployeeID" config-allow-edit.bind="true"></field>
+			<field name="OrderType" config-allow-edit.bind="true"></field>
+			<field name="ProdOrdID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="UnapprovedTrans"></qp-grid>
+	<qp-panel id="AMClockTranLineSplittingExtension_lsselect" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template id="AMClockTranLineSplittingExtension_LotSerOptions_optform" wg-container name="14-17-17" class="equal-height">
+			<qp-fieldset slot="A" id="AMClockTranLineSplittingExtension_LotSerOptions1" view.bind="AMClockTranLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="AMClockTranLineSplittingExtension_LotSerOptions2" view.bind="AMClockTranLineSplittingExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="AMClockTranLineSplittingExtension_GenerateNumbers"></qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridSplits" view.bind="splits"></qp-grid>
+		<footer>
+			<qp-button id="btnSave" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

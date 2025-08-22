@@ -1,0 +1,109 @@
+<template>
+	<qp-template name="1-1" class="equal-height label-size-m" id="Classes_form" wg-container>
+		<qp-fieldset slot="A" id="first" view.bind="Classes">
+			<field name="PIClassID"></field>
+			<field name="Descr"></field>
+			<field name="Method"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="first" view.bind="Classes" class="no-label">
+			<field name="IncludeZeroItems"></field>
+			<field name="UnlockSiteOnCountingFinish"></field>
+			<field name="HideBookQty"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab" class="label-size-m">
+		<qp-tab id="tabInventoryItemSelection" caption="Inventory Item Selection" if.bind='Classes.Method.value == "I"'>
+			<qp-template name="1-1" id="Classes_pnlInvItemSel">
+				<qp-fieldset slot="A" id="pnlInvItemSel" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="SelectedMethod"></field>
+					<field name="RandomItemsLimit"></field>
+					<field name="LastCountPeriod"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridItems" view.bind="Items">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ABCCodeSelection_tab" caption="ABC Code Selection" if.bind='Classes.Method.value == "A"'>
+			<qp-template id="ABCCodeSelection_tab-form" name="1-1">
+				<qp-fieldset slot="A" id="ABCCodeSelection_fieldset" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="ABCCodeID"></field>
+					<field name="ByABCFrequency"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="MovementClassSelection_tab" caption="Movement Class Selection" if.bind='Classes.Method.value == "M"'>
+			<qp-template name="1-1" id="MovementClassSelection_form">
+				<qp-fieldset slot="A" id="MovementClassSelection_fieldset" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="MovementClassID"></field>
+					<field name="ByMovementClassFrequency"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="PICycleSelection_tab" caption="PI Cycle Selection" if.bind='Classes.Method.value == "Y"'>
+			<qp-template name="1-1" class="equal-height" id="PICycleSelection_form">
+				<qp-fieldset slot="A" id="PICycleSelection_fieldset" view.bind="CurrentClass" wg-container="CurrentClass_tab">
+					<field name="CycleID"></field>
+					<field name="ByCycleFrequency"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ItemClassSelection_tab" caption="Item Class Selection" if.bind='Classes.Method.value == "C"'>
+			<qp-grid id="gridItemClasses" view.bind="ItemClasses">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="WarehouseLocationSelection_tab" caption="Warehouse/Location Selection">
+			<qp-template name="1-1" class="equal-height" id="WarehouseLocationSelection_form">
+				<qp-fieldset slot="A" id="WarehouseLocationSelection_fieldset" view.bind="CurrentClass" wg-container="CurrentClass_tab" class="transparent-section">
+					<field name="SiteID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="grid" view.bind="Locations">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="AssignmentOrder_tab" caption="Assignment Order">
+			<qp-template id="CurrentClass_pnlNumberAssignmentOrder" name="1-1" wg-container>
+				<qp-fieldset slot="A" id="AssignmentOrder_fieldset1" view.bind="CurrentClass" slot="B" caption="Line and Tag Number Assignment Order" >
+					<field name="NAO1">
+						<qp-label slot="label" caption="1:"></qp-label>
+					</field>
+					<field name="NAO2">
+						<qp-label slot="label" caption="2:"></qp-label>
+					</field>
+					<field name="NAO3">
+						<qp-label slot="label" caption="3:"></qp-label>
+					</field>
+					<field name="NAO4">
+						<qp-label slot="label" caption="4:"></qp-label>
+					</field>
+					<field name="BlankLines"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="LocationFilter" caption="Add Locations" auto-repaint="true">
+		<qp-template name="1" id="LocationFilter_optform" wg-container class="equal-height">
+			<qp-fieldset slot="A" id="locationLookupColumn1" view.bind="LocationFilter">
+				<field name="StartLocationID"></field>
+				<field name="EndLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnAddClose" caption="Add" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="InventoryFilter" caption="Add Items" auto-repaint="true">
+		<qp-template name="1" id="InventoryFilter_ifilter" wg-container class="equal-height">
+			<qp-fieldset slot="A" id="inventoryLookupColumn1" view.bind="InventoryFilter">
+				<field name="StartInventoryID"></field>
+				<field name="EndInventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonAddClose-InventoryFilter" wg-name="PXButton1" caption="Add" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-InventoryFilter" wg-name="PXButton2" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

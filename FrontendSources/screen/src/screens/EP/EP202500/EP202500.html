@@ -1,0 +1,32 @@
+<template>
+	<qp-template id="form" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="LoginType_form" view.bind="LoginType" wg-container="LoginType_form">
+			<field name="LoginTypeName"></field>
+			<field name="Entity"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab" >
+		<qp-tab id="tabAllowedRoles" caption="Allowed Roles">
+			<qp-grid id="allowedRoles" view.bind="AllowedRoles" wg-container="AllowedRoles_allowsRolesGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabUsers" caption="Users">
+			<qp-grid id="users" view.bind="Users" wg-container="Users_usersGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabManagedUserTypes" caption="Managed User Types" if.bind="LoginType.Entity.value == 'C'">
+			<qp-grid id="managedUserTypes" view.bind="ManagedLoginTypes" wg-container="ManagedLoginTypes_managedLoginTypesGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabDetails" caption="Login Rules">
+			<qp-template name="1-1" id="CurrentLoginType_tab" class="label-size-m" wg-container>
+				<qp-fieldset slot="A" id="currentLoginType" view.bind="LoginType">
+					<field name="EmailAsLogin"></field>
+					<field name="ResetPasswordOnLogin"></field>
+					<field name="RequireLoginActivation"></field>
+					<field name="AllowedLoginType"></field>
+					<field name="AllowedSessions"></field>
+					<field name="DisableTwoFactorAuth"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,17 @@
+<template>
+
+	<qp-template name="17-17-14" id="formHistoryHeader">
+		<qp-fieldset id="panelHistoryHeader" view.bind="History_Header" slot="A" wg-container="History_Header_form">
+			<field name="OrganizationID"></field>
+			<field name="BranchID"></field>
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="TaxPeriodID"></field>
+			<field name="StartDateUI"></field>
+			<field name="EndDateInclusive"></field>
+			<field name="LineNbr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridHistoryDetails" view.bind="History_Detail" wg-container="History_Detail_grid"> </qp-grid>
+
+</template>

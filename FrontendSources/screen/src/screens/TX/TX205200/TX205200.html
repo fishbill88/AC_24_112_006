@@ -1,0 +1,14 @@
+<template>
+
+	<qp-template name="1-1" id="formBucket" wg-container="Bucket_form">
+		<qp-fieldset id="panelBucket" view.bind="Bucket" slot="A">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="BucketID"></field>
+			<field name="TaxReportRevisionID"></field>
+			<field name="BucketType"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="gridBucketLines" view.bind="BucketLine" wg-container="BucketLine_grid"> </qp-grid>
+
+</template>

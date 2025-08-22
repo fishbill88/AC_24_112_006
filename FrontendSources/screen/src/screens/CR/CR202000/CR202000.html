@@ -1,0 +1,84 @@
+<template>
+	<qp-template id="Campaign_template" name="1-1" wg-container="Campaign_form" class="label-size-m" class="equal-height">
+		<qp-fieldset slot="A" view.bind="Campaign" id="CampaignFormLeft">
+			<field name="CampaignID"></field>
+			<field name="CampaignType"></field>
+			<field name="CampaignName"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" view.bind="Campaign" id="CampaignFormRight">
+			<field name="Status"></field>
+			<field name="OwnerID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTabBar" class="label-size-m">
+		<qp-tab id="CampaignCurrent_tab" caption="Campaign Details">
+			<qp-template id="cmpaignCurrent_template" name="1-1">
+				<div slot="A">
+					<qp-fieldset view.bind="Campaign" id="CampaignCurrent_Planning" caption="Planning">
+						<field name="StartDate"></field>
+						<field name="EndDate"></field>
+						<field name="WorkgroupID"></field>
+						<field name="ExpectedResponse"></field>
+						<field name="PlannedBudget"></field>
+						<field name="ExpectedRevenue"></field>
+						<field name="PromoCodeID"></field>
+					</qp-fieldset>
+					<qp-fieldset view.bind="Campaign" id="CampaignCurrent_PAI" caption="Project Accounting Integration">
+						<field name="ProjectID" config-allow-edit.bind="true"></field>
+						<field name="ProjectTaskID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset
+						view.bind="CalcCampaignCurrent"
+						id="CampaignCurrent_Statistics"
+						caption="Campaign Statistics"
+						class="highlights-section"
+					>
+						<field name="Contacts"></field>
+						<field name="MembersContacted"></field>
+						<field name="MembersResponded"></field>
+						<field name="LeadsGenerated"></field>
+						<field name="LeadsConverted"></field>
+						<field name="Opportunities"></field>
+						<field name="ClosedOpportunities"></field>
+						<field name="OpportunitiesValue"></field>
+						<field name="ClosedOpportunitiesValue"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+			<qp-rich-text-editor id="campaignDescription" class="stretch" value.two-way="Campaign.Description.value"></qp-rich-text-editor>
+		</qp-tab>
+		<qp-tab id="Activities_tab" caption="Activities">
+			<qp-splitter id="splitter" split="height">
+				<split-pane>
+					<qp-grid id="gridActivities" view.bind="Activities"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-rich-text-editor
+						id="edActivityBody"
+						state.bind="Activities.Body"
+						wg-field
+						value.bind="Activities.activeRow.Body.value"
+						config.bind="{readOnly: true}">
+					</qp-rich-text-editor>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="CampaignMarketingLists_tab" caption="Marketing Lists">
+			<qp-grid id="grdCampaignMarketingLists" view.bind="CampaignMarketingLists"></qp-grid>
+		</qp-tab>
+		<qp-tab id="CampaignMembers_tab" caption="Members">
+			<qp-grid id="grdCampaignMembers" view.bind="CampaignMembers"></qp-grid>
+		</qp-tab>
+		<qp-tab id="Leads_tab" caption="Generated Leads">
+			<qp-grid id="Leads" view.bind="Leads"></qp-grid>
+		</qp-tab>
+		<qp-tab id="Opportunities_tab" caption="Opportunities">
+			<qp-grid id="gridOpportunities" view.bind="Opportunities"></qp-grid>
+		</qp-tab>
+		<qp-tab id="Attributes_tab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

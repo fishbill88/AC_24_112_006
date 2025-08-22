@@ -1,0 +1,40 @@
+<template>
+
+	<qp-template id="formDocument" name="7-10-7" wg-container="Document_form" class="equal-height">
+		<qp-fieldset id="columnFirstDocument" view.bind="Document" slot="A">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondDocument" view.bind="Document" slot="B">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="TaxPeriod"></field>
+			<field name="DocDate"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="DocDesc" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdDocument" view.bind="Document" slot="C" class="highlights-section">
+			<field name="CuryDocBal"></field>
+			<field name="CuryOrigDocAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="gridDetails" view.bind="Transactions" wg-container="Transactions_grid"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template name="17-17-14" id="formCurrentDocument">
+				<qp-fieldset slot="A" id="panelCurrentDocument" view.bind="CurrentDocument" wg-container="CurrentDocument_form2">
+					<field name="BatchNbr" config-allow-edit.bind="true"></field>
+					<field name="BranchID"></field>
+					<field name="FinPeriodID"></field>
+					<field name="AdjAccountID"></field>
+					<field name="AdjSubID"></field>
+					<field name="OrigRefNbr"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,26 @@
+<template>
+
+	<qp-template name="1-1" id="formHeader" wg-container="Header_form" class="label-size-m equal-height">
+
+		<qp-fieldset id='columnFirst' view.bind='Header' slot='A'>
+			<field name="DimensionID"></field>
+			<field name="ParentDimensionID"></field>
+			<field name="LookupMode"></field>
+			<field name="Validate"></field>
+			<field name="SpecificModule"></field>
+			<field name="NumberingID" config-allow-edit.bind='true'></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id='columnSecond' view.bind='Header' slot='B'>
+			<field name="MaxLength"></field>
+			<field name="Length"></field>
+			<field name="Segments"></field>
+		</qp-fieldset>
+
+	</qp-template>
+
+	<qp-grid id='grid' view.bind="Detail">
+	</qp-grid>
+
+</template>

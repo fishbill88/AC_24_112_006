@@ -1,0 +1,1 @@
+"C:\Program Files\Acumatica ERP\24-112-006\App_Data\Projects\FramePaymentsCustomization\FramePaymentsCustomization.sln"

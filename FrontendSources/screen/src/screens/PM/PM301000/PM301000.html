@@ -1,0 +1,464 @@
+<template>
+	<qp-template name="7-10-7" class="equal-height" id="Project_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="Project" class="label-size-xs">
+			<field name="ContractCD"></field>
+			<field name="Status"></field>
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="TemplateID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="Project" class="label-size-s">
+			<using wg-container="ProjectProperties_tab" view="ProjectProperties">
+				<field name="OwnerID" ></field>
+			</using>
+			<field name="Description" config-rows.bind="3"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo" class="label-size-m"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formSlotC" view.bind="TaskTotals" class="highlights-section">
+			<field name="CuryIncome" ></field>
+			<field name="CuryExpense" ></field>
+			<field name="CuryMargin" ></field>
+			<field name="MarginPct" caption="Margin (%)"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar active-tab-id="SummaryTab" id="ProjectProperties_tab" wg-container>
+		<qp-tab id="SummaryTab" caption="Summary">
+			<qp-template name="1-1" id="SummaryForm">
+				<div slot="A">
+					<qp-fieldset id="SummaryTabSlotA01" view.bind="ProjectProperties" caption="Project properties">
+						<field name="BudgetLevel" ></field>
+						<field name="CostBudgetLevel" ></field>
+						<field name="StartDate" ></field>
+						<field name="ExpireDate" ></field>
+						<field name="ProjectGroupID" config-allow-edit.bind="true"></field>
+						<field name="ApproverID" ></field>
+						<field name="LastChangeOrderNumber" ></field>
+						<field name="CuryIDCopy" >
+							<qp-button id="btnSetCurrencyRates" class="control-container size-default" state.bind="SetCurrencyRates">
+							</qp-button>
+						</field>
+						<field name="BaseCuryID" ></field>
+						<field name="RateTypeID" config-allow-edit.bind="true"></field>
+						<field name="AccountingMode" ></field>
+						<field name="ChangeOrderWorkflow" ></field>
+						<field name="AllowNonProjectAccountGroups" ></field>
+						<field name="RestrictToEmployeeList" ></field>
+						<field name="RestrictToResourceList" ></field>
+						<field name="BudgetMetricsEnabled" ></field>
+						<field name="CertifiedJob" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotA02" view.bind="ProjectProperties" caption="Billing and allocation settings">
+						<field name="BillingCuryID" ></field>
+						<using view="Billing" wg-container="Billing_billingForm">
+							<field name="Type" ></field>
+							<field name="NextDate" ></field>
+							<field name="LastDate" ></field>
+						</using>
+						<field name="LocationID" ></field>
+						<field name="PayrollWorkLocationID" config-allow-edit.bind="true"></field>
+						<field name="TermsID" ></field>
+						<field name="AllocationID" config-allow-edit.bind="true"></field>
+						<field name="AutoAllocate" ></field>
+						<field name="BillingID" config-allow-edit.bind="true"></field>
+						<field name="DefaultBranchID" ></field>
+						<field name="RateTableID" config-allow-edit.bind="true"></field>
+						<field name="CreateProforma" ></field>
+						<field name="LimitsEnabled" ></field>
+						<field name="PrepaymentEnabled" ></field>
+						<field name="PrepaymentDefCode" ></field>
+						<field name="AutomaticReleaseAR" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="SummaryTabSlotB01" view.bind="ProjectProperties" caption="Quote">
+						<field name="QuoteNbr" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotB02" view.bind="ProjectProperties" caption="AIA">
+						<field name="AIALevel" ></field>
+						<field name="LastProformaNumber" ></field>
+						<field name="IncludeQtyInAIA" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotB03" view.bind="ProjectProperties" caption="Visibility settings">
+						<field name="ProjectVisibilitySettingsRow01" unbound>
+							<qp-field control-state.bind="ProjectProperties.VisibleInGL" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInAP" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInAR" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInSO" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInPO" class="col-2">
+							</qp-field>
+						</field>
+						<field name="ProjectVisibilitySettingsRow02" unbound>
+							<qp-field control-state.bind="ProjectProperties.VisibleInIN" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInCA" class="col-2">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInCR" class="col-4">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInPROD" class="col-4">
+							</qp-field>
+						</field>
+						<field name="ProjectVisibilitySettingsRow03" unbound>
+							<qp-field control-state.bind="ProjectProperties.VisibleInTA" class="col-4">
+							</qp-field>
+							<qp-field control-state.bind="ProjectProperties.VisibleInEA" class="col-4">
+							</qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-fieldset id="SummaryTabSlotB04" view.bind="ProjectProperties" caption="Retainage">
+						<field name="RetainageMode" ></field>
+						<field name="IncludeCO" ></field>
+						<field name="ProjectRevenueTotals.CuryAmount"></field>
+						<field name="ProjectRevenueTotals.CuryRevisedAmount"></field>
+						<field name="ProjectRevenueTotals.ContractCompletedPct"></field>
+						<field name="ProjectRevenueTotals.ContractCompletedWithCOPct"></field>
+						<field name="ProjectRevenueTotals.CuryTotalRetainedAmount"></field>
+						<field name="SteppedRetainage"></field>
+						<field name="RetainagePct"></field>
+						<field name="RetainageMaxPct">
+							<qp-field control-state.bind="ProjectProperties.CuryCapAmount" >
+							</qp-field>
+						</field>
+					</qp-fieldset>
+					<qp-grid id="gridRetainageSteps" view.bind="RetainageSteps" caption="Stepped Retainage" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="TasksTab" caption="Tasks">
+			<qp-grid id="TaskGrid" view.bind="Tasks">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="RevenueBudgetTab" caption="Revenue Budget">
+			<qp-template name="7-10-7" id="RevenueFilterForm" wg-container="RevenueFilter_RevenueFilter">
+				<qp-fieldset slot="A" id="RevenueFilterSlotA" view.bind="RevenueFilter" class="transparent-section">
+					<field name="GroupByTask" class="no-label"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="RevenueFilterSlotB" view.bind="RevenueFilter" class="transparent-section">
+					<field name="CuryAmountToInvoiceTotal" class="label-size-m"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="RevenueBudgetGrid" view.bind="RevenueBudget"wg-container="RevenueBudget_RevenueBudgetGrid">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="CostBudgetTab" caption="Cost Budget">
+			<qp-template name="7-10-7" id="CostFilterForm" wg-container="CostFilter_CostFilter">
+				<qp-fieldset slot="A" id="CostFilterSlotA" view.bind="CostFilter" class="transparent-section">
+					<field name="GroupByTask" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="CostBudgetGrid" view.bind="CostBudget" wg-container="CostBudget_CostBudgetGrid">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="BalancesTab" caption="Balances">
+			<qp-grid id="ProjectBalanceGrid" view.bind="BalanceRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="CommitmentsTab" caption="Commitments">
+			<qp-grid id="PurchaseOrdersGrid" view.bind="PurchaseOrders">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="InvoicesTab" caption="Invoices">
+			<qp-grid id="InvoicesGrid" view.bind="Invoices">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ChangeOrdersTab" caption="Change Orders">
+			<qp-grid id="ChangeOrdersGrid" view.bind="ChangeOrders">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ChangeRequestsTab" caption="Change Requests">
+			<qp-grid id="gridChangeRequests" view.bind="ChangeRequests">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="UnionLocalsTab" caption="Union Locals">
+			<qp-grid id="UnionsGrid" view.bind="Unions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ActivitiesTab" caption="Activities">
+			<qp-grid id="gridActivities" view.bind="Activities">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="EmployeesTab" caption="Employees">
+			<qp-template name="1-1" id="EmployeesForm" class="stretch">
+				<qp-grid slot="A" id="gridEmployeeContract" view.bind="EmployeeContract" caption="Employees" class="framed-section">
+				</qp-grid>
+				<qp-grid slot="B" id="gridContractRates" view.bind="ContractRates" caption="Overrides" class="framed-section">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="EquipmentTab" caption="Equipment">
+			<qp-grid id="ProjectRatesGrid" view.bind="EquipmentRates">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="AddressesTab" caption="Addresses">
+			<qp-template name="1-1" id="AddressForm">
+				<div slot="A">
+					<qp-fieldset wg-container="Site_Address_SiteAddressForm" id="SiteAddressForm" view.bind="Site_Address" caption="Project address">
+						<field name="AddressLine1" ></field>
+						<field name="City" ></field>
+						<field name="CountryId" ></field>
+						<field name="State" ></field>
+						<field name="PostalCode" >
+							<qp-address-lookup wg-name="ViewAddressOnMap" class="control-container size-default" view.bind="Site_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="Latitude" ></field>
+						<field name="Longitude" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="Tax_Settings" view.bind="ProjectProperties" caption="Tax settings">
+						<field name="CostTaxZoneID" ></field>
+						<field name="RevenueTaxZoneID" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="Billing_Contact" view.bind="Billing_Contact" caption="Bill-to contact">
+						<field name="OverrideContact" ></field>
+						<field name="FullName" ></field>
+						<field name="Attention" ></field>
+						<field name="Phone1" ></field>
+						<field name="Email" ></field>
+					</qp-fieldset>
+					<qp-fieldset wg-container="Billing_Address_Billing_Address" id="Billing_Address" view.bind="Billing_Address" caption="Bill-to address">
+						<field name="OverrideAddress" ></field>
+						<field name="AddressLine1" ></field>
+						<field name="AddressLine2" ></field>
+						<field name="City" ></field>
+						<field name="CountryID" ></field>
+						<field name="State" ></field>
+						<field name="PostalCode" >
+							<qp-address-lookup class="control-container size-default" view.bind="Billing_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="IsValidated" ></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="DefaultsTab" caption="Defaults">
+			<qp-template name="17-31" id="DefaultsForm" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="DefaultsForm01" view.bind="ProjectProperties" caption="GL accounts">
+						<field name="DefaultSalesAccountID" ></field>
+						<field name="DefaultSalesSubID" ></field>
+						<field name="DefaultExpenseAccountID" ></field>
+						<field name="DefaultExpenseSubID" ></field>
+						<field name="DefaultAccrualAccountID" ></field>
+						<field name="DefaultAccrualSubID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="DefaultsForm02" view.bind="ProjectProperties" caption="Drop-ship purchases">
+						<field name="DropshipExpenseAccountSource" ></field>
+						<field name="DropshipExpenseSubMask" ></field>
+						<field name="DropshipReceiptProcessing" ></field>
+						<field name="DropshipExpenseRecording" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="DefaultsForm03" view.bind="ProjectProperties" caption="GL accounts for payroll">
+						<field name="EarningsAcctID" ></field>
+						<field name="EarningsSubID" ></field>
+						<field name="BenefitExpenseAcctID" ></field>
+						<field name="BenefitExpenseSubID" ></field>
+						<field name="TaxExpenseAcctID" ></field>
+						<field name="TaxExpenseSubID" ></field>
+						<field name="PTOExpenseAcctID" ></field>
+						<field name="PTOExpenseSubID" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="AccountTaskGrid" view.bind="Accounts" caption="Default task for GL account" class="framed-section">
+					</qp-grid>
+					<qp-grid id="gridMarkups" view.bind="Markups" caption="Document markups" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="AttributesTab" caption="Attributes">
+			<qp-grid id="PXGridAnswers" view.bind="Answers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ApprovalsTab" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="MailingAndPrintingTab" caption="Mailing & Printing">
+			<qp-splitter id="splitterId"
+				split="height"
+				initial-split="50%"
+				state="normal"
+			>
+				<split-pane>
+					<qp-grid id="gridNS" view.bind="NotificationSources" caption="Mailings">
+					</qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-grid id="gridNR" view.bind="NotificationRecipients" caption="Recipients">
+					</qp-grid>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="ComplianceTab" caption="Compliance">
+			<qp-grid id="grdComplianceDocuments" view.bind="ComplianceDocuments">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="LienWaiverSettingsTab" caption="Lien Waiver Settings">
+			<qp-template name="1-1" id="LienWaiverForm" class="stretch">
+				<div slot="A">
+					<qp-fieldset id="LienWaiverForm01" view.bind="ProjectProperties" caption="Conditional Lien Waivers">
+						<field name="ThroughDateSourceConditional" ></field>
+						<field name="IsActive" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="LienWaiverForm02" view.bind="ProjectProperties" caption="Unconditional Lien Waivers">
+						<field name="ThroughDateSourceUnconditional" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-grid id="ComplianceSettingsGrid" view.bind="LienWaiverRecipients" class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="ContactsTab" caption="Contacts">
+			<qp-grid id="ProjectContactsGrid" view.bind="ProjectContacts">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="ProductionOrdersTab" caption="Production Orders">
+			<qp-grid id="ProdOrdersGrid" view.bind="ProjectProdOrders">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="EstimatesTab" caption="Estimates">
+			<qp-grid id="EstimatesGrid" view.bind="ProjectEstimates">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="CreateProductionOrderFilter" caption="Create Production Order" auto-repaint="true">
+		<qp-template name="7-10-7" class="equal-height" id="CreateProductionOrderFilter_FormCreateProdOrder" wg-container>
+			<qp-fieldset slot="A" id="FormCreateProdOrder01" view.bind="CreateProductionOrderFilter">
+				<field name="OrderType" ></field>
+				<field name="ProdOrdID" ></field>
+				<field name="InventoryID" ></field>
+				<field name="SubItemID" ></field>
+				<field name="SiteID" ></field>
+				<field name="LocationID" ></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="FormCreateProdOrder02" view.bind="CreateProductionOrderFilter">
+				<field name="ProdDate" ></field>
+				<field name="QtytoProd" ></field>
+				<field name="ProjectID" ></field>
+				<field name="TaskID" ></field>
+				<field name="CostCodeID" ></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="btnCreate" caption="Create" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnProdCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="TemplateSettings" caption="New Project Template" auto-repaint="true">
+		<qp-fieldset id="formTemplateSettings" view.bind="TemplateSettings">
+			<field name="TemplateID" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-fieldset id="formChangeID" view.bind="ChangeIDDialog">
+			<field name="CD" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" state.bind="Save" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="TasksForAddition" caption="Add Tasks" auto-repaint="true" width="60vw">
+		<qp-grid id="gridAddTasks" view.bind="TasksForAddition">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton2" state.bind="AddTasks" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton3" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="CopyDialog" caption="Copy Project" auto-repaint="true">
+		<qp-fieldset id="formCopyProject" view.bind="CopyDialog">
+			<field name="ProjectID" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButtonOK2" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButtonCancel2" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="LoadFromTemplateDialog" caption="Warning" auto-repaint="true">
+		<qp-label caption="Creation of the project based on the selected template may take a significant amount of time. Do you want to proceed?"></qp-label>
+		<footer>
+			<qp-button id="PXButton5" state.bind="LoadFromTemplate" caption="Proceed" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton4" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field name="NewApprover" ></field>
+			<field name="IgnoreApproversDelegations" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReassignApprovalCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="DocumentSettings" caption="Create Service Order/Appointment" auto-repaint="true">
+		<qp-template name="7-10-7" class="equal-height" id="DocumentSettings_formServiceOrderAppointmentSettings" wg-container>
+			<qp-fieldset slot="A" id="formServiceOrderAppointmentSettings" view.bind="DocumentSettings">
+				<field name="SrvOrdType" ></field>
+				<field name="BranchID" ></field>
+				<field name="BranchLocationID" ></field>
+				<field name="Description" ></field>
+				<field name="ProjectID" ></field>
+				<field name="ProjectTaskID" ></field>
+				<field name="OrderDate" ></field>
+				<field name="SLAETA_Date" ></field>
+				<field name="SLAETA_Time" ></field>
+				<field name="AssignedEmpID" ></field>
+				<field name="ProblemID" ></field>
+				<field name="ContactID" config-allow-edit.bind="true"></field>
+				<field name="ScheduledDateTimeBegin_Date" ></field>
+				<field name="ScheduledDateTimeBegin_Time" ></field>
+				<field name="ScheduledDateTimeEnd_Date" ></field>
+				<field name="ScheduledDateTimeEnd_Time" ></field>
+				<field name="HandleManuallyScheduleTime" ></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="CreateAndReview" caption="Create and review" dialog-result="Yes">
+			</qp-button>
+			<qp-button id="Create" caption="Create" dialog-result="Ok">
+			</qp-button>
+			<qp-button id="Cancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

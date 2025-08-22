@@ -1,0 +1,44 @@
+<template>
+	<qp-template id="formPlugin" wg-container="Plugin_form" name="1-1" class="equal-height label-size-m">
+		<qp-fieldset id="first" view.bind="Plugin" slot="A">
+			<field name="CarrierPluginID"></field>
+			<field name="Description"></field>
+			<field name="PluginTypeName"></field>
+			<field name="ReturnLabelNotification"></field>
+		</qp-fieldset>
+		<qp-fieldset id="second" view.bind="Plugin" slot="B">
+			<field name="UnitType"></field>
+			<field name="KilogramUOM"></field>
+			<field name="PoundUOM"></field>
+			<field name="CentimeterUOM"></field>
+			<field name="InchUOM"></field>
+			<field name="SiteID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="PluginParamterTab" caption="Plug-in Parameters">
+			<qp-grid id="PXGridSettings" view.bind="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="CustomerMap" caption="Customer Accounts">
+			<qp-grid id="PXGridAccounts" view.bind="CustomerAccounts">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="StampAccountInfo" caption="Stamps.com Account Info">
+			<qp-grid id="gridStampsInfo" view.bind="StampsAccountInfoRecord">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="SETerritoryMappinh" caption="Territories Mapping">
+			<qp-grid id="gridTerritoriesMapping" view.bind="ShipEngineTerritoriesMappings">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="BuyPostageParamsView" caption="Specify Postage Amount" auto-repaint="true">
+		<qp-fieldset id="BuyPostageParamsView_formbuypostage" wg-container view.bind="BuyPostageParamsView">
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" caption="BUY" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

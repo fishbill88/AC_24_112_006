@@ -1,0 +1,26 @@
+<template>
+	<qp-template name="1-1" id="Document_form">
+		<qp-fieldset id="form" view.bind="PayrollYear" slot="A" class="label-size-m">
+			<field name="PayGroupID"></field>
+			<field name="Year"></field>
+			<field name="StartDate"></field>
+			<field name="FinPeriods">
+				<qp-field control-state.bind="PayrollYear.OverrideFinPeriods" config-enabled.bind="true"></qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="Periods"></qp-grid>
+	<qp-panel id="PeriodCreation" caption="Create Periods" auto-repaint="true" width="40vw">
+		<qp-fieldset id="formCreatePeriods" view.bind="PeriodCreation" class="label-size-m">
+			<field name="UseExceptions"></field>
+			<field name="ExceptionDateBehavior"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PeriodCreationOK" caption="Generate" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PeriodCreationCancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>
+

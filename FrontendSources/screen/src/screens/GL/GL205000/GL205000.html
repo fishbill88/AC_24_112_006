@@ -1,0 +1,24 @@
+<template>
+	<qp-splitter id="splitterGLBudgetTree" initial-split="15%" class="stretch">
+		<split-pane>
+			<qp-tree id="tree" view.bind="Tree"></qp-tree>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="grid" view.bind="Details"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="Details" caption="Preload Accounts" auto-repaint="true">
+		<qp-template name="1-1" id="formPreloadAccounts" wg-container="PreloadFilter_formPanel">
+			<qp-fieldset slot="A" id="columnFirst-formPreloadAccounts" view.bind="PreloadFilter">
+				<field name="fromAccount"></field>
+				<field name="toAccount"></field>
+				<field name="SubIDFilter"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-formPreloadAccounts" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-formPreloadAccounts" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

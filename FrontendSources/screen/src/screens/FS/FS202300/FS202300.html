@@ -1,0 +1,142 @@
+<template>
+	<qp-template id="SvrOrdTypeRecords_form-form" name="1-1" class="label-size-m">
+		<qp-fieldset id="SvrOrdTypeRecords_form" slot="A" view.bind="SvrOrdTypeRecords">
+			<field name="SrvOrdType"></field>
+			<field name="Descr"></field>
+			<field name="Active"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentSrvOrdTypeRecord_tab" wg-container>
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="SetupTemplate" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="CurrentSrvOrdTypeRecord_10" caption="General Settings" view.bind="CurrentSrvOrdTypeRecord">
+						<field name="SrvOrdNumberingID" config-allow-edit.bind="true"></field>
+						<field name="Behavior"></field>
+						<field name="ServiceOrderWorkflowTypeID"></field>
+						<field name="AppointmentWorkflowTypeID"></field>
+						<field name="CompleteSrvOrdWhenSrvDone"></field>
+						<field name="CloseSrvOrdWhenSrvDone"></field>
+						<field name="RequireContact"></field>
+						<field name="RequireRoom"></field>
+						<field name="RequireCustomerSignature"></field>
+						<field name="CopyNotesFromCustomer"></field>
+						<field name="CopyAttachmentsFromCustomer"></field>
+						<field name="CopyNotesFromCustomerLocation"></field>
+						<field name="CopyAttachmentsFromCustomerLocation"></field>
+						<field name="CopyNotesToAppoinment"></field>
+						<field name="CopyAttachmentsToAppoinment"></field>
+						<field name="CopyNotesToInvoice"></field>
+						<field name="CopyAttachmentsToInvoice"></field>
+						<field name="CopyLineNotesToInvoice"></field>
+						<field name="CopyLineAttachmentsToInvoice"></field>
+						<field name="OnTravelCompleteStartAppt"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentSrvOrdTypeRecord_20" caption="Default Settings" view.bind="CurrentSrvOrdTypeRecord">
+						<field name="AppAddressSource"></field>
+						<field name="DfltCostCodeID"></field>
+						<field name="SalesPersonID"></field>
+						<field name="Commissionable"></field>
+						<field name="DfltBillableTravelItem" config-allow-edit.bind="true"></field>
+						<field name="SetLotSerialNbrInAppts"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CurrentSrvOrdTypeRecord_30" caption="Billing Settings" view.bind="CurrentSrvOrdTypeRecord">
+						<field name="PostTo"></field>
+						<field name="PostNegBalanceToAp"></field>
+						<field name="EnableINPosting"></field>
+						<field name="AllowQuickProcess"></field>
+						<field name="PostOrderType" config-allow-edit.bind="true"></field>
+						<field name="PostOrderTypeNegativeBalance" config-allow-edit.bind="true"></field>
+						<field name="AllocationOrderType" config-allow-edit.bind="true"></field>
+						<field name="DfltTermIDARSO" config-allow-edit.bind="true"></field>
+						<field name="DfltTermIDAP" config-allow-edit.bind="true"></field>
+						<field name="SalesAcctSource"></field>
+						<field name="CombineSubFrom"></field>
+						<field name="SubID"></field>
+						<field name="AccountGroupID"></field>
+						<field name="ReasonCode"></field>
+						<field name="BillingType"></field>
+						<field name="ReleaseProjectTransactionOnInvoice"></field>
+						<field name="ReleaseIssueOnInvoice"></field>
+						<field name="AllowInvoiceOnlyClosedAppointment"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentSrvOrdTypeRecord_40" caption="Integrating with Time & Expenses" view.bind="CurrentSrvOrdTypeRecord">
+						<field name="RequireTimeApprovalToInvoice"></field>
+						<field name="CreateTimeActivitiesFromAppointment"></field>
+						<field name="DfltEarningType"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabTimeBehavior" caption="Time Behavior">
+			<qp-template id="TimeBehaviorTemplate" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="CurrentSrvOrdTypeRecord_50" caption="Appointment Starting Settings" view.bind="CurrentSrvOrdTypeRecord">
+						<field name="OnStartApptSetStartTimeInHeader"></field>
+						<field name="OnStartApptSetNotStartItemInProcess"></field>
+						<field name="OnStartApptStartUnassignedStaff"></field>
+						<field name="OnStartApptStartServiceAndStaff"></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentSrvOrdTypeRecord_60" caption="Appointment Completion Settings" view.bind="CurrentSrvOrdTypeRecord">
+						<field name="OnCompleteApptSetEndTimeInHeader"></field>
+						<field name="OnCompleteApptSetInProcessItemsAs"></field>
+						<field name="OnCompleteApptSetNotStartedItemsAs"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset id="CurrentSrvOrdTypeRecord_70" slot="B" caption="Other Settings" view.bind="CurrentSrvOrdTypeRecord">
+					<field name="OnStartTimeChangeUpdateLogStartTime"></field>
+					<field name="OnEndTimeChangeUpdateLogEndTime"></field>
+					<field name="AllowManualLogTimeEdition"></field>
+					<field name="SetTimeInHeaderBasedOnLog"></field>
+					<field name="OnCompleteApptRequireLog"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabQuickProcessing" caption="Quick Processing" if.bind="SvrOrdTypeRecords.ShowQuickProcessTab.value == true">
+			<qp-template id="QuickProcessingTemplate" name="1-1" class="label-size-m">
+				<div slot="A">
+					<qp-fieldset id="QuickProcessSettings_10" caption="Appointment Actions" view.bind="QuickProcessSettings">
+						<field name="CloseAppointment"></field>
+						<field name="EmailSignedAppointment"></field>
+						<field name="GenerateInvoiceFromAppointment"></field>
+					</qp-fieldset>
+					<qp-fieldset id="QuickProcessSettings_20" caption="Service Order Actions" view.bind="QuickProcessSettings">
+						<field name="AllowInvoiceServiceOrder"></field>
+						<field name="CompleteServiceOrder"></field>
+						<field name="CloseServiceOrder"></field>
+						<field name="GenerateInvoiceFromServiceOrder"></field>
+					</qp-fieldset>
+					<qp-fieldset id="QuickProcessSettings_30" caption="Sales Order Actions" view.bind="QuickProcessSettings">
+						<field name="PrepareInvoice"></field>
+						<field name="SOQuickProcess"></field>
+						<field name="EmailSalesOrder"></field>
+					</qp-fieldset>
+					<qp-fieldset id="QuickProcessSettings_40" caption="Invoice Actions" view.bind="QuickProcessSettings">
+						<field name="ReleaseInvoice"></field>
+						<field name="EmailInvoice"></field>
+					</qp-fieldset>
+					<qp-fieldset id="QuickProcessSettings_50" caption="Bill Actions" view.bind="QuickProcessSettings">
+						<field name="ReleaseBill"></field>
+						<field name="PayBill"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabProblemCodes" caption="Problem Codes">
+			<qp-grid id="PXGridProblems" view.bind="SrvOrdTypeProblemRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="grid" view.bind="Mapping">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabMailingPrinting" caption="Mailing & Printing">
+			<qp-grid id="NotificationSources_gridNS" view.bind="NotificationSources" caption="Mailings">
+			</qp-grid>
+			<qp-grid id="gridNR" view.bind="NotificationRecipients" caption="Recipients">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

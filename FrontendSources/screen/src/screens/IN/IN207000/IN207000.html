@@ -1,0 +1,19 @@
+<template>
+	<qp-template name="1-1" id="lotserclass_form" wg-container class="equal-height label-size-m">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="lotserclass">
+			<field name="LotSerClassID"></field>
+			<field name="Descr"></field>
+			<field name="LotSerTrack"></field>
+			<field name="LotSerTrackExpiration"></field>
+			<field name="RequiredForDropship"></field>
+			<field name="LotSerAssign"></field>
+			<field name="LotSerIssueMethod"></field>
+			<field name="LotSerNumShared"></field>
+			<field name="LotSerNumVal"></field>
+			<field name="AutoNextNbr"></field>
+			<field name="AutoSerialMaxCount"></field>
+		</qp-fieldset>
+		<qp-grid slot="B" id="grid" view.bind="lotsersegments" caption="Numbering Settings" class="framed-section">
+		</qp-grid>
+	</qp-template>
+</template>

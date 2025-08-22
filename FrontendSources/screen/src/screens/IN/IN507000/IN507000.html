@@ -1,0 +1,19 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="Filter_form" wg-container>
+		<qp-fieldset slot="A" id="Filter_form_column1" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="OrgBAccountID" control-type="qp-branch-selector"></field>
+			<field name="NumberOfPeriods"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter_form_column2" view.bind="Filter">
+			<field name="FromPeriodID">
+				<qp-label slot="label" caption="Period Range"></qp-label>
+				<qp-field control-state.bind="Filter.ToPeriodID"></qp-field>
+			</field>
+			<field name="CalculateBy"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="TurnoverCalcs">
+	</qp-grid>
+</template>

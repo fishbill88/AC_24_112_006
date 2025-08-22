@@ -1,0 +1,25 @@
+<template>
+	<qp-template name="17-17-14" id="Header_form" wg-container class="equal-height">
+		<qp-fieldset id="Header_form_column1" view.bind="Header" slot="A">
+			<field name="TemplateItemID" config-allow-edit.bind="true"></field>
+			<field name="ColAttributeID"></field>
+			<field name="RowAttributeID"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="splitter" split="height" initial-split="150px">
+		<split-pane>
+			<qp-grid id="MatrixAttributes" view.bind="AdditionalAttributes" caption="Additional Attributes"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="Matrix_MatrixMatrix" view.bind="Matrix" caption="Main Attributes"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="MatrixItemsForCreation" caption="Create Matrix Items" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="grdCreate" view.bind="MatrixItemsForCreation"></qp-grid>
+		<footer>
+			<qp-button id="btnCreateUpdate" caption="Confirmation" dialog-result="OK"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

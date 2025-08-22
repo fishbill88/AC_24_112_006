@@ -1,0 +1,30 @@
+<template>
+	<qp-template id="formSettings" name="1-1" wg-container="cmsetup_formSettings">
+		<div slot="A">
+			<qp-fieldset id="groupSetupNumberingSettings" view.bind="cmsetup" caption="Setup and Numbering Settings">
+				<field name="BatchNumberingID" config-allow-edit.bind="true"></field>
+				<field name="TranslNumberingID" config-allow-edit.bind="true"></field>
+				<field name="ExtRefNbrNumberingID" config-allow-edit.bind="true"></field>
+				<field name="GainLossSubMask" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupPostingSettings" view.bind="cmsetup" caption="Posting Settings">
+				<field name="AutoPostOption"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupDataEntrySettings" view.bind="cmsetup" caption="Data Entry Settings">
+				<field name="RateVarianceWarn"></field>
+				<field name="RateVariance"></field>
+				<field name="TranslDefId" config-allow-edit.bind="true"></field>
+			</qp-fieldset>
+		</div>
+		<qp-fieldset id="groupDefaultRateTypes" view.bind="cmsetup" slot="B" caption="Default Rate Types">
+			<field name="GLRateTypeDflt" config-allow-edit.bind="true"></field>
+			<field name="GLRateTypeReval" config-allow-edit.bind="true"></field>
+			<field name="CARateTypeDflt" config-allow-edit.bind="true"></field>
+			<field name="ARRateTypeDflt" config-allow-edit.bind="true"></field>
+			<field name="ARRateTypeReval" config-allow-edit.bind="true"></field>
+			<field name="APRateTypeDflt" config-allow-edit.bind="true"></field>
+			<field name="APRateTypeReval" config-allow-edit.bind="true"></field>
+			<field name="PMRateTypeDflt" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+</template>

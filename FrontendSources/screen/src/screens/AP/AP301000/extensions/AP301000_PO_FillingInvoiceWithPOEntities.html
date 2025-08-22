@@ -1,0 +1,129 @@
+<template>
+
+	<qp-panel id="poreceiptslist" caption="Add PO Receipt" auto-repaint="true" width="85vw" height="90vh">
+		<qp-template name="1-1-1" id="formPoreceiptslist" class="equal-height" wg-container="filter_frmPOrderFilter">
+			<qp-fieldset slot="A" id="groupPoreceiptslist" view.bind="filter">
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="gridPoreceiptslist" view.bind="poreceiptslist" wg-container="poreceiptslist_grid4"></qp-grid>
+
+		<footer>
+			<qp-button id="buttonAddClose-poreceiptslist" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-poreceiptslist" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="poReceiptLinesSelection" caption="Add Receipt Line" auto-repaint="true" width="85vw" height="90vh">
+		<qp-template name="1-1-1" id="formPoReceiptLinesSelection" class="equal-height" wg-container="filter_frmPOFilter">
+			<qp-fieldset slot="A" id="groupPoReceiptLinesSelection" view.bind="filter" >
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+
+		<qp-grid id="gridPoReceiptLinesSelection" view.bind="poReceiptLinesSelection" wg-container="poReceiptLinesSelection_gridOL"></qp-grid>
+		<footer>
+			<qp-button id="buttonAdd-poReceiptLinesSelection" caption="Add" state.bind="AddReceiptLine2"></qp-button>
+			<qp-button id="buttonAddClose-poReceiptLinesSelection" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-poReceiptLinesSelection" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="poorderslist" caption="Add PO Order" auto-repaint="true" width="85vw" height="90vh">
+		<qp-grid id="gridPoorderslist" view.bind="poorderslist" wg-container="poorderslist_PXGrid1"></qp-grid>
+		<footer>
+			<qp-button id="buttonAdd-poorderslist" caption="Add" state.bind="AddPOOrder2"></qp-button>
+			<qp-button id="buttonAddClose-poorderslist" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-poorderslist" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="poorderlineslist" caption="Add PO Line" auto-repaint="true" width="85vw" height="90vh">
+		<qp-template name="1-1-1" id="formPoorderlineslist" class="equal-height" wg-container="orderfilter_PXFormView1">
+			<qp-fieldset slot="A" id="columnFirst-Poorderlineslist" view.bind="orderfilter">
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecond-Poorderlineslist" view.bind="orderfilter">
+				<field name="ShowBilledLines" class="no-label"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridPoorderlineslist" view.bind="poorderlineslist" wg-container="poorderlineslist_POOrderLinesGrid"></qp-grid>
+
+		<footer>
+			<qp-button id="buttonAdd-poorderlineslist" caption="Add" state.bind="AddPOOrderLine2"></qp-button>
+			<qp-button id="buttonAddClose-poorderlineslist" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-poorderlineslist" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SubcontractLines" caption="Add Subcontract Line" auto-repaint="true" width="85vw" height="90vh">
+		<qp-template name="1-1-1" id="formSubcontractLines" class="equal-height" wg-container="orderfilter_PXAddSubcontractLineFormView">
+			<qp-fieldset slot="A" id="columnFirstSubcontractLines" view.bind="orderfilter">
+				<field name="SubcontractNumber"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecondSubcontractLines" view.bind="orderfilter" class="no-label">
+				<field name="ShowBilledLines"></field>
+				<field name="ShowUnbilledLines"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridSubcontractLinesGrid" view.bind="SubcontractLines" wg-container="SubcontractLines_SubcontractLinesGrid"></qp-grid>
+		<footer>
+			<qp-button id="buttonAdd-SubcontractLines" caption="Add Subcontract Line" state.bind="AddSubcontractLine"></qp-button>
+			<qp-button id="buttonAddClose-SubcontractLines" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-SubcontractLines" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="subcontracts" caption="Add Subcontract" auto-repaint="true" width="85vw" height="90vh">
+		<qp-grid id="gridSubcontracts" view.bind="subcontracts" wg-container="subcontracts_PXGridSubcontract"></qp-grid>
+		<footer>
+			<qp-button id="buttonAdd-subcontracts" caption="Add" state.bind="AddSubcontract"></qp-button>
+			<qp-button id="buttonAddClose-subcontracts" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-subcontracts" caption="Cancel" dialog-result="No"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="LandedCostDetailsAdd" caption="Add LC" auto-repaint="true" width="85vw" height="90vh">
+		<qp-template name="1-1-1" id="formAddLC" wg-container="landedCostFilter_frmLCFilter">
+			<qp-fieldset slot="A" id="columnFirst-AddLC" view.bind="landedCostFilter">
+				<field name="LandedCostDocRefNbr"></field>
+				<field name="LandedCostCodeID"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecond-AddLC" view.bind="landedCostFilter">
+				<field name="ReceiptType"></field>
+				<field name="ReceiptNbr"></field>
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridLandedCostDetailsAdd" view.bind="LandedCostDetailsAdd" wg-container="LandedCostDetailsAdd_grdLC"></qp-grid>
+		<footer>
+			<qp-button id="buttonAdd-LandedCostDetailsAdd" caption="Add" state.bind="AddLandedCost2"></qp-button>
+			<qp-button id="buttonAddClose-LandedCostDetailsAdd" dialog-result="OK" caption="Add & Close"></qp-button>
+			<qp-button id="buttonCancel-LandedCostDetailsAdd" dialog-result="No" caption="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="linkLineFilter" caption="Link Line" auto-repaint="true" width="85vw" height="90vh">
+		<qp-template name="1-1-1" id="formLinkLineFilter" class="equal-height" wg-container="linkLineFilter_LinkLineFilterForm">
+			<qp-fieldset slot="A" id="columnFirstLinkLineFilter" view.bind="linkLineFilter">
+				<field name="POOrderNbr"></field>
+				<field name="SiteID"></field>
+				<field name="InventoryID"></field>
+				<field name="UOM"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecondLinkLineFilter" view.bind="linkLineFilter">
+				<field name="SelectedMode"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridLinkLineGrid" view.bind="linkLineReceiptTran" wg-container="linkLineReceiptTran_LinkLineGrid"></qp-grid>
+		<qp-grid id="gridLinkLineOrderGrid" view.bind="linkLineOrderTran" wg-container="linkLineOrderTran_LinkLineOrderGrid"></qp-grid>
+		<qp-grid id="gridLinkLineLandedCostGrid" view.bind="LinkLineLandedCostDetail" wg-container="LinkLineLandedCostDetail_LinkLineLandedCostGrid"></qp-grid>
+		<footer>
+			<qp-button id="buttonSave-linkLineFilter" dialog-result="Yes" caption="Save"></qp-button>
+			<qp-button id="buttonCancel-linkLineFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

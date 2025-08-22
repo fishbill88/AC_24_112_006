@@ -1,0 +1,19 @@
+<template>
+	<qp-tab before="#tabLogs" id="tabPutAway" caption="Put Away" if.bind="HeaderView.ShowPutAway.value == true">
+		<qp-grid id="gridPutAway" view.bind="PutAway">
+		</qp-grid>
+	</qp-tab>
+	<qp-tab after="#tabPutAway" id="tabTransfers" caption="Transfers" if.bind="HeaderView.ShowPutAway.value == true">
+		<qp-grid id="formTransfers" view.bind="RelatedTransfers">
+		</qp-grid>
+	</qp-tab>
+
+	<qp-panel id="TransferSplitLinks" wg-container caption="Transfer Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridTransfers" view.bind="TransferSplitLinks">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOk" dialog-result="OK" caption="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

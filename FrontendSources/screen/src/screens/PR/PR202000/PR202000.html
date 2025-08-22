@@ -1,0 +1,43 @@
+<template>
+	<qp-template name="1-1-1" id="form_Header">
+		<div slot="A">
+			<qp-fieldset id="form" view.bind="EmployeeClass">
+				<field name="EmployeeClassID"></field>
+				<field name="Descr"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+	<qp-tabbar id="CurEmployeeClassRecord_tab" wg-container>
+		<qp-tab id="PayrollTab" caption="Payroll">
+			<qp-template name="1-1-1" id="form_Current">
+				<div slot="A">
+					<qp-fieldset id="leftSidePayrollSettings" view.bind="CurEmployeeClassRecord">
+						<field name="EmpType"></field>
+						<field name="PayGroupID"></field>
+						<field name="CalendarID"></field>
+						<field name="HoursPerWeek"></field>
+						<field name="StdWeeksPerYear"></field>
+						<field name="HoursPerYear"></field>
+						<field name="OverrideHoursPerYearForCertified"></field>
+						<field name="HoursPerYearForCertified"></field>
+						<field name="ExemptFromOvertimeRules"></field>
+						<field name="NetPayMin"></field>
+						<field name="GrnMaxPctNet"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="rightSidePayrollSettings" view.bind="CurEmployeeClassRecord">
+						<field name="WorkCodeID"></field>
+						<field name="UnionID"></field>
+						<field name="ExemptFromCertifiedReporting"></field>
+					</qp-fieldset>
+					<qp-fieldset id="workLocationPayrollSettings" view.bind="CurEmployeeClassRecord" caption="Work Locations">
+						<field name="UsePayrollProjectWorkLocation" no-label="true"></field>
+					</qp-fieldset>
+					<qp-grid view.bind="WorkLocations" id="grdWorkLocations">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

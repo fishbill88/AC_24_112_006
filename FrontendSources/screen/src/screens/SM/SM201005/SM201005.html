@@ -1,0 +1,26 @@
+<template>
+	<!-- Primary Form -->
+	<qp-template id="form" name="1-1" wg-container="Roles_form">
+		<qp-fieldset id="roles" view.bind="Roles" slot="A">
+			<field name="Rolename"></field>
+			<field name="Descr"></field>
+			<field name="Guest"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<!-- Tabs -->
+	<qp-tabbar id="tab">
+		<qp-tab id="tabMembership" caption="Membership">
+			<qp-grid id="grid" view.bind="UsersByRole">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabActiveDirectory" caption="Active Directory">
+			<qp-grid id="gridActiveDirectory" view.bind="ActiveDirectoryMap">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabClaims" caption="Claims">
+			<qp-grid id="gridClaims" view.bind="ClaimsMap">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

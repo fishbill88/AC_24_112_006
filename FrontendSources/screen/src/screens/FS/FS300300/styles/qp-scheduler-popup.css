@@ -1,0 +1,185 @@
+
+:root {
+	--qp-sch-dialog-width: 450px;
+	--qp-sch-edit-dialog-width: 500px;
+}
+.qp-sch-popup-holder {
+	position: absolute;
+	height: 100px;
+	top: -10000px;
+}
+
+.qp-sch-popup {
+	max-height: calc(100% - 40px);
+	max-width: var(----qp-sch-dialog-width) !important;
+	border-radius: 10px !important;
+	box-shadow: 0px 0px 24px 2px #00000059 !important;
+}
+
+/* the collapse icon needs to be in the same style as the close button (per the mockup) */
+/* TODO: remove once/if platform adds alternative styling for qp-collapsible-anchor */
+.qp-sch-popup .qp-collapser {
+	background-color: transparent !important;
+	height: 16px !important;
+	width: 16px !important;
+	padding: 0px !important;
+}
+	.qp-sch-popup .qp-collapser.expanded:before {
+		content: "\e915" !important;
+	}
+	.qp-sch-popup .qp-collapser:not(.expanded):before {
+		content: "\e914" !important;
+	}
+
+.qp-sch-popup.qp-sch-edit-popup {
+	max-width: var(----qp-sch-edit-dialog-width) !important;
+}
+
+.qp-sch-popup .b-panel-content {
+	background-color: white !important;
+	border-radius: 10px !important;
+	padding: 20px 20px 10px 20px;
+}
+	/* .qp-sch-popup.qp-sch-view-popup .b-panel-content {
+		padding-top: 20px;
+	} */
+
+
+.qp-sch-popup .grid-content-table > tbody > tr.active > td,
+.qp-sch-popup .grid-content-table > tbody > tr.active > td.active {
+	background-color: transparent !important;
+}
+
+.qp-sch-popup .gray-pane .grid-content .grid-content-table {
+	background-color: var(--qp-sch-dark-background);
+}
+
+.qp-sch-popup .control-CurrentRow:before {
+	content: none;
+}
+
+.qp-sch-popup .toggle {
+	position: static;
+    background: transparent;
+    color: #00000066;
+}
+	.qp-sch-popup .toggle:hover {
+		color: #000000;
+	}
+
+.qp-sch-popup .qp-menu-shadow {
+	background-color: transparent;
+}
+
+.qp-sch-popup .qp-fieldset {
+	overflow: hidden;
+}
+
+.qp-sch-popup .gray-pane qp-grid {
+	padding-left: 10px;
+}
+
+.qp-sch-popup .transparent-section.qp-fieldset {
+	padding: 0px;
+}
+	.qp-sch-popup .transparent-section.qp-fieldset .qp-field .wrapper{
+		padding: 0px;
+	}
+
+	.qp-sch-popup .transparent-section.qp-fieldset *:is(
+		.qp-selector.qp-selector-readonly,
+		.qp-datetime__editor.ReadOnly,
+		textarea.qp-text-editor,
+		input.qp-text-editor
+	) {
+		border-bottom-color: #00000014;
+	}
+	.qp-sch-popup .transparent-section .qp-fieldset-caption {
+		padding: 0px;
+	}
+
+.qp-sch-popup qp-tool-bar {
+	margin-left: -4px;
+}
+
+
+.qp-sch-popup-data {
+	overflow: visible;
+	position: absolute;
+	z-index: 10000;
+    background: white;
+    width: calc(var(--qp-sch-dialog-width) - 40px);
+	height: auto;
+}
+	.qp-sch-popup-edit-data {
+		width: calc(var(--qp-sch-edit-dialog-width) - 40px);
+	}
+	.qp-sch-popup-data qp-shrinking-panel {
+		position: initial;
+		width: 100%;
+		padding: 0px;
+	}
+		.qp-sch-popup-data .qp-field .label-wrapper {
+			width: 122px;
+		}
+
+	.qp-sch-popup-data ux-dialog {
+		box-shadow: none;
+		width: 100%;
+	}
+		.qp-sch-popup-data ux-dialog ux-dialog-header {
+			/* TODO: Remove once adapted to native popups */
+			padding: 0;
+    		border-bottom: none;
+		}
+			.qp-sch-popup-data ux-dialog ux-dialog-header .qp-dialog-header {
+				/* TODO: Remove once adapted to native popups */
+				padding: 0;
+				margin: 0;
+			}
+		.qp-sch-popup-data ux-dialog qp-tab {
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+		.qp-sch-popup-data ux-dialog ux-dialog-body {
+			padding: 16px 0px 0px 0px;
+		}
+		.qp-sch-popup-data ux-dialog .qp-dialog-title {
+			color: black;
+			font-weight: 600;
+		}
+		.qp-sch-popup-data ux-dialog .qp-tool-bar {
+			margin-top: 5px;
+		}
+
+	.qp-sch-popup-data .qp-field:not(.qp-sch-no-label) .control-container.size-default {
+		flex-grow: 0.5 !important;
+		flex-shrink: 0;
+	}
+		.qp-sch-edit-popup .qp-sch-popup-data .qp-field:not(.qp-sch-no-label) .control-container.size-default {
+			flex-grow: 1 !important;
+		}
+
+	*:not(.event-info) > .qp-sch-popup-data.transparent {
+		filter:alpha(opacity=0);
+		pointer-events: none;
+		opacity: 0;
+		z-index: 0;
+	}
+	.qp-sch-popup-data .grid-top-bar {
+		display: none;
+	}
+	.qp-sch-popup-data .grid-content {
+		min-height: 32px !important;
+	}
+		.qp-sch-popup-data .grid-content-wrap {
+			position: initial;
+		}
+
+
+.qp-sch-grid-fieldset {
+    gap: 6px;
+	background-color: #F5F7F9;
+	display: flex;
+    flex-direction: column;
+}

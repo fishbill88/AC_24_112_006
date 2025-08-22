@@ -1,0 +1,53 @@
+<template>
+	<qp-tabbar id="tab" >
+		<qp-tab id="preview_tab" caption="Preview">
+			<qp-template name="17-17-14" class="equal-height" id="preview_template" wg-container="GeneratorSettings_tab">
+				<qp-fieldset id="priview_column1" view.bind="GeneratorSettings" slot="A">
+					<field name="PIClassID"></field>
+					<field name="Descr"></field>
+					<field name="SiteID"></field>
+					<field name="Method"></field>
+				</qp-fieldset>
+				<qp-fieldset id="priview_column2" view.bind="GeneratorSettings" slot="B">
+					<field name="SelectedMethod"></field>
+					<field name="CycleID"></field>
+					<field name="ABCCodeID" id="edABCCodeID"></field>
+					<field name="MovementClassID" id="edMovementClassID"></field>
+					<field name="RandomItemsLimit" id="edRandomItemsLimit"></field>
+					<field name="ByFrequency" id="chkByFrequency"></field>
+					<field name="BlankLines" id="edBlankLines"></field>
+					<field name="MaxLastCountDate" id="edMaxLastCountDate"></field>
+				</qp-fieldset>
+			</qp-template>
+
+			<qp-grid id="grid" view.bind="PreliminaryResultRecs">
+			</qp-grid>
+ 		</qp-tab>
+		<qp-tab id="location_selection_tab" caption="Location Selection">
+        	<qp-template name="17-17-14" class="equal-height" id="location_selection_template" wg-container="CurrentGeneratorSettings_tab">
+				<qp-fieldset id="location_selection_tab1" view.bind="CurrentGeneratorSettings" slot="A" class="transparent-section">
+					<field name="SiteID"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-template name="1-1" id="included_excluded_locations" class="stretch">
+				<qp-grid slot="A" id="gridLocations" view.bind="LocationsToLock" caption="Selected Locations" class="framed-section stretch">
+				</qp-grid>
+				<qp-grid slot="B" id="gridExcludedLocations" view.bind="ExcludedLocations" caption="Excluded Locations" class="framed-section stretch">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="item_selection_tab" caption="Item Selection">
+			<qp-template name="17-17-14" class="equal-height" id="item_selection_template" wg-container="CurrentGeneratorSettings_tab">
+				<qp-fieldset id="item_selection_column1" view.bind="CurrentGeneratorSettings" slot="A" class="transparent-section">
+					<field name="Method"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-template name="1-1" id="included_excluded_items" class="stretch">
+				<qp-grid slot="A" id="gridInventoryItems" view.bind="InventoryItemsToLock" caption="Selected Inventory Items" class="framed-section">
+				</qp-grid>
+				<qp-grid slot="B" id="gridExcludedInventoryItems" view.bind="ExcludedInventoryItems" caption="Excluded Inventory Items" class="framed-section">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,194 @@
+<template>
+
+	<qp-template id="form" name="1-1-1" wg-container="Contracts_form" class="equal-height">
+		<qp-fieldset id="columnFirstHeader" view.bind="Contracts" slot="A">
+			<field name="ContractCD"></field>
+			<field name="TemplateID" config-allow-edit.bind="true"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnSecondHeader" view.bind="Contracts" slot="B">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="LocationID" config-allow-edit.bind="true"></field>
+			<field name="Description"></field>
+		</qp-fieldset>
+		<qp-fieldset id="columnThirdHeader" view.bind="Contracts" slot="C">
+			<field name="Balance"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs" wg-container="CurrentContract_tab">
+		<qp-tab id="tabSummary" caption="Summary">
+			<qp-template id="formSummary" name="1-1">
+				<div id="columnFirstSummary" slot="A">
+					<qp-fieldset id="groupContractSettings" view.bind="CurrentContract" caption="Contract Settings">
+						<field name="StartDate"></field>
+						<field name="ActivationDate"></field>
+						<field name="ExpireDate"></field>
+						<field name="TerminationDate"></field>
+						<field name="AutoRenew"></field>
+						<field name="AutoRenewDays"></field>
+						<field name="DaysBeforeExpiration"></field>
+						<field name="GracePeriod"></field>
+						<field name="Days"></field>
+						<field name="CuryID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupBillingSchedule" view.bind="Billing" caption="Billing Schedule" wg-container="Billing_billingForm">
+						<field name="StartBilling"></field>
+						<field name="Type"></field>
+						<field name="LastDate"></field>
+						<field name="NextDate"></field>
+					</qp-fieldset>
+				</div>
+				<div id="columnSecondSummary" slot="B">
+					<qp-fieldset id="grouBillingInformation" view.bind="Billing" caption="Billing Information" wg-container="Billing_PXFormView1">
+						<field name="BillTo"></field>
+						<field name="AccountID" config-allow-edit.bind="true"></field>
+						<field name="LocationID"></field>
+						<using view="BillingLocation" wg-container="BillingLocation_PXFormView6">
+							<field name="CBranchID"></field>
+						</using>
+						<using wg-container="Billing_descriptionFormulaView">
+							<field name="InvoiceFormula"></field>
+							<field name="TranFormula"></field>
+						</using>
+					</qp-fieldset>
+					<qp-fieldset id="groupContractManagement" view.bind="CurrentContract" caption="Contract Management">
+						<field name="OwnerID"></field>
+						<field name="SalesPersonID"></field>
+						<field name="CaseItemID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-template id="formDetails" name="1-1-1" wg-container="CurrentContract_PXFormView4">
+				<qp-fieldset id="columnFirstDetailsHeader" view.bind="CurrentContract" slot="A">
+					<field name="EffectiveFrom"></field>
+					<field name="DiscountID"></field>
+				</qp-fieldset>
+				<qp-fieldset id="columnSecondDetailHeader" view.bind="CurrentContract" slot="B">
+					<field name="PendingSetup"></field>
+					<field name="PendingRecurring"></field>
+					<field name="PendingRenewal"></field>
+					<field name="TotalPending"></field>
+				</qp-fieldset>
+				<qp-fieldset id="columnThirdDetailHeader" view.bind="CurrentContract" slot="C">
+					<field name="CurrentSetup"></field>
+					<field name="CurrentRecurring"></field>
+					<field name="CurrentRenewal"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridContractDetails" view.bind="ContractDetails" wg-container="ContractDetails_detGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabRecurringSummary" caption="Recurring Summary">
+			<qp-template name="1-1" id="formRecurringSummary">
+				<qp-fieldset slot="A" id="panelRecurringSummary" view.bind="CurrentContract" wg-container="CurrentContract_PXFormView3">
+					<field name="TotalRecurring"></field>
+					<field name="TotalUsage"></field>
+					<field name="TotalDue"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridRecurringDetails" view.bind="RecurringDetails" wg-container="RecurringDetails_detGrid"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabEmployeeOvverrides" caption="Employee Overrides">
+			<qp-grid id="gridContractRates" view.bind="ContractRates" wg-container="ContractRates_gridContractRates"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabContractHistory" caption="Contract History">
+			<qp-grid id="gridContractHistory" view.bind="RenewalHistory" wg-container="RenewalHistory_RenewalHistoryGrid"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabARHistory" caption="AR History">
+			<qp-grid id="gridInvoices" view.bind="Invoices" wg-container="Invoices_InvoicesGrid"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes">
+			<qp-grid id="gridAnswers" view.bind="Answers" wg-container="Answers_PXGridAnswers"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="renewManualNumberingFilter" caption="Please enter new Contract ID" auto-repaint="true">
+		<qp-template name="1" id="formRenewManualNumberingFilter">
+			<qp-fieldset slot="A" id="panelRenewManualNumberingFilter" view.bind="renewManualNumberingFilter" wg-container="renewManualNumberingFilter_formRenewManualNumbering">
+				<field name="labelPrompt" unbound replace-content>
+					<qp-label caption="A new contract is being created for your renewable contract. Please enter a Contract ID."></qp-label>
+				</field>
+				<field name="ContractCD"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-renewManualNumberingFilter" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-renewManualNumberingFilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ChangeIDDialog" caption="Specify New ID" auto-repaint="true">
+		<qp-template name="1-1" id="formChangeIDDialog">
+			<qp-fieldset id="panelChangeIDDialog" view.bind="ChangeIDDialog" wg-container="ChangeIDDialog_formChangeID">
+				<field name="CD"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-ChangeIDDialog" state.bind="Save" dialog-result="OK"></qp-button>
+			<qp-button id="button-ChangeIDDialog" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SetupSettings" caption="Set Up Contract" auto-repaint="true">
+		<qp-template name="1-1" id="formSetupSettings">
+			<qp-fieldset id="panelSetupSettings" view.bind="SetupSettings" wg-container="SetupSettings_formSetupSettings">
+				<field name="StartDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-SetupSettings" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-SetupSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ActivationSettings" caption="Activate Contract" auto-repaint="true">
+		<qp-template name="1-1" id="formActivationSettings">
+			<qp-fieldset id="panelActivationSettings" view.bind="ActivationSettings" wg-container="ActivationSettings_formActivationSettings">
+				<field name="ActivationDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-ActivationSettings" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-ActivationSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="TerminationSettings" caption="Terminate Contract" auto-repaint="true">
+		<qp-template name="1-1" id="formTerminationSettings">
+			<qp-fieldset id="panelTerminationSettings" view.bind="TerminationSettings" wg-container="TerminationSettings_PXFormView2">
+				<field name="TerminationDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-TerminationSettings" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-TerminationSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="OnDemandSettings" caption="Billing On Demand" auto-repaint="true">
+		<qp-template name="1-1" id="formOnDemandSettings">
+			<qp-fieldset id="panelOnDemandSettings" view.bind="OnDemandSettings" wg-container="OnDemandSettings_PXFormView5">
+				<field name="BillingDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-OnDemandSettings" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-OnDemandSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="RenewalSettings" caption="Renew Contract" auto-repaint="true">
+		<qp-template name="1-1" id="formRenewalSettings">
+			<qp-fieldset slot="A" id="panelRenewalSettings" view.bind="RenewalSettings" wg-container="RenewalSettings_formRenewal">
+				<field name="RenewalDate"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-RenewalSettings" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-RenewalSettings" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

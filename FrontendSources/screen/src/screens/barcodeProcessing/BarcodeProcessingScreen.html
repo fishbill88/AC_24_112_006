@@ -1,0 +1,41 @@
+<template>
+	<require from="screens/barcodeProcessing/styles.css"></require>
+
+	<qp-template id="HeaderView_formHeader" name="7-10-7" wg-container class="equal-height">
+		<qp-fieldset id="main" view.bind="HeaderView" slot="A">
+			<field name="Barcode"
+				control-type="qp-barcode-input"
+				config-sound-control.bind="Info.MessageSoundFile"
+				config-submit-command.bind="Scan">
+			</field>
+		</qp-fieldset>
+
+		<qp-fieldset id="secondary" view.bind="HeaderView" slot="B" class="no-label">
+			<field name="Message" config-rows.bind="3"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="third" view.bind="HeaderView" slot="C" class="no-label">
+			<field name="ProcessingSucceeded"
+				config.bind="{
+					label: '',
+					renderStyle: 'button',
+					checkImages: { normal: 'main@Success' },
+					uncheckImages: { normal: 'main@Fail' }
+				}"
+				config-class.bind="'ProcessingStatusIcon'">
+			</field>
+		</qp-fieldset>
+
+		<!-- the whole fieldset with a single field is needed for proper work of the sound mechanism, do not remove or transform -->
+		<qp-fieldset id="info" view.bind="Info">
+			<field name="MessageSoundFile" show.bind="false"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabLogs" caption="Scan Log">
+			<qp-grid id="gridLogs" wg-container="grid4" view.bind="Logs">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

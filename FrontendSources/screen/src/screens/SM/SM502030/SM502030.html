@@ -1,0 +1,43 @@
+<template>
+	<qp-template name="1-1" id="form" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="col1" view.bind="Filter">
+			<field name="DefinitionId"></field>
+			<field name="fakename" caption="Date Range" unbound>
+				<qp-field control-state.bind="Filter.FromDate" class="col-6">
+					<qp-field control-state.bind="Filter.ToDate" class="col-6"></qp-field>
+				</qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="cont2" split="height" initial-split="70%" class="stretch">
+		<split-pane>
+			<qp-grid id="grid" view.bind="Events" caption="Business Events"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="grid2" view.bind="EventSubscribers" caption="Subscribers"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+
+	<qp-panel id="EventDetails" caption="Show Event Data" auto-repaint="true" wg-container="EventDetails_frmViewDetails">
+		<qp-fieldset id="frmViewDetails" view.bind="EventDetails">
+			<field name="Details" config-type.bind="1" config-rows.bind="20"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton1" dialog-result="OK" caption="Close">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="EventSettings" caption="History Settings" auto-repaint="true" wg-container="EventSettings_PXFormView1">
+		<qp-fieldset id="PXFormView1" view.bind="EventSettings">
+			<field name="DeleteHistoryAutomatically"></field>
+			<field name="HistoryRetainCount"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="PXButton2" dialog-result="OK" caption="Save">
+			</qp-button>
+			<qp-button id="PXButton3" dialog-result="Cancel" caption="Close">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

@@ -1,0 +1,81 @@
+<template>
+	<qp-panel
+		id="CreateOrderParams"
+		auto-repaint="true"
+		caption="Create Sales Order"
+		width="40vw"
+	>
+		<qp-tabbar id="panel_CreateSalesOrder_mainTabBar">
+			<qp-tab id="panel_CreateSalesOrder_tabMain" caption="Main">
+				<qp-fieldset
+					id="panel_CreateSalesOrder_Params"
+					caption="Sales Order"
+					view.bind="CreateOrderParams"
+				>
+					<field name="OrderType"></field>
+					<field name="OrderNbr"></field>
+					<field name="MakeQuotePrimary"></field>
+					<field name="RecalculatePrices"></field>
+					<field name="OverrideManualPrices" class="qp-field-dependent"></field>
+					<field name="RecalculateDiscounts"></field>
+					<field name="OverrideManualDiscounts" class="qp-field-dependent"></field>
+					<field name="OverrideManualDocGroupDiscounts" class="qp-field-dependent"></field>
+					<field name="ConfirmManualAmount"></field>
+					<field name="AMIncludeEstimate"></field>
+					<field name="AMCopyConfigurations"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="panel_CreateSalesOrder_Customer"
+					caption="Customer"
+					view.bind="CustomerInfo"
+				>
+					<field name="AcctCD"></field>
+					<field name="ClassID"></field>
+					<field name="Email" control-type="qp-mail-editor"></field>
+					<field name="WarningMessage"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateSalesOrder_tabAttributes" caption="Attributes">
+				<qp-grid
+					id="grdCreateSalesOrderQuoteInfoAttributes"
+					view.bind="CustomerInfoAttributes"
+					caption="Customer"
+					class="framed-section"
+				>
+				</qp-grid>
+			</qp-tab>
+			<qp-tab
+				id="panel_CreateSalesOrderAll_tabUDFS"
+				caption="User-Defined Fields"
+			>
+				<qp-grid
+					id="grdCreateSalesOrderQuoteInfoUDF"
+					view.bind="CustomerInfoUDF"
+					caption="Customer"
+					class="framed-section"
+				>
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="btnCreateSalesOrderCreateCustomer"
+				state.bind="CreateCustomerInPanel"
+				dialog-result="Retry"
+			>
+			</qp-button>
+			<qp-button
+				id="btnCreateSalesOrderOK"
+				caption="Create And Review"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="btnCreateSalesOrderCancel"
+				caption="Cancel"
+				dialog-result="Abort"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

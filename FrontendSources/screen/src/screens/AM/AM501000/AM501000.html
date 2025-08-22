@@ -1,0 +1,13 @@
+<template>
+	<qp-template id="Filter_form" wg-container name="17-17-14">
+		<qp-fieldset slot="A" id="Filter1" view.bind="Filter">
+			<field name="ProcessAction"></field>
+			<field name="ReleaseOrders"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Filter2" no-label="true" view.bind="Filter">
+			<field name="ExcludePlanningOrders"></field>
+			<field name="ExcludeFirmOrders"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="OrderList"></qp-grid>
+</template>

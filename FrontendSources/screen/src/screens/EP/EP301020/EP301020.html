@@ -1,0 +1,137 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="ClaimDetails_form" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="ClaimDetails" >
+			<field name="ClaimDetailCD" ></field>
+			<field name="Status" ></field>
+			<field name="ExpenseDate" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="ClaimDetails" >
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="EmployeeID" ></field>
+			<field name="BranchID" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formSlotC" view.bind="ClaimDetails" class="highlights-section">
+			<field name="CuryTranAmtWithTaxes" ></field>
+			<field name="CuryTaxTotal" ></field>
+			<field name="ClaimCuryTranAmtWithTaxes">
+				<qp-field control-state.bind="ClaimDetails.CardCuryID" class="col-4">
+				</qp-field>
+			</field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="CurrentClaimDetails_Tabs" wg-container>
+		<qp-tab id="DetailsTab" caption="Details">
+			<qp-template name="1-1" id="DetailsForm">
+				<div slot="A">
+					<qp-fieldset id="CurrentClaimDetailsFormSlotA01" view.bind="CurrentClaimDetails" caption="Expense Details">
+						<field name="TranDesc" config-rows.bind="3"></field>
+					</qp-fieldset>
+					<qp-template name="1-1" id="QtyAndCostFieldsForm" class="equal-height">
+						<qp-fieldset slot="A" id="CurrentClaimDetailsFormSlotA0101" view.bind="CurrentClaimDetails">
+							<field name="Qty" ></field>
+							<field name="CuryUnitCost" ></field>
+							<field name="CuryExtCost" ></field>			
+						</qp-fieldset>
+						<qp-fieldset slot="B" id="CurrentClaimDetailsFormSlotA0102" view.bind="CurrentClaimDetails">
+							<field name="UOM" ></field>
+							<field name="CuryEmployeePart" ></field>
+						</qp-fieldset>
+					</qp-template>
+					<qp-fieldset id="CurrentClaimDetailsFormSlotA02" view.bind="CurrentClaimDetails">
+						<field name="CuryTipAmt" ></field>
+						<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+						<field name="ExpenseRefNbr" ></field>
+						<field name="ContractID" ></field>
+						<field name="TaskID" ></field>
+						<field name="CostCodeID" ></field>
+						<field name="RefNbr" config-allow-edit.bind="true"></field>
+						<field name="StatusClaim" ></field>
+						<field name="PaidWith" ></field>
+						<field name="CorpCardID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentClaimDetailsFormSlotA03" view.bind="CurrentClaimDetails" caption="Expense Classification">
+						<field name="Hold" ></field>
+						<field name="Released" ></field>
+						<field name="HoldClaim" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentClaimDetailsFormSlotA04" view.bind="CurrentClaimDetails" caption="Tax Info">
+						<field name="TaxZoneID" ></field>
+						<field name="TaxCalcMode" ></field>
+						<field name="TaxCategoryID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="CurrentClaimDetailsFormSlotA05" view.bind="CurrentClaimDetails" caption="Field Service Details">
+						<field name="FSEntityTypeUI" ></field>
+						<field name="FSEntityNoteID" config-allow-edit.bind="true"></field>
+						<field name="FSBillable" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="CurrentClaimDetailsFormSlotB01" view.bind="CurrentClaimDetails" caption="Financial Details">
+						<field name="Billable" ></field>
+						<field name="ClaimDetails.CustomerID"></field>
+						<field name="ClaimDetails.CustomerLocationID"></field>
+						<field name="ExpenseAccountID" ></field>
+						<field name="ExpenseSubID" ></field>
+						<field name="SalesAccountID" ></field>
+						<field name="SalesSubID" ></field>
+					</qp-fieldset>
+					<div class="framed-section">
+						<qp-label caption="Image"></qp-label>
+						<qp-image-uploader width="600px" height="500px" config.bind="{showFeed: true}"></qp-image-uploader>	
+					</div>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="TaxesTab" caption="Taxes">
+			<qp-template name="17-17-14" id="DetailsForm">
+				<qp-fieldset slot="A" id="CurrentClaimDetailsForm06" view.bind="CurrentClaimDetails" class="transparent-section">
+					<field name="CuryTaxRoundDiff" ></field>
+				</qp-fieldset>	
+			</qp-template>
+			<qp-grid id="grid1" view.bind="Taxes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="BankingTab" caption="Banking" if.bind="ClaimDetails.BankTranStatus.value != null">
+			<qp-fieldset id="CurrentClaimDetailsForm07" view.bind="CurrentClaimDetails">
+				<field name="BankTranStatus" ></field>
+				<field name="Category" ></field>
+			</qp-fieldset>
+		</qp-tab>
+		<qp-tab id="ApprovalDetailsTab" caption="Approvals">
+			<qp-grid id="gridApproval" view.bind="Approval">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="TaxZoneUpdateAskView" auto-repaint="true" width="40vw">
+		<qp-label caption="Do you want to use the specified tax zone for expense receipts by default?"></qp-label>
+		<footer>
+			<qp-button id="SaveTaxZone" state.bind="SaveTaxZone" caption="Yes" dialog-result="OK">
+			</qp-button>
+			<qp-button id="CancelTaxZone" caption="No" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReasonApproveRejectParams" caption="Enter Reason" auto-repaint="true">
+		<qp-fieldset id="PXFormViewPanelReason" view.bind="ReasonApproveRejectParams">
+			<field id="edReason" name="Reason" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReasonOk" caption="OK" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReasonCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="ReassignApprovalFilter" caption="Reassign Approval" auto-repaint="true">
+		<qp-fieldset id="formReassignApproval" view.bind="ReassignApprovalFilter">
+			<field id="edNewApprover" name="NewApprover" ></field>
+			<field id="chkIgnoreApproversDelegations" name="IgnoreApproversDelegations" ></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnReassignApprovalOK" caption="Reassign" dialog-result="OK">
+			</qp-button>
+			<qp-button id="btnReassignApprovalCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

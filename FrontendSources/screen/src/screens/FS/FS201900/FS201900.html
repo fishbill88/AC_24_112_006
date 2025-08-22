@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="GeoZoneTemplate" name="1-1" class="label-size-m">
+		<qp-fieldset id="GeoZoneRecords_form" slot="A" view.bind="GeoZoneRecords">
+			<field name="GeoZoneCD"></field>
+			<field name="Descr"></field>
+			<field name="CountryID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="employees" caption="Employees">
+			<qp-grid id="PXGrid1" view.bind="GeoZoneEmpRecords">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="postalCodes" caption="Postal Codes">
+			<qp-grid id="PXGrid2" view.bind="GeoZonePostalCodeRecords">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,81 @@
+<template>
+	<qp-panel
+		id="AccountInfo"
+		auto-repaint="true"
+		caption="Create Account"
+		height="735px"
+	>
+		<qp-tabbar id="panel_CreateAccount_mainTabBar">
+			<qp-tab id="panel_CreateAccount_tabMain" caption="Main">
+				<qp-fieldset
+					id="formCreateBothContactAndAccount_Account"
+					caption="Business Account"
+					view.bind="AccountInfo"
+				>
+					<field name="BAccountID"></field>
+					<field name="AccountName"></field>
+					<field name="AccountClass"></field>
+					<field name="LinkContactToAccount"></field>
+				</qp-fieldset>
+				<qp-fieldset
+					id="formCreateBothContactAndAccount_Contact"
+					caption="Contact"
+					view.bind="ContactInfo"
+				>
+					<field name="FirstName"></field>
+					<field name="LastName"></field>
+					<field name="FullName"></field>
+					<field name="Salutation"></field>
+					<field name="Phone1">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="ContactInfo.Phone1Type"
+						></qp-field>
+					</field>
+					<field name="Phone2">
+						<qp-field
+							slot="label"
+							no-label="true"
+							control-state.bind="ContactInfo.Phone2Type"
+						></qp-field>
+					</field>
+					<field name="Email" control-type="qp-mail-editor"></field>
+					<field name="ContactClass"></field>
+				</qp-fieldset>
+			</qp-tab>
+			<qp-tab id="panel_CreateAccount_tabAttributes" caption="Attributes">
+				<qp-grid id="grdAccountInfoAttributesBoth" view.bind="AccountInfoAttributes" caption="Business Account" class="framed-section">
+				</qp-grid>
+				<qp-grid id="grdContactInfoAttributesBoth" view.bind="ContactInfoAttributes" caption="Contact" class="framed-section">
+				</qp-grid>
+			</qp-tab>
+			<qp-tab id="panel_CreateAccount_tabUDFS" caption="User-Defined Fields">
+				<qp-grid id="grdAccountInfoUDFBoth" view.bind="AccountInfoUDF" caption="Business Account" class="framed-section">
+				</qp-grid>
+				<qp-grid id="grdContactInfoUDFBoth" view.bind="ContactInfoUDF" caption="Contact" class="framed-section">
+				</qp-grid>
+			</qp-tab>
+		</qp-tabbar>
+		<footer>
+			<qp-button
+				id="CreateContactAndAccountBtnReview"
+				caption="Create and review"
+				dialog-result="Yes"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateContactAndAccountBtnConvert"
+				caption="Create"
+				dialog-result="OK"
+			>
+			</qp-button>
+			<qp-button
+				id="CreateContactAndAccountBtnCancel"
+				caption="Cancel"
+				dialog-result="Cancel"
+			>
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

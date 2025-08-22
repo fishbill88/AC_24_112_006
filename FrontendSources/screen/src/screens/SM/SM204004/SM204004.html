@@ -1,0 +1,114 @@
+<template>
+	<qp-template name="1-1" class="equal-height" id="Notifications_PXFormView1" wg-container>
+		<qp-fieldset slot="A" id="formNotifications1" view.bind="Notifications">
+			<field name="NotificationID" config.bind="{displayMode:'text'}"></field>
+			<field name="ScreenID" config.bind="{displayMode:'text'}"></field>
+			<field name="Name"></field>
+			<field name="NTo" control-type="qp-tree-selector" control-config.bind="{
+				treeSelectorId: 'tree_selector_edNTo',
+				treeConfig: {
+					idName: 'Path',
+					dataMember: 'ScreenUserItems',
+					description: 'Name',
+					idParent: 'Key',
+					iconField: 'Icon',
+				},
+				selectorConfig: {
+					view: 'UserItems',
+					key: 'KeyUserName',
+					description: 'FullName',
+				},
+			}"></field>
+			<field name="NFrom"></field>
+			<field name="Subject" control-type="qp-tree-selector" control-config.bind="{
+				treeSelectorId: 'tree_selector_edsubject',
+				treeConfig: {
+					idName: 'Path',
+					dataMember: 'EntityItemsWithPrevious',
+					description: 'Name',
+					idParent: 'Key',
+					iconField: 'Icon',
+					mode: 'single',
+				},
+				allowEditValue: true,
+			}"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formNotifications2" view.bind="Notifications">
+			<field name="DeliveryType"></field>
+			<field name="ScreenIdValue"></field>
+			<field name="DestinationScreenID"></field>
+			<field name="DestinationEntityID" control-type="qp-tree-selector" control-config.bind="{
+				treeSelectorId: 'tree_selector_edDestinationEntityID',
+				treeConfig: {
+					idName: 'Path',
+					dataMember: 'EntityItems',
+					description: 'Name',
+					idParent: 'Key',
+					iconField: 'Icon',
+					mode: 'single',
+				},
+			}"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar active-tab-id="clientSecrets" id="tabs">
+		<qp-tab id="tabMessage" caption="Message">
+			<div class="v-stack">
+				<div class="h-stack">
+					<qp-button id="btnDataField" caption="Insert Data Field" click.delegate="onHelpClick(false)"></qp-button>
+					<qp-button id="btnPrevDataField" caption="Insert Previous Data Field" click.delegate="onHelpClick(true)"
+						tooltip.bind = 'LocalizableStrings.btnPrevDataField_tooltip'></qp-button>
+				</div>
+				<qp-tree-selector-dialog  view-model.ref="EntityItemsTreeSelector" editor-div.bind="editorDiv" config.bind="{
+					treeSelectorId: 'edDataField',
+					disabled: true,
+					treeConfig: {
+						idName: 'Path',
+						dataMember: 'EntityItems',
+						description: 'Name',
+						idParent: 'Key',
+						iconField: 'Icon',
+						mode: 'single',
+					},
+				}"></qp-tree-selector-dialog>
+				<qp-tree-selector-dialog  view-model.ref="PreviousEntityItemsTreeSelector" editor-div.bind="editorDiv" config.bind="{
+					treeSelectorId: 'edPrevDataField',
+					disabled: true,
+					treeConfig: {
+						idName: 'Path',
+						dataMember: 'PreviousEntityItems',
+						description: 'Name',
+						idParent: 'Key',
+						iconField: 'Icon',
+						mode: 'single',
+					},
+				}"></qp-tree-selector-dialog>
+				<qp-template name="1" id="templateCurrentNotification" wg-container="CurrentNotification_tab">
+					<qp-fieldset slot="A" id="formCurrentNotification" view.bind="CurrentNotification">
+						<field name="BodyWrapper" unbound replace-content class="col-12">
+							<qp-text-editor class="col-12" state.bind="CurrentNotification.Body"
+								value.bind="CurrentNotification.Body.value"
+								view-model.ref="BodyControl"
+								config.bind="{type: 1, rows: 10, selectOnFocus: false}">
+							</qp-text-editor>
+						  </field>
+					</qp-fieldset>
+				</qp-template>
+			</div>
+		</qp-tab>
+		<qp-tab id="tabBusinessEvents" caption="Send by Events" if.bind='Notifications.ShowSendByEventsTabExpr.value'>
+			<qp-grid id="grdSendByEvents" view.bind="BusinessEvents">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel caption="Create Business Event" id="NewEventData">
+		<qp-fieldset id="frmCreateBusinessEvent" view.bind="NewEventData">
+			<field name="Name"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel"  dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

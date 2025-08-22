@@ -1,0 +1,119 @@
+<template>
+	<qp-tabbar id="ProjectManagementSetup_tab" wg-container>
+		<qp-tab id="GeneralTab" caption="General">
+			<qp-template name="1-1" id="GeneralForm" class="label-size-xm">
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="form01" view.bind="ProjectManagementSetup" caption="Due Date Calculation">
+						<field name="AnswerDaysCalculationType" ></field>
+						<field name="CalendarId" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="form02" view.bind="ProjectManagementSetup" caption="Request For Information Settings">
+						<field name="RequestForInformationNumberingId" config-allow-edit.bind="true"></field>
+						<field name="DefaultEmailNotification" ></field>
+						<field name="RequestForInformationAssignmentMapId" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+					</qp-fieldset>
+					<qp-fieldset id="form03" view.bind="ProjectManagementSetup" caption="Daily Field Report Settings">
+						<field name="DailyFieldReportNumberingId" config-allow-edit.bind="true"></field>
+						<field name="DailyFieldReportApprovalMapId" config-allow-edit.bind="true"></field>
+						<field name="PendingApprovalNotification" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="IsHistoryLogEnabled" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" class="v-stack">
+					<qp-fieldset id="form04" view.bind="ProjectManagementSetup" caption="Project Issue Settings">
+						<field name="ProjectIssueNumberingId" config-allow-edit.bind="true"></field>
+						<field name="ProjectIssueAssignmentMapId" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+					</qp-fieldset>
+					<qp-grid id="edProjectIssueType" view.bind="ProjectIssueTypes">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="DailyFieldReportCopySettingsTab" caption="Daily Field Report Copy Settings">
+			<qp-template name="1-1-1" id="DailyFieldReportCopyConfiguration_DailyFieldReportCopyConfigurationForm" wg-container>
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="DailyFieldReportCopyConfigurationForm01" view.bind="DailyFieldReportCopyConfiguration" caption="Common" no-label="true">
+						<field name="IsConfigurationEnabled" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="DailyFieldReportCopyConfigurationForm02" view.bind="DailyFieldReportCopyConfiguration" caption="Daily Field Report Summary" no-label="true">
+						<field name="Notes" ></field>
+						<field name="Date" ></field>
+						<field name="ProjectManager" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" class="v-stack">
+					<qp-fieldset id="DailyFieldReportCopyConfigurationForm03" view.bind="DailyFieldReportCopyConfiguration" caption="Labor Time And Activities" no-label="true">
+						<field name="Employee" ></field>
+						<field name="EmployeeEarningType" ></field>
+						<field name="EmployeeProjectTask" ></field>
+						<field name="EmployeeCostCode" ></field>
+						<field name="EmployeeTime" ></field>
+						<field name="EmployeeTimeSpent" ></field>
+						<field name="EmployeeIsBillable" ></field>
+						<field name="EmployeeBillableTime" ></field>
+						<field name="EmployeeDescription" ></field>
+						<field name="EmployeeTask" ></field>
+						<field name="EmployeeCertifiedJob" ></field>
+						<field name="EmployeeUnionLocal" ></field>
+						<field name="EmployeeLaborItem" ></field>
+						<field name="EmployeeWccCode" ></field>
+						<field name="EmployeeContract" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="C" class="v-stack">
+					<qp-fieldset id="DailyFieldReportCopyConfigurationForm04" view.bind="DailyFieldReportCopyConfiguration" caption="Subcontractors" no-label="true">
+						<field name="SubcontractorVendorId" ></field>
+						<field name="SubcontractorProjectTask" ></field>
+						<field name="SubcontractorCostCode" ></field>
+						<field name="SubcontractorNumberOfWorkers" ></field>
+						<field name="SubcontractorTimeArrived" ></field>
+						<field name="SubcontractorTimeDeparted" ></field>
+						<field name="SubcontractorWorkingHours" ></field>
+						<field name="SubcontractorDescription" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="DailyFieldReportCopyConfigurationForm05" view.bind="DailyFieldReportCopyConfiguration" caption="Equipment" no-label="true">
+						<field name="EquipmentId" ></field>
+						<field name="EquipmentProjectTask" ></field>
+						<field name="EquipmentCostCode" ></field>
+						<field name="EquipmentIsBillable" ></field>
+						<field name="EquipmentSetupTime" ></field>
+						<field name="EquipmentRunTime" ></field>
+						<field name="EquipmentSuspendTime" ></field>
+						<field name="EquipmentDescription" ></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="WeatherServicesTab" caption="Weather Services">
+			<qp-template name="1-1" id="WeatherIntegrationSetup_WeatherIntegrationConfigurationForm" class="label-size-xm" wg-container>
+				<qp-fieldset slot="A" id="WeatherIntegrationConfigurationForm" view.bind="WeatherIntegrationSetup" caption="General Settings">
+					<field name="IsConfigurationEnabled" ></field>
+					<field name="WeatherApiService" ></field>
+					<field name="WeatherApiKey" >
+						<qp-button id="btnTestConnection" class="control-container size-default" state.bind="TestConnection">
+						</qp-button>
+					</field>
+					<field name="UnitOfMeasureFormat" ></field>
+					<field name="RequestParametersType" ></field>
+					<field name="IsWeatherProcessingLogEnabled" ></field>
+					<field name="WeatherProcessingLogTerm" ></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="SubmittalSettingsTab" caption="Submittal Settings">
+			<qp-template name="1-1" id="ProjectManagementSetup_SubmittalSettingsForm" class="label-size-xm" wg-container>
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="SubmittalSettingsForm" view.bind="ProjectManagementSetup" caption="Submittal Settings">
+						<field name="SubmittalNumberingId" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-grid
+						id="edSubmittalType"
+						view.bind="SubmittalTypes"
+						caption="Submittal Types"
+						class="framed-section">
+					</qp-grid>
+				</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

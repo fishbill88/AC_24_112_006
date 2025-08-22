@@ -1,0 +1,102 @@
+<template>
+	<qp-template name="7-10-7" id="document_form" wg-container qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="first" view.bind="Document">
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="DocDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="CreateBill"></field>
+			<field name="VendorRefNbr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="summary" view.bind="Document" class="summary-pane">
+			<field name="CuryAllocatedTotal"></field>
+			<field name="CuryLineTotal"></field>
+			<field name="CuryVatTaxableTotal"></field>
+			<field name="CuryVatExemptTotal"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryDocTotal"></field>
+			<field name="CuryControlTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabDetails" caption="Landed Costs">
+			<qp-grid id="gridLandedCost" view.bind="Details">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabReceiptLines" caption="Details">
+			<qp-grid id="gridReceiptLines" view.bind="ReceiptLines">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTaxes" caption="Taxes" load-on-demand="true">
+			<qp-grid id="grid1" view.bind="Taxes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template name="17-17-14" id="CurrentDocument_tab" wg-container>
+				<qp-fieldset slot="A" id="groupFinancial" view.bind="CurrentDocument" caption="Billing Settings">
+					<field name="BranchID"></field>
+					<field name="TermsID"></field>
+					<field name="BillDate"></field>
+					<field name="DueDate"></field>
+					<field name="DiscDate"></field>
+					<field name="CuryDiscAmt"></field>
+					<field name="TaxZoneID"></field>
+					<field name="PayToVendorID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="groupOwnership" view.bind="CurrentDocument" caption="Assign To">
+					<field name="WorkgroupID"></field>
+					<field name="OwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="poReceiptSelection" caption="Add Receipt" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="Filter_filter" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="addReceiptFilter-first" view.bind="filter">
+				<field name="ReceiptType"></field>
+				<field name="ReceiptNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="addReceiptFilter-second" view.bind="filter">
+				<field name="VendorID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grdReceipts" view.bind="poReceiptSelection">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton8" state.bind="AddPOReceipt2">
+			</qp-button>
+			<qp-button id="PXButton3" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton4" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="poReceiptLinesSelection" caption="Add Receipt Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="Filter_PXFormView1" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="addReceiptLineFilter-first" view.bind="filter">
+				<field name="ReceiptType"></field>
+				<field name="ReceiptNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="addReceiptLineFilter-second" view.bind="filter">
+				<field name="VendorID"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXGrid1" view.bind="poReceiptLinesSelection">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton1" state.bind="AddPOReceiptLine2">
+			</qp-button>
+			<qp-button id="PXButton2" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton5" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

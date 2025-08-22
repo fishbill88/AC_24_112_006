@@ -1,0 +1,30 @@
+<template>
+	<qp-template id="formMain" name="1-1" class="equal-height" wg-container="ARFinChargesList_form">
+		<qp-fieldset id="groupGeneralSettings" view.bind="ARFinChargesList" slot="A" caption="General Settings">
+			<field name="FinChargeID"></field>
+			<field name="FinChargeDesc"></field>
+			<field name="CalculationMethod"></field>
+			<field name="TermsID"></field>
+			<field name="BaseCurFlag"></field>
+			<field name="FinChargeAccountID"></field>
+			<field name="FinChargeSubID"></field>
+			<field name="TaxCategoryID"></field>
+		</qp-fieldset>
+		<div id="columnSecondMain" slot="B">
+			<qp-fieldset id="groupOverdueFeeSettings" view.bind="ARFinChargesList" caption="Overdue Fee Settings">
+				<field name="FeeAmount"></field>
+				<field name="FeeAccountID"></field>
+				<field name="FeeSubID"></field>
+				<field name="FeeDesc"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupChargingSettings" view.bind="ARFinChargesList" caption="Charging Settings">
+				<field name="MinChargeDocumentAmt"></field>
+				<field name="ChargingMethod"></field>
+				<field name="FixedAmount"></field>
+				<field name="LineThreshold"></field>
+				<field name="MinFinChargeAmount"></field>
+			</qp-fieldset>
+			<qp-grid id="gridPercentList" view.bind="PercentList" wg-container="PercentList_gridNS"></qp-grid>
+		</div>
+	</qp-template>
+</template>

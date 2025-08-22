@@ -1,0 +1,263 @@
+<template>
+	<qp-template name="7-10-7" id="document_form" wg-container qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="first" view.bind="Document">
+			<field name="ReceiptType"></field>
+			<field name="ReceiptNbr"></field>
+			<field name="Status"></field>
+			<field name="ReceiptDate"></field>
+			<field name="FinPeriodID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Document">
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="VendorLocationID"></field>
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="AutoCreateInvoice"></field>
+			<field name="InvoiceNbr"></field>
+			<field name="ReturnInventoryCostMode"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="summary" view.bind="Document" class="highlights-section">
+			<field name="OrderQty"></field>
+			<field name="ControlQty"></field>
+			<field name="UnbilledQty"></field>
+			<field name="CuryOrderTotal"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="transactions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOrders" caption="Orders" load-on-demand="true"
+			if.bind="Document.ShowPurchaseOrdersTab.value == true">
+			<qp-grid id="formOrders" view.bind="ReceiptOrdersLink">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabPutAway" caption="Put Away" load-on-demand="true"
+			if.bind="Document.ShowPutAwayHistoryTab.value == true">
+			<qp-grid id="formTransfers" view.bind="RelatedTransfers">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabHistory" caption="History" load-on-demand="true">
+			<qp-grid id="formPRHistory" view.bind="ReceiptHistory">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabBilling" caption="Billing" load-on-demand="true">
+			<div class="v-stack">
+				<qp-label caption="The values in the Billed Amt., Accrued Amt., and PPV Amt columns are always shown in the base currency.">
+				</qp-label>
+				<qp-grid id="formBillingHistory" view.bind="apDocs">
+				</qp-grid>
+			</div>
+		</qp-tab>
+		<qp-tab id="tabLandedCosts" caption="Landed Costs" load-on-demand="true"
+			if.bind="Document.ShowLandedCostsTab.value == true">
+			<qp-grid id="gridLandedCosts" view.bind="landedCosts">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOther" caption="Other">
+			<qp-template name="17-17-14" id="CurrentDocument_tab" wg-container>
+				<div slot="A" class="v-stack">
+					<qp-fieldset id="groupOther" view.bind="CurrentDocument" caption="Receipt Info">
+						<field name="InventoryRefNbr" config-allow-edit.bind="true"></field>
+						<field name="BranchID"></field>
+						<field name="BranchBaseCuryID"></field>
+						<field name="InvoiceDate"></field>
+						<field name="SOOrderNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupIntercompanySale" view.bind="CurrentDocument" caption="Intercompany Sale">
+						<field name="IntercompanyShipmentNbr" config-allow-edit.bind="true"></field>
+						<field name="IntercompanySOType"></field>
+						<field name="IntercompanySONbr" config-allow-edit.bind="true"></field>
+						<field name="ExcludeFromIntercompanyProc"></field>
+					</qp-fieldset>
+				</div>
+				<qp-fieldset slot="B" id="groupOwnership" view.bind="Document" caption="Ownership">
+					<field name="WorkgroupID"></field>
+					<field name="OwnerID"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="POReceiptLineSplittingExtension_lsselect" caption="Line Details" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="14-17-17" id="POReceiptLineSplittingExtension_LotSerOptions_optform" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="formLotSerOptions-first" view.bind="POReceiptLineSplittingExtension_LotSerOptions">
+				<field name="UnassignedQty"></field>
+				<field name="Qty"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="formLotSerOptions-second" view.bind="POReceiptLineSplittingExtension_LotSerOptions">
+				<field name="StartNumVal">
+					<qp-button id="btnGenerate" class="col-12" state.bind="POReceiptLineSplittingExtension_GenerateNumbers" wg-name="Generate">
+					</qp-button>
+				</field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grid2" view.bind="splits">
+		</qp-grid>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="AddReceipt_frmReceipt" wg-container caption="Add Receipt Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="frmReceipt" class="equal-height">
+			<qp-fieldset slot="A" id="frmReceipt-first" view.bind="addReceipt">
+				<field name="BarCode"></field>
+				<field name="InventoryID"></field>
+				<field name="SubItemID"></field>
+				<field name="LotSerialNbr"></field>
+				<field name="SiteID"></field>
+				<field name="LocationID"></field>
+				<field name="ExpireDate"></field>
+				<field name="ReceiptQty"></field>
+				<field name="UOM"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmReceipt-second" view.bind="addReceipt">
+				<field name="VendorID"></field>
+				<field name="VendorLocationID"></field>
+				<field name="POType"></field>
+				<field name="PONbr"></field>
+				<field name="POLineNbr"></field>
+				<field name="ShipFromSiteID"></field>
+				<field name="SOOrderType"></field>
+				<field name="SOOrderNbr"></field>
+				<field name="SOOrderLineNbr"></field>
+				<field name="SOShipmentNbr"></field>
+				<field name="UnitCost"></field>
+				<field name="ByOne"></field>
+				<field name="AutoAddLine"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="PXButton7" state.bind="AddPOReceiptLine2">
+			</qp-button>
+			<qp-button id="PXButton5" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton6" caption="Close" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="openOrders" caption="Add Purchase Order" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="Filter_frmOrderFilter1" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="frmOrderFilter1-first" view.bind="filter">
+				<field name="OrderType"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmOrderFilter1-second" view.bind="filter">
+				<field name="ShipToBAccountID"></field>
+				<field name="ShipToLocationID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grdOpenOrders" view.bind="openOrders">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton8" state.bind="AddPOOrder2" wg-name="Add">
+			</qp-button>
+			<qp-button id="PXButton3" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton4" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="poLinesSelection" caption="Add Purchase Order Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="Filter_frmPOFilter" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="frmPOFilter-first" view.bind="filter">
+				<field name="OrderType"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmPOFilter-second" view.bind="filter">
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridOL" view.bind="poLinesSelection">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton1" state.bind="AddPOOrderLine2" wg-name="Add">
+			</qp-button>
+			<qp-button id="PXButton2" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton9" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="poReceiptReturn" caption="Add Receipt" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="ReturnFilter_frmReceiptReturnFilter" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="frmReceiptReturnFilter-first" view.bind="returnFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmReceiptReturnFilter-second" view.bind="returnFilter">
+				<field name="ReceiptNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grdReceiptReturn" view.bind="poReceiptReturn">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton14" state.bind="AddPOReceiptReturn2">
+			</qp-button>
+			<qp-button id="PXButton17" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton18" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="poReceiptLineReturn" caption="Add Receipt Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="ReturnFilter_frmReceiptReturnLineFilter" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="frmReceiptReturnLineFilter-first" view.bind="returnFilter">
+				<field name="OrderType"></field>
+				<field name="OrderNbr"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmReceiptReturnLineFilter-second" view.bind="returnFilter">
+				<field name="ReceiptNbr"></field>
+				<field name="InventoryID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="grdReceiptLineReturn" view.bind="poReceiptLineReturn">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton19" state.bind="AddPOReceiptLineReturn2">
+			</qp-button>
+			<qp-button id="PXButton20" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton21" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="openTransfers" caption="Add Transfer Order" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="Filter_formTransferFilter1" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="formTransferFilter1-first" view.bind="filter">
+				<field name="ShipFromSiteID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="gridOpenTransfers" view.bind="openTransfers">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton11" state.bind="AddTransfer2" wg-name="Add">
+			</qp-button>
+			<qp-button id="PXButton12" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton13" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+	<qp-panel id="intranSelection" caption="Add Transfer Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-template name="1-1-1" id="Filter_frmTransferFilter" class="equal-height" wg-container>
+			<qp-fieldset slot="A" id="frmTransferFilter-first" view.bind="filter">
+				<field name="ShipFromSiteID"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="frmTransferFilter-second" view.bind="filter">
+				<field name="SOOrderNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="PXGrid1" view.bind="intranSelection">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton15" caption="Add & Close" dialog-result="OK">
+			</qp-button>
+			<qp-button id="PXButton16" caption="Cancel" dialog-result="No">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

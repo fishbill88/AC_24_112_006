@@ -1,0 +1,69 @@
+﻿<template>
+	<qp-template id="Documents_form" wg-container name="17-17-14" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="Documents1" view.bind="Documents">
+			<field name="ConfigurationID"></field>
+			<field name="Revision"></field>
+			<field name="Status"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="Documents2" view.bind="Documents">
+			<field name="BOMID"></field>
+			<field name="BOMRevisionID" config-allow-edit.bind="true"></field>
+			<field name="InventoryID" config-allow-edit.bind="true"></field>
+			<field name="IsCompletionRequired" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="mainTab">
+		<qp-tab id="tabFeatures" caption="Features">
+			<qp-splitter id="splitterFeatures" split="height" initial-split="40%">
+				<split-pane>
+					<qp-grid id="gridFeature" view.bind="ConfigurationFeatures"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-tabbar id="mainFeaturesB">
+						<qp-tab id="tabOptions" caption="Options">
+							<qp-grid id="gridOption" view.bind="FeatureOptions"></qp-grid>
+						</qp-tab>
+						<qp-tab id="tabRules" caption="Rules">
+							<qp-grid id="gridFeatureRule" view.bind="FeatureRules"></qp-grid>
+						</qp-tab>
+					</qp-tabbar>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="tabConfigurationAttributes" caption="Attributes">
+			<qp-splitter id="splitterAttributes" split="height" initial-split="40%">
+				<split-pane>
+					<qp-grid id="AttributesGrid" view.bind="ConfigurationAttributes"></qp-grid>
+				</split-pane>
+				<split-pane>
+					<qp-tabbar id="mainFeaturesC">
+						<qp-tab id="tabAttRules" caption="Rules">
+							<qp-grid id="AttributeRulesGrid" view.bind="AttributeRules"></qp-grid>
+						</qp-tab>
+					</qp-tabbar>
+				</split-pane>
+			</qp-splitter>
+		</qp-tab>
+		<qp-tab id="tabKeys" caption="Keys">
+			<qp-template id="Documents_tabKeys" wg-container name="17-17-14">
+				<qp-fieldset slot="A" id="SelectedConfiguration1" view.bind="Documents">
+					<field name="KeyFormat"></field>
+					<field name="KeyNumberingID"></field>
+					<field name="KeyEquation" control-type="qp-formula-editor"></field>
+					<field name="KeyDescription" control-type="qp-formula-editor"></field>
+					<field name="TranDescription" control-type="qp-formula-editor"></field>
+					<field name="OnTheFlySubItems"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabPrice" caption="Price">
+			<qp-template id="Documents_tabPrice" wg-container name="17-17-14">
+				<qp-fieldset slot="A" id="SelectedConfiguration2" view.bind="Documents">
+					<field name="PriceRollup"></field>
+					<field name="PriceCalc"></field>
+				</qp-fieldset>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+</template>

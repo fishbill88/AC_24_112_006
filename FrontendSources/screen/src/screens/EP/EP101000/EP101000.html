@@ -1,0 +1,99 @@
+<template>
+	<qp-tabbar id="Setup_tab" wg-container>
+		<qp-tab id="GeneralTab" caption="General" class="label-size-xm">
+			<qp-template name="1-1" id="GeneralForm" qp-collapsible>
+				<div slot="A">
+					<qp-fieldset id="formSetup01" view.bind="Setup" caption="Numbering Settings">
+						<field name="ClaimNumberingID" config-allow-edit.bind="true" pinned="false"></field>
+						<field name="ReceiptNumberingID" config-allow-edit.bind="true" pinned="false"></field>
+						<field name="TimeCardNumberingID" config-allow-edit.bind="true" pinned="false"></field>
+						<field name="EquipmentTimecardNumberingID" config-allow-edit.bind="true" pinned="false"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSetup02" view.bind="Setup" caption="Approval Settings">
+						<field name="ClaimDetailsAssignmentMapID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="ClaimAssignmentMapID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="TimeCardAssignmentMapID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="EquipmentTimecardAssignmentMapID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSetup03" view.bind="Setup" caption="Pending Approval Notification">
+						<field name="ClaimDetailsAssignmentNotificationID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="ClaimAssignmentNotificationID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="TimeCardAssignmentNotificationID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+						<field name="EquipmentTimeCardAssignmentNotificationID" config-allow-edit.bind="true" config-display-mode.bind="'text'"></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSetup05" view.bind="Setup" caption="Note And File Handling">
+						<field name="CopyNotesAR" ></field>
+						<field name="CopyFilesAR" ></field>
+						<field name="CopyNotesAP" ></field>
+						<field name="CopyFilesAP" ></field>
+						<field name="CopyNotesPM" ></field>
+						<field name="CopyFilesPM" ></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="formSetup06" view.bind="Setup" caption="Expense Claim Settings">
+						<field name="SalesSubMask" pinned="false"></field>
+						<field name="ExpenseSubMask" pinned="false"></field>
+						<field name="NonTaxableTipItem" config-allow-edit.bind="true"></field>
+						<field name="UseReceiptAccountForTips" ></field>
+						<field name="HoldEntry" ></field>
+						<field name="PostSummarizedCorpCardExpenseReceipts" ></field>
+						<field name="RequireRefNbrInExpenseReceipts" ></field>
+						<field name="AllowMixedTaxSettingInClaims" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSetup07" view.bind="Setup" caption="Time Reporting Settings">
+						<field name="RequireTimes" ></field>
+						<field name="DefaultActivityType" pinned="false"></field>
+						<field name="MinBillableTime" ></field>
+						<field name="RegularHoursType" pinned="false"></field>
+						<field name="HolidaysType" pinned="false"></field>
+						<field name="VacationsType" pinned="false"></field>
+						<field name="isPreloadHolidays" ></field>
+						<field name="PostingOption" ></field>
+						<field name="OffBalanceAccountGroupID" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSetup08" view.bind="Setup" caption="Week Settings">
+						<field name="CustomWeek" ></field>
+						<field name="FirstDayOfWeek" ></field>
+					</qp-fieldset>
+					<qp-fieldset id="formSetup04" view.bind="Setup" caption="Posting Settings">
+						<field name="GroupTransactgion" ></field>
+						<field name="AutomaticReleaseAR" ></field>
+						<field name="AutomaticReleaseAP" ></field>
+						<field name="AutomaticReleasePM" ></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="CustomWeekTab" caption="Custom Week" if.bind="Setup.CustomWeek.value == true">
+			<qp-template name="14-17-17" id="CustomWeekForm" class="label-size-xs">
+				<qp-fieldset slot="A" id="PXFormView4" view.bind="WeekFilter">
+					<field name="Year">
+						<qp-button id="btnGenerateWeeks" state.bind="GenerateWeeks">
+						</qp-button>
+					</field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="PXGridCustomWeek" view.bind="CustomWeek">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+	<qp-panel id="GenerateWeeksDialog" caption="Generate Weeks" auto-repaint="true">
+		<qp-template name="1" id="GenerateWeeksDialog_formsGenerateWeeks" wg-container>
+			<qp-fieldset slot="A" id="formsGenerateWeeks" view.bind="GenerateWeeksDialog">
+				<field name="FromDate" ></field>
+				<field name="TillDate" ></field>
+				<field name="CutOffDayOne" ></field>
+				<field name="DayOne" ></field>
+				<field name="CutOffDayTwo" ></field>
+				<field name="DayTwo" ></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="cbOk" state.bind="GenerateWeeksOK">
+			</qp-button>
+			<qp-button id="cbCancel" caption="Cancel" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

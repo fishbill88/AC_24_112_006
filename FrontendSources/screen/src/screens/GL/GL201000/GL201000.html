@@ -1,0 +1,47 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="formFiscalYear" wg-container="FiscalYear_form">
+		<qp-fieldset slot="A" id="column1fiscalYear" view.bind="FiscalYear">
+			<field name="Year"></field>
+			<field name="StartDate"></field>
+			<field name="FinPeriods"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="column2fiscalYear" view.bind="FiscalYear">
+			<field name="CustomPeriods" no-label="true"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridPeriods" view.bind="Periods" wg-container="Periods_grid">
+	</qp-grid>
+
+	<qp-panel id="GenerateParams" caption="Generate GL Calendar" auto-repaint="true" width="60vw">
+		<qp-template name="1-1-1" id="formGenerateParams" wg-container="GenerateParams_GenParams">
+			<qp-fieldset slot="A" id="columnFirstGenerateParams" view.bind="GenerateParams">
+				<field name="FirstFinYear"></field>
+				<field name="LastFinYear"></field>
+			</qp-fieldset>
+			<qp-fieldset slot="B" id="columnSecondGenerateParams" view.bind="GenerateParams">
+				<field name="FromYear"></field>
+				<field name="ToYear"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-GenerateParams" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-GenerateParams" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="SaveDialog" caption="Update Financial Year" auto-repaint="true">
+		<qp-template name="1" id="formSaveDialog">
+			<qp-fieldset slot="A" id="panelSaveDialog" wg-container="SaveDialog_SavePrm" view.bind="SaveDialog">
+				<field name="Message" no-label="true"></field>
+				<field name="Method"></field>
+				<field name="MoveDayOfWeek"></field>
+				<field name="MethodDescription"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-SaveDialog" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-SaveDialog" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

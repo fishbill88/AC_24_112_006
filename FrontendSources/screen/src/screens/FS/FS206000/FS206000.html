@@ -1,0 +1,19 @@
+<template>
+	<qp-template id="BillingCycleRecords_form" name="1-1" class="label-size-m" wg-container>
+		<div slot="A">
+			<qp-fieldset id="BillingCycleRecords_10" view.bind="BillingCycleRecords">
+				<field name="BillingCycleCD"></field>
+				<field name="Descr"></field>
+				<field name="BillingBy" control-type="qp-radio" config-class.bind="'vertical'"></field>
+				<field name="BillingCycleType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+			</qp-fieldset>
+			<qp-fieldset id="BillingCycleRecords_20" caption="Time Frame Grouping Settings" view.bind="BillingCycleRecords">
+				<field name="TimeCycleType" control-type="qp-radio" config-class.bind="'vertical'"></field>
+				<field name="TimeCycleDayOfMonth"></field>
+				<field name="TimeCycleWeekDay"></field>
+				<field name="GroupBillByLocations"></field>
+				<field name="InvoiceOnlyCompletedServiceOrder"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

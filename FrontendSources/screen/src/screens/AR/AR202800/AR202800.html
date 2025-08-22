@@ -1,0 +1,56 @@
+<template>
+	<qp-template name="1-1" id="formARStatementCycleRecord" class="equal-height" wg-container="ARStatementCycleRecord_form">
+		<div slot="A" id="columnFirst-ARStatementCycleRecord">
+			<qp-fieldset id="groupGeneralSettings-ARStatementCycleRecord" view.bind="ARStatementCycleRecord" Caption="General Settings">
+				<field name="StatementCycleId"></field>
+				<field name="Descr"></field>
+				<field name="PrepareOn"></field>
+				<field name="Day00"></field>
+				<field name="Day01"></field>
+				<field name="DayOfWeek"></field>
+				<field name="LastStmtDate"></field>
+				<field name="RequirePaymentApplication"></field>
+				<field name="PrintEmptyStatements"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupAgingSettings-ARStatementCycleRecord" view.bind="ARStatementCycleRecord" Caption="Aging Settings">
+				<field name="UseFinPeriodForAging"></field>
+				<field name="AgingPeriodsCaption" unbound>
+					<qp-label slot="label" caption="Aging Period (Days)"></qp-label>
+					<qp-label caption="Description"></qp-label>
+				</field>
+				<field name="AgeMsgCurrent">
+					<qp-label slot="label" caption="Current"></qp-label>
+				</field>
+				<field name="AgeMsg00">
+					<div slot="label" class="no-label h-stack">
+						<qp-field control-state.bind="ARStatementCycleRecord.Bucket01LowerInclusiveBound" class="col-4"></qp-field>
+						- <qp-field control-state.bind="ARStatementCycleRecord.AgeDays00" class="col-4"></qp-field>
+					</div>
+				</field>
+				<field name="AgeMsg01">
+					<div slot="label" class="no-label h-stack">
+						<qp-field control-state.bind="ARStatementCycleRecord.Bucket02LowerInclusiveBound" class="col-4"></qp-field>
+						- <qp-field control-state.bind="ARStatementCycleRecord.AgeDays01" class="col-4"></qp-field>
+					</div>
+				</field>
+				<field name="AgeMsg02">
+					<div slot="label" class="no-label h-stack">
+						<qp-field control-state.bind="ARStatementCycleRecord.Bucket03LowerInclusiveBound" class="col-4"></qp-field>
+						- <qp-field control-state.bind="ARStatementCycleRecord.AgeDays02" class="col-4"></qp-field>
+					</div>
+				</field>
+				<field name="AgeMsg03">
+					<div slot="label" class="no-label h-stack">
+						Over <qp-field control-state.bind="ARStatementCycleRecord.Bucket04LowerInclusiveBound" class="col-4"></qp-field>
+					</div>
+				</field>
+				<field name="AgeBasedOn"></field>
+			</qp-fieldset>
+			<qp-fieldset id="groupFinanceChargeSettings-ARStatementCycleRecord" view.bind="ARStatementCycleRecord" Caption="Finance Charge Settings">
+				<field name="FinChargeApply"></field>
+				<field name="RequireFinChargeProcessing"></field>
+				<field name="FinChargeID"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

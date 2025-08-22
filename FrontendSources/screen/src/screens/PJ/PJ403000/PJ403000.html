@@ -1,0 +1,18 @@
+<template>
+	<qp-template name="17-17-14" class="equal-height" id="Filter_PXFormView1" wg-container qp-collapsible>
+		<qp-fieldset slot="A" id="formSlotA" view.bind="Filter">
+			<field name="ProjectId" ></field>
+			<field name="ProjectTaskId" ></field>
+			<field name="ProjectIssueID" ></field>
+			<field name="RFIID" ></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formSlotB" view.bind="Filter">
+			<field name="StatusID" ></field>
+			<field name="DisciplineId" ></field>
+			<field name="IsCurrentOnly" ></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id="grid" view.bind="DrawingLogs">
+	</qp-grid>
+</template>

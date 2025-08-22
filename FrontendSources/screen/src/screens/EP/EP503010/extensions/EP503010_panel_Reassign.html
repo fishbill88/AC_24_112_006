@@ -1,0 +1,22 @@
+<template>
+	<qp-panel id="reassignApprovalFilter" after="#anchor_Panels" auto-repaint="true">
+		<qp-template id="reassignApprovalFilter-form" name="1-1-1">
+			<qp-fieldset slot="A" id="ReassignApproval" view.bind="ReassignApprovalFilter">
+				<field name="NewApprover"></field>
+				<field name="IgnoreApproversDelegations"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button
+				id="btnReassignApprovalOK"
+				caption="Reassign"
+				dialog-result="OK">
+			</qp-button>
+			<qp-button
+				id="btnReassignApprovalCancel"
+				caption="Cancel"
+				dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+</template>

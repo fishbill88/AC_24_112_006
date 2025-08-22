@@ -1,0 +1,35 @@
+<template>
+	<qp-tab after="#tabPriceCost" id="tabManufacturing" caption="Manufacturing">
+		<qp-template name="1-1" id="manufacturingSettings_manufacturingSettingsForm" wg-container>
+			<div slot="A">
+				<qp-fieldset id="prodOrderDefaults" caption="Production Order Defaults" view.bind="manufacturingSettings">
+					<field name="AMBOMID" config-allow-edit.bind="true"></field>
+					<field name="AMPlanningBOMID" config-allow-edit.bind="true"></field>
+					<field name="AMConfigurationID" config-allow-edit.bind="true"></field>
+					<field name="AMDefaultMarkFor"></field>
+					<field name="AMMakeToOrderItem"></field>
+					<field name="AMQtyRoundUp"></field>
+					<field name="AMCTPItem"></field>
+				</qp-fieldset>
+				<qp-fieldset id="scrapSettings" caption="Scrap" view.bind="manufacturingSettings">
+					<field name="AMScrapSiteID" config-allow-edit.bind="true"></field>
+					<field name="AMScrapLocationID" config-allow-edit.bind="true"></field>
+				</qp-fieldset>
+				<qp-grid id="AMGridAMSubItemDefault" view.bind="AMSubItemDefaults">
+				</qp-grid>
+			</div>
+			<div slot="B">
+				<qp-fieldset id="planningSettings" caption="Planning Settings" view.bind="manufacturingSettings">
+					<field name="ReplenishmentSource"></field>
+					<field name="AMMinOrdQty"></field>
+					<field name="AMMaxOrdQty"></field>
+					<field name="AMLotSize"></field>
+					<field name="AMMFGLeadTime"></field>
+				</qp-fieldset>
+				<qp-fieldset id="schedulingSettings" caption="Scheduling" view.bind="manufacturingSettings">
+					<field name="AMCheckSchdMatlAvailability"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</qp-tab>
+</template>

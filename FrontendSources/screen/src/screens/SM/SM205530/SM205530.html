@@ -1,0 +1,24 @@
+<template>
+	<qp-template name="1-1" id="Filter_form" class="equal-height" wg-container>
+		<qp-fieldset slot="A" id="first" view.bind="Filter">
+			<field name="ScreenID"></field>
+			<field name="UserID"></field>
+			<field name="StartDate"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="second" view.bind="Filter">
+			<field name="TableName"></field>
+			<field name="EndDate"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-splitter id="splitter" split="height" initial-split="50%" class="stretch">
+		<split-pane>
+			<qp-grid id="gridKeys" view.bind="Keys" caption="Records" on-filter-columns.call="onFilterColumns(col)">
+			</qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="gridChanges" view.bind="Changes" caption="Events" on-filter-columns.call="onFilterColumns(col)">
+			</qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

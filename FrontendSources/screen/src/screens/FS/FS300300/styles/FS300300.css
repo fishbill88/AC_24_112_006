@@ -1,0 +1,142 @@
+.hidden {
+	display: none !important;
+}
+
+.qp-system-menu {
+	z-index: auto; /* we need this for the drop down menu to be on top of Bing Map's controls AND appointment popup */
+}
+.qp-menu-options {
+	z-index: 4500; /* we need this for the drop down menu to be on top of Bing Map's controls  AND appointment popup */
+}
+
+.b-float-root {
+	z-index: 4000; /* below grid filter dialog */
+}
+
+.main-tab-bar {
+	height: 100%;
+}
+
+.botton-row-buttons {
+    height: 40px;
+	position: relative;
+}
+
+.switch-mode-button {
+	position: absolute;
+    right: 0px;
+}
+
+.switch-table-button {
+	position: absolute;
+    left: 0px;
+}
+
+.top-bar-cont {
+	display: none;
+}
+
+/* TODO: temporary fix for an issue in UI platform */
+#mainTabBar .left-toolbar-cont {
+	flex: 1 0 100px;
+}
+#mainTabBar .right-toolbar-cont {
+    flex: 0 1 200px;
+}
+#mainTabBar .filter-box {
+	min-width: 100px;
+    max-width: 200px;
+    width: auto !important;
+}
+.qp-sch-grid-container .left-toolbar-cont {
+	flex: 1 0 190px;
+}
+
+/* TODO: temporary fix for an issue in UI platform */
+.filter-combo {
+	height: var(--qp-toolbar-height);
+}
+
+#searchAppointmentsGridID_topBaradjust,
+#appointmentsAllStaffGridID_topBaradjust,
+#serviceOrderGridID_topBaradjust,
+#searchAppointmentsGridID_topBarexportToExcel,
+#appointmentsAllStaffGridID_topBarexportToExcel,
+#serviceOrderGridID_topBarexportToExcel {
+	display: none;
+}
+
+.horizontal-splitter {
+	height: 100%;
+	display: block;
+}
+	.horizontal-splitter > .qp-splitter > .qp-splitter-bar {
+		margin: 38px 0px 0px 0px;
+	}
+
+.main-map {
+	padding-top: 38px;
+    position: relative;
+    height: 100%;
+    display: block;
+}
+
+#SODetailsGridID .grid-top-bar {
+	display: none;
+}
+#SODetailsGridID .grid-content {
+	min-height: 32px !important;
+}
+
+.MicrosoftMap .NavBar_Container {
+	z-index: 999 !important;
+}
+
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='V'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='V'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='V'],
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='N'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='N'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='N'] {
+	background-color: rgba(195, 231, 255, 1);
+}
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='H'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='H'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='H'],
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='W'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='W'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='W'] {
+	background-color: rgba(228, 192, 0, 0.25);
+}
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='C'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='C'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='C'],
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='Z'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='Z'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='Z'] {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='X'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='X'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='X'] {
+	background-color: rgba(255, 208, 208, 0.6);
+}
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='A'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='A'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='A'],
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='O'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='O'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='O'],
+#edEditedAppointment-Status.drop-down__editor .drop-down__text[valueattr='P'],
+#edSelectedAppointment-Status.drop-down__editor .drop-down__text[valueattr='P'],
+#edSelectedSO-Status.drop-down__editor .drop-down__text[valueattr='P'] {
+	background-color: rgba(200, 229, 190, 0.6);
+}
+
+.edit-dialog {
+    width: 800px;  /* TODO: Temporary bugfix */
+}
+
+#pnlFiles, #pnlActivities, #pnlNote {
+	display: none;
+}

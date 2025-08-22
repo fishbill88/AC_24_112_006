@@ -1,0 +1,97 @@
+<template>
+	<iframe name="Profiler" style="display: none;"></iframe>
+	<qp-template id="filtersLogging_form" name="1-1-1" qp-collapsible wg-container > 
+		<qp-fieldset id="requestsSettings" view.bind="Filter" caption="Request Logging" slot="A" >
+			<field name="ProfilerEnabled"></field>
+			<field name="TimeLimit"></field>
+			<field name="SqlCounterLimit"></field>
+			<field name="ScreenId"></field>
+			<field name="UserId"></field>
+		</qp-fieldset>
+		<qp-fieldset id="sqlSettings" view.bind="Filter" caption="SQL Logging" slot="B" >
+			<field name="SqlProfiler"></field>
+			<field name="SqlTimeLimit"></field>
+			<field name="SqlRowCounterLimit"></field>
+			<field name="SqlMethodFilter"></field>
+			<field name="SqlProfilerIncludeQueryCache"></field>
+		</qp-fieldset>
+		<qp-fieldset id="eventsSettings" view.bind="Filter" caption="Event Logging" slot="C" >
+			<field name="TraceEnabled"></field>
+			<field name="LogLevelFilter"></field>
+			<field name="LogCategoryFilter"></field>
+			<field name="TraceExceptionsEnabled"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-template id="filtersDefaultLogging_form" name="1" wg-container > 
+		<qp-fieldset id="defaultLoggingSettings" no-label="true" view.bind="Filter" slot="A" >
+			<field name="DefaultLogging"></field>
+		</qp-fieldset>
+	</qp-template>
+	
+	<qp-tabbar id="maintTab" >
+		<qp-tab id="tabRequests" caption="REQUESTS">
+			<qp-grid id="requests_grid" view.bind="Samples">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabSql" caption="SQL">
+			<qp-grid id="sql_grid" view.bind="SqlSummary">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabExceptions" caption="EXCEPTIONS">
+			<qp-grid id="exceptions_grid" view.bind="TraceExceptionsSummary">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabEventLog" caption="EVENT LOG">
+			<qp-grid id="events_grid" view.bind="TraceEventsLog">
+			</qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="Sql" caption="View SQL" auto-repaint="true" width="90vw" wg-container >
+		<qp-grid id="sqlProfiler_grid" view.bind="Sql">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="TraceEvents" caption="View Event Log" auto-repaint="true" width="90vw" wg-container >
+		<qp-grid id="eventsProfiler_grid" view.bind="TraceEvents">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="TraceExceptions" caption="Exception Profiler" auto-repaint="true" width="90vw" wg-container >
+		<qp-grid id="exceptionsProfiler_grid" view.bind="TraceExceptions">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="TraceExceptionDetails" caption="View Exception Details" auto-repaint="true" width="90vw" wg-container >
+		<qp-grid id="exceptionsDetails_grid" view.bind="TraceExceptionDetails">
+		</qp-grid>
+	</qp-panel>
+	<qp-panel id="SqlSummary" caption="Sql Details" auto-repaint="true" width="90vw" wg-container >
+		<qp-template id="sqlSummaryDetails_form" name="1-1" > 
+			<qp-fieldset id="sqlSummaryDetailsSettings1" view.bind="SqlSummaryFilter" slot="A" >
+				<field name="RecordId"></field>
+				<field name="TotalSQLTime"></field>
+			</qp-fieldset>
+			<qp-fieldset id="sqlSummaryDetailsSettings2" view.bind="SqlSummaryFilter" slot="B" >
+				<field name="TotalExecutions"></field>
+				<field name="TotalRows"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-grid id="sqlDetails_grid" view.bind="SqlSummaryRows">
+		</qp-grid>
+		<qp-fieldset id="sqlDetailsFormStackTrace" view.bind="SqlSummaryRowsPreview">
+			<field name="SQLWithStackTrace" no-label="true" config-type.bind="1" config-rows.bind="15"></field>
+		</qp-fieldset>
+	</qp-panel>
+	<qp-panel id="TraceEventsLog" caption="View Event Details" auto-repaint="true" width="50vw" wg-container >
+		<qp-template id="eventDetails_form" name="1-1" > 
+			<qp-fieldset id="eventDetailsSettings1" view.bind="TraceEventsLogDetails" slot="A" width="50vw">
+				<field name="EventDateTime"></field>
+			</qp-fieldset>
+			<qp-fieldset id="eventDetailsSettings2" view.bind="TraceEventsLogDetails" slot="B" width="50vw">
+				<field name="TraceType"></field>
+			</qp-fieldset>
+		</qp-template>
+		<qp-fieldset id="eventDetailsSettings3" view.bind="TraceEventsLogDetails" >
+			<field name="EventDetails" config-type.bind="1" config-rows.bind="5"></field>
+			<field name="StackTrace" config-type.bind="1" config-rows.bind="15"></field>
+		</qp-fieldset>
+	</qp-panel>
+</template>

@@ -1,0 +1,12 @@
+<template>
+	<qp-template id="formGraphSetup" wg-container="GraphSetup_formGraphSetup" name="17-17-14">
+		<qp-fieldset id="graphSetupFieldset" caption="Microsoft Graph API" slot="A">
+			<field name="GraphSetup.TenantID"></field>
+			<field name="GraphSetup.ClientID"></field>
+			<field name="GraphSetup.ClientSecret"></field>
+			<field name="GraphSetup.Timeout"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="gridGraphAccessRights" view.bind="AccessRights" wg-container="AccessRights_gridGraphAccessRights">
+	</qp-grid>
+</template>

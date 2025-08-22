@@ -1,0 +1,19 @@
+<template>
+	<qp-template name="17-17-14" id="form" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="filterColumn1" view.bind="Filter">
+            <field name="StartDate">
+				<qp-label slot="label" caption="Date Range"></qp-label>
+				<qp-field control-state.bind="Filter.EndDate"></qp-field>
+			</field>
+			<field name="HideProcessed"></field>
+		</qp-fieldset>
+	</qp-template>
+    <qp-splitter split="height" class="stretch" id="scanJobs_splitter">
+        <split-pane>
+            <qp-grid id="grdScanMaster" view.bind="ScanJob" caption="Scan Jobs"></qp-grid>
+        </split-pane>
+        <split-pane>
+            <qp-grid id="grdScanDetail" view.bind="Parameters" caption="Document Parameters"></qp-grid>
+        </split-pane>
+    </qp-splitter>
+</template>

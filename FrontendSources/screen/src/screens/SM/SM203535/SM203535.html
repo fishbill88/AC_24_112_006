@@ -1,0 +1,25 @@
+<template>
+	<qp-template name="1-1" id="Plugin_form" wg-container class="equal-height">
+		<qp-fieldset slot="A" id="col1" view.bind="Plugin">
+			<field name="Name"></field>
+			<field name="PluginTypeName"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="col2" view.bind="Plugin">
+			<field name="IsDefault" no-label="true" ></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id='PXGridSettings' view.bind="Details" caption='Parameters'></qp-grid>
+
+	<qp-panel caption="Send Test Message" id="SendTestMessageDialogView" >
+		<qp-fieldset id="formSendTestMessageDialogBox" view.bind="SendTestMessageDialogView">
+			<field name="TO"></field>
+			<field name="Body" config-type.bind="1" config-rows.bind="2"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" caption="OK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" caption="Cancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+</template>

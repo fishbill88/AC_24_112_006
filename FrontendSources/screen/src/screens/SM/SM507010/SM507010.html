@@ -1,0 +1,12 @@
+<template>
+	<qp-template id="Filter_template" name="17-17-14" wg-container="Filter_form">
+		<qp-fieldset slot="A" id="action" view.bind="Filter">
+			<field name="Operation"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid
+		id="gridEmails"
+		view.bind="FilteredItems"
+		wg-container="FilteredItems_grid"
+	></qp-grid>
+</template>

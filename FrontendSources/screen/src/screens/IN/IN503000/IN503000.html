@@ -1,0 +1,29 @@
+<template>
+	<qp-template name="17-17-14" id="Filter_form" wg-container class="equal-height">
+		<qp-fieldset slot="A" id="column1" view.bind="Filter">
+			<field name="Action"></field>
+			<field name="ItemClassID"></field>
+			<field name="InventoryID">
+				<qp-button id="btnItemList" class="col-auto" state.bind="model.viewModel.SelectItems">
+				</qp-button>
+			</field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="column2_nonstock" view.bind="Filter" caption="Non-Stock Item Settings">
+			<field name="NonStockItemClassID"></field>
+			<field name="NonStockPostClassID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="column2_stock" view.bind="Filter" caption="Stock Item Settings">
+			<field name="StockItemClassID"></field>
+			<field name="StockPostClassID"></field>
+			<field name="StockValMethod"></field>
+			<field name="StockLotSerClassID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="ItemList">
+	</qp-grid>
+
+	<qp-panel id="SelectedItems" caption="Inventory Item List" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridItemList" view.bind="SelectedItems">
+		</qp-grid>
+	</qp-panel>
+</template>

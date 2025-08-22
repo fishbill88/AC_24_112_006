@@ -1,0 +1,16 @@
+<template>
+	<qp-template id="UpdateBomMatlRecs_form" wg-container name="17-17-14" class="equal-height">
+		<qp-fieldset slot="A" id="UpdateBomMatlRecs1" view.bind="UpdateBomMatlRecs">
+			<field name="CurrInvID" config-allow-edit.bind="true"></field>
+			<field name="CurrSubItemID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="UpdateBomMatlRecs2" view.bind="UpdateBomMatlRecs">
+			<field name="NewInvID" config-allow-edit.bind="true"></field>
+			<field name="NewSubItemID"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="UpdateBomMatlRecs3" view.bind="UpdateBomMatlRecs">
+			<field name="EffStartDate"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="SelectedBoms"></qp-grid>
+</template>

@@ -1,0 +1,14 @@
+<template>
+
+	<qp-template name="1-1" id="formSegment" wg-container="Segment_form" class="label-size-m">
+		<qp-fieldset id='columnFirst' view.bind='Segment' slot='A'>
+			<field name="DimensionID" config-allow-edit.bind='true'></field>
+			<field name="SegmentID"></field>
+			<field name="Descr"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-grid id='grid' view.bind="Values">
+	</qp-grid>
+
+</template>

@@ -1,0 +1,298 @@
+<template>
+	<qp-template id="form" name="7-10-7" wg-container="Document_form" qp-collapsible class="equal-height">
+		<qp-fieldset slot="A" id="headerColumn1" view.bind="Document">
+			<field name="DocType"></field>
+			<field name="RefNbr"></field>
+			<field name="Status"></field>
+			<field name="DocDate"></field>
+			<field name="FinPeriodID"></field>
+			<field name="InvoiceNbr"></field>
+			<field name="ProjectID" config-allow-edit.bind="true"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="headerColumn2" view.bind="Document">
+			<field name="CustomerID" config-allow-edit.bind="true"></field>
+			<field name="CustomerLocationID"></field>
+			<field name="CuryID" control-type="qp-currency" view.bind="CurrencyInfo"></field>
+			<field name="TermsID"></field>
+			<field name="DueDate"></field>
+			<field name="DiscDate"></field>
+			<field name="DocDesc" config-type.bind="1" config-rows.bind="3"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="headerColumn3" view.bind="Document" class="highlights-section">
+			<field name="CuryDetailExtPriceTotal"></field>
+			<field name="CuryLineDiscTotal"></field>
+			<field name="CuryDiscTot"></field>
+			<field name="CuryFreightTot"></field>
+			<field name="CuryTaxTotal"></field>
+			<field name="CuryOrigDocAmt"></field>
+			<field name="CuryDocBal"></field>
+			<field name="CuryOrigDiscAmt"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tab">
+		<qp-tab id="tabDetails" caption="Details">
+			<qp-grid id="grid" view.bind="Transactions">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabTaxes" caption="Taxes">
+			<qp-grid id="grid1" view.bind="Taxes">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCommissions" caption="Commissions">
+			<qp-template id="Commission" name="7-17" wg-container="CurrentDocument_Commission"
+				class="stretch full-width">
+				<qp-fieldset slot="A" id="commissionsColumn1" view.bind="CurrentDocument">
+					<field name="SalesPersonID"></field>
+					<field name="CuryCommnblAmt"></field>
+					<field name="CuryCommnAmt"></field>
+				</qp-fieldset>
+				<qp-grid slot="B" id="gridSalesPerTran" view.bind="SalesPerTrans">
+				</qp-grid>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabFreight" caption="Freight">
+			<qp-template id="formG" name="17-17-14" wg-container="CurrentDocument_formG">
+				<qp-fieldset slot="A" id="freightColumn1" view.bind="CurrentDocument">
+					<field name="CuryFreightAmt"></field>
+				</qp-fieldset>
+				<qp-fieldset slot="B" id="freightColumn2" view.bind="CurrentDocument">
+					<field name="CuryPremiumFreightAmt"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridFreightDetails" view.bind="FreightDetails">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabFinancial" caption="Financial">
+			<qp-template id="financialForm" name="17-17-14" wg-container="CurrentDocument_tab">
+				<div slot="A" id="financialColumn1">
+					<qp-fieldset id="groupLinkToGL" view.bind="CurrentDocument" caption="Link to GL">
+						<field name="BatchNbr" config-allow-edit.bind="true"></field>
+						<field name="BranchID"></field>
+						<field name="ARAccountID"></field>
+						<field name="ARSubID"></field>
+						<field name="OrigRefNbr" config-allow-edit.bind="true"></field>
+						<field name="CorrectionRefNbr" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupOwnership" view.bind="CurrentDocument" caption="Ownership">
+						<field name="WorkgroupID"></field>
+						<field name="OwnerID"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupPrintEmail" view.bind="CurrentDocument" caption="Print and Email Options">
+						<field no-label="true" name="Printed">
+							<qp-field no-label="true" control-state.bind="CurrentDocument.DontPrint"></qp-field>
+						</field>
+						<field no-label="true" name="Emailed">
+							<qp-field no-label="true" control-state.bind="CurrentDocument.DontEmail"></qp-field>
+						</field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="financialColumn2">
+					<qp-fieldset id="formP" view.bind="SODocument" wg-container="SODocument_formP"
+						caption="Payment Information">
+						<field name="PaymentMethodID"></field>
+						<field name="PMInstanceID"></field>
+						<field name="CashAccountID"></field>
+						<field name="ExtRefNbr"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupTaxInfo" view.bind="CurrentDocument" caption="Tax Info">
+						<field name="DisableAutomaticTaxCalculation"></field>
+						<field name="TaxZoneID"></field>
+						<field name="TaxCalcMode"></field>
+						<field name="ExternalTaxExemptionNumber"></field>
+						<field name="AvalaraCustomerUsageType"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupVATToatals" view.bind="CurrentDocument" caption="VAT Totals">
+						<field name="CuryVatTaxableTotal"></field>
+						<field name="CuryVatExemptTotal"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupCashDiscountInfo" view.bind="CurrentDocument" caption="Cash Discount Info">
+						<field name="CuryDiscountedDocTotal"></field>
+						<field name="CuryDiscountedTaxableTotal"></field>
+						<field name="CuryDiscountedPrice"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabAddresses" caption="Addresses">
+			<qp-template name="17-17-14" id="formBillingAndShippingContact">
+				<div slot="A" id="addressesColumn1">
+					<qp-fieldset id="groupBillToContact" view.bind="Billing_Contact" caption="Bill-To Contact"
+						wg-container="Billing_Contact_formC">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupBillToAddress" view.bind="Billing_Address" caption="Bill-To Address"
+						wg-container="Billing_Address_formA">
+						<field name="OverrideAddress">
+							<qp-address-lookup class="col-12" view.bind="Billing_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B" id="addressesColumn2">
+					<qp-fieldset id="groupShipToContact" view.bind="Shipping_Contact" caption="Ship-To Contact"
+						wg-container="Shipping_Contact_Shipping_Contact">
+						<field name="OverrideContact"></field>
+						<field name="FullName"></field>
+						<field name="Attention"></field>
+						<field name="Phone1"></field>
+						<field name="Email"></field>
+					</qp-fieldset>
+					<qp-fieldset id="groupShipToAddress" view.bind="Shipping_Address" caption="Ship-To Address"
+						wg-container="Shipping_Address_Shipping_Address">
+						<field name="CurrentDocument.MultiShipAddress"></field>
+						<field name="OverrideAddress">
+							<qp-address-lookup class="col-12" view.bind="Shipping_Address">
+							</qp-address-lookup>
+						</field>
+						<field name="AddressLine1"></field>
+						<field name="AddressLine2"></field>
+						<field name="City"></field>
+						<field name="CountryID"></field>
+						<field name="State"></field>
+						<field name="PostalCode"></field>
+						<field name="Latitude"></field>
+						<field name="Longitude"></field>
+						<field name="IsValidated"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabDiscounts" caption="Discounts">
+			<qp-grid id="discountDetailGrid" view.bind="ARDiscountDetails">
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabApplications" caption="Applications">
+			<qp-template name="7-17" id="formPT" wg-container="CurrentDocument_formPT" class="stretch full-width">
+				<qp-fieldset slot="A" id="applicationsColumn1" view.bind="CurrentDocument" caption="Payments Summary">
+					<field name="CuryUnreleasedPaymentAmt"></field>
+					<field name="CuryCCAuthorizedAmt"></field>
+					<field name="CuryPaidAmt"></field>
+					<field name="CuryPaymentTotal"></field>
+					<field name="CuryBalanceWOTotal"></field>
+					<field name="CuryUnpaidBalance"></field>
+				</qp-fieldset>
+				<div slot="B" id="applicationsColumn2">
+				<qp-grid id="detgrid" view.bind="Adjustments">
+				</qp-grid>
+				<qp-grid id="detgrid2" view.bind="Adjustments_1">
+				</qp-grid>
+			</div>
+			</qp-template>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="shipmentlist" caption="Add Order" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="grid4" view.bind="shipmentlist">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton1" state.bind="AddShipment" wg-name="Add"></qp-button>
+			<qp-button id="PXButton2" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton3" state.bind="AddShipmentCancel" dialog-result="Cancel" wg-name="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="soLineList" caption="Add SO Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridSOLineList" view.bind="soLineList">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton4" state.bind="AddSOLine"></qp-button>
+			<qp-button id="PXButton5" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton6" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="arTranList" caption="Add Return Line" auto-repaint="true" width="85vw" height="85vh">
+		<qp-grid id="gridARTranList" view.bind="arTranList">
+		</qp-grid>
+		<footer>
+			<qp-button id="PXButton40" state.bind="AddARTran"></qp-button>
+			<qp-button id="PXButton50" caption="Add & Close" dialog-result="OK"></qp-button>
+			<qp-button id="PXButton60" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="QuickPayment" caption="Create Payment" auto-repaint="true">
+		<qp-template name="1" id="quickPaymentTemplate">
+			<qp-fieldset slot="A" id="CreatePaymentFormView" wg-container view.bind="QuickPayment">
+				<field name="CuryOrigDocAmt"></field>
+				<field name="CuryRefundAmt"></field>
+				<field name="CuryID"></field>
+				<field name="DocDesc"></field>
+				<field name="PaymentMethodID"></field>
+				<field name="RefTranExtNbr"></field>
+				<field name="NewCard"></field>
+				<field name="NewAccount"></field>
+				<field name="SaveCard"></field>
+				<field name="SaveAccount"></field>
+				<field name="PMInstanceID"></field>
+				<field name="CashAccountID"></field>
+				<field name="ProcessingCenterID"></field>
+				<field name="ExtRefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="CreatePaymentRefundButton" state.bind="CreatePaymentRefund" dialog-result="Abort"></qp-button>
+			<qp-button id="CreatePaymentCaptureButton" state.bind="CreatePaymentCapture" dialog-result="Yes"></qp-button>
+			<qp-button id="CreatePaymentAuthorizeButton" state.bind="CreatePaymentAuthorize" dialog-result="No"></qp-button>
+			<qp-button id="CreatePaymentOKButton" state.bind="CreatePaymentOK" dialog-result="OK"></qp-button>
+			<qp-button id="CreatePaymentCancelButton" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="ImportExternalTran" caption="Import CC Payment" auto-repaint="true">
+		<qp-template name="1" id="importExternalTranTemplate">
+			<qp-fieldset slot="A" id="ImportPaymentFormView" wg-container view.bind="ImportExternalTran">
+				<field name="TranNumber"></field>
+				<field name="ProcessingCenterID"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="ImportPaymentCreateButton" state.bind="ImportDocumentPaymentCreate" dialog-result="OK">
+			</qp-button>
+			<qp-button id="ImportPaymentCancelButton" dialog-result="Cancel">
+			</qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="recalcdiscountsfilter" caption="Recalculate Prices">
+		<qp-template name="1" id="formRecalcDiscounts">
+			<qp-fieldset slot="A" id="panelRecalcDiscounts" view.bind="recalcdiscountsfilter"
+				wg-container="recalcdiscountsfilter_formRecalcDiscounts">
+				<field name="RecalcTarget"></field>
+				<field name="RecalcUnitPrices"></field>
+				<field name="OverrideManualPrices"></field>
+				<field name="RecalcDiscounts"></field>
+				<field name="OverrideManualDiscounts"></field>
+				<field name="OverrideManualDocGroupDiscounts"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK" dialog-result="OK" state.bind="RecalcOk"></qp-button>
+		</footer>
+	</qp-panel>
+
+	<qp-panel id="duplicatefilter" caption="Duplicate Reference Nbr.">
+		<qp-label id="labelMessage" caption="Record already exists. Please enter new Reference Nbr."></qp-label>
+		<qp-template name="1" id="formViewPanelDuplicate">
+			<qp-fieldset slot="A" id="panelViewPanelDuplicate" view.bind="duplicatefilter"
+				wg-container="duplicatefilter_PXFormViewPanelDuplicate">
+				<field name="RefNbr"></field>
+			</qp-fieldset>
+		</qp-template>
+		<footer>
+			<qp-button id="buttonOK-duplicatefilter" dialog-result="OK"></qp-button>
+			<qp-button id="buttonCancel-duplicatefilter" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+</template>

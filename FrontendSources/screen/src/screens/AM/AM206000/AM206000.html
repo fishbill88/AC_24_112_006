@@ -1,0 +1,25 @@
+<template>
+	<qp-template id="EstimateClassRecords_form" wg-container name="1-1" class="label-size-m equal-height">
+		<div slot="A">
+			<qp-fieldset id="EstimateClassRecords1" view.bind="EstimateClassRecords">
+				<field name="EstimateClassID"></field>
+				<field name="Description"></field>
+			</qp-fieldset>
+			<qp-fieldset id="EstimateClassRecords2" view.bind="EstimateClassRecords" caption="General Settings">
+				<field name="ItemClassID"></field>
+				<field name="TaxCategoryID"></field>
+				<field name="EngineerID"></field>
+				<field name="LeadTime"></field>
+				<field name="OrderQty"></field>
+			</qp-fieldset>
+			<qp-fieldset id="EstimateClassRecords3" view.bind="EstimateClassRecords" caption="Default Markups">
+				<field name="LaborMarkupPct"></field>
+				<field name="MachineMarkupPct"></field>
+				<field name="MaterialMarkupPct"></field>
+				<field name="ToolMarkupPct"></field>
+				<field name="OverheadMarkupPct"></field>
+				<field name="SubcontractMarkupPct"></field>
+			</qp-fieldset>
+		</div>
+	</qp-template>
+</template>

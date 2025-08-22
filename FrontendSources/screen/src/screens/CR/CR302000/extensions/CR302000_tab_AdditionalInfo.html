@@ -1,0 +1,51 @@
+<template>
+	<template id="tabAdditionalInfo_Content">
+		<qp-template id="AdditionalInfo-form" name="1-1">
+			<div slot="A">
+				<qp-fieldset id="AdditionalInfo_AdditionalInfo" caption="Contact Details" view.bind="Contact">
+					<field name="WorkgroupID"></field>
+					<field name="OverrideSalesTerritory"></field>
+					<field name="SalesTerritoryID"></field>
+					<field name="ParentBAccountID" config-allow-edit.bind="true"></field>
+					<field name="ExtRefNbr"></field>
+					<field name="Source"></field>
+					<field name="Synchronize"></field>
+				</qp-fieldset>
+				<qp-fieldset
+						id="AdditionalInfo_ActivitiesHistory"
+						caption="Activities History"
+						view.bind="ContactActivityStatistics">
+					<field name="LastIncomingActivityDate"></field>
+					<field name="LastOutgoingActivityDate"></field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_ContactPreferences" caption="Contact Preferences" view.bind="Contact">
+					<field name="Method"></field>
+					<field name="NoCall"></field>
+					<field name="NoMarketing"></field>
+					<field name="NoEMail"></field>
+					<field name="NoMassMail"></field>
+					<field name="LanguageID"></field>
+				</qp-fieldset>
+			</div>
+
+			<div slot="B">
+				<qp-fieldset id="AdditionalInfo_Photo" caption="Photo" view.bind="Contact">
+					<field name="ImageUrl" unbound replace-content>
+						<qp-image-uploader
+								id="ImageUrl"
+								width="300px"
+								height="300px"
+								state.bind="Contact.Img"
+								value.two-way="Contact.Img.value"></qp-image-uploader>
+					</field>
+				</qp-fieldset>
+				<qp-fieldset id="AdditionalInfo_PersonalInfo" caption="Personal Info" view.bind="Contact">
+					<field name="DateOfBirth"></field>
+					<field name="Gender"></field>
+					<field name="MaritalStatus"></field>
+					<field name="Spouse"></field>
+				</qp-fieldset>
+			</div>
+		</qp-template>
+	</template>
+</template>

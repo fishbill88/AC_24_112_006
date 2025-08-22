@@ -1,0 +1,32 @@
+<template>
+	<qp-template id="Filter_form" name="7-10-7" wg-container class="equal-height">
+		<qp-fieldset id="first" view.bind="Filter" slot="A">
+			<field Name="Action"></field>
+			<field Name="SiteID"></field>
+			<field Name="WorksheetType"></field>
+			<field Name="EndDate"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="second" view.bind="Filter" slot="B">
+			<field name="InventoryID" replace-content>
+				<qp-field control-state.bind="Filter.InventoryID">
+					<qp-button id="btnItemList" state.bind="SelectItems" class="col-auto"></qp-button>
+				</qp-field>
+			</field>
+			<field name="LocationID" replace-content>
+				<qp-field control-state.bind="Filter.LocationID">
+					<qp-button id="btnLocationList" state.bind="SelectLocations" class="col-auto"></qp-button>
+				</qp-field>
+			</field>
+			<field Name="MaxNumberOfLinesInPickList"></field>
+			<field Name="MaxQtyInLines"></field>
+		</qp-fieldset>
+
+		<qp-fieldset id="parameters" view.bind="Filter" slot="C" caption="Parameters">
+			<field Name="NewPriority"></field>
+			<field Name="AssigneeID"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-grid id="grid" view.bind="PickingJobs">
+	</qp-grid>
+</template>

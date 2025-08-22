@@ -1,0 +1,54 @@
+<template>
+	<qp-tabbar id="AMBSetupRecord_tab" wg-container>
+		<qp-tab id="tabGeneral" caption="General">
+			<qp-template id="General-form" name="1-1" class="label-size-xm">
+				<div slot="A">
+					<qp-fieldset id="AMBSetupRecord_NumberingSettings" view.bind="AMBSetupRecord" caption="Numbering Settings">
+						<field name="BOMNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ECRNumberingID" config-allow-edit.bind="true"></field>
+						<field name="ECONumberingID" config-allow-edit.bind="true"></field>
+					</qp-fieldset>
+					<qp-fieldset id="AMBSetupRecord_DataEntrySettings" view.bind="AMBSetupRecord" caption="Data Entry Settings">
+						<field name="DefaultRevisionID"></field>
+						<field name="DuplicateItemOnBOM"></field>
+						<field name="DuplicateItemOnOper"></field>
+						<field name="WcID" config-allow-edit.bind="true"></field>
+						<field name="OperationTimeFormat"></field>
+						<field name="ProductionTimeFormat"></field>
+						<field name="AllowEmptyBOMSubItemID"></field>
+						<field name="ForceECR"></field>
+						<field name="RequireECRBeforeECO"></field>
+						<field name="BOMHoldRevisionsOnEntry"></field>
+					</qp-fieldset>
+				</div>
+				<div slot="B">
+					<qp-fieldset id="AMBSetupRecord_CostRoll" view.bind="AMBSetupRecord" caption="Cost Roll">
+						<field name="AllowArchiveWithoutUpdatePending"></field>
+						<field name="AutoArchiveWhenUpdatePending"></field>
+					</qp-fieldset>
+					<qp-fieldset id="AMBSetupRecord_WorkCenterDefaults" view.bind="AMBSetupRecord" caption="Work Center Defaults">
+						<field name="DefaultQueueTime"></field>
+						<field name="DefaultFinishTime"></field>
+						<field name="DefaultMoveTime"></field>
+					</qp-fieldset>
+				</div>
+			</qp-template>
+		</qp-tab>
+		<qp-tab id="tabECRApproval" caption="ECR Approval">
+			<qp-template id="ECRApproval-form" name="1-1">
+					<qp-fieldset slot="A" id="AMBSetupRecord_ECRApproval" view.bind="AMBSetupRecord"  class="label-size-xm transparent-pane">
+						<field name="ECRRequestApproval" class="no-label"></field>
+					</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridECRApproval" view.bind="ECRSetupApproval"></qp-grid>
+		</qp-tab>
+		<qp-tab id="tabECOApproval" caption="ECO Approval">
+			<qp-template id="ECOApproval-form" name="1-1">
+				<qp-fieldset slot="A" id="AMBSetupRecord_ECOApproval" view.bind="AMBSetupRecord"  class="label-size-xm transparent-pane">
+					<field name="ECORequestApproval" class="no-label"></field>
+				</qp-fieldset>
+			</qp-template>
+			<qp-grid id="gridECOApproval" view.bind="ECOSetupApproval"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

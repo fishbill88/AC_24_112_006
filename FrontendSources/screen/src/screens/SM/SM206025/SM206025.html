@@ -1,0 +1,52 @@
+<template>
+	<qp-template name="7-10-7" id="Mappings_form" class="equal-height" wg-container>
+		<qp-fieldset slot="A" id="formMappings_1" view.bind="Mappings">
+			<field name="Name"></field>
+			<field control-type="qp-selector" name="ScreenID" config.bind="{displayMode:'text'}"></field>
+			<field name="ProviderID"></field>
+			<field name="ProviderObject"></field>
+			<field name="SyncType"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="formMappings_2" view.bind="Mappings">
+			<field name="IsActive" no-label="true">
+				<qp-field control-state.bind="Mappings.Visible" config-enabled.bind="false" no-label="true"
+						class="col-5"></qp-field>
+				<qp-field control-state.bind="Mappings.IsSimpleMapping" config-enabled.bind="false" no-label="true"
+						class="col-4"></qp-field>
+			</field>
+			<field name="SitemapTitle"></field>
+			<field name="WorkspaceID"></field>
+			<field name="SubcategoryID"></field>
+			<field control-type="qp-selector" name="FormatLocale" config.bind="{ displayMode: 'text', suggester: { descriptionName:'CultureReadableName' } }"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="C" id="formMappings_3" view.bind="Mappings" no-label="true">
+			<field name="ProcessInParallel"></field>
+			<field name="BreakOnError"></field>
+			<field name="BreakOnTarget"></field>
+			<field name="DiscardResult"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-tabbar id="tabsMapping">
+		<qp-tab caption="Mapping" id="tabMapping">
+			<qp-grid id="gridFieldMappings" view.bind="FieldMappings" wg-container="FieldMappings_gridMapping"></qp-grid>
+		</qp-tab>
+		<qp-tab caption="Source Restrictions" id="tabSourceRestrictions">
+			<qp-grid id="gridConditions" view.bind="Conditions" wg-container="Conditions_gridSourceRestrictions"></qp-grid>
+		</qp-tab>
+		<qp-tab caption="Target Restrictions" id="tabTargetRestrictions">
+			<qp-grid id="gridConditions" view.bind="MatchingConditions"wg-container="MatchingConditions_gridTargetRestrictions"></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+
+	<qp-panel id="InsertFromFilter" caption="Choose scenario to insert steps from" auto-repaint="true">
+		<qp-fieldset id="InsertFromFilter_frmInsertFrom" wg-container view.bind="InsertFromFilter" >
+			<field name="MappingID"></field>
+		</qp-fieldset>
+		<footer>
+			<qp-button id="btnOK" dialog-result="OK"></qp-button>
+			<qp-button id="btnCancel" dialog-result="Cancel"></qp-button>
+		</footer>
+	</qp-panel>
+	
+    <qp-include url="../panels/panel-publish-to-ui/panel-publish-to-ui.html"></qp-include>
+</template>

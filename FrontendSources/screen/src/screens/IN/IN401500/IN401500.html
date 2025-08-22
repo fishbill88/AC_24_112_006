@@ -1,0 +1,22 @@
+<template>
+	<qp-template name="17-17-14" id="Header_form" wg-container class="equal-height">
+		<qp-fieldset id="Header_form_column1" view.bind="Header" slot="A" >
+			<field name="TemplateItemID" config-allow-edit.bind="true"></field>
+			<field name="ColAttributeID"></field>
+			<field name="RowAttributeID"></field>
+		</qp-fieldset>
+		<qp-fieldset id="Header_form_column2" view.bind="Header" slot="B" >
+			<field name="SiteID" config-allow-edit.bind="true"></field>
+			<field name="LocationID"></field>
+			<field name="DisplayPlanType"></field>
+		</qp-fieldset>
+	</qp-template>
+	<qp-splitter id="splitter" split="height" initial-split="100px">
+		<split-pane>
+			<qp-grid id="MatrixAttributes" view.bind="AdditionalAttributes" caption="Additional Attributes"></qp-grid>
+		</split-pane>
+		<split-pane>
+			<qp-grid id="Matrix_MatrixMatrix" view.bind="Matrix" caption="Main Attributes"></qp-grid>
+		</split-pane>
+	</qp-splitter>
+</template>

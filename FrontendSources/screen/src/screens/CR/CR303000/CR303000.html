@@ -1,0 +1,111 @@
+<template>
+	<!-- Primary Form -->
+	<qp-template
+		name="1-1"
+		id="form"
+		class="equal-height label-size-m"
+		qp-collapsible
+		wg-container
+	>
+		<qp-fieldset slot="A" id="phF_form_PXLayoutRule#0" view.bind="BAccount">
+			<field name="AcctCD"></field>
+			<field name="AcctName"></field>
+			<field name="Status"></field>
+		</qp-fieldset>
+		<qp-fieldset slot="B" id="phF_form_PXLayoutRule#3" view.bind="BAccount">
+			<field name="OwnerID"></field>
+			<field name="ClassID"></field>
+			<using view="DefContact">
+				<field name="DuplicateStatus"></field>
+			</using>
+		</qp-fieldset>
+	</qp-template>
+
+	<!-- Tabs -->
+	<qp-tabbar id="tab" class="label-size-m">
+		<qp-tab id="tabGeneral" caption="General" ref="tabGeneral_Content">
+		</qp-tab>
+		<qp-tab
+			id="tabDuplicates"
+			caption="Duplicates"
+			if.bind="DefContact.DuplicateFound.value == true"
+			load-on-demand="true"
+		>
+			<qp-grid
+				caption="Records for Merging"
+				id="gridDuplicatesForMerging"
+				view.bind="DuplicatesForMerging"
+			>
+			</qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAttributes" caption="Attributes" ref="tabAttributes_Content">
+		</qp-tab>
+		<qp-tab id="tabActivities" caption="Activities" ref="tabActivities_Content">
+		</qp-tab>
+		<qp-tab
+			id="tabAdditionalInfo"
+			caption="Additional Info"
+			ref="tabAdditionalInfo_Content"
+		>
+		</qp-tab>
+		<qp-tab id="tabContacts" caption="Contacts">
+			<qp-grid id="gridContacts" view.bind="Contacts"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabLocations" caption="Locations" load-on-demand="true">
+			<qp-grid id="gridLocations" view.bind="Locations"> </qp-grid>
+		</qp-tab>
+		<qp-tab
+			id="tabShipping"
+			caption="Shipping"
+			ref="tabShipping_Content"
+			load-on-demand="true"
+		>
+		</qp-tab>
+		<qp-tab id="tabRelations" caption="Relations" ref="tabRelations_Content">
+		</qp-tab>
+		<qp-tab id="tabLeads" caption="Leads" load-on-demand="true">
+			<qp-grid id="gridLeads" view.bind="Leads" wg-container> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOpportunities" caption="Opportunities" load-on-demand="true">
+			<qp-grid id="gridOpportunities" view.bind="Opportunities"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCases" caption="Cases" load-on-demand="true">
+			<qp-grid id="gridCases" view.bind="Cases" wg-container> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabContracts" caption="Contracts" load-on-demand="true">
+			<qp-grid id="gridContracts" view.bind="Contracts"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabOrders" caption="Orders" load-on-demand="true">
+			<qp-grid id="gridOrders" view.bind="Orders"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabCampaigns" caption="Campaigns" load-on-demand="true">
+			<qp-grid id="gridCampaigns" view.bind="Members"> </qp-grid>
+		</qp-tab>
+		<qp-tab
+			id="tabMarketingLists"
+			caption="Marketing Lists"
+			ref="tabMarketingLists_Content"
+		>
+		</qp-tab>
+		<qp-tab id="tabSalesforce" caption="Salesforce" ref="tabSalesforce_Content">
+		</qp-tab>
+		<qp-tab id="tabHubSpot" caption="HubSpot" ref="tabHubSpot_Content">
+		</qp-tab>
+		<qp-tab
+			id="tabMailing&&Printing"
+			caption="Mailing & Printing"
+			load-on-demand="true"
+		>
+			<qp-grid
+				id="gridNotificationSources"
+				view.bind="NotificationSources"
+				wg-container="NotificationSources_gridNS"
+			></qp-grid>
+			<qp-grid
+				id="gridNotificationRecipients"
+				view.bind="NotificationRecipients"
+				wg-container="NotificationRecipients_gridNR"
+			></qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>

@@ -1,0 +1,24 @@
+<template>
+
+	<qp-template name="1-1" id="formPeriodHeader">
+		<qp-fieldset id="periodPeriodHeader" view.bind="Period_Header" slot="A" wg-container="Period_Header_form">
+			<field name="OrganizationID" config-allow-edit.bind="true"></field>
+			<field name="BranchID" config-allow-edit.bind="true"></field>
+			<field name="VendorID" config-allow-edit.bind="true"></field>
+			<field name="TaxPeriodID"></field>
+			<field name="RevisionId"></field>
+			<field name="ShowDifference"></field>
+			<field name="StartDate"></field>
+			<field name="EndDate"></field>
+		</qp-fieldset>
+	</qp-template>
+
+	<qp-tabbar id="tabs">
+		<qp-tab id="tabsDetails" caption="Details">
+			<qp-grid id="grid" view.bind="Period_Details"> </qp-grid>
+		</qp-tab>
+		<qp-tab id="tabAPDocuments" caption="AP Documents">
+			<qp-grid id="gridAPDocument" view.bind="APDocuments" wg-container="APDocuments_gridDocument"> </qp-grid>
+		</qp-tab>
+	</qp-tabbar>
+</template>
