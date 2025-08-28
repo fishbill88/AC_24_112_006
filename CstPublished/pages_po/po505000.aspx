@@ -14,40 +14,40 @@
         DefaultControlID="edPurchDate" EmailingGraph="">
         <Activity HighlightColor="" SelectedColor="" Width="" Height=""></Activity>
         <Template>
-            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" />
-            <px:PXSegmentMask CommitChanges="True" ID="edBranchID" runat="server" DataField="BranchID" />
-            <px:PXDateTimeEdit CommitChanges="True" runat="server" DataField="PurchDate" ID="edPurchDate" />
-            <px:PXLayoutRule runat="server" Merge="True" />
-            <px:PXSelector CommitChanges="True" ID="edOwnerID" runat="server" DataField="OwnerID" />
-            <px:PXCheckBox CommitChanges="True" SuppressLabel="True" ID="chkMyOwner" runat="server" Checked="True" DataField="MyOwner" />
-            <px:PXLayoutRule runat="server" Merge="False" />
-            <px:PXLayoutRule runat="server" Merge="True" />
-            <px:PXSelector CommitChanges="True" ID="edWorkGroupID" runat="server" DataField="WorkGroupID" />
-            <px:PXCheckBox CommitChanges="True" SuppressLabel="True" ID="chkMyWorkGroup" runat="server" DataField="MyWorkGroup" />
-            <px:PXLayoutRule runat="server" Merge="False" />
-            <px:PXSegmentMask CommitChanges="True" ID="edItemClassCD" runat="server" DataField="ItemClassCD" />
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" ></px:PXLayoutRule>
+            <px:PXSegmentMask CommitChanges="True" ID="edBranchID" runat="server" DataField="BranchID" ></px:PXSegmentMask>
+            <px:PXDateTimeEdit CommitChanges="True" runat="server" DataField="PurchDate" ID="edPurchDate" ></px:PXDateTimeEdit>
+            <px:PXLayoutRule runat="server" Merge="True" ></px:PXLayoutRule>
+            <px:PXSelector CommitChanges="True" ID="edOwnerID" runat="server" DataField="OwnerID" ></px:PXSelector>
+            <px:PXCheckBox CommitChanges="True" SuppressLabel="True" ID="chkMyOwner" runat="server" Checked="True" DataField="MyOwner" ></px:PXCheckBox>
+            <px:PXLayoutRule runat="server" Merge="False" ></px:PXLayoutRule>
+            <px:PXLayoutRule runat="server" Merge="True" ></px:PXLayoutRule>
+            <px:PXSelector CommitChanges="True" ID="edWorkGroupID" runat="server" DataField="WorkGroupID" ></px:PXSelector>
+            <px:PXCheckBox CommitChanges="True" SuppressLabel="True" ID="chkMyWorkGroup" runat="server" DataField="MyWorkGroup" ></px:PXCheckBox>
+            <px:PXLayoutRule runat="server" Merge="False" ></px:PXLayoutRule>
+            <px:PXSegmentMask CommitChanges="True" ID="edItemClassCD" runat="server" DataField="ItemClassCD" ></px:PXSegmentMask>
             <px:PXSegmentMask CommitChanges="True" ID="edInventoryID" runat="server" DataField="InventoryID">
                 <GridProperties>
-                    <PagerSettings Mode="NextPrevFirstLast" />
+                    <PagerSettings Mode="NextPrevFirstLast" ></PagerSettings>
                 </GridProperties>
             </px:PXSegmentMask>
-            <px:PXSegmentMask CommitChanges="True" runat="server" DataField="SiteID" ID="edSiteID" AutoRefresh="true" />
-            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="M" />
-            <px:PXDateTimeEdit CommitChanges="True" runat="server" DataField="RequestedOnDate" ID="edRequestedOnDate" />
-            <px:PXSegmentMask CommitChanges="True" runat="server" DataField="VendorID" ID="edVendorID" AutoRefresh="true" />
-            <px:PXSegmentMask CommitChanges="True" ID="edCustomerID" runat="server" DataField="CustomerID" AutoRefresh="true" />
-            <px:PXSelector CommitChanges="True" ID="edOrderType" runat="server" DataField="OrderType" />
-            <px:PXSelector CommitChanges="True" ID="edOrderNbr" runat="server" DataField="OrderNbr" AutoRefresh="true" />
-            <px:PXSelector CommitChanges="True" ID="edSrvOrdType" runat="server" DataField="SrvOrdType" />
-            <px:PXSelector CommitChanges="True" ID="edserviceOrderRefNbr" runat="server" DataField="serviceOrderRefNbr" AutoRefresh="true" />
-			<px:PXSelector runat="server" ID="edAMOrderType" DataField="AMOrderType" CommitChanges="True" />
-			<px:PXSelector runat="server" ID="edAMOrderNbr" DataField="ProdOrdID" CommitChanges="True" />
-            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="M" />
-            <px:PXNumberEdit ID="edOrderTotalQty" runat="server" DataField="OrderQty" Enabled="False" />
-            <px:PXNumberEdit ID="edOrderTotal" runat="server" DataField="OrderTotal" Enabled="False" />
-            <px:PXNumberEdit ID="edOrderWeight" runat="server" DataField="OrderWeight" Enabled="False" />
-            <px:PXNumberEdit ID="edOrderVolume" runat="server" DataField="OrderVolume" Enabled="False" />
-        </Template>
+            <px:PXSegmentMask CommitChanges="True" runat="server" DataField="SiteID" ID="edSiteID" AutoRefresh="true" ></px:PXSegmentMask>
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="M" ></px:PXLayoutRule>
+            <px:PXDateTimeEdit CommitChanges="True" runat="server" DataField="RequestedOnDate" ID="edRequestedOnDate" ></px:PXDateTimeEdit>
+            <px:PXSegmentMask CommitChanges="True" runat="server" DataField="VendorID" ID="edVendorID" AutoRefresh="true" ></px:PXSegmentMask>
+            <px:PXSegmentMask CommitChanges="True" ID="edCustomerID" runat="server" DataField="CustomerID" AutoRefresh="true" ></px:PXSegmentMask>
+            <px:PXSelector CommitChanges="True" ID="edOrderType" runat="server" DataField="OrderType" ></px:PXSelector>
+            <px:PXSelector CommitChanges="True" ID="edOrderNbr" runat="server" DataField="OrderNbr" AutoRefresh="true" ></px:PXSelector>
+            <px:PXSelector CommitChanges="True" ID="edSrvOrdType" runat="server" DataField="SrvOrdType" ></px:PXSelector>
+            <px:PXSelector CommitChanges="True" ID="edserviceOrderRefNbr" runat="server" DataField="serviceOrderRefNbr" AutoRefresh="true" ></px:PXSelector>
+			<px:PXSelector runat="server" ID="edAMOrderType" DataField="AMOrderType" CommitChanges="True" ></px:PXSelector>
+			<px:PXSelector runat="server" ID="edAMOrderNbr" DataField="ProdOrdID" CommitChanges="True" ></px:PXSelector>
+            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="M" ></px:PXLayoutRule>
+            <px:PXNumberEdit ID="edOrderTotalQty" runat="server" DataField="OrderQty" Enabled="False" ></px:PXNumberEdit>
+            <px:PXNumberEdit ID="edOrderTotal" runat="server" DataField="OrderTotal" Enabled="False" ></px:PXNumberEdit>
+            <px:PXNumberEdit ID="edOrderWeight" runat="server" DataField="OrderWeight" Enabled="False" ></px:PXNumberEdit>
+            <px:PXNumberEdit ID="edOrderVolume" runat="server" DataField="OrderVolume" Enabled="False" ></px:PXNumberEdit>
+	<px:PXNumberEdit runat="server" ID="CstPXNumberEdit1" DataField="UsrPrice" /></Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
@@ -93,6 +93,7 @@
                     <px:PXGridColumn CommitChanges="True" AllowUpdate="False" DataField="VendorID" DisplayFormat="&gt;AAAAAAAAAA" AutoCallBack="true" ></px:PXGridColumn>
                     <px:PXGridColumn CommitChanges="True" AllowUpdate="False" DataField="VendorID_Vendor_acctName" ></px:PXGridColumn>
                     <px:PXGridColumn CommitChanges="True" AllowUpdate="False" DataField="VendorLocationID" DisplayFormat="&gt;AAAAAAAAAA" ></px:PXGridColumn>
+	<px:PXGridColumn DataField="AlternateID" Width="180" />
                     <px:PXGridColumn AllowUpdate="False" DataField="Location__vLeadTime" ></px:PXGridColumn>
 	<px:PXGridColumn DataField="UsrVendorID" Width="140" />
 	<px:PXGridColumn DataField="UsrVendorLocationID" Width="70" />

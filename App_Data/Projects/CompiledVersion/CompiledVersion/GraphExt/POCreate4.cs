@@ -37,6 +37,8 @@ namespace SWKTechCustomization
             POLineExt poLineExt = line?.GetExtension<POLineExt>();
             POOrderExt poOrderExt = docgraph?.CurrentDocument?.Current?.GetExtension<POOrderExt>();
             SOOrder soOrder = SOOrder.PK.Find(Base, soline?.OrderType, soline?.OrderNbr);
+            InventoryItem item = InventoryItem.PK.Find(Base, demand?.InventoryID);
+            InventoryItemExt itemExt = item?.GetExtension<InventoryItemExt>();
             SOOrderExt soOrderExt = soOrder?.GetExtension<SOOrderExt>();
             if (soLine != null)
             {
@@ -67,7 +69,7 @@ namespace SWKTechCustomization
             if (typeExt?.UsrShowVendorAddress ?? false)
                 poLineExt.UsrVendorAddress = soLineExt?.UsrVendorAddress;
 
-            poLineExt.UsrItemSpecs = soLineExt?.UsrItemSpecs;
+            poLineExt.UsrItemSpecs = soLineExt?.UsrItemSpecs ?? itemExt.UsrItemSpecs;
 
             //POOrderExt poOrderExt = docgraph.CurrentDocument.Current.GetExtension<POOrderExt>();
             poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
@@ -90,16 +92,19 @@ namespace SWKTechCustomization
             //SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
 
             // Overwrite PO Line Unit Cost if SOLine.usrSWKSPCCost has value
-            if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
+            if(soLine != null)
             {
-                //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);
-            }
-            else
-            {
-                //line.CuryUnitCost = demand.EffPrice;
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
-                //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
+                if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
+                {
+                    //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
+                    docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);
+                }
+                else
+                {
+                    //line.CuryUnitCost = demand.EffPrice;
+                    docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
+                    //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
+                }
             }
 
             if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && poLineExt != null)

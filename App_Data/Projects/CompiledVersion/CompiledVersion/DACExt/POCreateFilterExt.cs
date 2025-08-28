@@ -8,8 +8,8 @@ namespace CompiledVersion.DAC
     {
         public static bool IsActive() => true;
         #region UsrPrice
-        [PXDecimal]
-        [PXUIField(DisplayName = "Price", Visibility = PXUIVisibility.SelectorVisible)]
+        [PXDecimal(6)]
+        [PXUIField(DisplayName = "Price", Enabled = false)]
         public decimal? UsrPrice { get; set; }
         public abstract class usrPrice : PX.Data.BQL.BqlDecimal.Field<usrPrice> { }
         #endregion

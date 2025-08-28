@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PX.Objects.SO.GraphExtensions.SOOrderEntryExt;
+using PX.Objects.CR.Standalone;
 
 namespace CompiledVersion.Graphs
 {
@@ -345,27 +346,29 @@ namespace CompiledVersion.Graphs
             RecalculateExtendedCost(e.Cache, e.Row);
         }
 
-        protected virtual void _(Events.FieldUpdated<SOLineExt.usrVendorID> e, PXFieldUpdated baseMethod)
+        protected virtual void _(Events.FieldUpdated<SOLineExt.usrVendorID> e)
         {
-            baseMethod?.Invoke(e.Cache, e.Args);
             SOLine line = (SOLine)e.Row;
             if (line == null) return;
 
+            SOLineExt lineExt = line.GetExtension<SOLineExt>();
             POVendorInventory vendorInv = PXSelect<POVendorInventory,
                 Where<POVendorInventory.inventoryID, Equal<Required<SOLine.inventoryID>>,
-                    And<POVendorInventory.vendorID, Equal<Required<SOLine.vendorID>>>>>
-                .Select(Base, line.InventoryID, line.VendorID);
+                    And<POVendorInventory.vendorID, Equal<Required<SOLine.vendorID>>,
+                    And<POVendorInventory.isDefault,Equal<True>>>>>
+                .Select(Base, line.InventoryID, lineExt.UsrVendorID);
 
-            SOLineExt lineExt = line.GetExtension<SOLineExt>();
             lineExt.UsrVendorLocationID = vendorInv?.VendorLocationID;
 
-            PX.Objects.CA.Light.Location location = PXSelect<PX.Objects.CA.Light.Location,
-                Where<PX.Objects.CA.Light.Location.bAccountID, Equal<Required<PX.Objects.CA.Light.Location.bAccountID>>,
-                    And<PX.Objects.CA.Light.Location.locationID, Equal<Required<PX.Objects.CA.Light.Location.locationID>>>>>
-                .Select(Base, vendorInv?.VendorID, vendorInv?.VendorLocationID);
+            //PX.Objects.CA.Light.Location location = PXSelect<PX.Objects.CA.Light.Location,
+            //    Where<PX.Objects.CA.Light.Location.bAccountID, Equal<Required<PX.Objects.CA.Light.Location.bAccountID>>,
+            //        And<PX.Objects.CA.Light.Location.locationID, Equal<Required<PX.Objects.CA.Light.Location.locationID>>>>>
+            //    .Select(Base, vendorInv?.VendorID, vendorInv?.VendorLocationID);
+
+            PX.Objects.CR.Location loc = PX.Objects.CR.Location.PK.Find(Base, vendorInv?.VendorID, vendorInv?.VendorLocationID);
             Address address = PXSelect<Address,
-                Where<Address.bAccountID, Equal<Required<Address.bAccountID>>>>
-                .Select(Base, vendorInv?.VendorID);
+                Where<Address.addressID, Equal<Required<Address.addressID>>>>
+                .Select(Base, loc?.DefAddressID);
 
             if (address != null)
             {
@@ -383,16 +386,16 @@ namespace CompiledVersion.Graphs
             }
         }
 
-        protected virtual void _(Events.FieldUpdated<SOLineExt.usrVendorLocationID> e, PXFieldUpdated baseMethod)
+        protected virtual void _(Events.FieldUpdated<SOLineExt.usrVendorLocationID> e)
         {
-            baseMethod?.Invoke(e.Cache, e.Args);
             SOLine line = (SOLine)e.Row;
             if (line == null) return;
             SOLineExt lineExt = line.GetExtension<SOLineExt>();
 
+            PX.Objects.CR.Location loc = PX.Objects.CR.Location.PK.Find(Base, lineExt?.UsrVendorID, lineExt?.UsrVendorLocationID);
             Address address = PXSelect<Address,
-                Where<Address.bAccountID, Equal<Required<Address.bAccountID>>>>
-                .Select(Base, lineExt?.UsrVendorID);
+                Where<Address.addressID, Equal<Required<Address.addressID>>>>
+                .Select(Base, loc?.DefAddressID);
 
             if (address != null)
             {

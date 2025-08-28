@@ -21,55 +21,6 @@ namespace CompiledVersion.Graphs
     {
         public static bool IsActive() => true;
 
-        //[PXFilterable]
-        //public PXFilteredProcessingJoin<POFixedDemand, POCreateFilter,
-        //     LeftJoin<Vendor, On<Vendor.bAccountID, Equal<POFixedDemand.vendorID>>,
-        //     LeftJoin<POVendorInventory,
-        //           On<POVendorInventory.recordID, Equal<POFixedDemand.recordID>>,
-        //     LeftJoin<CRLocation, On<CRLocation.bAccountID, Equal<POFixedDemand.vendorID>, And<CRLocation.locationID, Equal<POFixedDemand.vendorLocationID>>>,
-        //     LeftJoin<SOOrder, On<SOOrder.noteID, Equal<POFixedDemand.refNoteID>, And<SOOrder.status.IsIn<SOOrderStatus.backOrder, SOOrderStatus.open, SOOrderStatus.shipping>>>,
-        //     LeftJoin<SOLine, On<SOLine.orderType, Equal<POFixedDemand.orderType>, And<SOLine.orderNbr, Equal<POFixedDemand.orderNbr>, And<SOLine.lineNbr, Equal<POFixedDemand.lineNbr>>>>,
-        //     LeftJoin<DropShipLink, On<DropShipLink.FK.SOLine>>>>>>>,
-        //     Where2<Where<POFixedDemand.inventoryID, Equal<Current<POCreateFilter.inventoryID>>, Or<Current<POCreateFilter.inventoryID>, IsNull>>,
-        //         And2<Where<POFixedDemand.siteID, Equal<Current<POCreateFilter.siteID>>, Or<Current<POCreateFilter.siteID>, IsNull>>,
-        //         And2<Where<SOOrder.customerID, Equal<Current<POCreateFilter.customerID>>, Or<Current<POCreateFilter.customerID>, IsNull, Or<SOOrder.orderNbr, IsNull>>>,
-        //         And2<Where<SOOrder.orderType, Equal<Current<POCreateFilter.orderType>>, Or<Current<POCreateFilter.orderType>, IsNull>>,
-        //         And2<Where<SOOrder.orderNbr, Equal<Current<POCreateFilter.orderNbr>>, Or<Current<POCreateFilter.orderNbr>, IsNull>>,
-        //         And2<Where<POFixedDemand.planDate, LessEqual<Current<POCreateFilter.requestedOnDate>>, Or<Current<POCreateFilter.requestedOnDate>, IsNull>>,
-        //         And2<Where<POFixedDemand.orderType, IsNull, Or<POFixedDemand.behavior, NotEqual<SOBehavior.bL>, Or<POFixedDemand.pOCreateDate, LessEqual<Current<POCreateFilter.purchDate>>>>>,
-        //         And2<Where<POFixedDemand.itemClassCD, Like<Current<POCreateFilter.itemClassCDWildcard>>, Or<Current<POCreateFilter.itemClassCDWildcard>, IsNull>>,
-        //         And<POFixedDemand.planQty, NotEqual<decimal0>,
-        //         And<Where<POFixedDemand.planType, NotIn3<INPlanConstants.plan6D, INPlanConstants.plan6E>,
-        //                 Or<POFixedDemand.baseShippedQty, Equal<decimal0>,
-        //                     And<DropShipLink.sOLineNbr, IsNull,
-        //                     And<SOLine.isLegacyDropShip, Equal<boolFalse>>>>>>>>>>>>>>>,
-        //     OrderBy<Asc<POFixedDemand.inventoryID>>> FixedDemand2;
-
-        //[PXFilterable]
-        //public PXFilteredProcessingJoin<POFixedDemand, POCreateFilter,
-        //    LeftJoin<Vendor, On<Vendor.bAccountID, Equal<POFixedDemand.vendorID>>,
-        //    LeftJoin<POVendorInventory,
-        //          On<POVendorInventory.recordID, Equal<POFixedDemand.recordID>>,
-        //    LeftJoin<CRLocation, On<CRLocation.bAccountID, Equal<POFixedDemand.vendorID>, And<CRLocation.locationID, Equal<POFixedDemand.vendorLocationID>>>,
-        //    LeftJoin<SOOrder, On<SOOrder.noteID, Equal<POFixedDemand.refNoteID>, And<SOOrder.status.IsIn<SOOrderStatus.backOrder, SOOrderStatus.open, SOOrderStatus.shipping>>>,
-        //    LeftJoin<SOLine, On<SOLine.orderType, Equal<POFixedDemand.orderType>, And<SOLine.orderNbr, Equal<POFixedDemand.orderNbr>, And<SOLine.lineNbr, Equal<POFixedDemand.lineNbr>>>>,
-        //    LeftJoin<DropShipLink, On<DropShipLink.FK.SOLine>>>>>>>,
-        //    Where2<Where<POFixedDemand.vendorID, Equal<Current<POCreateFilter.vendorID>>, Or<Current<POCreateFilter.vendorID>, IsNull>>,
-        //        And2<Where<POFixedDemand.inventoryID, Equal<Current<POCreateFilter.inventoryID>>, Or<Current<POCreateFilter.inventoryID>, IsNull>>,
-        //        And2<Where<POFixedDemand.siteID, Equal<Current<POCreateFilter.siteID>>, Or<Current<POCreateFilter.siteID>, IsNull>>,
-        //        And2<Where<SOOrder.customerID, Equal<Current<POCreateFilter.customerID>>, Or<Current<POCreateFilter.customerID>, IsNull, Or<SOOrder.orderNbr, IsNull>>>,
-        //        And2<Where<SOOrder.orderType, Equal<Current<POCreateFilter.orderType>>, Or<Current<POCreateFilter.orderType>, IsNull>>,
-        //        And2<Where<SOOrder.orderNbr, Equal<Current<POCreateFilter.orderNbr>>, Or<Current<POCreateFilter.orderNbr>, IsNull>>,
-        //        And2<Where<POFixedDemand.planDate, LessEqual<Current<POCreateFilter.requestedOnDate>>, Or<Current<POCreateFilter.requestedOnDate>, IsNull>>,
-        //        And2<Where<POFixedDemand.orderType, IsNull, Or<POFixedDemand.behavior, NotEqual<SOBehavior.bL>, Or<POFixedDemand.pOCreateDate, LessEqual<Current<POCreateFilter.purchDate>>>>>,
-        //        And2<Where<POFixedDemand.itemClassCD, Like<Current<POCreateFilter.itemClassCDWildcard>>, Or<Current<POCreateFilter.itemClassCDWildcard>, IsNull>>,
-        //        And<POFixedDemand.planQty, NotEqual<decimal0>,
-        //        And<Where<POFixedDemand.planType, NotIn3<INPlanConstants.plan6D, INPlanConstants.plan6E>,
-        //                Or<POFixedDemand.baseShippedQty, Equal<decimal0>,
-        //                    And<DropShipLink.sOLineNbr, IsNull,
-        //                    And<SOLine.isLegacyDropShip, Equal<boolFalse>>>>>>>>>>>>>>>>,
-        //    OrderBy<Asc<POFixedDemand.inventoryID>>> FixedDemand;
-
         public virtual IEnumerable fixedDemand()
         {
             PXResultset<POFixedDemand> fixedDemands = SelectFromFixedDemandViewNew();
@@ -129,35 +80,53 @@ namespace CompiledVersion.Graphs
                     POFixedDemand demandRow = demand;
                     SOLine sOLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
                     And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-                                  .Select(Base, demandRow.OrderType, demandRow.OrderNbr, demandRow.LineNbr);
-
-                    SOLineExt soLineExt = sOLine?.GetExtension<SOLineExt>();
-                    if (soLineExt?.UsrVendorID != null && soLineExt?.UsrVendorLocationID != null)
+                                  .Select(Base, demandRow?.OrderType, demandRow?.OrderNbr, demandRow?.LineNbr);
+                    if (sOLine != null)
                     {
-                        demandRow.VendorID = soLineExt?.UsrVendorID;
-                        Location loc = PXSelect<Location, Where<Location.bAccountID, Equal<Required<Location.bAccountID>>,
-                            And<Location.locationID, Equal<Required<Location.locationID>>>>>
-                            .Select(Base, soLineExt?.UsrVendorID, soLineExt?.UsrVendorLocationID);
-                        demandRow.VendorLocationID = loc?.LocationID;
+
+                        SOLineExt soLineExt = sOLine?.GetExtension<SOLineExt>();
+                        if (soLineExt?.UsrVendorID != null && soLineExt?.UsrVendorLocationID != null)
+                        {
+                            demandRow.VendorID = soLineExt?.UsrVendorID;
+                            Location loc = PXSelect<Location, Where<Location.bAccountID, Equal<Required<Location.bAccountID>>,
+                                And<Location.locationID, Equal<Required<Location.locationID>>>>>
+                                .Select(Base, soLineExt?.UsrVendorID, soLineExt?.UsrVendorLocationID);
+                            demandRow.VendorLocationID = loc?.LocationID;
+                        }
                     }
                     if (Base.Filter.Current.VendorID != null)
                         if (demandRow.VendorID != Base.Filter.Current.VendorID)
                             continue;
 
-                    if (demandRow.InventoryID != null && demandRow.VendorID == null && demandRow.VendorLocationID == null)
-                    {
-                        //get the default vendor from POVendorInventory
-                        POVendorInventory vendorInventory = PXSelect<POVendorInventory,
-                            Where<POVendorInventory.inventoryID, Equal<Required<POVendorInventory.inventoryID>>,
-                            And<POVendorInventory.isDefault, Equal<True>,
-                            And<POVendorInventory.active,Equal<True>>>>>
-                            .Select(Base, demandRow.InventoryID);
-                        if (vendorInventory != null)
-                        {
-                            demandRow.VendorID = vendorInventory.VendorID;
-                            demandRow.VendorLocationID = vendorInventory.VendorLocationID;
-                        }
-                    }
+                    InventoryItem item = InventoryItem.PK.Find(Base, demandRow.InventoryID);
+                    INItemXRef iNItemXRef = PXSelect<INItemXRef,
+                        Where<INItemXRef.inventoryID, Equal<Required<INItemXRef.inventoryID>>,
+                            And<INItemXRef.alternateType, Equal<INAlternateType.global>>>>.
+                        Select(Base, demandRow.InventoryID);
+                    if (item != null && iNItemXRef != null)
+                        demandRow.AlternateID = iNItemXRef.AlternateID;
+                    else
+                        demandRow.AlternateID = null;
+                    //if (demandRow.InventoryID != null && demandRow.VendorID == null && demandRow.VendorLocationID == null)
+                    //{
+                    //    //get the default vendor from POVendorInventory
+                    //    InventoryItemMaint maint = PXGraph.CreateInstance<InventoryItemMaint>();
+                    //    maint.Clear();
+                    //    InventoryItem item = InventoryItem.PK.Find(Base, demandRow.InventoryID);
+                    //    maint.Item.Current = item;
+
+                    //    maint.VendorItems.Select();
+                    //    foreach (POVendorInventory vendorInventory in maint.VendorItems.Select())
+                    //    {
+                    //        if (vendorInventory.IsDefault == true && vendorInventory.Active == true)
+                    //        {
+                    //            demandRow.VendorID = vendorInventory.VendorID;
+                    //            demandRow.VendorLocationID = vendorInventory.VendorLocationID;
+                    //            break;
+                    //        }
+
+                    //    }
+                    //}
 
                     fixedDemands.Add(demand);
                 }

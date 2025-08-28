@@ -17,7 +17,7 @@ namespace POInventoryCustomization
         {
             SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
                   And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-                                  .Select(Base, soline.OrderType, soline.OrderNbr, soline.LineNbr);
+                                  .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
             if (soLine != null)
             {
                 SOLineExt lineExt = soLine?.GetExtension<SOLineExt>();

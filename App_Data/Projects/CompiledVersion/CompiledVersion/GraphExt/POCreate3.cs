@@ -1,8 +1,10 @@
 ﻿using CompiledVersion.DAC;
 using PX.Data;
 using PX.Objects.IN;
-using static PX.Objects.PO.POCreate;
 using PX.Objects.PO;
+using System.Linq;
+using static PX.Objects.PO.POCreate;
+using static PX.Objects.SO.SOCreate;
 
 namespace PX.Objects.PO3
 {
@@ -14,14 +16,23 @@ namespace PX.Objects.PO3
             var filter = Base.Filter.Current;
             if (filter == null) return;
             var filterExt = PXCache<POCreateFilter>.GetExtension<POCreateFilterExt>(filter);
-            decimal sumPrice = 0m;
-            foreach (POFixedDemand row in Base.FixedDemand.Select())
-            {
-                if (row.Selected == true && row.EffPrice != null && row.OrderQty != null)
-                {
-                    sumPrice += (row.EffPrice ?? 0m);
-                }
-            }
+            decimal? sumPrice = Base.FixedDemand.Cache.Updated.RowCast<POFixedDemand>()
+                                .Where(r => r.Selected == true).Sum(r => r.EffPrice);
+
+            //foreach (POFixedDemand demand in Base.FixedDemand.Cache.Updated.RowCast<POFixedDemand>().Where(r=>r.Selected == true).Sum(r=>r.EffPrice))
+            //{
+            //    if (demand.Selected == true)
+            //    {
+            //        sumPrice += (demand.EffPrice ?? 0m);
+            //    }
+            //}
+            //foreach (POFixedDemand row in Base.FixedDemand.Select())
+            //{
+            //    if (row.Selected == true && row.EffPrice != null && row.OrderQty != null)
+            //    {
+            //        sumPrice += (row.EffPrice ?? 0m);
+            //    }
+            //}
             filterExt.UsrPrice = sumPrice;
             Base.Filter.Cache.SetValueExt<POCreateFilterExt.usrPrice>(filter, sumPrice);
         }
@@ -43,23 +54,23 @@ namespace PX.Objects.PO3
             UpdateUsrPrice();
         }
 
-        protected virtual void _(Events.RowSelecting<POFixedDemand> e)
-        {
-            var row = e.Row as POFixedDemand;
-            if (row == null) return;
-            if (row.VendorID != null && row.InventoryID != null)
-            {
-                row.AlternateID = null;
-                INItemXRef itemXRef = PXSelect<INItemXRef,
-                    Where<INItemXRef.inventoryID, Equal<Required<INItemXRef.inventoryID>>,
-                        And<INItemXRef.alternateType, Equal<INAlternateType.global>>>>.
-                    Select(Base, row.InventoryID);
-                if (itemXRef != null)
-                {
-                    row.AlternateID = itemXRef.AlternateID;
-                }
-            }
-        }
+        //protected virtual void _(Events.RowSelecting<POFixedDemand> e)
+        //{
+        //    var row = e.Row as POFixedDemand;
+        //    if (row == null) return;
+        //    if (row.VendorID != null && row.InventoryID != null)
+        //    {
+        //        row.AlternateID = null;
+        //        INItemXRef itemXRef = PXSelect<INItemXRef,
+        //            Where<INItemXRef.inventoryID, Equal<Required<INItemXRef.inventoryID>>,
+        //                And<INItemXRef.alternateType, Equal<INAlternateType.global>>>>.
+        //            Select(Base, row.InventoryID);
+        //        if (itemXRef != null)
+        //        {
+        //            row.AlternateID = itemXRef.AlternateID;
+        //        }
+        //    }
+        //}
 
     }
 }
