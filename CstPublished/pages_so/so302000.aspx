@@ -243,7 +243,7 @@
 							<px:PXCheckBox ID="chkGroundCollect" runat="server" DataField="GroundCollect" ></px:PXCheckBox>
 							<px:PXCheckBox ID="chkResedential" runat="server" DataField="Resedential" ></px:PXCheckBox>
 							<px:PXCheckBox ID="chkSaturdayDelivery" runat="server" DataField="SaturdayDelivery" ></px:PXCheckBox>
-							<px:PXTextEdit runat="server" ID="edUsrShippingNotes" DataField="UsrShippingNotes" Width="200" TextMode="MultiLine" Height="200" LabelWidth="" />
+							<px:PXTextEdit runat="server" TextMode="MultiLine" Width="200" Height="200" DataField="UsrShippingNotes" ID="edUsrShippingNotes" />
 							<px:PXFormView runat="server" ID="formPacejetOptions" DataMember="CarrierData" SkinID="Inside" RenderStyle="Simple">
 								<Template>
 									<px:PXLayoutRule runat="server" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>

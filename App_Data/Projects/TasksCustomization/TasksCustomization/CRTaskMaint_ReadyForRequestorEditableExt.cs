@@ -2,7 +2,7 @@ using PX.Data;
 using PX.Objects.CR;
 using PX.Objects.EP;
 
-namespace MyProject
+namespace TasksCustomization
 {
     // Ensures Ready for Requestor status is treated as editable like Open/InProcess
     public class CRTaskMaint_ReadyForRequestorEditableExt : PXGraphExtension<CRTaskMaint>

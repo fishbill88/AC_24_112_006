@@ -41,9 +41,9 @@
 					<px:PXCheckBox SuppressLabel="True" ID="chkUpdateGL" runat="server" DataField="UpdateGL" ></px:PXCheckBox>
 					<px:PXCheckBox SuppressLabel="True" ID="chkSummPost" runat="server" DataField="SummPost" ></px:PXCheckBox>
 					<px:PXCheckBox SuppressLabel="True" ID="chkAutoPost" runat="server" DataField="AutoPost" ></px:PXCheckBox>
-					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule1" StartGroup="True" GroupCaption="Item Request Settings" />
-					<px:PXSegmentMask runat="server" ID="CstPXSegmentMask6" DataField="UsrDefaultWarehouse" />
-					<px:PXSelector runat="server" ID="edUsrProductBrandAttributeID" DataField="UsrProductBrandAttributeID" AllowEdit="True" />
+					<px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Item Request Settings" ID="rthCstPXLayoutRule1" />
+					<px:PXSegmentMask runat="server" DataField="UsrDefaultWarehouse" ID="edUsrDefaultWarehouse" />
+					<px:PXSelector runat="server" DataField="UsrProductBrandAttributeID" AllowEdit="True" ID="edUsrProductBrandAttributeID" />
 					<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="M" ></px:PXLayoutRule>
 					<px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Data Entry Settings" ></px:PXLayoutRule>
 					<px:PXCheckBox SuppressLabel="True" ID="PXCheckBox4" runat="server" Checked="True" DataField="HoldEntry" ></px:PXCheckBox>

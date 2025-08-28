@@ -54,7 +54,7 @@
                     <px:PXGridColumn AllowUpdate="False" DataField="CustomerOrderNbr" ></px:PXGridColumn>
                     <px:PXGridColumn DataField="BillingInOrders" ></px:PXGridColumn>
 	<px:PXGridColumn DataField="AttributeFORMTYPE" Width="70" />
-	<px:PXGridColumn DataField="AttributeBILLCOMPLE" Width="60" Type="CheckBox" />
+	<px:PXGridColumn Type="CheckBox" DataField="AttributeBILLCOMPLE" Width="60" />
                     <px:PXGridColumn DataField="BillSeparately" Type="CheckBox" TextAlign="Center" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="SiteID" DisplayFormat="&gt;AAAAAAAAAA" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="SiteID_INSite_descr" ></px:PXGridColumn>

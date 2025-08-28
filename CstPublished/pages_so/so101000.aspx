@@ -28,8 +28,8 @@
                             AllowEdit="True" DataSourceID="ds" edit="1" ></px:PXSelector>
                         <px:PXSelector ID="edWorksheetNumberingID" runat="server" DataField="PickingWorksheetNumberingID" AllowNull="False" DataSourceID="ds" AllowEdit="True" ></px:PXSelector>
                         <px:PXCheckBox ID="chkAdvancedAvailCheck" runat="server" DataField="AdvancedAvailCheck" ></px:PXCheckBox>
-	<px:PXCheckBox runat="server" ID="CstPXCheckBox7" DataField="UsrHidePrintingMethod" />
-	<px:PXCheckBox runat="server" ID="CstPXCheckBox8" DataField="UsrHidePrintingMethod2" /></px:PXPanel>
+	<px:PXCheckBox runat="server" DataField="UsrHidePrintingMethod" ID="edUsrHidePrintingMethod" />
+	<px:PXCheckBox runat="server" DataField="UsrHidePrintingMethod2" ID="edUsrHidePrintingMethod2" /></px:PXPanel>
                     <px:PXPanel ID="pnlPriceSettings" runat="server" Caption="Price Settings" RenderStyle="Fieldset">
                         <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="XM" ControlSize="XM" ></px:PXLayoutRule>
                         <px:PXDropDown ID="edMinGrossProfitValidation" runat="server" AllowNull="False" DataField="MinGrossProfitValidation" SelectedIndex="1" ></px:PXDropDown>
@@ -80,16 +80,22 @@
                         <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="XM" ControlSize="XM" ></px:PXLayoutRule>
                         <px:PXSelector ID="edDefaultReturnOrderType" runat="server" DataField="DefaultReturnOrderType" DataSourceID="ds" ></px:PXSelector>
                     </px:PXPanel>
-	<px:PXPanel runat="server" ID="pnlInvRestrict" Caption="Non-Stock Item Invoice Restrictions" RenderStyle="Fieldset">
-		<px:PXLayoutRule runat="server" ID="STHCCstPXLayoutRule2" StartColumn="True" ControlSize="XM" LabelsWidth="XM" />
-		<px:PXSegmentMask runat="server" ID="edUsrNonstock1" DataField="UsrNonstock1" />
-		<px:PXSegmentMask runat="server" ID="edUsrNonstock2" DataField="UsrNonstock2" />
-		<px:PXSegmentMask runat="server" ID="edUsrNonstock3" DataField="UsrNonstock3" /></px:PXPanel>
-	<px:PXPanel runat="server" ID="edShippingFreightSetting" Caption="Shipping and Freight Settings" DataMember="sosetup" RenderStyle="Fieldset">
-		<px:PXLayoutRule runat="server" ID="STCstPXLayoutRule200" StartColumn="True" ControlSize="XM" LabelsWidth="XM" />
-		<px:PXSelector runat="server" ID="edUsrNotToExceed" DataField="UsrNotToExceed" />
-		<px:PXSelector runat="server" ID="edUsrPrepayAndAdd" DataField="UsrPrepayAndAdd" />
-		<px:PXSelector runat="server" ID="edUsrFreeFreightAllowed" DataField="UsrFreeFreightAllowed" /></px:PXPanel></Template>
+	<px:PXPanel runat="server" Caption="Non-Stock Item Invoice Restrictions" RenderStyle="Fieldset" ID="pnlInvRestrict">
+		<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="XM" ControlSize="XM" ID="STHCCstPXLayoutRule2" />
+		<px:PXSegmentMask runat="server" DataField="UsrNonstock1" ID="edUsrNonstock1" />
+		<px:PXSegmentMask runat="server" DataField="UsrNonstock2" ID="edUsrNonstock2" />
+		<px:PXSegmentMask runat="server" DataField="UsrNonstock3" ID="edUsrNonstock3" /></px:PXPanel>
+	<px:PXPanel runat="server" DataMember="sosetup" Caption="Shipping and Freight Settings" RenderStyle="Fieldset" ID="edShippingFreightSetting">
+		<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="XM" ControlSize="XM" ID="STCstPXLayoutRule200" />
+		<px:PXSelector runat="server" DataField="UsrNotToExceed" ID="edUsrNotToExceed" />
+		<px:PXSelector runat="server" DataField="UsrPrepayAndAdd" ID="edUsrPrepayAndAdd" />
+		<px:PXSelector runat="server" DataField="UsrFreeFreightAllowed" ID="edUsrFreeFreightAllowed" /></px:PXPanel>
+	<px:PXPanel runat="server" Caption="Purchase Order Settings (Drop-ship)" RenderStyle="Fieldset" ID="panelPurchaseOrderSettings">
+		<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="XM" ControlSize="XM" ID="cstPurchaseOrderSettings" />
+		<px:PXCheckBox runat="server" DataField="UsrCopyHeaderNotesToPO" ID="edUsrCopyHeaderNotesToPO" />
+		<px:PXCheckBox runat="server" DataField="UsrCopyHeaderAttachmentsToPO" ID="edUsrCopyHeaderAttachmentsToPO" />
+		<px:PXCheckBox runat="server" DataField="UsrCopyLineNotesToPO" ID="edUsrCopyLineNotesToPO" />
+		<px:PXCheckBox runat="server" DataField="UsrCopyLineAttachmentsToPO" ID="edUsrCopyLineAttachmentsToPO" /></px:PXPanel></Template>
             </px:PXTabItem>
             <px:PXTabItem Text="Approval">
                 <Template>

@@ -74,8 +74,8 @@
 			<px:PXNumberEdit runat="server" Enabled="False" DataField="AMCuryEstimateTotal" ID="edCuryEstimateTotal" ></px:PXNumberEdit>
             <px:PXNumberEdit CommitChanges="True" ID="edCuryTaxTotal" runat="server" DataField="CuryTaxTotal"></px:PXNumberEdit>
             <px:PXNumberEdit CommitChanges="True" ID="edCuryProductsAmount" runat="server" DataField="CuryProductsAmount"></px:PXNumberEdit>
-	<px:PXLayoutRule runat="server" ID="CstPXLayoutRuleGP1" StartColumn="True" ControlSize="M" LabelsWidth="SM" />
-	<px:PXTextEdit runat="server" ID="edUsrHubspotDealID" DataField="UsrHubspotDealID" TextMode="MultiLine" Height="60px" /></Template>
+	<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" ID="CstPXLayoutRuleGP1" />
+	<px:PXTextEdit runat="server" TextMode="MultiLine" Height="60px" DataField="UsrHubspotDealID" ID="edUsrHubspotDealID" /></Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">

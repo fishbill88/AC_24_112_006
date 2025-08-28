@@ -53,10 +53,10 @@
             <px:PXDropDown ID="edItemStatus" runat="server" DataField="ItemStatus" Size="S" ></px:PXDropDown>
             <px:PXLayoutRule runat="server" ColumnSpan="2" ></px:PXLayoutRule>
             <px:PXTextEdit ID="edDescr" runat="server" DataField="Descr" CommitChanges="True"></px:PXTextEdit>
-	<px:PXLayoutRule runat="server" ID="CstLayoutRule1" />
-	<px:PXLayoutRule runat="server" ID="CstLayoutRule3" ColumnSpan="2" />
-	<px:PXTextEdit runat="server" ID="edUsrItemSpecs" DataField="UsrItemSpecs" TextMode="MultiLine" Height="70" />
-	<px:PXLayoutRule runat="server" ID="CstLayoutRule4" />
+	<px:PXLayoutRule runat="server" ID="rth_CstLayoutRule1" />
+	<px:PXLayoutRule runat="server" ColumnSpan="2" ID="rt_CstLayoutRule3" />
+	<px:PXTextEdit runat="server" TextMode="MultiLine" Height="70" DataField="UsrItemSpecs" ID="edUsrItemSpecs" />
+	<px:PXLayoutRule runat="server" ID="rth_CstLayoutRule4" />
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="XM" ></px:PXLayoutRule>
             <px:PXSelector CommitChanges="True" ID="edProductWorkgroupID" runat="server" DataField="ProductWorkgroupID" ></px:PXSelector>
             <px:PXSelector ID="edProductManagerID" runat="server" DataField="ProductManagerID" AutoRefresh="True" ></px:PXSelector>

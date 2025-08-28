@@ -3,7 +3,7 @@ using PX.Data.WorkflowAPI;
 using PX.Objects.CR;
 using static PX.Data.WorkflowAPI.BoundedTo<PX.Objects.CR.CRTaskMaint, PX.Objects.CR.CRActivity>;
 
-namespace MyProject
+namespace TasksCustomization
 {
     // Workflow extension for CRTaskMaint to add "Ready for Requestor" state between Processing and Completed
     public class CRTaskMaint_Workflow : PXGraphExtension<CRTaskMaint>

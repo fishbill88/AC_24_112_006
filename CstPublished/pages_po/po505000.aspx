@@ -90,10 +90,13 @@
                     <px:PXGridColumn AllowUpdate="False" DataField="DemandUOM" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="OrderQty" TextAlign="Right" AutoCallBack="true" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="RequestedDate" ></px:PXGridColumn>
-                    <px:PXGridColumn AllowUpdate="False" DataField="VendorID" DisplayFormat="&gt;AAAAAAAAAA" AutoCallBack="true" ></px:PXGridColumn>
-                    <px:PXGridColumn AllowUpdate="False" DataField="VendorID_Vendor_acctName" ></px:PXGridColumn>
-                    <px:PXGridColumn AllowUpdate="False" DataField="VendorLocationID" DisplayFormat="&gt;AAAAAAAAAA" ></px:PXGridColumn>
+                    <px:PXGridColumn CommitChanges="True" AllowUpdate="False" DataField="VendorID" DisplayFormat="&gt;AAAAAAAAAA" AutoCallBack="true" ></px:PXGridColumn>
+                    <px:PXGridColumn CommitChanges="True" AllowUpdate="False" DataField="VendorID_Vendor_acctName" ></px:PXGridColumn>
+                    <px:PXGridColumn CommitChanges="True" AllowUpdate="False" DataField="VendorLocationID" DisplayFormat="&gt;AAAAAAAAAA" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="Location__vLeadTime" ></px:PXGridColumn>
+	<px:PXGridColumn DataField="UsrVendorID" Width="140" />
+	<px:PXGridColumn DataField="UsrVendorLocationID" Width="70" />
+	<px:PXGridColumn DataField="UsrVendorAddress" Width="280" />
                     <px:PXGridColumn AllowUpdate="False" DataField="AddLeadTimeDays" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="Vendor__TermsID" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="Location__vCarrierID" ></px:PXGridColumn>

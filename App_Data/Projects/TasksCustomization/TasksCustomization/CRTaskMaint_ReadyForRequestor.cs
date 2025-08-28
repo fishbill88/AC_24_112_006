@@ -3,7 +3,7 @@ using PX.Data;
 using PX.Objects.CR;
 using PX.Objects.EP;
 
-namespace MyProject
+namespace TasksCustomization
 {
     public static class TaskCustomStatuses
     {

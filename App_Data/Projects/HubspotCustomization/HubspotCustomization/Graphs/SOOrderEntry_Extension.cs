@@ -17,7 +17,7 @@ namespace HubspotCustomization
     public class SOOrderEntry_Extension : PXGraphExtension<PX.Objects.SO.SOOrderEntry>
     {
         public static bool IsActive() => true;
-        //public PXSelect<CSAnswers> Attributes;
+
         #region Overrides
 
         public delegate IEnumerable PrepareInvoiceDelegate(PXAdapter adapter);
@@ -57,51 +57,9 @@ namespace HubspotCustomization
             SOOrder order = (SOOrder)e.Row;
             if (order == null) return;
 
-            // Hide the User Defined Field "AttributeFORMTYPE"
-            //if (e.Cache.Fields.Contains("AttributeFORMTYPE"))
-            //{
-            //    var attributeField = e.Cache.Fields.Where(r => r.Equals("AttributeFORMTYPE")).FirstOrDefault();
-            //    var attributes = e.Cache.GetAttributes("AttributeFORMTYPE").ToList();
-
-            //    //PXUIFieldAttribute.SetVisible(e.Cache, null, attributeField, false);
-            //    //PXUIFieldAttribute.SetVisibility(e.Cache, order, attributeField, PXUIVisibility.Visible);
-            //    PXUIFieldAttribute.SetVisibility(e.Cache, null, attributeField, PXUIVisibility.Visible);
-            //}
-
             //disable SOOrderExt usrHubspotDealID
             PXUIFieldAttribute.SetEnabled<SOOrderExt.usrHubspotDealID>(e.Cache, order, false);
         }
-
-        //protected virtual void _(Events.FieldUpdated<SOLine.inventoryID> e, PXFieldUpdated baseMethod)
-        //{
-        //    baseMethod?.Invoke(e.Cache, e.Args);
-        //    SOLine line = (SOLine)e.Row;
-        //    if (line == null) return;
-
-        //    POVendorInventory defaultVendor = null;
-        //    foreach (POVendorInventory defVen in PXSelect<POVendorInventory,
-        //        Where<POVendorInventory.inventoryID, Equal<Required<POVendorInventory.inventoryID>>>>
-        //        .Select(Base, line.InventoryID))
-        //    {
-        //        if (defVen.IsDefault == true)
-        //        {
-        //            defaultVendor = defVen;
-        //            break;
-        //        }
-        //    }
-
-        //    Location location = PXSelect<Location,
-        //        Where<Location.bAccountID, Equal<Required<Location.bAccountID>>,
-        //            And<Location.locationID, Equal<Required<Location.locationID>>>>>
-        //        .Select(Base, defaultVendor?.VendorID, defaultVendor?.VendorLocationID);
-
-
-        //    SOLineExt lineExt = line.GetExtension<SOLineExt>();
-        //    lineExt.UsrVendorID = null;//defaultVendor?.VendorID;
-        //    lineExt.UsrVendorLocationID = null;// defaultVendor?.VendorLocationID;
-
-        //    lineExt.UsrVendorAddress = null;
-        //}
 
         public void CheckItemsForFlaggedNonStockItem()
         {
@@ -143,72 +101,6 @@ namespace HubspotCustomization
                 }
             }
         }
-
-
-        //protected virtual void _(Events.FieldUpdated<SOLineExt.usrVendorID> e, PXFieldUpdated baseMethod)
-        //{
-        //    baseMethod?.Invoke(e.Cache, e.Args);
-        //    SOLine line = (SOLine)e.Row;
-        //    if (line == null) return;
-
-        //    POVendorInventory vendorInv = PXSelect<POVendorInventory,
-        //        Where<POVendorInventory.inventoryID, Equal<Required<SOLine.inventoryID>>,
-        //            And<POVendorInventory.vendorID, Equal<Required<SOLine.vendorID>>>>>
-        //        .Select(Base, line.InventoryID, line.VendorID);
-
-        //    SOLineExt lineExt = line.GetExtension<SOLineExt>();
-        //    lineExt.UsrVendorLocationID = vendorInv?.VendorLocationID;
-
-        //    Location location = PXSelect<Location,
-        //        Where<Location.bAccountID, Equal<Required<Location.bAccountID>>,
-        //            And<Location.locationID, Equal<Required<Location.locationID>>>>>
-        //        .Select(Base, vendorInv?.VendorID, vendorInv?.VendorLocationID);
-        //    Address address = PXSelect<Address,
-        //        Where<Address.bAccountID, Equal<Required<Address.bAccountID>>>>
-        //        .Select(Base, vendorInv?.VendorID);
-
-        //    if (address != null)
-        //    {
-        //        lineExt.UsrVendorAddress = string.Format("{0}{1}{2}, {3} {4}",
-        //            address.AddressLine1 ?? "",
-        //            string.IsNullOrWhiteSpace(address.AddressLine2) ? "" : " " + address.AddressLine2,
-        //            string.IsNullOrWhiteSpace(address.City) ? "" : ", " + address.City,
-        //            address.State ?? "",
-        //            address.PostalCode ?? ""
-        //        ).Trim();
-        //    }
-        //    else
-        //    {
-        //        lineExt.UsrVendorAddress = null;
-        //    }
-        //}
-
-        //protected virtual void _(Events.FieldUpdated<SOLineExt.usrVendorLocationID> e, PXFieldUpdated baseMethod)
-        //{
-        //    baseMethod?.Invoke(e.Cache, e.Args);
-        //    SOLine line = (SOLine)e.Row;
-        //    if (line == null) return;
-        //    SOLineExt lineExt = line.GetExtension<SOLineExt>();
-
-        //    Address address = PXSelect<Address,
-        //        Where<Address.bAccountID, Equal<Required<Address.bAccountID>>>>
-        //        .Select(Base, lineExt?.UsrVendorID);
-
-        //    if (address != null)
-        //    {
-        //        lineExt.UsrVendorAddress = string.Format("{0}{1}{2}, {3} {4}",
-        //            address.AddressLine1 ?? "",
-        //            string.IsNullOrWhiteSpace(address.AddressLine2) ? "" : " " + address.AddressLine2,
-        //            string.IsNullOrWhiteSpace(address.City) ? "" : ", " + address.City,
-        //            address.State ?? "",
-        //            address.PostalCode ?? ""
-        //        ).Trim();
-        //    }
-        //    else
-        //    {
-        //        lineExt.UsrVendorAddress = null;
-        //    }
-        //}
 
         #endregion
     }

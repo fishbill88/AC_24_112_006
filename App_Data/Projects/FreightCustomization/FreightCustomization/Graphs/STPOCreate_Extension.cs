@@ -24,7 +24,7 @@ using CRLocation = PX.Objects.CR.Standalone.Location;
 using SOLine5 = PX.Objects.PO.POOrderEntry.SOLine5;
 using SOLineSplit3 = PX.Objects.PO.POOrderEntry.SOLineSplit3;
 
-namespace PX.Objects.PO
+namespace FreightCustomization
 {
     public sealed class STPOCreate_Extension : PXGraphExtension<PX.Objects.PO.POCreate>
     {
@@ -32,36 +32,36 @@ namespace PX.Objects.PO
 
         #region Event Handlers
 
-        public delegate void LinkPOLineToSOLineSplitDelegate(POOrderEntry docgraph, SOLineSplit3 soline, POLine line);
-        [PXOverride]
-        public void LinkPOLineToSOLineSplit(POOrderEntry docgraph, SOLineSplit3 soline, POLine line, LinkPOLineToSOLineSplitDelegate baseMethod)
-        {
-            baseMethod(docgraph, soline, line);
-            docgraph.Save.Press();
-            SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-                  And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-                                  .Select(Base, soline.OrderType, soline.OrderNbr, soline.LineNbr);
-            if (soLine != null)
-            {
-                SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
-                SOOrderEntry sograph = PXGraph.CreateInstance<SOOrderEntry>();
-                sograph.Clear();
-                sograph.Document.Current = soOrder;
-                SOSetup sosetup = PXSelect<SOSetup>.Select(Base);
-                SOSetupExt soExt = sosetup.GetExtension<SOSetupExt>();
-                CopyNotesAndAttachmentsToPO<SOOrder, SOLine>(docgraph,
-                                                             sograph,
-                                                             soOrder,
-                                                             new List<SOLine> { soLine },
-                                                             docgraph.CurrentDocument.Current,
-                                                             new List<POLine> { line },
-                                                             (soExt.UsrCopyHeaderNotesToPO ?? false),
-                                                             (soExt.UsrCopyHeaderAttachmentsToPO ?? false),
-                                                             (soExt.UsrCopyLineNotesToPO ?? false),
-                                                             (soExt.UsrCopyLineAttachmentsToPO ?? false));
+        //public delegate void LinkPOLineToSOLineSplitDelegate(POOrderEntry docgraph, SOLineSplit3 soline, POLine line);
+        //[PXOverride]
+        //public void LinkPOLineToSOLineSplit(POOrderEntry docgraph, SOLineSplit3 soline, POLine line, LinkPOLineToSOLineSplitDelegate baseMethod)
+        //{
+        //    baseMethod(docgraph, soline, line);
+        //    docgraph.Save.Press();
+        //    SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+        //          And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+        //                          .Select(Base, soline.OrderType, soline.OrderNbr, soline.LineNbr);
+        //    if (soLine != null)
+        //    {
+        //        SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
+        //        SOOrderEntry sograph = PXGraph.CreateInstance<SOOrderEntry>();
+        //        sograph.Clear();
+        //        sograph.Document.Current = soOrder;
+        //        SOSetup sosetup = PXSelect<SOSetup>.Select(Base);
+        //        SOSetupExt soExt = sosetup.GetExtension<SOSetupExt>();
+        //        CopyNotesAndAttachmentsToPO<SOOrder, SOLine>(docgraph,
+        //                                                     sograph,
+        //                                                     soOrder,
+        //                                                     new List<SOLine> { soLine },
+        //                                                     docgraph.CurrentDocument.Current,
+        //                                                     new List<POLine> { line },
+        //                                                     (soExt.UsrCopyHeaderNotesToPO ?? false),
+        //                                                     (soExt.UsrCopyHeaderAttachmentsToPO ?? false),
+        //                                                     (soExt.UsrCopyLineNotesToPO ?? false),
+        //                                                     (soExt.UsrCopyLineAttachmentsToPO ?? false));
               
-            }
-        }
+        //    }
+        //}
 
         public delegate String LinkPOLineToBlanketDelegate(POLine line, POOrderEntry docgraph, POFixedDemand demand, SOLineSplit3 soline, ref PXErrorLevel ErrorLevel, ref String ErrorText);
         [PXOverride]
@@ -73,10 +73,10 @@ namespace PX.Objects.PO
             SOOrder soOrder = PXSelect<SOOrder,
                 Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
                     And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
-                .Select(Base, soline.OrderType, soline.OrderNbr);
-            SOOrderExt orderExt = soOrder.GetExtension<SOOrderExt>();
+                .Select(Base, soline?.OrderType, soline?.OrderNbr);
+            SOOrderExt orderExt = soOrder?.GetExtension<SOOrderExt>();
 
-            docgraph?.Document.Cache.SetValueExt<POOrderExt.usrShippingInstructions>(line, orderExt.UsrShippingInstructions);
+            docgraph?.Document.Cache.SetValueExt<POOrderExt.usrShippingInstructions>(line, orderExt?.UsrShippingInstructions);
 
             return result;
         }

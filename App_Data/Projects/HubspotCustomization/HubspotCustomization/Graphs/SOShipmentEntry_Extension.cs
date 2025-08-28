@@ -103,31 +103,6 @@ namespace HubspotCustomization
 
             return hasDropShip;
         }
-
-        #endregion
-
-        #region Event Handlers
-
-        protected void SOShipment_RowSelected(PXCache cache, PXRowSelectedEventArgs e, PXRowSelected InvokeBaseHandler)
-        {
-            if (InvokeBaseHandler != null)
-                InvokeBaseHandler(cache, e);
-
-            if (e.Row == null) return;
-
-            var shipment = (SOShipment)e.Row;
-
-            // Manual check based on business rules
-            bool canCreateInvoice = CanCreateInvoice(shipment);
-            bool canCreateDropship = CanCreateDropshipInvoice(shipment);
-
-            createCombinedInvoice.SetEnabled(canCreateInvoice || canCreateDropship);
-
-            // Hide the original actions
-            Base.createInvoice.SetVisible(false);
-            Base.createDropshipInvoice.SetVisible(false);
-        }
-
         protected virtual bool CanCreateInvoice(SOShipment shipment)
         {
             // Check if shipment is confirmed and not already invoiced
@@ -157,6 +132,31 @@ namespace HubspotCustomization
 
             return hasDropShip;
         }
+
+        #endregion
+
+        #region Event Handlers
+
+        protected void SOShipment_RowSelected(PXCache cache, PXRowSelectedEventArgs e, PXRowSelected InvokeBaseHandler)
+        {
+            if (InvokeBaseHandler != null)
+                InvokeBaseHandler(cache, e);
+
+            if (e.Row == null) return;
+
+            var shipment = (SOShipment)e.Row;
+
+            // Manual check based on business rules
+            bool canCreateInvoice = CanCreateInvoice(shipment);
+            bool canCreateDropship = CanCreateDropshipInvoice(shipment);
+
+            createCombinedInvoice.SetEnabled(canCreateInvoice || canCreateDropship);
+
+            // Hide the original actions
+            Base.createInvoice.SetVisible(false);
+            Base.createDropshipInvoice.SetVisible(false);
+        }
+
 
         #endregion
 

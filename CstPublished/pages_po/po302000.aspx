@@ -87,7 +87,7 @@
             <px:PXCheckBox ID="chkShowPurchaseOrdersTab" runat="server" DataField="ShowPurchaseOrdersTab" ></px:PXCheckBox>
             <px:PXCheckBox ID="chkShowPutAwayHistoryTab" runat="server" DataField="ShowPutAwayHistoryTab" ></px:PXCheckBox>
             <px:PXCheckBox ID="chkShowLandedCostsTab" runat="server" DataField="ShowLandedCostsTab" ></px:PXCheckBox>
-	<px:PXCheckBox runat="server" ID="edUsrHasShippingTab" DataField="UsrHasShippingTab" CommitChanges="True" /></Template>
+	<px:PXCheckBox runat="server" CommitChanges="True" DataField="UsrHasShippingTab" ID="edUsrHasShippingTab" /></Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
@@ -291,16 +291,16 @@
             </px:PXTabItem>
 	<px:PXTabItem Text="Shipping" BindingContext="form" VisibleExp="DataControls[&quot;edUsrHasShippingTab&quot;].Value == 1">
 		<Template>
-			<px:PXFormView runat="server" ID="formShipping" DataMember="CurrentDocument" SkinID="Transparent">
+			<px:PXFormView runat="server" SkinID="Transparent" ID="formShipping" DataMember="CurrentDocument">
 				<Template>
-					<px:PXLayoutRule runat="server" ID="CstPXLayoutRule2" StartRow="True" />
-					<px:PXSelector runat="server" ID="edUsrFOBPoint" DataField="UsrFOBPoint" />
-					<px:PXSelector runat="server" ID="edUsrShipVia" DataField="UsrShipVia" />
-					<px:PXSelector runat="server" ID="edUsrShipTermsID" DataField="UsrShipTermsID" />
-					<px:PXNumberEdit runat="server" ID="edUsrFreightCost" DataField="UsrFreightCost" />
-					<px:PXNumberEdit runat="server" ID="edUsrFreightPrice" DataField="UsrFreightPrice" />
-					<px:PXTextEdit runat="server" ID="edUsrCarrierAccount" DataField="UsrCarrierAccount" />
-					<px:PXTextEdit runat="server" ID="edUsrTrackingNumber" DataField="UsrTrackingNumber" /></Template></px:PXFormView></Template></px:PXTabItem>
+					<px:PXLayoutRule runat="server" StartRow="True" ID="rth2CstPXLayoutRule2" />
+					<px:PXSelector runat="server" DataField="UsrFOBPoint" ID="edUsrFOBPoint" />
+					<px:PXSelector runat="server" DataField="UsrShipVia" ID="edUsrShipVia" />
+					<px:PXSelector runat="server" DataField="UsrShipTermsID" ID="edUsrShipTermsID" />
+					<px:PXNumberEdit runat="server" DataField="UsrFreightCost" ID="edUsrFreightCost" />
+					<px:PXNumberEdit runat="server" DataField="UsrFreightPrice" ID="edUsrFreightPrice" />
+					<px:PXTextEdit runat="server" DataField="UsrCarrierAccount" ID="edUsrCarrierAccount" />
+					<px:PXTextEdit runat="server" DataField="UsrTrackingNumber" ID="edUsrTrackingNumber" /></Template></px:PXFormView></Template></px:PXTabItem>
 			<px:PXTabItem Text="Put Away" VisibleExp="DataControls[&quot;chkShowPutAwayHistoryTab&quot;].Value == 1" BindingContext="form">
 				<Template>
 					<px:PXGrid ID="formTransfers" runat="server" DataSourceID="ds" Width="100%" SkinID="Details" BorderStyle="None" AdjustPageSize="Auto">

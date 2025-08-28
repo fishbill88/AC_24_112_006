@@ -18,29 +18,28 @@ namespace POInventoryCustomization
                                   .Select(Base, soline.OrderType, soline.OrderNbr, soline.LineNbr);
             if (soLine != null)
             {
-                SOLineExt lineExt = soLine.GetExtension<SOLineExt>();
-                POLineExt poLineExt = line.GetExtension<POLineExt>();
+                SOLineExt lineExt = soLine?.GetExtension<SOLineExt>();
+                POLineExt poLineExt = line?.GetExtension<POLineExt>();
 
 
+                SOOrder soOrder = SOOrder.PK.Find(Base, soline?.OrderType, soline?.OrderNbr);
 
-                SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
 
+                SOOrderType orderType = SOOrderType.PK.Find(Base, soOrder?.OrderType);
+                SOOrderTypeExt typeExt = orderType?.GetExtension<SOOrderTypeExt>();
+                if (typeExt?.UsrShowVendorID ?? false)
+                    poLineExt.UsrVendorID = lineExt?.UsrVendorID;
 
-                SOOrderType orderType = SOOrderType.PK.Find(Base, soOrder.OrderType);
-                SOOrderTypeExt typeExt = orderType.GetExtension<SOOrderTypeExt>();
-                if (typeExt.UsrShowVendorID ?? false)
-                    poLineExt.UsrVendorID = lineExt.UsrVendorID;
+                if (typeExt?.UsrShowVendorLocationID ?? false)
+                    poLineExt.UsrVendorLocationID = lineExt?.UsrVendorLocationID;
 
-                if (typeExt.UsrShowVendorLocationID ?? false)
-                    poLineExt.UsrVendorLocationID = lineExt.UsrVendorLocationID;
+                if (typeExt?.UsrShowVendorAddress ?? false)
+                    poLineExt.UsrVendorAddress = lineExt?.UsrVendorAddress;
 
-                if (typeExt.UsrShowVendorAddress ?? false)
-                    poLineExt.UsrVendorAddress = lineExt.UsrVendorAddress;
-
-                poLineExt.UsrItemSpecs = lineExt.UsrItemSpecs;
+                poLineExt.UsrItemSpecs = lineExt?.UsrItemSpecs;
 
                 POOrderExt poOrderExt = docgraph.CurrentDocument.Current.GetExtension<POOrderExt>();
-                poOrderExt.UsrCustomerOrderNbr = soOrder.CustomerOrderNbr;
+                poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
 
             }
 

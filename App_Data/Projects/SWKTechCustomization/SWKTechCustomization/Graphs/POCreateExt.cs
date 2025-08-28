@@ -37,22 +37,22 @@ namespace SWKTechCustomization
             SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
 
             // Overwrite PO Line Unit Cost if SOLine.usrSWKSPCCost has value
-            if (soLineExt != null && (soLineExt.UsrSWKSPCCost ?? 0m) > 0m)
+            if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
             {
                 //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt.UsrSWKSPCCost);
+                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);
             }
             else
             {
                 //line.CuryUnitCost = demand.EffPrice;
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine.CuryUnitCost);
+                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
                 //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
             }
 
             if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && poLineExt != null)
             {
                 //poLineExt.UsrSWKSPCCode = soLineExt.UsrSWKSPCCode;
-                docgraph?.Transactions.Cache.SetValueExt<POLineExt.usrSWKSPCCode>(line, soLineExt.UsrSWKSPCCode);
+                docgraph?.Transactions.Cache.SetValueExt<POLineExt.usrSWKSPCCode>(line, soLineExt?.UsrSWKSPCCode);
             }
             
             return result;
@@ -74,6 +74,18 @@ namespace SWKTechCustomization
             {
                 demand.EffPrice = customVendorPrice;
             }
+
+            SOLine sOLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+                  And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+                                  .Select(Base, demand?.OrderType, demand?.OrderNbr, demand?.LineNbr);
+
+            POInventoryCustomization.SOLineExt soLineExt = sOLine?.GetExtension<POInventoryCustomization.SOLineExt>();
+            if(soLineExt?.UsrVendorID != null && soLineExt?.UsrVendorLocationID != null)
+            {
+                demand.VendorID = soLineExt?.UsrVendorID;
+                demand.VendorLocationID = soLineExt?.UsrVendorLocationID;
+            }
+
         }
 
         [PXMergeAttributes(Method = MergeMethod.Merge)]

@@ -346,17 +346,25 @@
 		<px:PXSelector ID="edPrmCntID" runat="server" DataField="PrimaryContactID" AutoRefresh="true" DisplayMode="Text" CommitChanges="True" AllowEdit="True" OnEditRecord="edPrmCntID_EditRecord" >
 		<GridProperties FastFilterFields="DisplayName, Salutation, Phone1, EMail" />	
 	</px:PXSelector>
-	<px:PXButton runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardOffline" ID="edContactTeamsCardOffline" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
-		<Images Normal="svg:teams@teams_offline" />
+	<px:PXButton Text="
+    &lt;Images Normal=&quot;svg:teams@teams_offline&quot; />
+  " runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardOffline" ID="edContactTeamsCardOffline" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
+		<Images Normal="svg:teams@teams_offline" ></Images>
 	</px:PXButton>
-	<px:PXButton runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardAvailable" ID="edContactTeamsCardAvailable" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
-		<Images Normal="svg:teams@teams_available" />
+	<px:PXButton Text="
+    &lt;Images Normal=&quot;svg:teams@teams_available&quot; />
+  " runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardAvailable" ID="edContactTeamsCardAvailable" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
+		<Images Normal="svg:teams@teams_available" ></Images>
 	</px:PXButton>
-	<px:PXButton runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardBusy" ID="edContactTeamsCardBusy" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
-		<Images Normal="svg:teams@teams_busy" />
+	<px:PXButton Text="
+    &lt;Images Normal=&quot;svg:teams@teams_busy&quot; />
+  " runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardBusy" ID="edContactTeamsCardBusy" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
+		<Images Normal="svg:teams@teams_busy" ></Images>
 	</px:PXButton>
-	<px:PXButton runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardAway" ID="edContactTeamsCardAway" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
-		<Images Normal="svg:teams@teams_away" />
+	<px:PXButton Text="
+    &lt;Images Normal=&quot;svg:teams@teams_away&quot; />
+  " runat="server" CommandSourceID="ds" CommandName="ContactTeamsCardAway" ID="edContactTeamsCardAway" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
+		<Images Normal="svg:teams@teams_away" ></Images>
 	</px:PXButton>
 <px:PXLayoutRule runat="server" Merge="False" />
 	</Template>
@@ -711,11 +719,11 @@
 										</px:PXGridLevel>
 									</Levels>
 								</px:PXGrid>
-							<px:PXLayoutRule runat="server" ID="CstPXLayoutRule1" StartColumn="True" />
-							<px:PXFormView runat="server" ID="CstFormView2" DataMember="CurrentCustomer" SkinID="Transparent">
+							<px:PXLayoutRule runat="server" StartColumn="True" ID="rth_CstPXLayoutRule1" />
+							<px:PXFormView runat="server" SkinID="Transparent" ID="rth_CstFormView2" DataMember="CurrentCustomer">
 								<Template>
-									<px:PXTextEdit runat="server" ID="edUsrShippingInstructions" DataField="UsrShippingInstructions" Height="350" Width="300" LabelWidth="200" TextMode="MultiLine" />
-									<px:PXLayoutRule runat="server" ID="CstPXLayoutRule5" StartRow="True" /></Template></px:PXFormView></Template>
+									<px:PXTextEdit runat="server" TextMode="MultiLine" LabelWidth="200" Width="300" Height="350" DataField="UsrShippingInstructions" ID="edUsrShippingInstructions" />
+									<px:PXLayoutRule runat="server" StartRow="True" ID="rth_CstPXLayoutRule5" /></Template></px:PXFormView></Template>
 					</px:PXFormView>
 				</Template>
 			</px:PXTabItem>
@@ -1695,17 +1703,25 @@ var addressLookupPanel = (function() {
 			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="M" />
 			<px:PXTextEdit ID="edDisplayName" runat="server" DataField="DisplayName" SuppressLabel="True" Width="190px" />
 			<px:PXLayoutRule runat="server" Merge="True" LabelsWidth="XXS" ControlSize="XXS" />
-			<px:PXButton ID="edStatusIconContactOffline" runat="server" CommandSourceID="ds" CommandName="StatusIconContactOffline" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@offline" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@offline&quot; />
+      " ID="edStatusIconContactOffline" runat="server" CommandSourceID="ds" CommandName="StatusIconContactOffline" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@offline" ></Images>
 			</px:PXButton>
-			<px:PXButton ID="edStatusIconContactAvailable" runat="server" CommandSourceID="ds" CommandName="StatusIconContactAvailable" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@available" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@available&quot; />
+      " ID="edStatusIconContactAvailable" runat="server" CommandSourceID="ds" CommandName="StatusIconContactAvailable" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@available" ></Images>
 			</px:PXButton>
-			<px:PXButton ID="edStatusIconContactBusy" runat="server" CommandSourceID="ds" CommandName="StatusIconContactBusy" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@busy" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@busy&quot; />
+      " ID="edStatusIconContactBusy" runat="server" CommandSourceID="ds" CommandName="StatusIconContactBusy" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@busy" ></Images>
 			</px:PXButton>
-			<px:PXButton ID="edStatusIconContactAway" runat="server" CommandSourceID="ds" CommandName="StatusIconContactAway" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@away" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@away&quot; />
+      " ID="edStatusIconContactAway" runat="server" CommandSourceID="ds" CommandName="StatusIconContactAway" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@away" ></Images>
 			</px:PXButton>
 			<px:PXTextEdit ID="edStatus" runat="server" DataField="TeamsStatus"  ControlSize="M" CssClass="teamsStatusLabel" SuppressLabel="True" Width="132px" />
 			<px:PXLayoutRule runat="server" Merge="False" StartRow="True" StartColumn="True" LabelsWidth="S" ControlSize="M" />
@@ -1717,14 +1733,20 @@ var addressLookupPanel = (function() {
 	</px:PXFormView>
 
 	<div style="padding-left:74px; text-align: center;">
-		<px:PXButton ID="edContactChat" runat="server" CommandSourceID="ds" CommandName="ContactChat" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Contact Chat">
-			<Images Normal="svg:teams@teams_chat" />
+		<px:PXButton Text="
+      &lt;Images Normal=&quot;svg:teams@teams_chat&quot; />
+    " ID="edContactChat" runat="server" CommandSourceID="ds" CommandName="ContactChat" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Contact Chat">
+			<Images Normal="svg:teams@teams_chat" ></Images>
 		</px:PXButton>
-		<px:PXButton ID="edContactCall" runat="server" CommandSourceID="ds" CommandName="ContactCall" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Contact Call">
-			<Images Normal="svg:teams@teams_call" />
+		<px:PXButton Text="
+      &lt;Images Normal=&quot;svg:teams@teams_call&quot; />
+    " ID="edContactCall" runat="server" CommandSourceID="ds" CommandName="ContactCall" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Contact Call">
+			<Images Normal="svg:teams@teams_call" ></Images>
 		</px:PXButton>
-		<px:PXButton ID="edContactMeeting" runat="server" CommandSourceID="ds" CommandName="ContactMeeting" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Contact Meeting">
-			<Images Normal="svg:teams@teams_event" />
+		<px:PXButton Text="
+      &lt;Images Normal=&quot;svg:teams@teams_event&quot; />
+    " ID="edContactMeeting" runat="server" CommandSourceID="ds" CommandName="ContactMeeting" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Contact Meeting">
+			<Images Normal="svg:teams@teams_event" ></Images>
 		</px:PXButton>
 	</div>
 </px:PXSmartPanel>
@@ -1739,17 +1761,25 @@ var addressLookupPanel = (function() {
 			<px:PXLayoutRule runat="server" StartColumn="True" ControlSize="M" />
 			<px:PXTextEdit ID="edDisplayName" runat="server" DataField="DisplayName" SuppressLabel="True" Width="190px" />
 			<px:PXLayoutRule runat="server" Merge="True" LabelsWidth="XXS" ControlSize="XXS" />
-			<px:PXButton ID="edStatusIconOwnerOffline" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerOffline" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@offline" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@offline&quot; />
+      " ID="edStatusIconOwnerOffline" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerOffline" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@offline" ></Images>
 			</px:PXButton>
-			<px:PXButton ID="edStatusIconOwnerAvailable" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerAvailable" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@available" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@available&quot; />
+      " ID="edStatusIconOwnerAvailable" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerAvailable" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@available" ></Images>
 			</px:PXButton>
-			<px:PXButton ID="edStatusIconOwnerBusy" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerBusy" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@busy" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@busy&quot; />
+      " ID="edStatusIconOwnerBusy" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerBusy" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@busy" ></Images>
 			</px:PXButton>
-			<px:PXButton ID="edStatusIconOwnerAway" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerAway" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
-				<Images Normal="svg:teams@away" />
+			<px:PXButton Text="
+        &lt;Images Normal=&quot;svg:teams@away&quot; />
+      " ID="edStatusIconOwnerAway" runat="server" CommandSourceID="ds" CommandName="StatusIconOwnerAway" CssClass="Button teamsImageButton teamsStatusIcon" Width="32" Height="32">
+				<Images Normal="svg:teams@away" ></Images>
 			</px:PXButton>
 			<px:PXTextEdit ID="edStatus" runat="server" DataField="TeamsStatus" ControlSize="M" CssClass="teamsStatusLabel" SuppressLabel="True" Width="132px" />
 			<px:PXLayoutRule runat="server" Merge="False" StartRow="True" StartColumn="True" LabelsWidth="S" ControlSize="M" />
@@ -1761,14 +1791,20 @@ var addressLookupPanel = (function() {
 	</px:PXFormView>
 
 	<div style="padding-left:74px; text-align: center;">
-		<px:PXButton ID="edOwnerChat" runat="server" CommandSourceID="ds" CommandName="OwnerChat" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Teams Chat">
-			<Images Normal="svg:teams@teams_chat" />
+		<px:PXButton Text="
+      &lt;Images Normal=&quot;svg:teams@teams_chat&quot; />
+    " ID="edOwnerChat" runat="server" CommandSourceID="ds" CommandName="OwnerChat" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Teams Chat">
+			<Images Normal="svg:teams@teams_chat" ></Images>
 		</px:PXButton>
-		<px:PXButton ID="edOwnerCall" runat="server" CommandSourceID="ds" CommandName="OwnerCall" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Teams Call">
-			<Images Normal="svg:teams@teams_call" />
+		<px:PXButton Text="
+      &lt;Images Normal=&quot;svg:teams@teams_call&quot; />
+    " ID="edOwnerCall" runat="server" CommandSourceID="ds" CommandName="OwnerCall" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Teams Call">
+			<Images Normal="svg:teams@teams_call" ></Images>
 		</px:PXButton>
-		<px:PXButton ID="edOwnerMeeting" runat="server" CommandSourceID="ds" CommandName="OwnerMeeting" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Teams Meeting">
-			<Images Normal="svg:teams@teams_event" />
+		<px:PXButton Text="
+      &lt;Images Normal=&quot;svg:teams@teams_event&quot; />
+    " ID="edOwnerMeeting" runat="server" CommandSourceID="ds" CommandName="OwnerMeeting" DialogResult="OK" CssClass="Button teamsLargeButton" width="40" height="50" ToolTip="Open Teams Meeting">
+			<Images Normal="svg:teams@teams_event" ></Images>
 		</px:PXButton>
 	</div>
 </px:PXSmartPanel>

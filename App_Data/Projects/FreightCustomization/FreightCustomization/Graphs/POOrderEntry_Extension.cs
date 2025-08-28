@@ -53,7 +53,7 @@ namespace FreightCustomization
                     poExt.UsrShowFreightCost = sOSetupExt.UsrPrepayAndAdd == soOrder.ShipTermsID ||
                        sOSetupExt.UsrFreeFreightAllowed == soOrder.ShipTermsID;
                     poExt.UsrShowFreightPrice = sOSetupExt.UsrFreeFreightAllowed == soOrder.ShipTermsID;
-                    poExt.UsrShippingInstructions = sOOrderExt.UsrShippingInstructions;
+                    //poExt.UsrShippingInstructions = sOOrderExt.UsrShippingInstructions;
                 }
             }
             baseMethod?.Invoke(e.Cache, e.Args);

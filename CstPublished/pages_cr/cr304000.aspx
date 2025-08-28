@@ -34,22 +34,22 @@
 			<px:PXLayoutRule runat="server" Merge="True" ></px:PXLayoutRule>
             <px:PXSelector CommitChanges="True" ID="edContactID" runat="server" DataField="ContactID" TextField="displayName" AllowEdit="True" AutoRefresh="True" TextMode="Search" DisplayMode="Text" FilterByAllFields="True" edit="1" OnEditRecord="edContactID_EditRecord"></px:PXSelector>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_offline&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_offline&quot; />
       " runat="server" ID="edContactTeamsCardOffline" CommandSourceID="ds" CommandName="ContactTeamsCardOffline" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_offline" ></Images>
 			</px:PXButton>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_available&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_available&quot; />
       " runat="server" ID="edContactTeamsCardAvailable" CommandSourceID="ds" CommandName="ContactTeamsCardAvailable" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_available" ></Images>
 			</px:PXButton>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_busy&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_busy&quot; />
       " runat="server" ID="edContactTeamsCardBusy" CommandSourceID="ds" CommandName="ContactTeamsCardBusy" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_busy" ></Images>
 			</px:PXButton>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_away&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_away&quot; />
       " runat="server" ID="edContactTeamsCardAway" CommandSourceID="ds" CommandName="ContactTeamsCardAway" CssClass="Button teamsImageButton" Style="margin-left: 28px" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_away" ></Images>
 			</px:PXButton>
@@ -58,22 +58,22 @@
 			<px:PXLayoutRule runat="server" Merge="True" ></px:PXLayoutRule>
             <px:PXSelector CommitChanges="True" ID="edOwnerID" runat="server" DataField="OwnerID" TextMode="Search" DisplayMode="Text" FilterByAllFields="True" AutoRefresh="true" ></px:PXSelector>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_offline&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_offline&quot; />
       " runat="server" ID="edOwnerTeamsCardOffline" CommandSourceID="ds" CommandName="OwnerTeamsCardOffline" CssClass="Button teamsImageButton" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_offline" ></Images>
 			</px:PXButton>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_available&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_available&quot; />
       " runat="server" ID="edOwnerTeamsCardAvailable" CommandSourceID="ds" CommandName="OwnerTeamsCardAvailable" CssClass="Button teamsImageButton" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_available" ></Images>
 			</px:PXButton>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_busy&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_busy&quot; />
       " runat="server" ID="edOwnerTeamsCardBusy" CommandSourceID="ds" CommandName="OwnerTeamsCardBusy" CssClass="Button teamsImageButton" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_busy" ></Images>
 			</px:PXButton>
 			<px:PXButton Text="
-        &lt;Images Normal=&quot;svg:teams@teams_away&quot; >&lt;/Images>
+        &lt;Images Normal=&quot;svg:teams@teams_away&quot; />
       " runat="server" ID="edOwnerTeamsCardAway" CommandSourceID="ds" CommandName="OwnerTeamsCardAway" CssClass="Button teamsImageButton" Width="20" Height="24">
 				<Images Normal="svg:teams@teams_away" ></Images>
 			</px:PXButton>
@@ -88,8 +88,8 @@
             <px:PXNumberEdit ID="edTotalAmount" runat="server" DataField="TotalAmount" CommitChanges="True" Visible="false"></px:PXNumberEdit> 
             <px:PXNumberEdit ID="edCuryProductsAmount" runat="server" DataField="CuryProductsAmount" Enabled="False"></px:PXNumberEdit>        
             <px:PXCheckBox ID="chkServiceManagement" runat="server" DataField="ChkServiceManagement" ></px:PXCheckBox>
-	<px:PXLayoutRule runat="server" ID="STCstPXLayoutRulehp1" StartColumn="True" ControlSize="M" LabelsWidth="SM" />
-	<px:PXTextEdit runat="server" ID="edUsrHubspotDealID" DataField="UsrHubspotDealID" TextMode="MultiLine" Height="60px" /></Template>
+	<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" ID="STCstPXLayoutRulehp1" />
+	<px:PXTextEdit runat="server" TextMode="MultiLine" Height="60px" DataField="UsrHubspotDealID" ID="edUsrHubspotDealID" /></Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">

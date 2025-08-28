@@ -8,6 +8,8 @@ namespace NoteAttachmentsCustomization
 {
     public class POOrderEntry_Extension : PXGraphExtension<PX.Objects.PO.POOrderEntry>
     {
+        public static bool IsActive() => true;
+
         public PXSetup<SOSetup> sosetup;
         public PXSelect<SOOrder> allsoorder;
 

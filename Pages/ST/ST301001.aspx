@@ -3,7 +3,7 @@
 <%@ MasterType VirtualPath="~/MasterPages/FormTab.master" %>
 
 <asp:Content ID="cont1" ContentPlaceHolderID="phDS" runat="Server">
-	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%" PrimaryView="Document" TypeName="ItemRequestCustomization.ItemRequestEntry">
+	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%" PrimaryView="Document" TypeName="CompiledVersion.Graphs.ItemRequestEntry">
 		<CallbackCommands>
 		</CallbackCommands>
 	</px:PXDataSource>

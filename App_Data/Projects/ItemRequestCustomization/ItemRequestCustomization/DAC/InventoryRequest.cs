@@ -386,7 +386,7 @@ namespace ItemRequestCustomization
         #region VendorSiteID
         //[PX.Objects.IN.Site(DisplayName = "Default Warehouse", DescriptionField = typeof(INSite.descr),Enabled = false)]
         [PXDBInt]
-        [PXUIField(DisplayName = "Vendor Site ID")]
+        [PXUIField(DisplayName = "Vendor Warehouse")]
         [PXSelector(
             typeof(Search2<INSite.siteID,
                 InnerJoin<Location, On<Location.vSiteID, Equal<INSite.siteID>>>

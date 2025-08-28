@@ -69,7 +69,7 @@
                     <px:PXCheckBox SuppressLabel="True" ID="chkCopyLineFilesToChildOrder" runat="server" DataField="CopyLineFilesToChildOrder" ></px:PXCheckBox>
 
                     <px:PXLayoutRule runat="server" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
-	<px:PXLayoutRule runat="server" ID="stCstPXLayoutRule120as" StartGroup="True" GroupCaption="Vendor Settings" />
+	<px:PXLayoutRule runat="server" ID="rthCstPXLayoutRule1" StartGroup="True" />
 	<px:PXCheckBox runat="server" ID="edUsrShowVendorID" DataField="UsrShowVendorID" />
 	<px:PXCheckBox runat="server" ID="edUsrShowVendorLocationID" DataField="UsrShowVendorLocationID" />
 	<px:PXCheckBox runat="server" ID="edUsrShowVendorAddress" DataField="UsrShowVendorAddress" />

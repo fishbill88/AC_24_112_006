@@ -182,9 +182,9 @@
             <px:PXDateTimeEdit CommitChanges="True" ID="edOrderDate" runat="server" DataField="OrderDate" ></px:PXDateTimeEdit>
             <px:PXDateTimeEdit CommitChanges="True" ID="edExpectedDate" runat="server" DataField="ExpectedDate" ></px:PXDateTimeEdit>
             <px:PXDateTimeEdit ID="edExpirationDate" runat="server" DataField="ExpirationDate" CommitChanges="true" ></px:PXDateTimeEdit>
-	<px:PXLayoutRule runat="server" ID="CstLayoutRule2" ColumnSpan="2" />
-	<px:PXTextEdit runat="server" ID="edUsrCustomerOrderNbr" DataField="UsrCustomerOrderNbr" />
-	<px:PXLayoutRule runat="server" ID="CstLayoutRule3" />
+	<px:PXLayoutRule runat="server" ColumnSpan="2" ID="rth_CstLayoutRule2" />
+	<px:PXTextEdit runat="server" DataField="UsrCustomerOrderNbr" ID="edUsrCustomerOrderNbr" />
+	<px:PXLayoutRule runat="server" ID="rth_CstLayoutRule3" />
             <px:PXLayoutRule runat="server" ColumnSpan="2" ></px:PXLayoutRule>
             <px:PXTextEdit ID="edOrderDesc" runat="server" DataField="OrderDesc" ></px:PXTextEdit>
             <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="XM" ></px:PXLayoutRule>
@@ -203,12 +203,12 @@
             <px:PXNumberEdit ID="edCuryOrderTotal" runat="server" DataField="CuryOrderTotal" Enabled="False" ></px:PXNumberEdit>
             <px:PXNumberEdit CommitChanges="True" ID="edCuryControlTotal" runat="server" DataField="CuryControlTotal" ></px:PXNumberEdit>
             <px:PXNumberEdit ID="edCuryRetainageTotal" runat="server" DataField="CuryRetainageTotal" Enabled="False" ></px:PXNumberEdit>
-	<px:PXLayoutRule runat="server" ID="CstPXLayoutRule3" StartColumn="True" />
-	<px:PXNumberEdit runat="server" ID="edUsrRTHDetailTotal" DataField="UsrRTHDetailTotal" Enabled="False" />
-	<px:PXNumberEdit runat="server" ID="edUsrRTHLineDiscount" DataField="UsrRTHLineDiscount" Enabled="False" />
-	<px:PXNumberEdit runat="server" ID="edUsrRTHDocDiscount" DataField="UsrRTHDocDiscount" Enabled="False" />
-	<px:PXNumberEdit runat="server" ID="edUsrRTHTaxTotal" DataField="UsrRTHTaxTotal" Enabled="False" />
-	<px:PXNumberEdit runat="server" ID="edUsrRTHOrderTotal" DataField="UsrRTHOrderTotal" Enabled="False" /></Template>
+	<px:PXLayoutRule runat="server" StartColumn="True" ID="rth_CstPXLayoutRule3" />
+	<px:PXNumberEdit runat="server" Enabled="False" DataField="UsrRTHDetailTotal" ID="edUsrRTHDetailTotal" />
+	<px:PXNumberEdit runat="server" Enabled="False" DataField="UsrRTHLineDiscount" ID="edUsrRTHLineDiscount" />
+	<px:PXNumberEdit runat="server" Enabled="False" DataField="UsrRTHDocDiscount" ID="edUsrRTHDocDiscount" />
+	<px:PXNumberEdit runat="server" Enabled="False" DataField="UsrRTHTaxTotal" ID="edUsrRTHTaxTotal" />
+	<px:PXNumberEdit runat="server" Enabled="False" DataField="UsrRTHOrderTotal" ID="edUsrRTHOrderTotal" /></Template>
     </px:PXFormView>
 </asp:Content>
 <asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
@@ -249,26 +249,26 @@
                                     <px:PXGridColumn AllowNull="False" DataField="LineType" Type="DropDownList" CommitChanges="True" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="SiteID" DisplayFormat="&gt;AAAAAAAAAA" CommitChanges="True" AllowDragDrop="true"></px:PXGridColumn>
 	<px:PXGridColumn DataField="UsrItemSpecs" Width="280" />
-	<px:PXGridColumn DataField="UsrPrepaymentLine" Width="60" Type="CheckBox" CommitChanges="True" />
+                                    <px:PXGridColumn DataField="TranDesc" ></px:PXGridColumn>
+	<px:PXGridColumn Type="CheckBox" DataField="UsrPrepaymentLine" Width="60" CommitChanges="True" />
 	<px:PXGridColumn DataField="UsrVendorSpecTerms" Width="280" />
 	<px:PXGridColumn DataField="UsrVendorNotes" Width="280" />
-                                    <px:PXGridColumn DataField="TranDesc" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="UOM" DisplayFormat="&gt;aaaaaa" CommitChanges="True" AllowDragDrop="true"></px:PXGridColumn>
                                     <px:PXGridColumn AllowNull="False" DataField="OrderQty" TextAlign="Right" CommitChanges="True" AllowDragDrop="true"></px:PXGridColumn>
                                     <px:PXGridColumn AllowNull="False" DataField="BaseOrderQty" TextAlign="Right" ></px:PXGridColumn>
                                     <px:PXGridColumn AllowNull="False" DataField="OrderedQty" TextAlign="Right" ></px:PXGridColumn>
                                     <px:PXGridColumn AllowNull="False" DataField="NonOrderedQty" TextAlign="Right" ></px:PXGridColumn>
                                     <px:PXGridColumn AllowNull="False" DataField="ReceivedQty" TextAlign="Right" ></px:PXGridColumn>
-	<px:PXGridColumn DataField="UsrSkipPrint" Width="60" Type="CheckBox" />
 	<px:PXGridColumn DataField="UsrSWKRTHCost" Width="100" />
+	<px:PXGridColumn Type="CheckBox" DataField="UsrSkipPrint" Width="60" />
                                     <px:PXGridColumn AllowNull="False" DataField="CuryUnitCost" TextAlign="Right" CommitChanges="true" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="ManualPrice" TextAlign="Center" AllowNull="False" Type="CheckBox" CommitChanges="True"></px:PXGridColumn>   
                                     <px:PXGridColumn AllowNull="False" DataField="CuryLineAmt" TextAlign="Right" CommitChanges="true" ></px:PXGridColumn>
 	<px:PXGridColumn DataField="UsrSWKSPCCode" Width="140" />
-                                    <px:PXGridColumn CommitChanges="True" DataField="SOOrderNbr" AllowShowHide="true" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="SOOrderNbr" AllowShowHide="true" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="SOOrderStatus" AllowShowHide="true" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="SOLineNbr" AllowShowHide="true" ></px:PXGridColumn>
 	<px:PXGridColumn DataField="UsrShippingTerms" Width="70" />
-                                    <px:PXGridColumn CommitChanges="True" DataField="SOLineNbr" AllowShowHide="true" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="SOLinkActive" AllowShowHide="true" Type="CheckBox" TextAlign="Center" CommitChanges="True" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="DiscPct" TextAlign="Right" ></px:PXGridColumn>
 									<px:PXGridColumn DataField="CuryDiscAmt" TextAlign="Right" ></px:PXGridColumn>
@@ -299,8 +299,8 @@
                                     <px:PXGridColumn DataField="OrderType" Visible="False" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="LineNbr" TextAlign="Right" Visible="False" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="SortOrder" TextAlign="Right" Visible="False" ></px:PXGridColumn>
-	<px:PXGridColumn DataField="UsrVendorID" Width="140" />
-	<px:PXGridColumn DataField="UsrVendorLocationID" Width="70" />
+	<px:PXGridColumn DataField="UsrVendorID" Width="140" CommitChanges="True" />
+	<px:PXGridColumn DataField="UsrVendorLocationID" Width="70" CommitChanges="True" />
 	<px:PXGridColumn DataField="UsrVendorAddress" Width="280" />
                                     <px:PXGridColumn DataField="RequestedDate" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="PromisedDate" ></px:PXGridColumn>
@@ -539,11 +539,11 @@
                     <px:PXLayoutRule runat="server" StartGroup="True" GroupCaption="Ship Via:" ></px:PXLayoutRule>
                     <px:PXSelector ID="edFOBPoint" runat="server" DataField="FOBPoint" ></px:PXSelector>
                     <px:PXSelector ID="edShipVia" runat="server" DataField="ShipVia" ></px:PXSelector>
-	<px:PXNumberEdit runat="server" ID="edUsrFreightCost" DataField="UsrFreightCost" />
-	<px:PXSelector runat="server" ID="edUsrShipTermsID" DataField="UsrShipTermsID" />
-	<px:PXNumberEdit runat="server" ID="edUsrFreightPrice" DataField="UsrFreightPrice" />
-	<px:PXTextEdit runat="server" ID="edUsrCustomerAccount" DataField="UsrCustomerAccount" />
-	<px:PXTextEdit runat="server" ID="edUsrShippingInstructions" DataField="UsrShippingInstructions" Height="100" TextMode="MultiLine" /></Template>
+	<px:PXSelector runat="server" DataField="UsrShipTermsID" ID="edUsrShipTermsID" />
+	<px:PXTextEdit runat="server" DataField="UsrCustomerAccount" ID="edUsrCustomerAccount" />
+	<px:PXNumberEdit runat="server" DataField="UsrFreightCost" ID="edUsrFreightCost" />
+	<px:PXNumberEdit runat="server" DataField="UsrFreightPrice" ID="edUsrFreightPrice" />
+	<px:PXTextEdit runat="server" DataField="UsrShippingInstructions" TextMode="MultiLine" Height="100" ID="edUsrShippingInstructions" /></Template>
             </px:PXTabItem>
             <px:PXTabItem Text="Vendor Info">
                 <Template>

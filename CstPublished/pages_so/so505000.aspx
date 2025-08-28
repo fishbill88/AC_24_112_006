@@ -47,7 +47,7 @@
                     <px:PXGridColumn AllowUpdate="False" DataField="CustomerLocationID_Location_descr" ></px:PXGridColumn>
 	<px:PXGridColumn DataField="UsrEmail" Width="280" />
 	<px:PXGridColumn DataField="AttributeFORMTYPE" Width="70" />
-	<px:PXGridColumn DataField="AttributeBILLCOMPLE" Width="60" Type="CheckBox" />
+	<px:PXGridColumn Type="CheckBox" DataField="AttributeBILLCOMPLE" Width="60" />
                     <px:PXGridColumn AllowUpdate="False" DataField="InvoiceNbr" ></px:PXGridColumn>
                     <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="Status" Type="DropDownList" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="CuryPaymentTotal" ></px:PXGridColumn>
