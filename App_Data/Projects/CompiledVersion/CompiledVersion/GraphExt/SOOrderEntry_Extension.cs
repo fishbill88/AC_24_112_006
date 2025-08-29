@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PX.Objects.SO.GraphExtensions.SOOrderEntryExt;
 using PX.Objects.CR.Standalone;
+using PX.Data.BQL.Fluent;
 
 namespace CompiledVersion.Graphs
 {
@@ -21,6 +22,11 @@ namespace CompiledVersion.Graphs
         public static bool IsActive() => true;
 
         public bool SuppressCodeRequired = false;
+
+        #region Views
+        public SelectFrom<SOCustSalesPeople>.Where<SOCustSalesPeople.orderType.IsEqual<SOOrder.orderType.FromCurrent>
+            .And<SOCustSalesPeople.orderNbr.IsEqual<SOOrder.orderNbr.FromCurrent>>>.View SalesPeople;
+        #endregion
 
         #region Overrides
 
@@ -183,6 +189,25 @@ namespace CompiledVersion.Graphs
             }
             UpdateCustomerAccount(e.Cache, e.Row as SOOrder);
 
+            ClearSalesPerson();
+
+            foreach (CustSalesPeople item in SelectFrom<CustSalesPeople>.Where<CustSalesPeople.bAccountID.IsEqual<SOOrder.customerID.FromCurrent>>.View.Select(Base))
+            {
+                //insert in SOCustSalesPeople
+                SOCustSalesPeople newItem = SalesPeople.Insert();
+                newItem.SalesPersonID = item.SalesPersonID;
+                newItem.IsDefault = item.IsDefault;
+                newItem.CommisionPct = item.CommisionPct;
+            }
+        }
+
+        public void ClearSalesPerson()
+        {
+            foreach (var item in SalesPeople.Select())
+            {
+                SalesPeople.Cache.Delete(item);
+                SalesPeople.Delete(item);
+            }
         }
 
 

@@ -90,7 +90,7 @@
 		<px:PXSelector runat="server" DataField="UsrNotToExceed" ID="edUsrNotToExceed" />
 		<px:PXSelector runat="server" DataField="UsrPrepayAndAdd" ID="edUsrPrepayAndAdd" />
 		<px:PXSelector runat="server" DataField="UsrFreeFreightAllowed" ID="edUsrFreeFreightAllowed" /></px:PXPanel>
-	<px:PXPanel runat="server" Caption="Purchase Order Settings (Drop-ship)" RenderStyle="Fieldset" ID="panelPurchaseOrderSettings">
+	<px:PXPanel runat="server" Caption="Purchase Order Settings (Marked for PO)" RenderStyle="Fieldset" ID="panelPurchaseOrderSettings">
 		<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="XM" ControlSize="XM" ID="cstPurchaseOrderSettings" />
 		<px:PXCheckBox runat="server" DataField="UsrCopyHeaderNotesToPO" ID="edUsrCopyHeaderNotesToPO" />
 		<px:PXCheckBox runat="server" DataField="UsrCopyHeaderAttachmentsToPO" ID="edUsrCopyHeaderAttachmentsToPO" />

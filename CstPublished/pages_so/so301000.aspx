@@ -437,100 +437,100 @@
 									<px:PXGridColumn DataField="AMConfigKeyID" Width="90" CommitChanges="true" ></px:PXGridColumn></Columns>
                             </px:PXGridLevel>
                         </Levels>
-                        <AutoSize Enabled="True" />
+                        <AutoSize Enabled="True" ></AutoSize>
                         <ActionBar>
                             <CustomItems>
                                 <px:PXToolBarButton Text="Add Items" Key="cmdASI">
                                     <AutoCallBack Command="ShowItems" Target="ds">
-                                        <Behavior CommitChanges="True" PostData="Page" />
+                                        <Behavior CommitChanges="True" PostData="Page" ></Behavior>
                                     </AutoCallBack>
                                 </px:PXToolBarButton>
-                                <px:PXToolBarButton Text="Add Matrix Items" CommandSourceID="ds" CommandName="ShowMatrixPanel" />
-                                <px:PXToolBarButton Text="Add Invoice" CommandSourceID="ds" CommandName="AddInvoice" />
-                                <px:PXToolBarButton CommandSourceID="ds" CommandName="AddBlanketLine" />
+                                <px:PXToolBarButton Text="Add Matrix Items" CommandSourceID="ds" CommandName="ShowMatrixPanel" ></px:PXToolBarButton>
+                                <px:PXToolBarButton Text="Add Invoice" CommandSourceID="ds" CommandName="AddInvoice" ></px:PXToolBarButton>
+                                <px:PXToolBarButton CommandSourceID="ds" CommandName="AddBlanketLine" ></px:PXToolBarButton>
                                 <px:PXToolBarButton Text="Line Details" Key="cmdLS" CommandName="SOOrderLineSplittingExtension_ShowSplits" CommandSourceID="ds" DependOnGrid="grid">
                                     <AutoCallBack>
-                                        <Behavior CommitChanges="True" PostData="Page" />
+                                        <Behavior CommitChanges="True" PostData="Page" ></Behavior>
                                     </AutoCallBack>
                                 </px:PXToolBarButton>
                                 <px:PXToolBarButton Text="PO Link" DependOnGrid="grid" StateColumn="IsPOLinkAllowed">
-                                    <AutoCallBack Command="POSupplyOK" Target="ds" />
+                                    <AutoCallBack Command="POSupplyOK" Target="ds" ></AutoCallBack>
                                 </px:PXToolBarButton>
                                 <px:PXToolBarButton Text="Item Availability" DependOnGrid="grid" StateColumn="IsStockItem">
-                                    <AutoCallBack Command="ItemAvailability" Target="ds" />
+                                    <AutoCallBack Command="ItemAvailability" Target="ds" ></AutoCallBack>
                                 </px:PXToolBarButton>
 
                                 <px:PXToolBarButton Text="Insert Row" SyncText="false" ImageSet="main" ImageKey="AddNew">
 																	<AutoCallBack Target="grid" Command="AddNew" Argument="1"></AutoCallBack>
-																	<ActionBar ToolBarVisible="External" MenuVisible="true" />
+																	<ActionBar ToolBarVisible="External" MenuVisible="true" ></ActionBar>
                                 </px:PXToolBarButton>
                                 <px:PXToolBarButton Text="Cut Row" SyncText="false" ImageSet="main" ImageKey="Copy">
 																	<AutoCallBack Target="grid" Command="Copy"></AutoCallBack>
-																	<ActionBar ToolBarVisible="External" MenuVisible="true" />
+																	<ActionBar ToolBarVisible="External" MenuVisible="true" ></ActionBar>
                                 </px:PXToolBarButton>
                                 <px:PXToolBarButton Text="Insert Cut Row" SyncText="false" ImageSet="main" ImageKey="Paste">
 																	<AutoCallBack Target="grid" Command="Paste"></AutoCallBack>
-																	<ActionBar ToolBarVisible="External" MenuVisible="true" />
+																	<ActionBar ToolBarVisible="External" MenuVisible="true" ></ActionBar>
                                 </px:PXToolBarButton>
 								<px:PXToolBarButton Text="Configure" DependOnGrid="grid" StateColumn="IsConfigurable">
-									<AutoCallBack Command="ConfigureEntry" Target="ds" />
+									<AutoCallBack Command="ConfigureEntry" Target="ds" ></AutoCallBack>
 								</px:PXToolBarButton>
                                 <px:PXToolBarButton Text="Link Prod Order" DependOnGrid="grid" StateColumn="AMProdCreate" >
-                                    <AutoCallBack Command="linkProdOrder" Target="ds" />
+                                    <AutoCallBack Command="linkProdOrder" Target="ds" ></AutoCallBack>
                                 </px:PXToolBarButton>
                             </CustomItems>
                         </ActionBar>
                         <CallbackCommands PasteCommand="PasteLine">
-                            <Save PostData="Container" />
+                            <Save PostData="Container" ></Save>
                         </CallbackCommands>
-                        <Mode InitNewRow="True" AllowFormEdit="True" AllowUpload="True" AllowDragRows="true" />
+                        <Mode InitNewRow="True" AllowFormEdit="True" AllowUpload="True" AllowDragRows="true" ></Mode>
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
 	        <px:PXTabItem Text="Estimates" BindingContext="form" RepaintOnDemand="false">
 		        <Template>
 			        <px:PXGrid runat="server" ID="gridEstimates" SyncPosition="True" Height="200px" SkinID="DetailsInTab" Width="100%" AutoCallBack="Refresh" DataSourceID="ds">
-				        <AutoSize Enabled="True" />
-				        <AutoCallBack Command="Refresh" Enabled="True" Target="gridEstimates" />
+				        <AutoSize Enabled="True" ></AutoSize>
+				        <AutoCallBack Command="Refresh" Enabled="True" Target="gridEstimates" ></AutoCallBack>
 				        <Levels>
 					        <px:PXGridLevel DataMember="OrderEstimateRecords" DataKeyNames="EstimateID">
 						        <RowTemplate>
-							        <px:PXSelector runat="server" ID="edEstBranch" DataField="AMEstimateItem__BranchID" />
-							        <px:PXSelector runat="server" ID="edEstInventoryCD" DataField="AMEstimateItem__InventoryCD" />
-							        <px:PXTextEdit runat="server" ID="edEstItemDesc" DataField="AMEstimateItem__ItemDesc" />
-							        <px:PXSegmentMask runat="server" ID="EstimateSubItemID" DataField="AMEstimateItem__SubItemID" CommitChanges="True" />
-							        <px:PXSelector runat="server" ID="edEstSiteID" DataField="AMEstimateItem__SiteID" />
-							        <px:PXSelector runat="server" ID="edEstUOM" DataField="AMEstimateItem__UOM" />
-							        <px:PXNumberEdit runat="server" DataField="OrderQty" ID="edEstOrderQty" />
-							        <px:PXNumberEdit runat="server" DataField="CuryUnitPrice" ID="edEstCuryUnitPrice" />
-							        <px:PXNumberEdit runat="server" DataField="CuryExtPrice" ID="edEstCuryExtPrice" />
-							        <px:PXSelector runat="server" ID="edEstEstimateID" DataField="EstimateID" />
-							        <px:PXSelector runat="server" ID="edEstRevisionID" DataField="RevisionID" CommitChanges="True" />
-							        <px:PXSelector runat="server" ID="edEstTaxCategoryID" DataField="TaxCategoryID" />
-							        <px:PXSelector runat="server" ID="edEstOwnerID" DataField="AMEstimateItem__OwnerID" />
-							        <px:PXSelector runat="server" ID="edEstEngineerID" DataField="AMEstimateItem__EngineerID" />
-							        <px:PXDateTimeEdit runat="server" ID="edEstRequestDate" DataField="AMEstimateItem__RequestDate" />
-							        <px:PXDateTimeEdit runat="server" ID="edEstPromiseDate" DataField="AMEstimateItem__PromiseDate" />
-							        <px:PXSelector runat="server" ID="edEstEstimateClassID" DataField="AMEstimateItem__EstimateClassID" />
+							        <px:PXSelector runat="server" ID="edEstBranch" DataField="AMEstimateItem__BranchID" ></px:PXSelector>
+							        <px:PXSelector runat="server" ID="edEstInventoryCD" DataField="AMEstimateItem__InventoryCD" ></px:PXSelector>
+							        <px:PXTextEdit runat="server" ID="edEstItemDesc" DataField="AMEstimateItem__ItemDesc" ></px:PXTextEdit>
+							        <px:PXSegmentMask runat="server" ID="EstimateSubItemID" DataField="AMEstimateItem__SubItemID" CommitChanges="True" ></px:PXSegmentMask>
+							        <px:PXSelector runat="server" ID="edEstSiteID" DataField="AMEstimateItem__SiteID" ></px:PXSelector>
+							        <px:PXSelector runat="server" ID="edEstUOM" DataField="AMEstimateItem__UOM" ></px:PXSelector>
+							        <px:PXNumberEdit runat="server" DataField="OrderQty" ID="edEstOrderQty" ></px:PXNumberEdit>
+							        <px:PXNumberEdit runat="server" DataField="CuryUnitPrice" ID="edEstCuryUnitPrice" ></px:PXNumberEdit>
+							        <px:PXNumberEdit runat="server" DataField="CuryExtPrice" ID="edEstCuryExtPrice" ></px:PXNumberEdit>
+							        <px:PXSelector runat="server" ID="edEstEstimateID" DataField="EstimateID" ></px:PXSelector>
+							        <px:PXSelector runat="server" ID="edEstRevisionID" DataField="RevisionID" CommitChanges="True" ></px:PXSelector>
+							        <px:PXSelector runat="server" ID="edEstTaxCategoryID" DataField="TaxCategoryID" ></px:PXSelector>
+							        <px:PXSelector runat="server" ID="edEstOwnerID" DataField="AMEstimateItem__OwnerID" ></px:PXSelector>
+							        <px:PXSelector runat="server" ID="edEstEngineerID" DataField="AMEstimateItem__EngineerID" ></px:PXSelector>
+							        <px:PXDateTimeEdit runat="server" ID="edEstRequestDate" DataField="AMEstimateItem__RequestDate" ></px:PXDateTimeEdit>
+							        <px:PXDateTimeEdit runat="server" ID="edEstPromiseDate" DataField="AMEstimateItem__PromiseDate" ></px:PXDateTimeEdit>
+							        <px:PXSelector runat="server" ID="edEstEstimateClassID" DataField="AMEstimateItem__EstimateClassID" ></px:PXSelector>
                                 </RowTemplate>
 						        <Columns>
-							        <px:PXGridColumn DataField="AMEstimateItem__BranchID" />
-							        <px:PXGridColumn DataField="AMEstimateItem__InventoryCD" />
-							        <px:PXGridColumn DataField="AMEstimateItem__ItemDesc" />
-							        <px:PXGridColumn DataField="AMEstimateItem__SubItemID" />
-							        <px:PXGridColumn DataField="AMEstimateItem__SiteID" />
-							        <px:PXGridColumn DataField="AMEstimateItem__UOM" />
-							        <px:PXGridColumn DataField="OrderQty" TextAlign="Right" />
-							        <px:PXGridColumn DataField="CuryUnitPrice" TextAlign="Right" />
-							        <px:PXGridColumn DataField="CuryExtPrice" TextAlign="Right" />
-							        <px:PXGridColumn DataField="EstimateID" LinkCommand="ViewEstimate" />
-							        <px:PXGridColumn DataField="RevisionID" />
-							        <px:PXGridColumn DataField="TaxCategoryID" />
-							        <px:PXGridColumn DataField="AMEstimateItem__OwnerID" />
-							        <px:PXGridColumn DataField="AMEstimateItem__EngineerID" />
-							        <px:PXGridColumn DataField="AMEstimateItem__RequestDate" />
-							        <px:PXGridColumn DataField="AMEstimateItem__PromiseDate" />
-							        <px:PXGridColumn DataField="AMEstimateItem__EstimateClassID" />
+							        <px:PXGridColumn DataField="AMEstimateItem__BranchID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__InventoryCD" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__ItemDesc" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__SubItemID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__SiteID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__UOM" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="OrderQty" TextAlign="Right" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="CuryUnitPrice" TextAlign="Right" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="CuryExtPrice" TextAlign="Right" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="EstimateID" LinkCommand="ViewEstimate" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="RevisionID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="TaxCategoryID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__OwnerID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__EngineerID" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__RequestDate" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__PromiseDate" ></px:PXGridColumn>
+							        <px:PXGridColumn DataField="AMEstimateItem__EstimateClassID" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
@@ -538,15 +538,15 @@
 					        <CustomItems>
 						        <px:PXToolBarButton Text="Add" CommandSourceID="ds" CommandName="AddEstimate">
 							        <AutoCallBack>
-								        <Behavior CommitChanges="True" RepaintControlsIDs="gridEstimates" PostData="Self" />
+								        <Behavior CommitChanges="True" RepaintControlsIDs="gridEstimates" PostData="Self" ></Behavior>
                                     </AutoCallBack>
                                 </px:PXToolBarButton>
 						        <px:PXToolBarButton Text="Quick Estimate" DependOnGrid="gridEstimates" StateColumn="EstimateID">
-							        <AutoCallBack Command="QuickEstimate" Target="ds" />
+							        <AutoCallBack Command="QuickEstimate" Target="ds" ></AutoCallBack>
                                 </px:PXToolBarButton>
 						        <px:PXToolBarButton Text="Remove" CommandSourceID="ds" CommandName="RemoveEstimate">
 							        <AutoCallBack>
-								        <Behavior CommitChanges="True" RepaintControlsIDs="gridEstimates" PostData="Self" />
+								        <Behavior CommitChanges="True" RepaintControlsIDs="gridEstimates" PostData="Self" ></Behavior>
                                     </AutoCallBack>
                                 </px:PXToolBarButton>
                             </CustomItems>
@@ -561,31 +561,31 @@
                         <Levels>
                             <px:PXGridLevel DataMember="Taxes">
                                 <RowTemplate>
-                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXTextEdit SuppressLabel="True" ID="edTaxZoneID2" runat="server" DataField="TaxZoneID" CommitChanges="true" AutoRefresh="true"/>
-                                    <px:PXSelector SuppressLabel="True" ID="edTaxID" runat="server" DataField="TaxID" CommitChanges="true" AutoRefresh="true"/>
-                                    <px:PXNumberEdit SuppressLabel="True" ID="edTaxRate" runat="server" DataField="TaxRate" Enabled="False" />
-                                    <px:PXNumberEdit SuppressLabel="True" ID="edCuryTaxableAmt" runat="server" DataField="CuryTaxableAmt" />
-                                    <px:PXNumberEdit SuppressLabel="True" ID="edCuryTaxAmt" runat="server" DataField="CuryTaxAmt" />
+                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                    <px:PXTextEdit SuppressLabel="True" ID="edTaxZoneID2" runat="server" DataField="TaxZoneID" CommitChanges="true" AutoRefresh="true"></px:PXTextEdit>
+                                    <px:PXSelector SuppressLabel="True" ID="edTaxID" runat="server" DataField="TaxID" CommitChanges="true" AutoRefresh="true"></px:PXSelector>
+                                    <px:PXNumberEdit SuppressLabel="True" ID="edTaxRate" runat="server" DataField="TaxRate" Enabled="False" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit SuppressLabel="True" ID="edCuryTaxableAmt" runat="server" DataField="CuryTaxableAmt" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit SuppressLabel="True" ID="edCuryTaxAmt" runat="server" DataField="CuryTaxAmt" ></px:PXNumberEdit>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="TaxZoneID" AllowUpdate="False" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="TaxID" AllowUpdate="False" CommitChanges="true" />
-                                    <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="TaxRate" TextAlign="Right" />
-                                    <px:PXGridColumn AllowNull="False" DataField="CuryTaxableAmt" TextAlign="Right" />
-									<px:PXGridColumn DataField="CuryExemptedAmt" TextAlign="Right" Width="100px" />
-									<px:PXGridColumn DataField="TaxUOM" TextAlign="Right" />
-									<px:PXGridColumn DataField="TaxableQty" TextAlign="Right" />
-                                    <px:PXGridColumn AllowNull="False" DataField="CuryTaxAmt" TextAlign="Right" />
-                                    <px:PXGridColumn AllowNull="False" DataField="Tax__TaxType" Label="Tax Type" RenderEditorText="True" />
-                                    <px:PXGridColumn AllowNull="False" DataField="Tax__PendingTax" Label="Pending VAT" TextAlign="Center" Type="CheckBox" />
-                                    <px:PXGridColumn AllowNull="False" DataField="Tax__ReverseTax" Label="Reverse VAT" TextAlign="Center" Type="CheckBox" />
-                                    <px:PXGridColumn AllowNull="False" DataField="Tax__ExemptTax" Label="Exempt From VAT" TextAlign="Center" Type="CheckBox" />
-                                    <px:PXGridColumn AllowNull="False" DataField="Tax__StatisticalTax" Label="Statistical VAT" TextAlign="Center" Type="CheckBox" />
+                                    <px:PXGridColumn DataField="TaxZoneID" AllowUpdate="False" CommitChanges="true" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="TaxID" AllowUpdate="False" CommitChanges="true" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="TaxRate" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="CuryTaxableAmt" TextAlign="Right" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="CuryExemptedAmt" TextAlign="Right" Width="100px" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="TaxUOM" TextAlign="Right" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="TaxableQty" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="CuryTaxAmt" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="Tax__TaxType" Label="Tax Type" RenderEditorText="True" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="Tax__PendingTax" Label="Pending VAT" TextAlign="Center" Type="CheckBox" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="Tax__ReverseTax" Label="Reverse VAT" TextAlign="Center" Type="CheckBox" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="Tax__ExemptTax" Label="Exempt From VAT" TextAlign="Center" Type="CheckBox" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="Tax__StatisticalTax" Label="Statistical VAT" TextAlign="Center" Type="CheckBox" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
-                        <AutoSize Enabled="True" />
+                        <AutoSize Enabled="True" ></AutoSize>
                         <ActionBar PagerGroup="3" PagerOrder="2">
                         </ActionBar>
                     </px:PXGrid>
@@ -595,91 +595,102 @@
                 <Template>
                     <px:PXFormView ID="Commission" runat="server" DataMember="CurrentDocument" RenderStyle="Simple" SkinID="Transparent">
                         <Template>
-                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" />
-                            <px:PXSegmentMask CommitChanges="True" ID="edSalesPersonID" runat="server" DataField="SalesPersonID" />
+                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" ></px:PXLayoutRule>
+                            <px:PXSegmentMask CommitChanges="True" ID="edSalesPersonID" runat="server" DataField="SalesPersonID" ></px:PXSegmentMask>
                         </Template>
                     </px:PXFormView>
                     <px:PXGrid ID="gridSalesPerTran" runat="server" Height="200px" Width="100%" DataSourceID="ds" BorderWidth="0px" SkinID="Details">
                         <Levels>
                             <px:PXGridLevel DataMember="SalesPerTran">
                                 <RowTemplate>
-                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXNumberEdit ID="edCommnPct" runat="server" DataField="CommnPct" AllowNull="True" />
-                                    <px:PXNumberEdit ID="edCommnAmt" runat="server" DataField="CommnAmt" />
-                                    <px:PXNumberEdit ID="edCuryCommnAmt" runat="server" DataField="CuryCommnAmt" />
-                                    <px:PXNumberEdit ID="edCommnblAmt" runat="server" DataField="CommnblAmt" />
-                                    <px:PXNumberEdit ID="edCuryCommnblAmt" runat="server" DataField="CuryCommnblAmt" AllowNull="True" />
-                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXSegmentMask ID="edSalesPersonID_1" runat="server" DataField="SalespersonID" AutoRefresh="True" />
+                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                    <px:PXNumberEdit ID="edCommnPct" runat="server" DataField="CommnPct" AllowNull="True" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edCommnAmt" runat="server" DataField="CommnAmt" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edCuryCommnAmt" runat="server" DataField="CuryCommnAmt" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edCommnblAmt" runat="server" DataField="CommnblAmt" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edCuryCommnblAmt" runat="server" DataField="CuryCommnblAmt" AllowNull="True" ></px:PXNumberEdit>
+                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                    <px:PXSegmentMask ID="edSalesPersonID_1" runat="server" DataField="SalespersonID" AutoRefresh="True" ></px:PXSegmentMask>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="SalespersonID" CommitChanges="True" />
-                                    <px:PXGridColumn DataField="CommnPct" TextAlign="Right" />
-                                    <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="CuryCommnAmt" TextAlign="Right" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="CuryCommnblAmt" TextAlign="Right" />
+                                    <px:PXGridColumn DataField="SalespersonID" CommitChanges="True" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="CommnPct" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="CuryCommnAmt" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="CuryCommnblAmt" TextAlign="Right" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
-                        <AutoSize Enabled="True" MinWidth="100" />
-                        <Mode AllowAddNew="False" AllowDelete="False" />
+                        <AutoSize Enabled="True" MinWidth="100" ></AutoSize>
+                        <Mode AllowAddNew="False" AllowDelete="False" ></Mode>
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
             <px:PXTabItem Text="Financial">
                 <Template>
-                    <px:PXLayoutRule runat="server" StartGroup="True" />
+                    <px:PXLayoutRule runat="server" StartGroup="True" ></px:PXLayoutRule>
                     <px:PXFormView ID="formFinancialInformation" runat="server" DataMember="CurrentDocument" DataSourceID="ds" MarkRequired="Dynamic" RenderStyle="Fieldset" Caption="Financial Information">
                         <Template>
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" />
-                            <px:PXSegmentMask ID="edBranchID" runat="server" CommitChanges="True" DataField="BranchID" DataSourceID="ds" />
-                            <px:PXTextEdit ID="edBranchBaseCuryID" runat="server" DataField="BranchBaseCuryID" />
-                            <px:PXCheckBox ID="chkDisableAutomaticTaxCalculation" runat="server" DataField="DisableAutomaticTaxCalculation" CommitChanges="True" />
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
+                            <px:PXSegmentMask ID="edBranchID" runat="server" CommitChanges="True" DataField="BranchID" DataSourceID="ds" ></px:PXSegmentMask>
+                            <px:PXTextEdit ID="edBranchBaseCuryID" runat="server" DataField="BranchBaseCuryID" ></px:PXTextEdit>
+                            <px:PXCheckBox ID="chkDisableAutomaticTaxCalculation" runat="server" DataField="DisableAutomaticTaxCalculation" CommitChanges="True" ></px:PXCheckBox>
                             <px:PXCheckBox ID="chkOverrideTaxZone" runat="server" DataField="OverrideTaxZone">
                                 <AutoCallBack Command="OverrideBlanketTaxZone" Target="ds">
-                                    <Behavior CommitChanges="True" />
+                                    <Behavior CommitChanges="True" ></Behavior>
                                 </AutoCallBack>
                             </px:PXCheckBox>
-                            <px:PXSelector ID="edTaxZoneID" runat="server" CommitChanges="True" DataField="TaxZoneID" DataSourceID="ds" />
-                            <px:PXDropDown ID="edTaxCalcMode" runat="server" CommitChanges="True" DataField="TaxCalcMode" />
-                                <px:PXTextEdit ID="edExternalTaxExemptionNumber" runat="server" CommitChanges="True" DataField="ExternalTaxExemptionNumber" />
-                            <px:PXDropDown ID="edAvalaraCustomerUsageTypeID" runat="server" CommitChanges="True" DataField="AvalaraCustomerUsageType" />
-                            <px:PXCheckBox ID="chkBillSeparately" runat="server" CommitChanges="True" DataField="BillSeparately" />
-                            <px:PXTextEdit ID="edInvoiceNbr" runat="server" DataField="InvoiceNbr" />
-                            <px:PXDateTimeEdit ID="edInvoiceDate" runat="server" CommitChanges="True" DataField="InvoiceDate" />
-                            <px:PXSelector ID="edTermsID" runat="server" CommitChanges="True" DataField="TermsID" DataSourceID="ds" />
-                            <px:PXDateTimeEdit ID="edDueDate" runat="server" DataField="DueDate" />
-                            <px:PXDateTimeEdit ID="edDiscDate" runat="server" DataField="DiscDate" />
-                            <px:PXSelector ID="edFinPeriodID" runat="server" DataField="FinPeriodID" DataSourceID="ds" />
-                            <px:PXLayoutRule runat="server" StartColumn="True" />
+                            <px:PXSelector ID="edTaxZoneID" runat="server" CommitChanges="True" DataField="TaxZoneID" DataSourceID="ds" ></px:PXSelector>
+                            <px:PXDropDown ID="edTaxCalcMode" runat="server" CommitChanges="True" DataField="TaxCalcMode" ></px:PXDropDown>
+                                <px:PXTextEdit ID="edExternalTaxExemptionNumber" runat="server" CommitChanges="True" DataField="ExternalTaxExemptionNumber" ></px:PXTextEdit>
+                            <px:PXDropDown ID="edAvalaraCustomerUsageTypeID" runat="server" CommitChanges="True" DataField="AvalaraCustomerUsageType" ></px:PXDropDown>
+                            <px:PXCheckBox ID="chkBillSeparately" runat="server" CommitChanges="True" DataField="BillSeparately" ></px:PXCheckBox>
+                            <px:PXTextEdit ID="edInvoiceNbr" runat="server" DataField="InvoiceNbr" ></px:PXTextEdit>
+                            <px:PXDateTimeEdit ID="edInvoiceDate" runat="server" CommitChanges="True" DataField="InvoiceDate" ></px:PXDateTimeEdit>
+                            <px:PXSelector ID="edTermsID" runat="server" CommitChanges="True" DataField="TermsID" DataSourceID="ds" ></px:PXSelector>
+                            <px:PXDateTimeEdit ID="edDueDate" runat="server" DataField="DueDate" ></px:PXDateTimeEdit>
+                            <px:PXDateTimeEdit ID="edDiscDate" runat="server" DataField="DiscDate" ></px:PXDateTimeEdit>
+                            <px:PXSelector ID="edFinPeriodID" runat="server" DataField="FinPeriodID" DataSourceID="ds" ></px:PXSelector>
+                            <px:PXLayoutRule runat="server" StartColumn="True" ></px:PXLayoutRule>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
-                    <px:PXLayoutRule runat="server" StartColumn="True" />
+                    <px:PXLayoutRule runat="server" StartColumn="True" ></px:PXLayoutRule>
                     <px:PXFormView ID="formPaymentInformation" runat="server" DataMember="CurrentDocument" DataSourceID="ds" MarkRequired="Dynamic" RenderStyle="Fieldset" Caption="Payment Information">
                         <Template>
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" />
-                            <px:PXCheckBox ID="chkOverridePrepayment" runat="server" DataField="OverridePrepayment" CommitChanges="True" />
-							<px:PXNumberEdit ID="edPrepaymentReqPct" runat="server" DataField="PrepaymentReqPct" CommitChanges="true" />
-							<px:PXNumberEdit ID="edCuryPrepaymentReqAmt" runat="server" DataField="CuryPrepaymentReqAmt" CommitChanges="true" />
-							<px:PXCheckBox ID="chkPrepaymentReqSatisfied" runat="server" DataField="PrepaymentReqSatisfied" />
-                            <px:PXSelector CommitChanges="True" ID="edPaymentMethodID" runat="server" DataField="PaymentMethodID" AutoRefresh="True" DataSourceID="ds" />
-                            <px:PXSelector CommitChanges="True" ID="edPMInstanceID" runat="server" DataField="PMInstanceID" TextField="Descr" AutoRefresh="True" AutoGenerateColumns="True" DataSourceID="ds" />
-                            <px:PXSegmentMask CommitChanges="True" ID="edCashAccountID" runat="server" DataField="CashAccountID" DataSourceID="ds" />
-                            <px:PXTextEdit ID="edExtRefNbr" runat="server" DataField="ExtRefNbr" CommitChanges="true" />
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" GroupCaption="Ownership" />
-                            <px:PXSelector ID="edWorkgroupID" runat="server" AutoRefresh="True" DataField="WorkgroupID" DataSourceID="ds" CommitChanges="true" />
-                            <px:PXSelector ID="edOwnerID" runat="server" AutoRefresh="True" DataField="OwnerID" DataSourceID="ds" CommitChanges="true" />
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
+                            <px:PXCheckBox ID="chkOverridePrepayment" runat="server" DataField="OverridePrepayment" CommitChanges="True" ></px:PXCheckBox>
+							<px:PXNumberEdit ID="edPrepaymentReqPct" runat="server" DataField="PrepaymentReqPct" CommitChanges="true" ></px:PXNumberEdit>
+							<px:PXNumberEdit ID="edCuryPrepaymentReqAmt" runat="server" DataField="CuryPrepaymentReqAmt" CommitChanges="true" ></px:PXNumberEdit>
+							<px:PXCheckBox ID="chkPrepaymentReqSatisfied" runat="server" DataField="PrepaymentReqSatisfied" ></px:PXCheckBox>
+                            <px:PXSelector CommitChanges="True" ID="edPaymentMethodID" runat="server" DataField="PaymentMethodID" AutoRefresh="True" DataSourceID="ds" ></px:PXSelector>
+                            <px:PXSelector CommitChanges="True" ID="edPMInstanceID" runat="server" DataField="PMInstanceID" TextField="Descr" AutoRefresh="True" AutoGenerateColumns="True" DataSourceID="ds" ></px:PXSelector>
+                            <px:PXSegmentMask CommitChanges="True" ID="edCashAccountID" runat="server" DataField="CashAccountID" DataSourceID="ds" ></px:PXSegmentMask>
+                            <px:PXTextEdit ID="edExtRefNbr" runat="server" DataField="ExtRefNbr" CommitChanges="true" ></px:PXTextEdit>
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" GroupCaption="Ownership" ></px:PXLayoutRule>
+                            <px:PXSelector ID="edWorkgroupID" runat="server" AutoRefresh="True" DataField="WorkgroupID" DataSourceID="ds" CommitChanges="true" ></px:PXSelector>
+                            <px:PXSelector ID="edOwnerID" runat="server" AutoRefresh="True" DataField="OwnerID" DataSourceID="ds" CommitChanges="true" ></px:PXSelector>
                             
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" GroupCaption="Other Information" />
-                            <px:PXTextEdit ID="edOrigOrderType" runat="server" DataField="OrigOrderType" Enabled="False" />
-                            <px:PXSelector ID="edOrigOrderNbr" runat="server" DataField="OrigOrderNbr" Enabled="False" AllowEdit="true" />
-                            <px:PXCheckBox ID="chkEmailed" runat="server" DataField="Emailed" Height="18px" Enabled="False" />
-                            <px:PXCheckBox ID="chkPrinted" runat="server" DataField="Printed" Height="18px" Enabled="False" />
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" GroupCaption="Other Information" ></px:PXLayoutRule>
+                            <px:PXTextEdit ID="edOrigOrderType" runat="server" DataField="OrigOrderType" Enabled="False" ></px:PXTextEdit>
+                            <px:PXSelector ID="edOrigOrderNbr" runat="server" DataField="OrigOrderNbr" Enabled="False" AllowEdit="true" ></px:PXSelector>
+                            <px:PXCheckBox ID="chkEmailed" runat="server" DataField="Emailed" Height="18px" Enabled="False" ></px:PXCheckBox>
+                            <px:PXCheckBox ID="chkPrinted" runat="server" DataField="Printed" Height="18px" Enabled="False" ></px:PXCheckBox>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                 </Template>
             </px:PXTabItem>
+	<px:PXTabItem Text="Sales People">
+		<Template>
+			<px:PXGrid runat="server" ID="grdSalesPeople" DataSourceID="ds" MatrixMode="True" Height="473px" SkinID="DetailsInTab" Width="100%">
+				<Levels>
+					<px:PXGridLevel DataMember="SalesPeople">
+						<Columns>
+							<px:PXGridColumn DataField="IsDefault" Width="60" Type="CheckBox" />
+							<px:PXGridColumn DataField="SalesPersonID" Width="140" />
+							<px:PXGridColumn DataField="SalesPersonID_description" Width="220" />
+							<px:PXGridColumn DataField="CommisionPct" Width="100" /></Columns></px:PXGridLevel></Levels>
+				<Mode AllowAddNew="False" AllowDelete="False" /></px:PXGrid></Template></px:PXTabItem>
             <px:PXTabItem Text="Shipping" VisibleExp="DataControls[&quot;chkShowShipmentsTab&quot;].Value == 1" BindingContext="form">
                 <Template>
                     <px:PXLayoutRule runat="server" StartGroup="True" ></px:PXLayoutRule>
@@ -1774,97 +1785,97 @@
             </px:PXTabItem>
             <px:PXTabItem Text="Addresses" VisibleExp="DataControls[&quot;chkShowShipmentsTab&quot;].Value == 1" BindingContext="form">
                 <Template>
-                    <px:PXLayoutRule runat="server" StartGroup="True" />
+                    <px:PXLayoutRule runat="server" StartGroup="True" ></px:PXLayoutRule>
                     <px:PXFormView ID="formD" runat="server" Caption="Ship-To Contact" DataMember="Shipping_Contact" DataSourceID="ds" RenderStyle="Fieldset">
                         <Template>
-                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" />
-                            <px:PXCheckBox CommitChanges="True" ID="chkOverrideContact" runat="server" DataField="OverrideContact" />
-                            <px:PXTextEdit ID="edFullName" runat="server" DataField="FullName" />
-                            <px:PXTextEdit ID="edAttention" runat="server" DataField="Attention" />
-                            <px:PXMaskEdit ID="edPhone1" runat="server" DataField="Phone1" />
-                            <px:PXMailEdit ID="edEmail" runat="server" DataField="Email" CommitChanges="True" />
+                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" ></px:PXLayoutRule>
+                            <px:PXCheckBox CommitChanges="True" ID="chkOverrideContact" runat="server" DataField="OverrideContact" ></px:PXCheckBox>
+                            <px:PXTextEdit ID="edFullName" runat="server" DataField="FullName" ></px:PXTextEdit>
+                            <px:PXTextEdit ID="edAttention" runat="server" DataField="Attention" ></px:PXTextEdit>
+                            <px:PXMaskEdit ID="edPhone1" runat="server" DataField="Phone1" ></px:PXMaskEdit>
+                            <px:PXMailEdit ID="edEmail" runat="server" DataField="Email" CommitChanges="True" ></px:PXMailEdit>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                     <px:PXFormView ID="formB" DataMember="Shipping_Address" runat="server" DataSourceID="ds" Caption="Ship-To Address" RenderStyle="Fieldset" SyncPosition="True">
                         <Template>
-                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" />
-                            <px:PXCheckBox CommitChanges="True" ID="chkOverrideAddress" runat="server" DataField="OverrideAddress" />
-                            <px:PXButton ID="btnShippingAddressLookup" runat="server" CommandName="ShippingAddressLookup" CommandSourceID="ds" Size="xs" TabIndex="-1" />
-                            <px:PXTextEdit ID="edAddressLine1" runat="server" DataField="AddressLine1" />
-                            <px:PXTextEdit ID="edAddressLine2" runat="server" DataField="AddressLine2" />
-                            <px:PXTextEdit ID="edCity" runat="server" DataField="City" />
-                            <px:PXSelector ID="edCountryID" runat="server" DataField="CountryID" AutoRefresh="True" DataSourceID="ds" CommitChanges="true" />
+                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" ></px:PXLayoutRule>
+                            <px:PXCheckBox CommitChanges="True" ID="chkOverrideAddress" runat="server" DataField="OverrideAddress" ></px:PXCheckBox>
+                            <px:PXButton ID="btnShippingAddressLookup" runat="server" CommandName="ShippingAddressLookup" CommandSourceID="ds" Size="xs" TabIndex="-1" ></px:PXButton>
+                            <px:PXTextEdit ID="edAddressLine1" runat="server" DataField="AddressLine1" ></px:PXTextEdit>
+                            <px:PXTextEdit ID="edAddressLine2" runat="server" DataField="AddressLine2" ></px:PXTextEdit>
+                            <px:PXTextEdit ID="edCity" runat="server" DataField="City" ></px:PXTextEdit>
+                            <px:PXSelector ID="edCountryID" runat="server" DataField="CountryID" AutoRefresh="True" DataSourceID="ds" CommitChanges="true" ></px:PXSelector>
                             <px:PXSelector ID="edState" runat="server" DataField="State" AutoRefresh="True" DataSourceID="ds" CommitChanges="True">
-                                <CallBackMode PostData="Container" />
+                                <CallBackMode PostData="Container" ></CallBackMode>
                                 <Parameters>
                                     <px:PXControlParam ControlID="formB" Name="SOShippingAddress.countryID" PropertyName="DataControls[&quot;edCountryID&quot;].Value"
-                                        Type="String" />
+                                        Type="String" ></px:PXControlParam>
                                 </Parameters>
                             </px:PXSelector>
-                            <px:PXMaskEdit CommitChanges="True" ID="edPostalCode" runat="server" DataField="PostalCode" />
-                            <px:PXNumberEdit ID="edLatitude" runat="server" DataField="Latitude" AllowNull="True" />
-                            <px:PXNumberEdit ID="edLongitude" runat="server" DataField="Longitude" AllowNull="True" />
-                            <px:PXCheckBox ID="chkIsValidated" runat="server" DataField="IsValidated" Enabled="False" />
+                            <px:PXMaskEdit CommitChanges="True" ID="edPostalCode" runat="server" DataField="PostalCode" ></px:PXMaskEdit>
+                            <px:PXNumberEdit ID="edLatitude" runat="server" DataField="Latitude" AllowNull="True" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edLongitude" runat="server" DataField="Longitude" AllowNull="True" ></px:PXNumberEdit>
+                            <px:PXCheckBox ID="chkIsValidated" runat="server" DataField="IsValidated" Enabled="False" ></px:PXCheckBox>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
-                    <px:PXLayoutRule runat="server" StartColumn="True" />
+                    <px:PXLayoutRule runat="server" StartColumn="True" ></px:PXLayoutRule>
                     <px:PXFormView ID="formC" runat="server" Caption="Bill-To Contact" DataMember="Billing_Contact" DataSourceID="ds" RenderStyle="Fieldset">
                         <Template>
-                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" />
-                            <px:PXCheckBox ID="chkOverrideContact" runat="server" CommitChanges="True" DataField="OverrideContact" />
-                            <px:PXTextEdit ID="edFullName" runat="server" DataField="FullName" />
-                            <px:PXTextEdit ID="edAttention" runat="server" DataField="Attention" />
-                            <px:PXMaskEdit ID="edPhone1" runat="server" DataField="Phone1" />
-                            <px:PXMailEdit ID="edEmail" runat="server" DataField="Email" CommitChanges="True" />
+                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" ></px:PXLayoutRule>
+                            <px:PXCheckBox ID="chkOverrideContact" runat="server" CommitChanges="True" DataField="OverrideContact" ></px:PXCheckBox>
+                            <px:PXTextEdit ID="edFullName" runat="server" DataField="FullName" ></px:PXTextEdit>
+                            <px:PXTextEdit ID="edAttention" runat="server" DataField="Attention" ></px:PXTextEdit>
+                            <px:PXMaskEdit ID="edPhone1" runat="server" DataField="Phone1" ></px:PXMaskEdit>
+                            <px:PXMailEdit ID="edEmail" runat="server" DataField="Email" CommitChanges="True" ></px:PXMailEdit>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                     <px:PXFormView ID="formA" DataMember="Billing_Address" runat="server" DataSourceID="ds" Caption="Bill-To Address" RenderStyle="Fieldset" SyncPosition="True">
                         <Template>
-                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" />
-                            <px:PXCheckBox CommitChanges="True" ID="chkOverrideAddress" runat="server" DataField="OverrideAddress" />
-                            <px:PXButton ID="btnAddressLookup" runat="server" CommandName="AddressLookup" CommandSourceID="ds" Size="xs" TabIndex="-1" />
-                            <px:PXTextEdit ID="edAddressLine1" runat="server" DataField="AddressLine1" />
-                            <px:PXTextEdit ID="edAddressLine2" runat="server" DataField="AddressLine2" />
-                            <px:PXTextEdit ID="edCity" runat="server" DataField="City" />
-                            <px:PXSelector ID="edCountryID" runat="server" DataField="CountryID" AutoRefresh="True" DataSourceID="ds" CommitChanges="true" />
+                            <px:PXLayoutRule runat="server" LabelsWidth="SM" ControlSize="XM" ></px:PXLayoutRule>
+                            <px:PXCheckBox CommitChanges="True" ID="chkOverrideAddress" runat="server" DataField="OverrideAddress" ></px:PXCheckBox>
+                            <px:PXButton ID="btnAddressLookup" runat="server" CommandName="AddressLookup" CommandSourceID="ds" Size="xs" TabIndex="-1" ></px:PXButton>
+                            <px:PXTextEdit ID="edAddressLine1" runat="server" DataField="AddressLine1" ></px:PXTextEdit>
+                            <px:PXTextEdit ID="edAddressLine2" runat="server" DataField="AddressLine2" ></px:PXTextEdit>
+                            <px:PXTextEdit ID="edCity" runat="server" DataField="City" ></px:PXTextEdit>
+                            <px:PXSelector ID="edCountryID" runat="server" DataField="CountryID" AutoRefresh="True" DataSourceID="ds" CommitChanges="true" ></px:PXSelector>
                             <px:PXSelector ID="edState" runat="server" DataField="State" AutoRefresh="True" DataSourceID="ds">
-                                <CallBackMode PostData="Container" />
+                                <CallBackMode PostData="Container" ></CallBackMode>
                                 <Parameters>
                                     <px:PXControlParam ControlID="formA" Name="SOBillingAddress.countryID" PropertyName="DataControls[&quot;edCountryID&quot;].Value"
-                                        Type="String" />
+                                        Type="String" ></px:PXControlParam>
                                 </Parameters>
                             </px:PXSelector>
-                            <px:PXMaskEdit CommitChanges="True" ID="edPostalCode" runat="server" DataField="PostalCode" />
-                            <px:PXCheckBox ID="chkIsValidated" runat="server" DataField="IsValidated" Enabled="False" />
+                            <px:PXMaskEdit CommitChanges="True" ID="edPostalCode" runat="server" DataField="PostalCode" ></px:PXMaskEdit>
+                            <px:PXCheckBox ID="chkIsValidated" runat="server" DataField="IsValidated" Enabled="False" ></px:PXCheckBox>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                 </Template>
             </px:PXTabItem>
             <px:PXTabItem Text="Approvals" BindingContext="form" RepaintOnDemand="false">
                 <Template>
                     <px:PXGrid ID="gridApproval" runat="server" DataSourceID="ds" Width="100%" SkinID="DetailsInTab" NoteIndicator="True" Style="left: 0px; top: 0px;">
-                        <AutoSize Enabled="True" />
-                        <Mode AllowAddNew="False" AllowDelete="False" AllowUpdate="False" />
+                        <AutoSize Enabled="True" ></AutoSize>
+                        <Mode AllowAddNew="False" AllowDelete="False" AllowUpdate="False" ></Mode>
                         <Levels>
                             <px:PXGridLevel DataMember="Approval">
                                 <Columns>
-                                    <px:PXGridColumn DataField="ApproverEmployee__AcctCD" />
-                                    <px:PXGridColumn DataField="ApproverEmployee__AcctName" />
-                                    <px:PXGridColumn DataField="WorkgroupID" />
-                                    <px:PXGridColumn DataField="ApprovedByEmployee__AcctCD" />
-                                    <px:PXGridColumn DataField="ApprovedByEmployee__AcctName" />
-                                    <px:PXGridColumn DataField="OrigOwnerID" Visible="false" SyncVisible="false" />
-                                    <px:PXGridColumn DataField="ApproveDate" />
-                                    <px:PXGridColumn DataField="Status" AllowNull="False" AllowUpdate="False" RenderEditorText="True" />
-                                    <px:PXGridColumn DataField="Reason" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="AssignmentMapID"  Visible="false" SyncVisible="false" />
-                                    <px:PXGridColumn DataField="RuleID" Visible="false" SyncVisible="false" />
-                                    <px:PXGridColumn DataField="StepID" Visible="false" SyncVisible="false" />
-                                    <px:PXGridColumn DataField="CreatedDateTime" Visible="false" SyncVisible="false" />
+                                    <px:PXGridColumn DataField="ApproverEmployee__AcctCD" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ApproverEmployee__AcctName" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="WorkgroupID" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ApprovedByEmployee__AcctCD" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ApprovedByEmployee__AcctName" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="OrigOwnerID" Visible="false" SyncVisible="false" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ApproveDate" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="Status" AllowNull="False" AllowUpdate="False" RenderEditorText="True" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="Reason" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="AssignmentMapID"  Visible="false" SyncVisible="false" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="RuleID" Visible="false" SyncVisible="false" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="StepID" Visible="false" SyncVisible="false" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="CreatedDateTime" Visible="false" SyncVisible="false" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
@@ -1875,49 +1886,49 @@
                 <Template>
                     <px:PXFormView ID="DiscountParameters" runat="server" DataMember="CurrentDocument" RenderStyle="Simple" SkinID="Transparent">
                         <Template>
-                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" />
-                            <px:PXCheckBox ID="chkDisableAutomaticDiscountCalculation" runat="server" DataField="DisableAutomaticDiscountCalculation" AlignLeft="true" CommitChanges="true" />
+                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="M" ></px:PXLayoutRule>
+                            <px:PXCheckBox ID="chkDisableAutomaticDiscountCalculation" runat="server" DataField="DisableAutomaticDiscountCalculation" AlignLeft="true" CommitChanges="true" ></px:PXCheckBox>
                         </Template>
                     </px:PXFormView>
                     <px:PXGrid ID="formDiscountDetail" runat="server" DataSourceID="ds" Width="100%" SkinID="Details" BorderStyle="None" SyncPosition="True">
                         <Levels>
                             <px:PXGridLevel DataMember="DiscountDetails">
                                 <RowTemplate>
-                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXCheckBox ID="chkSkipDiscount" runat="server" DataField="SkipDiscount" />
+                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                    <px:PXCheckBox ID="chkSkipDiscount" runat="server" DataField="SkipDiscount" ></px:PXCheckBox>
                                     <px:PXSelector ID="edDiscountID" runat="server" DataField="DiscountID"
-                                        AllowEdit="True" edit="1" />
-                                    <px:PXSelector ID="edDiscountSequenceID" runat="server" DataField="DiscountSequenceID" AllowEdit="True" AutoRefresh="True" edit="1" />
-                                    <px:PXDropDown ID="edType" runat="server" DataField="Type" Enabled="False" />
-                                    <px:PXCheckBox ID="chkIsManual" runat="server" DataField="IsManual" />
-                                    <px:PXNumberEdit ID="edCuryDiscountableAmt" runat="server" DataField="CuryDiscountableAmt" />
-                                    <px:PXNumberEdit ID="edDiscountableQty" runat="server" DataField="DiscountableQty" />
-                                    <px:PXNumberEdit ID="edCuryDiscountAmt" runat="server" DataField="CuryDiscountAmt" CommitChanges="true" />
-                                    <px:PXNumberEdit ID="edDiscountPct" runat="server" DataField="DiscountPct" CommitChanges="true" />
-                                    <px:PXSegmentMask ID="edFreeItemID" runat="server" DataField="FreeItemID" AllowEdit="True" />
-                                    <px:PXNumberEdit ID="edFreeItemQty" runat="server" DataField="FreeItemQty" />
-                                    <px:PXTextEdit ID="edExtDiscCode" runat="server" DataField="ExtDiscCode" />
-                                    <px:PXTextEdit ID="edDescription" runat="server" DataField="Description" />
+                                        AllowEdit="True" edit="1" ></px:PXSelector>
+                                    <px:PXSelector ID="edDiscountSequenceID" runat="server" DataField="DiscountSequenceID" AllowEdit="True" AutoRefresh="True" edit="1" ></px:PXSelector>
+                                    <px:PXDropDown ID="edType" runat="server" DataField="Type" Enabled="False" ></px:PXDropDown>
+                                    <px:PXCheckBox ID="chkIsManual" runat="server" DataField="IsManual" ></px:PXCheckBox>
+                                    <px:PXNumberEdit ID="edCuryDiscountableAmt" runat="server" DataField="CuryDiscountableAmt" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edDiscountableQty" runat="server" DataField="DiscountableQty" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edCuryDiscountAmt" runat="server" DataField="CuryDiscountAmt" CommitChanges="true" ></px:PXNumberEdit>
+                                    <px:PXNumberEdit ID="edDiscountPct" runat="server" DataField="DiscountPct" CommitChanges="true" ></px:PXNumberEdit>
+                                    <px:PXSegmentMask ID="edFreeItemID" runat="server" DataField="FreeItemID" AllowEdit="True" ></px:PXSegmentMask>
+                                    <px:PXNumberEdit ID="edFreeItemQty" runat="server" DataField="FreeItemQty" ></px:PXNumberEdit>
+                                    <px:PXTextEdit ID="edExtDiscCode" runat="server" DataField="ExtDiscCode" ></px:PXTextEdit>
+                                    <px:PXTextEdit ID="edDescription" runat="server" DataField="Description" ></px:PXTextEdit>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="SkipDiscount" Type="CheckBox" TextAlign="Center" />
-                                    <px:PXGridColumn DataField="LineNbr" />
-                                    <px:PXGridColumn DataField="DiscountID" CommitChanges="True" />
-                                    <px:PXGridColumn DataField="DiscountSequenceID" CommitChanges="True" />
-                                    <px:PXGridColumn DataField="Type" RenderEditorText="True" />
-                                    <px:PXGridColumn DataField="IsManual" Type="CheckBox" TextAlign="Center" />
-                                    <px:PXGridColumn DataField="CuryDiscountableAmt" TextAlign="Right" />
-                                    <px:PXGridColumn DataField="DiscountableQty" TextAlign="Right" />
-                                    <px:PXGridColumn DataField="CuryDiscountAmt" TextAlign="Right" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="DiscountPct" TextAlign="Right" CommitChanges="true" />
-                                    <px:PXGridColumn DataField="FreeItemID" DisplayFormat="&gt;CCCCC-CCCCCCCCCCCCCCC" />
-                                    <px:PXGridColumn DataField="FreeItemQty" TextAlign="Right" />
-                                    <px:PXGridColumn DataField="ExtDiscCode" />
-                                    <px:PXGridColumn DataField="Description" />
+                                    <px:PXGridColumn DataField="SkipDiscount" Type="CheckBox" TextAlign="Center" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="LineNbr" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="DiscountID" CommitChanges="True" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="DiscountSequenceID" CommitChanges="True" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="Type" RenderEditorText="True" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="IsManual" Type="CheckBox" TextAlign="Center" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="CuryDiscountableAmt" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="DiscountableQty" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="CuryDiscountAmt" TextAlign="Right" CommitChanges="true" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="DiscountPct" TextAlign="Right" CommitChanges="true" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="FreeItemID" DisplayFormat="&gt;CCCCC-CCCCCCCCCCCCCCC" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="FreeItemQty" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ExtDiscCode" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="Description" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
-                        <AutoSize Enabled="True" />
+                        <AutoSize Enabled="True" ></AutoSize>
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
@@ -1928,46 +1939,46 @@
                         <Levels>
                             <px:PXGridLevel DataMember="ShipmentList">
                                 <RowTemplate>
-                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXTextEdit ID="edOrderType3" runat="server" DataField="OrderType" Enabled="False" />
-                                    <px:PXTextEdit ID="edOrderNbr3" runat="server" DataField="OrderNbr" Enabled="False" />
+                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                    <px:PXTextEdit ID="edOrderType3" runat="server" DataField="OrderType" Enabled="False" ></px:PXTextEdit>
+                                    <px:PXTextEdit ID="edOrderNbr3" runat="server" DataField="OrderNbr" Enabled="False" ></px:PXTextEdit>
                                     <px:PXSelector SuppressLabel="True" Size="s" ID="edInvoiceNbr3" runat="server"
                                         DataField="InvoiceNbr" AutoRefresh="True"
-                                        AllowEdit="True" edit="1" />
+                                        AllowEdit="True" edit="1" ></px:PXSelector>
                                     <px:PXSelector SuppressLabel="True" Size="s" ID="edInvtRefNbr3" runat="server"
                                         DataField="InvtRefNbr" AutoRefresh="True"
                                         AllowEdit="True" edit="1">
                                         <Parameters>
-                                            <px:PXSyncGridParam ControlID="grid5" />
+                                            <px:PXSyncGridParam ControlID="grid5" ></px:PXSyncGridParam>
                                         </Parameters>
                                     </px:PXSelector>
-                                    <px:PXLayoutRule runat="server" />
-                                    <px:PXNumberEdit ID="edShipmentQty3" runat="server" DataField="ShipmentQty" />
+                                    <px:PXLayoutRule runat="server" ></px:PXLayoutRule>
+                                    <px:PXNumberEdit ID="edShipmentQty3" runat="server" DataField="ShipmentQty" ></px:PXNumberEdit>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="ShipmentType" />
-                                    <px:PXGridColumn DataField="ShipmentNbr" AllowUpdate="False" />
+                                    <px:PXGridColumn DataField="ShipmentType" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShipmentNbr" AllowUpdate="False" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="DisplayShippingRefNoteID" RenderEditorText="True"
-                                        LinkCommand="SOOrderShipment~DisplayShippingRefNoteID~Link" />
-                                    <px:PXGridColumn DataField="SOShipment__StatusIsNull" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="Operation" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="OrderType" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="OrderNbr" />
-                                    <px:PXGridColumn DataField="ShipDate" Label="Ship Date" />
-                                    <px:PXGridColumn AllowNull="False" DataField="ShipmentQty" TextAlign="Right" />
-                                    <px:PXGridColumn AllowNull="False" DataField="ShipmentWeight" TextAlign="Right" />
-                                    <px:PXGridColumn AllowNull="False" DataField="ShipmentVolume" TextAlign="Right" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="InvoiceType" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="InvoiceNbr" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="InvtDocType" />
-                                    <px:PXGridColumn AllowUpdate="False" DataField="InvtRefNbr" />
+                                        LinkCommand="SOOrderShipment~DisplayShippingRefNoteID~Link" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="SOShipment__StatusIsNull" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="Operation" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="OrderType" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="OrderNbr" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShipDate" Label="Ship Date" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="ShipmentQty" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="ShipmentWeight" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowNull="False" DataField="ShipmentVolume" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="InvoiceType" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="InvoiceNbr" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="InvtDocType" ></px:PXGridColumn>
+                                    <px:PXGridColumn AllowUpdate="False" DataField="InvtRefNbr" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
-                        <AutoSize Enabled="True" />
+                        <AutoSize Enabled="True" ></AutoSize>
                         <ActionBar PagerGroup="3" PagerOrder="2">
                         </ActionBar>
-                        <Mode AllowAddNew="False" AllowDelete="False" AllowUpdate="False" />
+                        <Mode AllowAddNew="False" AllowDelete="False" AllowUpdate="False" ></Mode>
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
@@ -1978,35 +1989,35 @@
                         <Levels>
                             <px:PXGridLevel DataMember="BlanketOrderChildrenDisplayList">
                                 <RowTemplate>
-                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                    <px:PXTextEdit ID="edChildOrderType" runat="server" DataField="OrderType" Enabled="False" />
-                                    <px:PXSelector ID="edChildOrderNbr" runat="server" DataField="OrderNbr" Enabled="False" AllowEdit="true" />
-                                    <px:PXSelector ID="edChildInvoiceNbr" runat="server" DataField="InvoiceNbr" AutoRefresh="True" AllowEdit="True" edit="1" />
+                                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                    <px:PXTextEdit ID="edChildOrderType" runat="server" DataField="OrderType" Enabled="False" ></px:PXTextEdit>
+                                    <px:PXSelector ID="edChildOrderNbr" runat="server" DataField="OrderNbr" Enabled="False" AllowEdit="true" ></px:PXSelector>
+                                    <px:PXSelector ID="edChildInvoiceNbr" runat="server" DataField="InvoiceNbr" AutoRefresh="True" AllowEdit="True" edit="1" ></px:PXSelector>
                                 </RowTemplate>
                                 <Columns>
-                                    <px:PXGridColumn DataField="CustomerLocationID" />
+                                    <px:PXGridColumn DataField="CustomerLocationID" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="OrderNbr" AllowUpdate="False" 
-                                        LinkCommand="ViewChildOrder" />
-                                    <px:PXGridColumn DataField="OrderDate" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="OrderStatus" />
-                                    <px:PXGridColumn DataField="OrderedQty" AllowNull="False" TextAlign="Right" />
-                                    <px:PXGridColumn DataField="CuryOrderedAmt" AllowNull="False" TextAlign="Right" />
-                                    <px:PXGridColumn DataField="ShipmentType" />
-                                    <px:PXGridColumn DataField="ShipmentNbr" AllowUpdate="False" />
+                                        LinkCommand="ViewChildOrder" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="OrderDate" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="OrderStatus" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="OrderedQty" AllowNull="False" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="CuryOrderedAmt" AllowNull="False" TextAlign="Right" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShipmentType" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShipmentNbr" AllowUpdate="False" ></px:PXGridColumn>
                                     <px:PXGridColumn DataField="DisplayShippingRefNoteID" RenderEditorText="True"
-                                        LinkCommand="SOBlanketOrderDisplayLink~DisplayShippingRefNoteID~Link" />
-                                    <px:PXGridColumn DataField="ShipmentDate" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="ShipmentStatus" />
-                                    <px:PXGridColumn DataField="ShippedQty" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="InvoiceType" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="InvoiceNbr" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="InvoiceDate" AllowUpdate="False" />
-                                    <px:PXGridColumn DataField="InvoiceStatus" />
+                                        LinkCommand="SOBlanketOrderDisplayLink~DisplayShippingRefNoteID~Link" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShipmentDate" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShipmentStatus" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="ShippedQty" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="InvoiceType" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="InvoiceNbr" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="InvoiceDate" AllowUpdate="False" ></px:PXGridColumn>
+                                    <px:PXGridColumn DataField="InvoiceStatus" ></px:PXGridColumn>
                                 </Columns>
                             </px:PXGridLevel>
                         </Levels>
-                        <AutoSize Enabled="True" />
-                        <Mode AllowAddNew="False" AllowDelete="False" AllowUpdate="False" />
+                        <AutoSize Enabled="True" ></AutoSize>
+                        <Mode AllowAddNew="False" AllowDelete="False" AllowUpdate="False" ></Mode>
                     </px:PXGrid>
                 </Template>
             </px:PXTabItem>
@@ -2014,21 +2025,21 @@
 				<Template>
                     <px:PXFormView ID="PayLinks" runat="server" DataMember="CurrentDocument" TabIndex="5000" RenderStyle="Simple" SkinID="Transparent">
                         <Template>
-                            <px:PXLayoutRule runat="server" ColumnWidth="400px" StartColumn="true" ControlSize="SM" LabelsWidth="SM" />
-                            <px:PXSelector CommitChanges="True" ID="PXSelProcCenter1" runat="server" DataField="ProcessingCenterID" AutoRefresh="true"  />
-					        <px:PXDropDown CommitChanges="True" ID="cmbDeliveryMethod1" runat="server"  DataField="DeliveryMethod" />
+                            <px:PXLayoutRule runat="server" ColumnWidth="400px" StartColumn="true" ControlSize="SM" LabelsWidth="SM" ></px:PXLayoutRule>
+                            <px:PXSelector CommitChanges="True" ID="PXSelProcCenter1" runat="server" DataField="ProcessingCenterID" AutoRefresh="true"  ></px:PXSelector>
+					        <px:PXDropDown CommitChanges="True" ID="cmbDeliveryMethod1" runat="server"  DataField="DeliveryMethod" ></px:PXDropDown>
                             <px:PXFormView ID="PXFormPayLink2" runat="server" DataMember="PayLink" RenderStyle="Simple">
 						    <Template>
-							    <px:PXLayoutRule runat="server" ControlSize="SM" LabelsWidth="SM" />
-							    <px:PXTextEdit Width="300px" ID="txtUrl" runat="server" DataField="Url" />
-							    <px:PXDropDown ID="cmbLinkStatus1" runat="server"  DataField="LinkStatus" />
+							    <px:PXLayoutRule runat="server" ControlSize="SM" LabelsWidth="SM" ></px:PXLayoutRule>
+							    <px:PXTextEdit Width="300px" ID="txtUrl" runat="server" DataField="Url" ></px:PXTextEdit>
+							    <px:PXDropDown ID="cmbLinkStatus1" runat="server"  DataField="LinkStatus" ></px:PXDropDown>
 						    </Template>
 					        </px:PXFormView>
-                            <px:PXLayoutRule runat="server" LabelsWidth="XS" StartColumn="True"  />
-					        <px:PXButton ID="btnCreateLink" runat="server" CommandName="CreateLink" Width="165px" CommandSourceID="ds" />
-					        <px:PXButton ID="btnSyncLink" runat="server" CommandName="SyncLink" Width="165px" CommandSourceID="ds" />
-                            <px:PXButton ID="btnDeactivateLink" runat="server" CommandName="DeactivateLink" Width="165px" CommandSourceID="ds" />
-					        <px:PXButton ID="btnResend" runat="server" CommandName="ResendLink" Width="165px" CommandSourceID="ds" />
+                            <px:PXLayoutRule runat="server" LabelsWidth="XS" StartColumn="True"  ></px:PXLayoutRule>
+					        <px:PXButton ID="btnCreateLink" runat="server" CommandName="CreateLink" Width="165px" CommandSourceID="ds" ></px:PXButton>
+					        <px:PXButton ID="btnSyncLink" runat="server" CommandName="SyncLink" Width="165px" CommandSourceID="ds" ></px:PXButton>
+                            <px:PXButton ID="btnDeactivateLink" runat="server" CommandName="DeactivateLink" Width="165px" CommandSourceID="ds" ></px:PXButton>
+					        <px:PXButton ID="btnResend" runat="server" CommandName="ResendLink" Width="165px" CommandSourceID="ds" ></px:PXButton>
                         </Template>
 					</px:PXFormView>
 				</Template>
@@ -2038,117 +2049,117 @@
                     <div style="margin-right:230px" resize-top="1">
                         <px:PXGrid ID="detgrid" runat="server" DataSourceID="ds"  Width="100%" Height="300px"
                             BorderWidth="0px" SkinID="Details" SyncPosition="True">
-                            <Mode InitNewRow="true" />
+                            <Mode InitNewRow="true" ></Mode>
                             <Levels>
                                 <px:PXGridLevel DataMember="Adjustments">
                                     <RowTemplate>
-                                        <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" />
-                                        <px:PXTextEdit ID="edAdjdOrderType" runat="server" DataField="AdjdOrderType" />
-                                        <px:PXDropDown ID="edARPayment__DocType" runat="server" DataField="ARPayment__DocType" />
-                                        <px:PXSelector ID="edPaymentMethodID" runat="server" DataField="PaymentMethodID" Enabled="False" />
-                                        <px:PXTextEdit ID="edAdjdOrderNbr" runat="server" DataField="AdjdOrderNbr" />
-                                        <px:PXSelector ID="edARPayment__RefNbr" runat="server" DataField="ARPayment__RefNbr" AllowEdit="True" edit="1" />
-                                        <px:PXDropDown ID="edAdjgDocType" runat="server" DataField="AdjgDocType" />
-                                        <px:PXDropDown ID="edARPayment__Status" runat="server" AllowNull="False" DataField="ARPayment__Status" Enabled="False" />
+                                        <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="M" ControlSize="XM" ></px:PXLayoutRule>
+                                        <px:PXTextEdit ID="edAdjdOrderType" runat="server" DataField="AdjdOrderType" ></px:PXTextEdit>
+                                        <px:PXDropDown ID="edARPayment__DocType" runat="server" DataField="ARPayment__DocType" ></px:PXDropDown>
+                                        <px:PXSelector ID="edPaymentMethodID" runat="server" DataField="PaymentMethodID" Enabled="False" ></px:PXSelector>
+                                        <px:PXTextEdit ID="edAdjdOrderNbr" runat="server" DataField="AdjdOrderNbr" ></px:PXTextEdit>
+                                        <px:PXSelector ID="edARPayment__RefNbr" runat="server" DataField="ARPayment__RefNbr" AllowEdit="True" edit="1" ></px:PXSelector>
+                                        <px:PXDropDown ID="edAdjgDocType" runat="server" DataField="AdjgDocType" ></px:PXDropDown>
+                                        <px:PXDropDown ID="edARPayment__Status" runat="server" AllowNull="False" DataField="ARPayment__Status" Enabled="False" ></px:PXDropDown>
                                         <px:PXSelector ID="edAdjgRefNbr" runat="server" AutoRefresh="True" DataField="AdjgRefNbr">
                                             <Parameters>
-                                                <px:PXControlParam ControlID="detgrid" Name="SOAdjust.adjgDocType" PropertyName="DataValues[&quot;AdjgDocType&quot;]" />
+                                                <px:PXControlParam ControlID="detgrid" Name="SOAdjust.adjgDocType" PropertyName="DataValues[&quot;AdjgDocType&quot;]" ></px:PXControlParam>
                                             </Parameters>
                                         </px:PXSelector>
-                                        <px:PXSegmentMask ID="edCashAccountID" runat="server" DataField="CashAccountID" />
-                                        <px:PXTextEdit ID="edARPayment__ExtRefNbr" runat="server" DataField="ARPayment__ExtRefNbr" />
-                                        <px:PXNumberEdit ID="edCustomerID" runat="server" DataField="CustomerID" />
-                                        <px:PXNumberEdit ID="edCuryAdjdAmt" runat="server" DataField="CuryAdjdAmt" />
-                                        <px:PXNumberEdit ID="edCuryAdjdBilledAmt" runat="server" DataField="CuryAdjdBilledAmt" />
-                                        <px:PXNumberEdit ID="edCuryAdjdTransferredToChildrenAmt" runat="server" DataField="CuryAdjdTransferredToChildrenAmt" />
-                                        <px:PXNumberEdit ID="edAdjAmt" runat="server" DataField="AdjAmt" />
-                                        <px:PXNumberEdit ID="edCuryDocBal" runat="server" DataField="CuryDocBal" Enabled="False" />
+                                        <px:PXSegmentMask ID="edCashAccountID" runat="server" DataField="CashAccountID" ></px:PXSegmentMask>
+                                        <px:PXTextEdit ID="edARPayment__ExtRefNbr" runat="server" DataField="ARPayment__ExtRefNbr" ></px:PXTextEdit>
+                                        <px:PXNumberEdit ID="edCustomerID" runat="server" DataField="CustomerID" ></px:PXNumberEdit>
+                                        <px:PXNumberEdit ID="edCuryAdjdAmt" runat="server" DataField="CuryAdjdAmt" ></px:PXNumberEdit>
+                                        <px:PXNumberEdit ID="edCuryAdjdBilledAmt" runat="server" DataField="CuryAdjdBilledAmt" ></px:PXNumberEdit>
+                                        <px:PXNumberEdit ID="edCuryAdjdTransferredToChildrenAmt" runat="server" DataField="CuryAdjdTransferredToChildrenAmt" ></px:PXNumberEdit>
+                                        <px:PXNumberEdit ID="edAdjAmt" runat="server" DataField="AdjAmt" ></px:PXNumberEdit>
+                                        <px:PXNumberEdit ID="edCuryDocBal" runat="server" DataField="CuryDocBal" Enabled="False" ></px:PXNumberEdit>
                                     </RowTemplate>
                                     <Columns>
-                                        <px:PXGridColumn DataField="AdjgDocType" Label="ARPayment-Type" RenderEditorText="True" />
-                                        <px:PXGridColumn DataField="AdjgRefNbr" DisplayFormat="&gt;CCCCCCCCCCCCCCC" RenderEditorText="True" Label="Reference Nbr." CommitChanges="True" LinkCommand="ViewPayment" PopupCommand="Cancel" />
-                                        <px:PXGridColumn DataField="BlanketNbr" />
-                                        <px:PXGridColumn DataField="CuryAdjdAmt" Label="Applied To Order" AllowNull="False" TextAlign="Right" CommitChanges="true" />
-                                        <px:PXGridColumn DataField="CuryAdjdBilledAmt" Label="Transferred to Invoice" AllowNull="False" TextAlign="Right" />
-                                        <px:PXGridColumn DataField="CuryAdjdTransferredToChildrenAmt" AllowNull="False" TextAlign="Right" />
-                                        <px:PXGridColumn DataField="CuryDocBal" Label="Balance" AllowNull="False" AllowUpdate="False" TextAlign="Right" />
-                                        <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="ARPayment__Status" Label="Status" RenderEditorText="True" />
-                                            <px:PXGridColumn DataField="ExtRefNbr" />
-                                            <px:PXGridColumn AllowUpdate="False" DataField="PaymentMethodID" DisplayFormat="&gt;aaaaaaaaaa" />
-                                            <px:PXGridColumn DataField="CashAccountID" DisplayFormat="&gt;######" />
-                                            <px:PXGridColumn DataField="CuryOrigDocAmt" />
-                                        <px:PXGridColumn DataField="ARPayment__CuryID" Label="Currency ID" />
-                                        <px:PXGridColumn DataField="ExternalTransaction__ProcStatus" />
-                                        <px:PXGridColumn DataField="CanVoid" Type="CheckBox" />
-                                        <px:PXGridColumn DataField="CanCapture" Type="CheckBox" />
-                                        <px:PXGridColumn DataField="CanDeletePayment" Type="CheckBox" />
-                                        <px:PXGridColumn DataField="CanDeleteRefund" Type="CheckBox" />
+                                        <px:PXGridColumn DataField="AdjgDocType" Label="ARPayment-Type" RenderEditorText="True" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="AdjgRefNbr" DisplayFormat="&gt;CCCCCCCCCCCCCCC" RenderEditorText="True" Label="Reference Nbr." CommitChanges="True" LinkCommand="ViewPayment" PopupCommand="Cancel" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="BlanketNbr" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CuryAdjdAmt" Label="Applied To Order" AllowNull="False" TextAlign="Right" CommitChanges="true" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CuryAdjdBilledAmt" Label="Transferred to Invoice" AllowNull="False" TextAlign="Right" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CuryAdjdTransferredToChildrenAmt" AllowNull="False" TextAlign="Right" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CuryDocBal" Label="Balance" AllowNull="False" AllowUpdate="False" TextAlign="Right" ></px:PXGridColumn>
+                                        <px:PXGridColumn AllowNull="False" AllowUpdate="False" DataField="ARPayment__Status" Label="Status" RenderEditorText="True" ></px:PXGridColumn>
+                                            <px:PXGridColumn DataField="ExtRefNbr" ></px:PXGridColumn>
+                                            <px:PXGridColumn AllowUpdate="False" DataField="PaymentMethodID" DisplayFormat="&gt;aaaaaaaaaa" ></px:PXGridColumn>
+                                            <px:PXGridColumn DataField="CashAccountID" DisplayFormat="&gt;######" ></px:PXGridColumn>
+                                            <px:PXGridColumn DataField="CuryOrigDocAmt" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="ARPayment__CuryID" Label="Currency ID" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="ExternalTransaction__ProcStatus" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CanVoid" Type="CheckBox" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CanCapture" Type="CheckBox" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CanDeletePayment" Type="CheckBox" ></px:PXGridColumn>
+                                        <px:PXGridColumn DataField="CanDeleteRefund" Type="CheckBox" ></px:PXGridColumn>
                                     </Columns>
                                 </px:PXGridLevel>
                             </Levels>
-                            <AutoSize Enabled="True" />
+                            <AutoSize Enabled="True" ></AutoSize>
                             <ActionBar>
                                 <CustomItems>
                                     <px:PXToolBarButton>
                                         <AutoCallBack Command="CreatePrepaymentInvoice" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton>
                                             <AutoCallBack Command="CreateDocumentPayment" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton>
                                         <AutoCallBack Command="CreateOrderPrepayment" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton DependOnGrid="detgrid" StateColumn="CanDeletePayment">
                                         <AutoCallBack Command="DeletePayment" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
-                                        <PopupCommand Target="detgrid" Command="Refresh" />
+                                        <PopupCommand Target="detgrid" Command="Refresh" ></PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton DependOnGrid="detgrid" StateColumn="CanCapture">
                                             <AutoCallBack Command="CaptureDocumentPayment" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton DependOnGrid="detgrid" StateColumn="CanVoid">
                                             <AutoCallBack Command="VoidDocumentPayment" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton>
                                             <AutoCallBack Command="ImportDocumentPayment" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton>
                                         <AutoCallBack Command="CreateDocumentRefund" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
                                         <PopupCommand Target="detgrid" Command="Refresh">
                                         </PopupCommand>
                                     </px:PXToolBarButton>
                                     <px:PXToolBarButton DependOnGrid="detgrid" StateColumn="CanDeleteRefund">
                                         <AutoCallBack Command="DeleteRefund" Target="ds">
-                                            <Behavior CommitChanges="True" />
+                                            <Behavior CommitChanges="True" ></Behavior>
                                         </AutoCallBack>
-                                        <PopupCommand Target="detgrid" Command="Refresh" />
+                                        <PopupCommand Target="detgrid" Command="Refresh" ></PopupCommand>
                                     </px:PXToolBarButton>
                                 </CustomItems>
                             </ActionBar>
@@ -2157,17 +2168,17 @@
                     <px:PXFormView ID="formPT" runat="server" Style="position:absolute;top:0px;right:0px;" DataSourceID="ds" Width="230px" DataMember="CurrentDocument"
                         Caption="Payment Total" CaptionVisible="False" SkinID="Transparent">
                         <Template>
-                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="XM" />
-                            <px:PXNumberEdit ID="edCuryUnreleasedPaymentAmt" runat="server" Enabled="False" DataField="CuryUnreleasedPaymentAmt"/>
-                            <px:PXNumberEdit ID="edCuryCCAuthorizedAmt" runat="server" Enabled="False" DataField="CuryCCAuthorizedAmt"/>
-                            <px:PXNumberEdit ID="edCuryPaidAmt" runat="server" Enabled="False" DataField="CuryPaidAmt"/>
-                            <px:PXNumberEdit ID="edCuryPaymentTotal1" runat="server" Enabled="False" DataField="CuryPaymentTotal"/>
-                            <px:PXNumberEdit ID="edCuryBilledPaymentTotal" runat="server" Enabled="False" DataField="CuryBilledPaymentTotal"/>
-                            <px:PXNumberEdit ID="edCuryTransferredToChildrenPaymentTotal" runat="server" Enabled="False" DataField="CuryTransferredToChildrenPaymentTotal"/>
-                            <px:PXLabel runat="server" ID="space" />
-                            <px:PXNumberEdit ID="edCuryUnpaidBalance" runat="server" Enabled="False" DataField="CuryUnpaidBalance"/>
-                            <px:PXNumberEdit ID="edCuryUnrefundedBalance" runat="server" Enabled="False" DataField="CuryUnrefundedBalance"/>
-                            <px:PXNumberEdit ID="edCuryUnbilledOrderTotal1" runat="server" Enabled="False" DataField="CuryUnbilledOrderTotal"/>
+                            <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="XM" ></px:PXLayoutRule>
+                            <px:PXNumberEdit ID="edCuryUnreleasedPaymentAmt" runat="server" Enabled="False" DataField="CuryUnreleasedPaymentAmt"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryCCAuthorizedAmt" runat="server" Enabled="False" DataField="CuryCCAuthorizedAmt"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryPaidAmt" runat="server" Enabled="False" DataField="CuryPaidAmt"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryPaymentTotal1" runat="server" Enabled="False" DataField="CuryPaymentTotal"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryBilledPaymentTotal" runat="server" Enabled="False" DataField="CuryBilledPaymentTotal"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryTransferredToChildrenPaymentTotal" runat="server" Enabled="False" DataField="CuryTransferredToChildrenPaymentTotal"></px:PXNumberEdit>
+                            <px:PXLabel runat="server" ID="space" ></px:PXLabel>
+                            <px:PXNumberEdit ID="edCuryUnpaidBalance" runat="server" Enabled="False" DataField="CuryUnpaidBalance"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryUnrefundedBalance" runat="server" Enabled="False" DataField="CuryUnrefundedBalance"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryUnbilledOrderTotal1" runat="server" Enabled="False" DataField="CuryUnbilledOrderTotal"></px:PXNumberEdit>
                         </Template>
                     </px:PXFormView>
                 </Template>
@@ -2176,8 +2187,8 @@
 				<Template>
 					<px:PXFormView ID="Risk" runat="server"  DataMember="CurrentDocument" RenderStyle="Simple" SkinID="Transparent">
 						<Template>
-							<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="XS" />
-							<px:PXTextEdit runat="server" ID="CstPXTextEdit1" DataField="RiskStatus" Enabled="False" />
+							<px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="S" ControlSize="XS" ></px:PXLayoutRule>
+							<px:PXTextEdit runat="server" ID="CstPXTextEdit1" DataField="RiskStatus" Enabled="False" ></px:PXTextEdit>
 					 </Template>
 					</px:PXFormView>
 					<px:PXGrid runat="server" ID="gridOrderRisks" DataSourceID="ds"  Width="100%" SkinID="Details"
@@ -2185,17 +2196,17 @@
 						<Levels>
 							<px:PXGridLevel DataMember="OrderRisks">
 								<Columns>
-                                    <px:PXGridColumn DataField="LineNbr" />
-									<px:PXGridColumn DataField="Score"  CommitChanges="true" Width="100px" />
-									<px:PXGridColumn DataField="Recommendation" Width="200px" />
-									<px:PXGridColumn DataField="Message" Width="500px" />
+                                    <px:PXGridColumn DataField="LineNbr" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="Score"  CommitChanges="true" Width="100px" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="Recommendation" Width="200px" ></px:PXGridColumn>
+									<px:PXGridColumn DataField="Message" Width="500px" ></px:PXGridColumn>
 								</Columns>
 							</px:PXGridLevel>
 						</Levels>
-						<AutoSize Enabled="True" />
+						<AutoSize Enabled="True" ></AutoSize>
 						<ActionBar PagerGroup="3" PagerOrder="2">
 						</ActionBar>
-						<Mode AllowAddNew="false" AllowDelete="False" AllowUpdate="false" />
+						<Mode AllowAddNew="false" AllowDelete="False" AllowUpdate="false" ></Mode>
 					</px:PXGrid>
 				</Template>
 			</px:PXTabItem>
@@ -2207,31 +2218,31 @@
 			<Levels>
 				<px:PXGridLevel DataMember="Relations">
 				<Columns>
-					<px:PXGridColumn DataField="Role" CommitChanges="True" Width="130px" />
-					<px:PXGridColumn DataField="IsPrimary" Type="CheckBox" TextAlign="Center" CommitChanges="True" />
-					<px:PXGridColumn DataField="TargetType" CommitChanges="True" Width="120px" />
-					<px:PXGridColumn DataField="TargetNoteID" DisplayMode="Text" LinkCommand="RelationsViewTargetDetails" CommitChanges="True" Width="200px" />
-					<px:PXGridColumn DataField="Description" Width="250px" />
-					<px:PXGridColumn DataField="Status" Width="150px" AllowFilter="False" AllowSort="False"/>
-					<px:PXGridColumn DataField="OwnerID" Width="200px" />
-					<px:PXGridColumn DataField="EntityID" AutoCallBack="true" LinkCommand="RelationsViewEntityDetails" CommitChanges="True" Width="200px" />
-					<px:PXGridColumn DataField="Name" Width="200px" />
-					<px:PXGridColumn DataField="ContactID" AutoCallBack="true" TextAlign="Left" TextField="ContactName" DisplayMode="Text" LinkCommand="RelationsViewContactDetails" Width="200px" />
-					<px:PXGridColumn DataField="Email" Width="200px" />
-					<px:PXGridColumn DataField="AddToCC" Type="CheckBox" TextAlign="Center" Width="90px" />
+					<px:PXGridColumn DataField="Role" CommitChanges="True" Width="130px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="IsPrimary" Type="CheckBox" TextAlign="Center" CommitChanges="True" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="TargetType" CommitChanges="True" Width="120px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="TargetNoteID" DisplayMode="Text" LinkCommand="RelationsViewTargetDetails" CommitChanges="True" Width="200px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="Description" Width="250px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="Status" Width="150px" AllowFilter="False" AllowSort="False"></px:PXGridColumn>
+					<px:PXGridColumn DataField="OwnerID" Width="200px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="EntityID" AutoCallBack="true" LinkCommand="RelationsViewEntityDetails" CommitChanges="True" Width="200px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="Name" Width="200px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="ContactID" AutoCallBack="true" TextAlign="Left" TextField="ContactName" DisplayMode="Text" LinkCommand="RelationsViewContactDetails" Width="200px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="Email" Width="200px" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="AddToCC" Type="CheckBox" TextAlign="Center" Width="90px" ></px:PXGridColumn>
 
-					<px:PXGridColumn DataField="DocumentDate" Width="200px" Visible="false" SyncVisible="false" />
-					<px:PXGridColumn DataField="CreatedDateTime" Width="200px" Visible="false" SyncVisible="false" />
-					<px:PXGridColumn DataField="CreatedByID" Width="200px" Visible="false" SyncVisible="false" />
-					<px:PXGridColumn DataField="LastModifiedByID" Width="200px" Visible="false" SyncVisible="false" />
+					<px:PXGridColumn DataField="DocumentDate" Width="200px" Visible="false" SyncVisible="false" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="CreatedDateTime" Width="200px" Visible="false" SyncVisible="false" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="CreatedByID" Width="200px" Visible="false" SyncVisible="false" ></px:PXGridColumn>
+					<px:PXGridColumn DataField="LastModifiedByID" Width="200px" Visible="false" SyncVisible="false" ></px:PXGridColumn>
 				</Columns>
 				<RowTemplate>
-					<px:PXSelector ID="edTargetNoteID" runat="server" DataField="TargetNoteID" FilterByAllFields="True" AutoRefresh="True" />
-					<px:PXSelector ID="edRelEntityID" runat="server" DataField="EntityID" FilterByAllFields="True" AutoRefresh="True" />
-					<px:PXSelector ID="edRelContactID" runat="server" DataField="ContactID" FilterByAllFields="True" AutoRefresh="True" />
-					<px:PXSelector ID="edOwnerID" runat="server" DataField="OwnerID" AutoRefresh="True" />
+					<px:PXSelector ID="edTargetNoteID" runat="server" DataField="TargetNoteID" FilterByAllFields="True" AutoRefresh="True" ></px:PXSelector>
+					<px:PXSelector ID="edRelEntityID" runat="server" DataField="EntityID" FilterByAllFields="True" AutoRefresh="True" ></px:PXSelector>
+					<px:PXSelector ID="edRelContactID" runat="server" DataField="ContactID" FilterByAllFields="True" AutoRefresh="True" ></px:PXSelector>
+					<px:PXSelector ID="edOwnerID" runat="server" DataField="OwnerID" AutoRefresh="True" ></px:PXSelector>
 
-					<px:PXDateTimeEdit ID="edCreatedDateTime" runat="server" DataField="CreatedDateTime_Date" />
+					<px:PXDateTimeEdit ID="edCreatedDateTime" runat="server" DataField="CreatedDateTime_Date" ></px:PXDateTimeEdit>
 				</RowTemplate>
 				</px:PXGridLevel>
 			</Levels>
@@ -2243,72 +2254,71 @@
 
             <px:PXTabItem Text="Totals">
                 <Template>
-                    <px:PXLayoutRule runat="server" StartGroup="True" />
+                    <px:PXLayoutRule runat="server" StartGroup="True" ></px:PXLayoutRule>
                     <px:PXFormView ID="formFreightInfo" runat="server" Caption="Freight Info" DataMember="CurrentDocument" DataSourceID="ds" RenderStyle="Fieldset">
                         <Template>
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" />
-                            <px:PXNumberEdit ID="edOrderWeight" runat="server" DataField="OrderWeight" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edOrderVolume" runat="server" DataField="OrderVolume" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit CommitChanges="True" ID="edPackageWeight" runat="server" DataField="PackageWeight" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryFreightCost" runat="server" DataField="CuryFreightCost" CommitChanges="true" Size="XM" />
-                            <px:PXButton ID="checkFreightRate" runat="server" Text="Check Freight Rate" CommandName="CalculateFreight" CommandSourceID="ds" />
-                            <px:PXCheckBox ID="chkFreightCostIsValid" runat="server" DataField="FreightCostIsValid" />
-							<px:PXCheckBox ID="chkOverrideFreightAmount" runat="server" DataField="OverrideFreightAmount" CommitChanges="True" />
-							<px:PXDropDown ID="edFreightAmountSource" runat="server" DataField="FreightAmountSource" />
-							<px:PXNumberEdit CommitChanges="True" ID="edCuryFreightAmt" runat="server" DataField="CuryFreightAmt" Size="XM" />
-                            <px:PXNumberEdit CommitChanges="True" ID="edCuryPremiumFreightAmt" runat="server" DataField="CuryPremiumFreightAmt" Size="XM" />
-                            <px:PXSelector CommitChanges="True" ID="edFreightTaxCategoryID" runat="server" DataField="FreightTaxCategoryID" DataSourceID="ds" Size="XM"/>
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
+                            <px:PXNumberEdit ID="edOrderWeight" runat="server" DataField="OrderWeight" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edOrderVolume" runat="server" DataField="OrderVolume" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit CommitChanges="True" ID="edPackageWeight" runat="server" DataField="PackageWeight" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryFreightCost" runat="server" DataField="CuryFreightCost" CommitChanges="true" Size="XM" ></px:PXNumberEdit>
+                            <px:PXButton ID="checkFreightRate" runat="server" Text="Check Freight Rate" CommandName="CalculateFreight" CommandSourceID="ds" ></px:PXButton>
+                            <px:PXCheckBox ID="chkFreightCostIsValid" runat="server" DataField="FreightCostIsValid" ></px:PXCheckBox>
+							<px:PXCheckBox ID="chkOverrideFreightAmount" runat="server" DataField="OverrideFreightAmount" CommitChanges="True" ></px:PXCheckBox>
+							<px:PXDropDown ID="edFreightAmountSource" runat="server" DataField="FreightAmountSource" ></px:PXDropDown>
+							<px:PXNumberEdit CommitChanges="True" ID="edCuryFreightAmt" runat="server" DataField="CuryFreightAmt" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit CommitChanges="True" ID="edCuryPremiumFreightAmt" runat="server" DataField="CuryPremiumFreightAmt" Size="XM" ></px:PXNumberEdit>
+                            <px:PXSelector CommitChanges="True" ID="edFreightTaxCategoryID" runat="server" DataField="FreightTaxCategoryID" DataSourceID="ds" Size="XM"></px:PXSelector>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                      <px:PXFormView ID="formVATTotals" runat="server" Caption="VAT Totals" DataMember="CurrentDocument" DataSourceID="ds" RenderStyle="Fieldset">
                         <Template>
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" />
-                            <px:PXNumberEdit ID="edCuryVatExemptTotal" runat="server" DataField="CuryVatExemptTotal" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryVatTaxableTotal" runat="server" DataField="CuryVatTaxableTotal" Enabled="False" Size="XM" />
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
+                            <px:PXNumberEdit ID="edCuryVatExemptTotal" runat="server" DataField="CuryVatExemptTotal" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryVatTaxableTotal" runat="server" DataField="CuryVatTaxableTotal" Enabled="False" Size="XM" ></px:PXNumberEdit>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
-                    <px:PXLayoutRule runat="server" StartColumn="True" />
+                    <px:PXLayoutRule runat="server" StartColumn="True" ></px:PXLayoutRule>
                     <px:PXFormView ID="formOrderTotals" runat="server" Caption="Order Totals" DataMember="CurrentDocument" DataSourceID="ds" RenderStyle="Fieldset">
                         <Template>
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" />
-							<px:PXNumberEdit runat="server" Enabled="False" Size="XM" DataField="AMCuryEstimateTotal" ID="edAMCuryEstimateTotal" />
-                            <px:PXNumberEdit ID="edCuryGoodsExtPriceTotal" runat="server" DataField="CuryGoodsExtPriceTotal" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryMiscExtPriceTotal" runat="server" Enabled="False" DataField="CuryMiscExtPriceTotal" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryLineDiscTotal2" runat="server" DataField="CuryLineDiscTotal" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryDiscTot2" runat="server" DataField="CuryDiscTot" Enabled ="false" Size="XM"/>
-                            <px:PXNumberEdit ID="edCuryTaxTotal2" runat="server" DataField="CuryTaxTotal" Enabled="False" Size="XM"/>
-                            <px:PXNumberEdit ID="edMarginPct" runat="server" DataField="MarginPct" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryMarginAmt" runat="server" DataField="CuryMarginAmt" Enabled="False" Size="XM" />
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
+							<px:PXNumberEdit runat="server" Enabled="False" Size="XM" DataField="AMCuryEstimateTotal" ID="edAMCuryEstimateTotal" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryGoodsExtPriceTotal" runat="server" DataField="CuryGoodsExtPriceTotal" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryMiscExtPriceTotal" runat="server" Enabled="False" DataField="CuryMiscExtPriceTotal" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryLineDiscTotal2" runat="server" DataField="CuryLineDiscTotal" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryDiscTot2" runat="server" DataField="CuryDiscTot" Enabled ="false" Size="XM"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryTaxTotal2" runat="server" DataField="CuryTaxTotal" Enabled="False" Size="XM"></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edMarginPct" runat="server" DataField="MarginPct" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryMarginAmt" runat="server" DataField="CuryMarginAmt" Enabled="False" Size="XM" ></px:PXNumberEdit>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                     <px:PXFormView ID="formCalculatedAmounts" runat="server" Caption="Shipment and Invoice Info" DataMember="CurrentDocument" DataSourceID="ds" RenderStyle="Fieldset">
                         <Template>
-                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" />
-							<px:PXNumberEdit runat="server" Enabled="False" Size="XM" DataField="AMEstimateQty" ID="edAMEstimateQty" />
-                            <px:PXNumberEdit ID="edBlanketOpenQty" runat="server" Enabled="False" DataField="BlanketOpenQty" Size="XM" />
-                            <px:PXNumberEdit ID="edOpenOrderQty" runat="server" Enabled="False" DataField="OpenOrderQty" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryOpenOrderTotal" runat="server" Enabled="False" DataField="CuryOpenOrderTotal" Size="XM" />
-                            <px:PXNumberEdit ID="edUnbilledOrderQty" runat="server" Enabled="False" DataField="UnbilledOrderQty" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryUnbilledOrderTotal" runat="server" Enabled="False" DataField="CuryUnbilledOrderTotal" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryPaymentTotal" runat="server" Enabled="False" DataField="CuryPaymentTotal" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryUnpaidBalance1" runat="server" DataField="CuryUnpaidBalance" Enabled="False" Size="XM" />
-                            <px:PXNumberEdit ID="edCuryUnrefundedBalance1" runat="server" DataField="CuryUnrefundedBalance" Enabled="False" Size="XM" />
+                            <px:PXLayoutRule runat="server" ControlSize="XM" LabelsWidth="SM" ></px:PXLayoutRule>
+							<px:PXNumberEdit runat="server" Enabled="False" Size="XM" DataField="AMEstimateQty" ID="edAMEstimateQty" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edBlanketOpenQty" runat="server" Enabled="False" DataField="BlanketOpenQty" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edOpenOrderQty" runat="server" Enabled="False" DataField="OpenOrderQty" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryOpenOrderTotal" runat="server" Enabled="False" DataField="CuryOpenOrderTotal" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edUnbilledOrderQty" runat="server" Enabled="False" DataField="UnbilledOrderQty" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryUnbilledOrderTotal" runat="server" Enabled="False" DataField="CuryUnbilledOrderTotal" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryPaymentTotal" runat="server" Enabled="False" DataField="CuryPaymentTotal" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryUnpaidBalance1" runat="server" DataField="CuryUnpaidBalance" Enabled="False" Size="XM" ></px:PXNumberEdit>
+                            <px:PXNumberEdit ID="edCuryUnrefundedBalance1" runat="server" DataField="CuryUnrefundedBalance" Enabled="False" Size="XM" ></px:PXNumberEdit>
                         </Template>
-                        <ContentStyle BackColor="Transparent" BorderStyle="None" />
+                        <ContentStyle BackColor="Transparent" BorderStyle="None" ></ContentStyle>
                     </px:PXFormView>
                 </Template>
-            </px:PXTabItem>
-        </Items>
+            </px:PXTabItem></Items>
         <CallbackCommands>
-            <Search CommitChanges="True" PostData="Page" />
-            <Refresh CommitChanges="True" PostData="Page" />
-            <Refresh CommitChanges="True" PostData="Page" />
-            <Search CommitChanges="True" PostData="Page" />
+            <Search CommitChanges="True" PostData="Page" ></Search>
+            <Refresh CommitChanges="True" PostData="Page" ></Refresh>
+            <Refresh CommitChanges="True" PostData="Page" ></Refresh>
+            <Search CommitChanges="True" PostData="Page" ></Search>
         </CallbackCommands>
-        <AutoSize Enabled="True" Container="Window" />
+        <AutoSize Enabled="True" Container="Window" ></AutoSize>
     </px:PXTab>
     <%-- PanelPOSupply / POLink --%>
     <px:PXSmartPanel ID="PanelPOSupply" runat="server" Width="960px" Height="360px" Caption="Purchasing Details" CaptionVisible="True"
