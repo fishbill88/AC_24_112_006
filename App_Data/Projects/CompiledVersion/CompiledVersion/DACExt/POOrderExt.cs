@@ -8,6 +8,13 @@ namespace CompiledVersion.DAC
     public sealed class POOrderExt : PXCacheExtension<POOrder>
     {
         public static bool IsActive() => true;
+        #region UsrSONotesCopied
+        public abstract class usrSONotesCopied : PX.Data.BQL.BqlBool.Field<usrSONotesCopied> { }
+        [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        public bool? UsrSONotesCopied { get; set; }
+        #endregion
+
         #region UsrFreightCost
         [PXDBDecimal(2)]
         [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]

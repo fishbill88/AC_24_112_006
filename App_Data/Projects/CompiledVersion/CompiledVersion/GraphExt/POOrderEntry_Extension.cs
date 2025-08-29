@@ -8,6 +8,7 @@ using PX.Objects.PO;
 using PX.Objects.SO;
 using System;
 using System.Linq;
+using static PX.Data.BQL.BqlPlaceholder;
 
 namespace CompiledVersion.Graphs
 {
@@ -129,54 +130,114 @@ namespace CompiledVersion.Graphs
                 APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, pOLine, e.NewValue);
             }
         }
-        protected virtual void _(Events.RowUpdated<POLine> e, PXRowUpdated baseMethod)
+
+        private bool TryGetLinkedSOLine(POLine poLine, out SOLine soLine, out SOOrder soOrder)
         {
-            POOrder order = Base.CurrentDocument.Current;
-            POLine line = (POLine)e.Row;
-            if (line == null) return;
-            baseMethod?.Invoke(e.Cache, e.Args);
-            DropShipLink link = GetDropShipLink(line);
-            SOSetup _sosetup = sosetup.Current;
-            SOSetupExt _soext = _sosetup.GetExtension<SOSetupExt>();
-            SOOrder soOrder = PXSelect<SOOrder,
-                Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
-                    And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
-                .Select(Base, link?.SOOrderType, link?.SOOrderNbr);
+            soLine = null; soOrder = null;
+            if (poLine == null) return false;
 
-            if ((_soext?.UsrCopyHeaderNotesToPO ?? false) && link != null && link.POOrderType == order.OrderType && link.POOrderNbr == order.OrderNbr)
+            if (POLineType.IsDropShip(poLine.LineType))
             {
-                // Get the note from the Sales Order
-                string noteText = PXNoteAttribute.GetNote(Base.Caches[typeof(SOOrder)], soOrder);
-
-                // Set the note on the Shipment
-                PXNoteAttribute.SetNote(Base.CurrentDocument.Cache, order, noteText);
-            }
-            //copy attachments from SOOrder to POOrder
-            if ((_soext?.UsrCopyHeaderAttachmentsToPO ?? false) && link != null && link.POOrderType == order.OrderType && link.POOrderNbr == order.OrderNbr)
-            {
-                PXNoteAttribute.CopyNoteAndFiles(Base.Caches[typeof(SOOrder)], soOrder, Base.Caches[typeof(POOrder)], order);
-            }
-
-            SOLine soLine = PXSelect<SOLine,
+                DropShipLink ds = PXSelect<DropShipLink,
+                    Where<DropShipLink.pOOrderType, Equal<Required<DropShipLink.pOOrderType>>,
+                      And<DropShipLink.pOOrderNbr, Equal<Required<DropShipLink.pOOrderNbr>>,
+                      And<DropShipLink.pOLineNbr, Equal<Required<DropShipLink.pOLineNbr>>>>>>
+                    .Select(Base, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
+                if (ds != null)
+                {
+                    soLine = PXSelect<SOLine,
                         Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-                            And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
-                            And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-                        .Select(Base, link?.SOOrderType, link?.SOOrderNbr, link?.SOLineNbr);
-            //get attachments and notes from the SOLine to POLIne
-            if ((_soext?.UsrCopyLineNotesToPO ?? false) && link != null && link.POOrderType == line.OrderType && link.POOrderNbr == line.OrderNbr && link.POLineNbr == line.LineNbr)
-            {
+                          And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
+                          And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+                        .Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
+                    if (soLine != null)
+                        soOrder = PXSelect<SOOrder,
+                            Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
+                              And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>.Select(Base, soLine.OrderType, soLine.OrderNbr);
+                }
+            }
 
-                // Get the note from the Sales Order Line
-                string noteText = PXNoteAttribute.GetNote(Base.Caches[typeof(SOLine)], soLine);
-                // Set the note on the Shipment Line
-                PXNoteAttribute.SetNote(Base.Caches[typeof(POLine)], line, noteText);
-            }
-            //get attachments from the SOLine to POLIne
-            if ((_soext?.UsrCopyLineAttachmentsToPO ?? false) && link != null && link.POOrderType == line.OrderType && link.POOrderNbr == line.OrderNbr && link.POLineNbr == line.LineNbr)
+            if (soLine == null)
             {
-                PXNoteAttribute.CopyNoteAndFiles(Base.Caches[typeof(SOLine)], soLine, Base.Caches[typeof(POLine)], line);
+                PXResult<SOLine, SOLineSplit> soRes = (PXResult<SOLine, SOLineSplit>)PXSelectJoin<SOLine, InnerJoin<SOLineSplit,
+                            On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+                            And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+                            And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+                        Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
+                          And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
+                          And<SOLineSplit.pOLineNbr, Equal<Required<SOLineSplit.pOLineNbr>>>>>>
+                    .Select(Base, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
+                if (soRes != null)
+                {
+                    soLine = soRes;
+                    if (soLine != null)
+                    {
+                        soOrder = PXSelect<SOOrder, Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>, And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>.Select(Base, soLine.OrderType, soLine.OrderNbr);
+                    }
+                }
             }
+            return soLine != null && soOrder != null;
         }
+
+
+
+        public delegate void PersistDelegate();
+        [PXOverride]
+        public void Persist(PersistDelegate baseMethod)
+        {
+            baseMethod();
+            POOrder order = Base.CurrentDocument.Current;
+            POOrderExt orderExt = order.GetExtension<POOrderExt>();
+            if (orderExt.UsrSONotesCopied ?? false) return;
+            bool headerCopiedThisSession = false;
+            foreach (POLine line in Base.Transactions.Select())
+            {
+                SOSetup _sosetup = sosetup.Current;
+                SOSetupExt _soext = _sosetup.GetExtension<SOSetupExt>();
+                SOOrder soOrder = null;
+                SOLine soLine = null;
+
+                bool hasSO = TryGetLinkedSOLine(line, out soLine, out soOrder);
+
+                if ((_soext?.UsrCopyHeaderNotesToPO ?? false) && hasSO && !headerCopiedThisSession)
+                {
+                    string noteText = PXNoteAttribute.GetNote(Base.Caches[typeof(SOOrder)], soOrder);
+
+                    PXNoteAttribute.SetNote(Base.Caches[typeof(POOrder)], Base.CurrentDocument.Current, noteText);
+                    PXNoteAttribute.SetNote(Base.CurrentDocument.Cache, Base.CurrentDocument.Current, noteText);
+                    string noteText2 = PXNoteAttribute.GetNote(Base.Caches[typeof(POOrder)], Base.CurrentDocument.Current);
+
+                    //use pxdatabase to update the notes of POOrder
+                    PXDatabase.Update<Note>(
+                        new PXDataFieldAssign("NoteText", noteText),
+                        new PXDataFieldRestrict("NoteID", Base.CurrentDocument.Current.NoteID)
+                    );
+                }
+                if ((_soext?.UsrCopyHeaderAttachmentsToPO ?? false) && hasSO && !headerCopiedThisSession)
+                {
+                    PXNoteAttribute.CopyNoteAndFiles(Base.Caches[typeof(SOOrder)], soOrder, Base.Caches[typeof(POOrder)], order,true,true);
+                }
+                headerCopiedThisSession = true;
+                if ((_soext?.UsrCopyLineNotesToPO ?? false) && hasSO)
+                {
+                    string noteText = PXNoteAttribute.GetNote(Base.Caches[typeof(SOLine)], soLine);
+                    PXNoteAttribute.SetNote(Base.Caches[typeof(POLine)], line, noteText);
+                    Base.CurrentDocument.Cache.Update(line);
+                }
+                if ((_soext?.UsrCopyLineAttachmentsToPO ?? false) && hasSO)
+                {
+                    PXNoteAttribute.CopyNoteAndFiles(Base.Caches[typeof(SOLine)], soLine, Base.Caches[typeof(POLine)], line);
+                    Base.CurrentDocument.Cache.Update(line);
+                }
+            }
+            orderExt.UsrSONotesCopied = true;
+            Base.CurrentDocument.Cache.Update(order);
+            Base.Caches[typeof(POOrder)].Persist(PXDBOperation.Update);
+            Base.Caches[typeof(POLine)].Persist(PXDBOperation.Update);
+            //persist again to save the flag
+            //Base.Persist();
+        }
+
         protected virtual void _(Events.RowSelecting<POLine> e, PXRowSelecting baseMethod)
         {
 
