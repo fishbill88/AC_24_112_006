@@ -103,7 +103,7 @@ namespace CompiledVersion.DAC
         #region SalesPersonID
         public abstract class salesPersonID : PX.Data.BQL.BqlInt.Field<salesPersonID> { }
         protected Int32? _SalesPersonID;
-        [SalesPerson(Enabled = false)]
+        [SalesPerson()]
         public virtual Int32? SalesPersonID
         {
             get
@@ -141,6 +141,7 @@ namespace CompiledVersion.DAC
         public abstract class commisionPct : PX.Data.BQL.BqlDecimal.Field<commisionPct> { }
         protected Decimal? _CommisionPct;
         [PXDBDecimal(6)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Commission %")]
         public virtual Decimal? CommisionPct
         {

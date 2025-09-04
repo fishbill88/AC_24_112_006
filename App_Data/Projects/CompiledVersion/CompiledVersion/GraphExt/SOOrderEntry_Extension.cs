@@ -91,7 +91,12 @@ namespace CompiledVersion.Graphs
 
             SOOrderType orderType = SOOrderType.PK.Find(Base, order.OrderType);
             SOOrderTypeExt typeExt = orderType.GetExtension<SOOrderTypeExt>();
-
+            bool isEditable = order.Status == SOOrderStatus.Open ||
+                                           order.Status == SOOrderStatus.Hold ||
+                                           order.Status == SOOrderStatus.CreditHold;
+            SalesPeople.View.AllowUpdate = isEditable;
+            SalesPeople.View.AllowInsert = isEditable;
+            SalesPeople.View.AllowDelete = isEditable;
 
             PXUIFieldAttribute.SetVisible<SOLineExt.usrVendorID>(Base.Transactions.Cache, null, typeExt?.UsrShowVendorID ?? false);
             PXUIFieldAttribute.SetVisible<SOLineExt.usrVendorLocationID>(Base.Transactions.Cache, null, typeExt?.UsrShowVendorLocationID ?? false);
@@ -526,6 +531,13 @@ namespace CompiledVersion.Graphs
             RecalculateRthCuryOrderTotal(row);
         }
 
+        protected virtual void _(Events.RowUpdated<SOLine> e, PXRowUpdated del) 
+        {
+            del?.Invoke(e.Cache, e.Args);
+            SOLine row = (SOLine)e.Row;
+            if (row == null) return;
+            RecalculateRthCuryOrderTotal(Base.Document.Current);
+        }
         protected virtual void _(Events.FieldUpdated<SOOrderExt.usrRTHCuryTaxTotal> e)
         {
             SOOrder row = (SOOrder)e.Row;
