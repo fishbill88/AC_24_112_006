@@ -558,7 +558,8 @@ namespace CompiledVersion.Graphs
 
             //rowExt.UsrRTHCuryOrderTotal = row.CuryOrderTotal;
             rowExt.UsrRTHCuryOrderTotal = ((rowExt.UsrRTHCuryDetailExtPriceTotal ?? 0m) - ((rowExt.UsrRTHCuryLineDiscTotal ?? 0m) + (rowExt.UsrRTHCuryDiscTot ?? 0m))) +
-                                            ((rowExt.UsrFreightPriceLimit ?? 0m) > 0m ? (rowExt.UsrFreightPriceLimit ?? 0m) : (rowExt.UsrRTHCuryFreightTot ?? 0m)) + (rowExt.UsrRTHCuryTaxTotal ?? 0m);
+                                            ((rowExt.UsrFreightPriceLimit ?? 0m) > 0m ? (rowExt.UsrFreightPriceLimit ?? 0m) : (rowExt.UsrRTHCuryFreightTot ?? 0m)) + 
+                                            (row.CuryTaxTotal ?? 0m);
         }
 
         protected virtual void _(Events.RowPersisting<SOLine> e)

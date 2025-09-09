@@ -26,7 +26,7 @@ namespace SWKTechCustomization
         [PXOverride]
         public String LinkPOLineToBlanket(POLine line, POOrderEntry docgraph, POFixedDemand demand, SOLineSplit3 soline, ref PXErrorLevel ErrorLevel, ref String ErrorText, LinkPOLineToBlanketDelegate baseMethod)
         {
-            //var demandExt = demand.GetExtension<POFixedDemandExt>();
+            var demandExt = demand.GetExtension<POFixedDemandExt>();
             //demand.VendorID = demandExt?.UsrVendorID ?? demand.VendorID;
             //demand.VendorLocationID = demandExt?.UsrVendorLocationID ?? demand.VendorLocationID;
 
@@ -105,6 +105,11 @@ namespace SWKTechCustomization
                     docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
                     //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
                 }
+            }
+            else
+            {
+                //line.CuryUnitCost = demand.EffPrice;
+                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, (demandExt.UsrSWKRTHCost ?? demand.EffPrice));
             }
 
             if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && poLineExt != null)

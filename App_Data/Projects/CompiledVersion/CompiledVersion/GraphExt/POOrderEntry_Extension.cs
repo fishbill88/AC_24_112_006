@@ -179,11 +179,9 @@ namespace CompiledVersion.Graphs
             return soLine != null && soOrder != null;
         }
 
-
-
-        public delegate void PersistDelegate();
+        public delegate void PostPersistDelegate();
         [PXOverride]
-        public void Persist(PersistDelegate baseMethod)
+        public void PostPersist(PostPersistDelegate baseMethod)
         {
             baseMethod();
             POOrder order = Base.CurrentDocument.Current;
@@ -215,7 +213,7 @@ namespace CompiledVersion.Graphs
                 }
                 if ((_soext?.UsrCopyHeaderAttachmentsToPO ?? false) && hasSO && !headerCopiedThisSession)
                 {
-                    PXNoteAttribute.CopyNoteAndFiles(Base.Caches[typeof(SOOrder)], soOrder, Base.Caches[typeof(POOrder)], order,true,true);
+                    PXNoteAttribute.CopyNoteAndFiles(Base.Caches[typeof(SOOrder)], soOrder, Base.Caches[typeof(POOrder)], order, true, true);
                 }
                 headerCopiedThisSession = true;
                 if ((_soext?.UsrCopyLineNotesToPO ?? false) && hasSO)
@@ -234,9 +232,17 @@ namespace CompiledVersion.Graphs
             Base.CurrentDocument.Cache.Update(order);
             Base.Caches[typeof(POOrder)].Persist(PXDBOperation.Update);
             Base.Caches[typeof(POLine)].Persist(PXDBOperation.Update);
-            //persist again to save the flag
-            //Base.Persist();
         }
+
+        //public delegate void PersistDelegate();
+        //[PXOverride]
+        //public void Persist(PersistDelegate baseMethod)
+        //{
+        //    baseMethod();
+            
+        //    //persist again to save the flag
+        //    //Base.Persist();
+        //}
 
         protected virtual void _(Events.RowSelecting<POLine> e, PXRowSelecting baseMethod)
         {
