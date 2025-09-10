@@ -12,5 +12,12 @@ namespace CompiledVersion.DAC
         public string UsrShippingNotes { get; set; }
         public abstract class usrShippingNotes : PX.Data.BQL.BqlString.Field<usrShippingNotes> { }
         #endregion
+
+        #region UsrReceiptNbr
+        [PXString(15, IsUnicode = true)]
+        [PXUIField(DisplayName = "Receipt Nbr")]
+        public string UsrReceiptNbr { get; set; }
+        public abstract class usrReceiptNbr : PX.Data.BQL.BqlString.Field<usrReceiptNbr> { }
+        #endregion
     }
 }

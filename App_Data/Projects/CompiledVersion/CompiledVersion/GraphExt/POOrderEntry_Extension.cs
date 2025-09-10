@@ -205,8 +205,9 @@ namespace CompiledVersion.Graphs
                     PXNoteAttribute.SetNote(Base.CurrentDocument.Cache, Base.CurrentDocument.Current, noteText);
                     string noteText2 = PXNoteAttribute.GetNote(Base.Caches[typeof(POOrder)], Base.CurrentDocument.Current);
 
-                    //use pxdatabase to update the notes of POOrder
-                    PXDatabase.Update<Note>(
+                    //use pxdatabase to update the notes of
+                    if (noteText != null)
+                        PXDatabase.Update<Note>(
                         new PXDataFieldAssign("NoteText", noteText),
                         new PXDataFieldRestrict("NoteID", Base.CurrentDocument.Current.NoteID)
                     );

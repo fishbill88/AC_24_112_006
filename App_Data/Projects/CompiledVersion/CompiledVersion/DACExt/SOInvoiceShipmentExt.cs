@@ -152,6 +152,11 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region Event Handlers
+        protected virtual void _(Events.RowSelected<SOShipment> e)
+        {
+            if (e.Row == null) return;
+            PXUIFieldAttribute.SetDisplayName<SOShipment.shipmentNbr>(Base.Orders.Cache, "Shipment / Receipt Nbr");
+        }
         protected virtual void _(Events.RowSelected<SOShipmentFilter> e)
         {
             if (e.Row == null) return;
@@ -160,7 +165,6 @@ namespace CompiledVersion.DAC
 
             // Hide the button completely
             prepareInvoice.SetVisible(false);
-
         }
         #endregion
 
