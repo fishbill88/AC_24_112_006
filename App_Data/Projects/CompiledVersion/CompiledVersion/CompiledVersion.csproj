@@ -33,6 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Bin\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="PX.Common">
       <HintPath>..\..\..\..\Bin\PX.Common.dll</HintPath>
     </Reference>
@@ -71,22 +75,24 @@
     <Compile Include="DACExt\POReceiptExt.cs" />
     <Compile Include="DACExt\SOInvoiceShipmentExt.cs" />
     <Compile Include="DACExt\SOLineExt.cs" />
+    <Compile Include="DACExt\SOLineSplit3Ext.cs" />
     <Compile Include="DACExt\SOOrderExt.cs" />
     <Compile Include="DACExt\SOOrderTypeExt.cs" />
     <Compile Include="DACExt\SOSetupExt.cs" />
     <Compile Include="DACExt\SOShipmentExt.cs" />
     <Compile Include="DAC\InventoryRequest.cs" />
     <Compile Include="DAC\SOCustSalesPeople.cs" />
-    <Compile Include="GraphExt\CRTaskMaint_ReadyForRequestor.cs" />
-    <Compile Include="GraphExt\CRTaskMaint_ReadyForRequestorEditableExt.cs" />
-    <Compile Include="GraphExt\CRTaskMaint_Workflow.cs" />
+    <Compile Include="Discarded Graphs\CRTaskMaint_ReadyForRequestor.cs" />
+    <Compile Include="Discarded Graphs\CRTaskMaint_ReadyForRequestorEditableExt.cs" />
+    <Compile Include="Discarded Graphs\CRTaskMaint_Workflow.cs" />
     <Compile Include="GraphExt\InventoryItemMaintExt.cs" />
     <Compile Include="GraphExt\NonStockItemMaintExt.cs" />
     <Compile Include="GraphExt\POCreate3.cs" />
     <Compile Include="GraphExt\POCreate4.cs" />
+    <Compile Include="GraphExt\POCreateReplaceOriginalMethod.cs" />
     <Compile Include="GraphExt\POCreateView.cs" />
     <Compile Include="GraphExt\POCreate_2.cs" />
-    <Compile Include="GraphExt\POCreate_1.cs" />
+    <Compile Include="Discarded Graphs\POCreate_1.cs" />
     <Compile Include="GraphExt\POOrderEntry_Extension.cs" />
     <Compile Include="GraphExt\POReceiptEntry_Extension.cs" />
     <Compile Include="GraphExt\QuoteMaintCRCreateSalesOrderExt.cs" />
@@ -97,7 +103,7 @@
     <Compile Include="GraphExt\SOReleaseInvoice_Extension.cs" />
     <Compile Include="GraphExt\SOSetupMaint_Extension.cs" />
     <Compile Include="GraphExt\SOShipmentEntry_Extension.cs" />
-    <Compile Include="GraphExt\POCreate_Extension.cs" />
+    <Compile Include="Discarded Graphs\POCreate_Extension.cs" />
     <Compile Include="GraphExt\SOShipmentEntry_WorkflowExt.cs" />
     <Compile Include="Graphs\ItemRequestEntry.cs" />
     <Compile Include="Helpers\Helper.cs" />

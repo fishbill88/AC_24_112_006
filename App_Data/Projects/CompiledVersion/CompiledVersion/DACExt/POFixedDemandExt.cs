@@ -98,6 +98,14 @@ namespace CompiledVersion.DAC
         public abstract class usrVendorAddress : PX.Data.BQL.BqlString.Field<usrVendorAddress> { }
 
         #endregion
+
+        #region UsrSWKSPCCode
+        [PXDBString(30, IsUnicode = true)]
+        [PXUIField(DisplayName = "SPC Code")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        public string UsrSWKSPCCode { get; set; }
+        public abstract class usrSWKSPCCode : PX.Data.BQL.BqlString.Field<usrSWKSPCCode> { }
+        #endregion
     }
 
     public sealed class INItemPlanExt : PXCacheExtension<INItemPlan>
@@ -134,6 +142,13 @@ namespace CompiledVersion.DAC
         public abstract class usrVendorLocationID : PX.Data.BQL.BqlInt.Field<usrVendorLocationID> { }
         #endregion
 
+        #region UsrSWKSPCCode
+        [PXDBString(30, IsUnicode = true)]
+        [PXUIField(DisplayName = "SPC Code")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        public string UsrSWKSPCCode { get; set; }
+        public abstract class usrSWKSPCCode : PX.Data.BQL.BqlString.Field<usrSWKSPCCode> { }
+        #endregion
 
         #region UsrVendorAddress
         [PXString(2000, IsUnicode = true)]

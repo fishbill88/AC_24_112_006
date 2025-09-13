@@ -5,6 +5,7 @@ using PX.Data;
 using PX.Objects.CR;
 using PX.Objects.CS;
 using PX.Objects.IN;
+using PX.Objects.PM;
 using PX.Objects.PO;
 using PX.Objects.SO;
 using System;
@@ -21,107 +22,112 @@ namespace SWKTechCustomization
         public static bool IsActive() => true;
 
         #region Event Handlers
-
-        public delegate String LinkPOLineToBlanketDelegate(POLine line, POOrderEntry docgraph, POFixedDemand demand, SOLineSplit3 soline, ref PXErrorLevel ErrorLevel, ref String ErrorText);
-        [PXOverride]
-        public String LinkPOLineToBlanket(POLine line, POOrderEntry docgraph, POFixedDemand demand, SOLineSplit3 soline, ref PXErrorLevel ErrorLevel, ref String ErrorText, LinkPOLineToBlanketDelegate baseMethod)
-        {
-            var demandExt = demand.GetExtension<POFixedDemandExt>();
-            //demand.VendorID = demandExt?.UsrVendorID ?? demand.VendorID;
-            //demand.VendorLocationID = demandExt?.UsrVendorLocationID ?? demand.VendorLocationID;
-
-            SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-                  And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-                                  .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
-            SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
-            POLineExt poLineExt = line?.GetExtension<POLineExt>();
-            POOrderExt poOrderExt = docgraph?.CurrentDocument?.Current?.GetExtension<POOrderExt>();
-            SOOrder soOrder = SOOrder.PK.Find(Base, soline?.OrderType, soline?.OrderNbr);
-            InventoryItem item = InventoryItem.PK.Find(Base, demand?.InventoryID);
-            InventoryItemExt itemExt = item?.GetExtension<InventoryItemExt>();
-            SOOrderExt soOrderExt = soOrder?.GetExtension<SOOrderExt>();
-            if (soLine != null)
-            {
-                POLineExt lineExt = line?.GetExtension<POLineExt>();
-                lineExt.UsrVendorSpecTerms = soLineExt?.UsrVendorSpecTerms;
-                lineExt.UsrVendorNotes = soLineExt?.UsrVendorNotes;
-
-                //SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
-
-                docgraph.CurrentDocument.Current.FOBPoint = soOrder?.FOBPoint;
-                docgraph.CurrentDocument.Current.ShipVia = soOrder?.ShipVia;
+        #region LinkPOLineToBlanket
 
 
-                poOrderExt.UsrShipTermsID = soOrder?.ShipTermsID;
-                poOrderExt.UsrCustomerAccount = soOrderExt?.UsrCustomerAccount;
-            }
+        #region LinkPOLineToBlanketDelegate - unused
+        //public delegate String LinkPOLineToBlanketDelegate(POLine line, POOrderEntry docgraph, POFixedDemand demand, SOLineSplit3 soline, ref PXErrorLevel ErrorLevel, ref String ErrorText);
+        //[PXOverride]
+        //public String LinkPOLineToBlanket(POLine line, POOrderEntry docgraph, POFixedDemand demand, SOLineSplit3 soline, ref PXErrorLevel ErrorLevel, ref String ErrorText, LinkPOLineToBlanketDelegate baseMethod)
+        //{
+        //    var demandExt = demand.GetExtension<POFixedDemandExt>();
+        //    //demand.VendorID = demandExt?.UsrVendorID ?? demand.VendorID;
+        //    //demand.VendorLocationID = demandExt?.UsrVendorLocationID ?? demand.VendorLocationID;
+
+        //    SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+        //          And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+        //                          .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
+        //    SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
+        //    POLineExt poLineExt = line?.GetExtension<POLineExt>();
+        //    POOrderExt poOrderExt = docgraph?.CurrentDocument?.Current?.GetExtension<POOrderExt>();
+        //    SOOrder soOrder = SOOrder.PK.Find(Base, soline?.OrderType, soline?.OrderNbr);
+        //    InventoryItem item = InventoryItem.PK.Find(Base, demand?.InventoryID);
+        //    InventoryItemExt itemExt = item?.GetExtension<InventoryItemExt>();
+        //    SOOrderExt soOrderExt = soOrder?.GetExtension<SOOrderExt>();
+        //    if (soLine != null)
+        //    {
+        //        POLineExt lineExt = line?.GetExtension<POLineExt>();
+        //        lineExt.UsrVendorSpecTerms = soLineExt?.UsrVendorSpecTerms;
+        //        lineExt.UsrVendorNotes = soLineExt?.UsrVendorNotes;
+
+        //        //SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
+
+        //        docgraph.CurrentDocument.Current.FOBPoint = soOrder?.FOBPoint;
+        //        docgraph.CurrentDocument.Current.ShipVia = soOrder?.ShipVia;
+
+
+        //        poOrderExt.UsrShipTermsID = soOrder?.ShipTermsID;
+        //        poOrderExt.UsrCustomerAccount = soOrderExt?.UsrCustomerAccount;
+        //    }
 
 
 
-            SOOrderType orderType = SOOrderType.PK.Find(Base, soOrder?.OrderType);
-            SOOrderTypeExt typeExt = orderType?.GetExtension<SOOrderTypeExt>();
-            if (typeExt?.UsrShowVendorID ?? false)
-                poLineExt.UsrVendorID = soLineExt?.UsrVendorID;
+        //    SOOrderType orderType = SOOrderType.PK.Find(Base, soOrder?.OrderType);
+        //    SOOrderTypeExt typeExt = orderType?.GetExtension<SOOrderTypeExt>();
+        //    if (typeExt?.UsrShowVendorID ?? false)
+        //        poLineExt.UsrVendorID = soLineExt?.UsrVendorID;
 
-            if (typeExt?.UsrShowVendorLocationID ?? false)
-                poLineExt.UsrVendorLocationID = soLineExt?.UsrVendorLocationID;
+        //    if (typeExt?.UsrShowVendorLocationID ?? false)
+        //        poLineExt.UsrVendorLocationID = soLineExt?.UsrVendorLocationID;
 
-            if (typeExt?.UsrShowVendorAddress ?? false)
-                poLineExt.UsrVendorAddress = soLineExt?.UsrVendorAddress;
+        //    if (typeExt?.UsrShowVendorAddress ?? false)
+        //        poLineExt.UsrVendorAddress = soLineExt?.UsrVendorAddress;
 
-            poLineExt.UsrItemSpecs = soLineExt?.UsrItemSpecs ?? itemExt.UsrItemSpecs;
+        //    poLineExt.UsrItemSpecs = soLineExt?.UsrItemSpecs ?? itemExt.UsrItemSpecs;
 
-            //POOrderExt poOrderExt = docgraph.CurrentDocument.Current.GetExtension<POOrderExt>();
-            poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
+        //    //POOrderExt poOrderExt = docgraph.CurrentDocument.Current.GetExtension<POOrderExt>();
+        //    poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
 
-            var result = baseMethod(line, docgraph, demand, soline, ref ErrorLevel, ref ErrorText);
-            //POLineExt poLineExt = line?.GetExtension<POLineExt>();
-            var docGraphExt = docgraph?.GetExtension<POOrderEntry_Extension>();
-            if (docGraphExt != null)
-                docGraphExt.skipCostDefaulting = true;
+        //    var result = baseMethod(line, docgraph, demand, soline, ref ErrorLevel, ref ErrorText);
+        //    //POLineExt poLineExt = line?.GetExtension<POLineExt>();
+        //    var docGraphExt = docgraph?.GetExtension<POOrderEntry_Extension>();
+        //    if (docGraphExt != null)
+        //        docGraphExt.skipCostDefaulting = true;
 
-            // this only runs when the plantype is dropship
-            // Set Shipping Instructions from SO Order to PO Order
-            if(demand.PlanDate != null && demand.PlanType == INPlanConstants.Plan6D)
-                docgraph?.CurrentDocument.Cache.SetValueExt<POOrderExt.usrShippingInstructions>(docgraph.CurrentDocument.Current, soOrderExt?.UsrShippingInstructions);
-            // Find the related SO Line
-            //SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-            //    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-            //    .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
+        //    // this only runs when the plantype is dropship
+        //    // Set Shipping Instructions from SO Order to PO Order
+        //    if(demand.PlanDate != null && demand.PlanType == INPlanConstants.Plan6D)
+        //        docgraph?.CurrentDocument.Cache.SetValueExt<POOrderExt.usrShippingInstructions>(docgraph.CurrentDocument.Current, soOrderExt?.UsrShippingInstructions);
+        //    // Find the related SO Line
+        //    //SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+        //    //    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+        //    //    .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
 
-            //SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
+        //    //SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
 
-            // Overwrite PO Line Unit Cost if SOLine.usrSWKSPCCost has value
-            if(soLine != null)
-            {
-                if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
-                {
-                    //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
-                    docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);
-                }
-                else
-                {
-                    //line.CuryUnitCost = demand.EffPrice;
-                    docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
-                    //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
-                }
-            }
-            else
-            {
-                //line.CuryUnitCost = demand.EffPrice;
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, (demandExt.UsrSWKRTHCost ?? demand.EffPrice));
-            }
+        //    // Overwrite PO Line Unit Cost if SOLine.usrSWKSPCCost has value
+        //    if(soLine != null)
+        //    {
+        //        if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
+        //        {
+        //            //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
+        //            docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);
+        //        }
+        //        else
+        //        {
+        //            //line.CuryUnitCost = demand.EffPrice;
+        //            docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
+        //            //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //line.CuryUnitCost = demand.EffPrice;
+        //        docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, (demandExt.UsrSWKRTHCost ?? demand.EffPrice));
+        //    }
 
-            if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && poLineExt != null)
-            {
-                //poLineExt.UsrSWKSPCCode = soLineExt.UsrSWKSPCCode;
-                docgraph?.Transactions.Cache.SetValueExt<POLineExt.usrSWKSPCCode>(line, soLineExt?.UsrSWKSPCCode);
-            }
+        //    if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && poLineExt != null)
+        //    {
+        //        //poLineExt.UsrSWKSPCCode = soLineExt.UsrSWKSPCCode;
+        //        docgraph?.Transactions.Cache.SetValueExt<POLineExt.usrSWKSPCCode>(line, soLineExt?.UsrSWKSPCCode);
+        //    }
 
 
-            return result;
-        }
+        //    return result;
+        //}
 
+        #endregion
+        #endregion
         // Override the EnumerateAndPrepareFixedDemandRow method to populate Vendor Price
         [PXOverride]
         public virtual void EnumerateAndPrepareFixedDemandRow(PXResult<POFixedDemand> rec,
@@ -160,6 +166,12 @@ namespace SWKTechCustomization
                 demandExt.UsrVendorLocationID = demand.VendorLocationID;
                 //demandExt.UsrVendorAddress = demand.VendorAddress;
             }
+
+            if(soLineExt.UsrSWKSPCCode != null)
+            {
+                var lineExt = demand.GetExtension<POFixedDemandExt>();
+                lineExt.UsrSWKSPCCode = soLineExt.UsrSWKSPCCode;
+            }   
         }
 
         [PXMergeAttributes(Method = MergeMethod.Merge)]

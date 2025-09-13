@@ -9,6 +9,7 @@ using PX.Objects.SO;
 using System;
 using System.Linq;
 using static PX.Data.BQL.BqlPlaceholder;
+using static PX.Objects.PO.POOrderEntry;
 
 namespace CompiledVersion.Graphs
 {
@@ -231,8 +232,8 @@ namespace CompiledVersion.Graphs
             }
             orderExt.UsrSONotesCopied = true;
             Base.CurrentDocument.Cache.Update(order);
-            Base.Caches[typeof(POOrder)].Persist(PXDBOperation.Update);
-            Base.Caches[typeof(POLine)].Persist(PXDBOperation.Update);
+            //Base.Caches[typeof(POOrder)].Persist(PXDBOperation.Update);
+            //Base.Caches[typeof(POLine)].Persist(PXDBOperation.Update);
         }
 
         //public delegate void PersistDelegate();
@@ -403,11 +404,43 @@ namespace CompiledVersion.Graphs
                 sOSetupExt.UsrPrepayAndAdd == soOrder.ShipTermsID);
             baseMethod?.Invoke(e.Cache, e.Args);
 
-        } 
+        }
         #endregion
 
         #endregion
 
+        #region From Original
+        public void UpdateSOLine(SOLineSplit3 split, int? vendorID, bool poCreated)
+        {
+            bool setVendor = split.VendorID != vendorID;
+            bool setPOCreated = split.POCreated != poCreated;
+            if (setVendor || setPOCreated)
+            {
+                SOLine5 origsoline = (SOLine5)Base.FixedDemandOrigSOLine.Select(split.OrderType, split.OrderNbr, split.LineNbr);
+                bool changed = false;
+                if (setVendor)
+                {
+                    split.VendorID = vendorID;
+                    if (origsoline != null && origsoline.VendorID != vendorID)
+                    {
+                        origsoline.VendorID = vendorID;
+                        changed = true;
+                    }
+                }
+                if (setPOCreated)
+                {
+                    split.POCreated = poCreated;
+                    if (origsoline != null && origsoline.POCreated != poCreated)
+                    {
+                        origsoline.POCreated = poCreated;
+                        changed = true;
+                    }
+                }
+                if (changed)
+                    Base.FixedDemandOrigSOLine.Cache.MarkUpdated(origsoline, assertError: true);
+            }
+        }
+        #endregion
 
     }
 }
