@@ -82,6 +82,7 @@
                     <px:PXGridColumn AllowUpdate="False" DataField="InventoryID" DisplayFormat="&gt;AAA-&gt;CCC-&gt;AA" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="InventoryID_InventoryItem_descr" ></px:PXGridColumn>
 	<px:PXGridColumn DataField="UsrSWKRTHCost" Width="100" />
+	<px:PXGridColumn DataField="UsrSWKSPCCode" Width="140" />
                     <px:PXGridColumn AllowUpdate="False" DataField="SubItemID" DisplayFormat="&gt;AA-A" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="POSiteID" DisplayFormat="&gt;AAAAAAAAAA" ></px:PXGridColumn>
                     <px:PXGridColumn AllowUpdate="False" DataField="POSiteID_description" ></px:PXGridColumn>
