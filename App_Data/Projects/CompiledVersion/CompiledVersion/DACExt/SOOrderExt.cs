@@ -240,5 +240,20 @@ namespace CompiledVersion.DAC
         public string UsrHubspotDealID { get; set; }
         public abstract class usrHubspotDealID : PX.Data.BQL.BqlString.Field<usrHubspotDealID> { }
         #endregion
+
+        // Unbound display fields for SOCreateShipment grid
+        #region UsrBillCompleteDisplay
+        public abstract class usrBillCompleteDisplay : PX.Data.BQL.BqlBool.Field<usrBillCompleteDisplay> { }
+        [PXBool]
+        [PXUIField(DisplayName = "Bill Complete", Enabled = false)]
+        public bool? UsrBillCompleteDisplay { get; set; }
+        #endregion
+
+        #region UsrFormTypeDisplay
+        public abstract class usrFormTypeDisplay : PX.Data.BQL.BqlString.Field<usrFormTypeDisplay> { }
+        [PXString(255, IsUnicode = true)]
+        [PXUIField(DisplayName = "Form Type", Enabled = false)]
+        public string UsrFormTypeDisplay { get; set; }
+        #endregion
     }
 }

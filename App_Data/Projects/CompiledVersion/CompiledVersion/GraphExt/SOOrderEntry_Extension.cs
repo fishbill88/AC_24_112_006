@@ -1,19 +1,22 @@
 ﻿using CompiledVersion.DAC;
 using PX.Common;
 using PX.Data;
+using PX.Data.BQL.Fluent;
 using PX.Data.Licensing;
 using PX.Objects.AR;
-using PX.Objects.IN;
+using PX.Objects.CR.Standalone;
 using PX.Objects.CS;
+using PX.Objects.IN;
 using PX.Objects.PO;
+using PX.Objects.CM;
 using PX.Objects.SO;
+using PX.Objects.SO.GraphExtensions.SOOrderEntryExt;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using PX.Objects.SO.GraphExtensions.SOOrderEntryExt;
-using PX.Objects.CR.Standalone;
-using PX.Data.BQL.Fluent;
+using static PX.Data.PXQuickProcess;
+using PX.Objects.Common.Extensions;
 
 namespace CompiledVersion.Graphs
 {
@@ -34,9 +37,215 @@ namespace CompiledVersion.Graphs
         [PXOverride]
         public IEnumerable PrepareInvoice(PXAdapter adapter, PrepareInvoiceDelegate baseMethod)
         {
-            CheckItemsForFlaggedNonStockItem();
-            return baseMethod(adapter);
+            List<SOOrder> list = adapter.Get<SOOrder>().ToList();
+
+            foreach (SOOrder order in list)
+            {
+                if (Base.Document.Cache.GetStatus(order) != PXEntryStatus.Inserted)
+                    Base.Document.Cache.MarkUpdated(order, assertError: true);
+            }
+
+            if (!adapter.MassProcess)
+            {
+                try
+                {
+                    Base.RecalculateExternalTaxesSync = true;
+                    Base.Save.Press();
+                }
+                finally
+                {
+                    Base.RecalculateExternalTaxesSync = false;
+                }
+            }
+
+            Dictionary<string, object> arguments = adapter.Arguments;
+            bool massProcess = adapter.MassProcess;
+            PXQuickProcess.ActionFlow quickProcessFlow = adapter.QuickProcessFlow;
+
+            PXLongOperation.StartOperation(this, delegate ()
+            {
+                var graph = PXGraph.CreateInstance<SOOrderEntry>();
+                SOOrderEntry_Extension ext = graph.GetExtension<SOOrderEntry_Extension>();
+                ext.InvoiceOrders(list, arguments, massProcess, quickProcessFlow);
+            });
+            yield return list;
+
+
+
+
+
+            //foreach (SOShipment shipment in adapter.Get<SOShipment>())
+            //{
+            //    if (shipment?.ShipmentNbr != null && TryGetNonStockError(shipment.ShipmentNbr, out string errorMessage))
+            //    {
+            //        // Proper log on Process Shipments page
+            //        if (adapter.MassProcess)
+            //        {
+            //            PXProcessing<SOOrder>.SetError(errorMessage);
+            //            yield return shipment; // return current row and stop
+            //            yield break;
+            //        }
+
+            //        // In single action, block with an exception
+            //        throw new PXException(errorMessage);
+            //    }
+            //    baseMethod(adapter);
+            //}
+
+            //CheckItemsForFlaggedNonStockItem();
+            //return baseMethod(adapter);
         }
+
+        protected virtual void InvoiceOrders(List<SOOrder> list, Dictionary<string, object> arguments,
+            bool massProcess, PXQuickProcess.ActionFlow quickProcessFlow)
+        {
+            var shipmentEntry = PXGraph.CreateInstance<SOShipmentEntry>();
+            var created = new InvoiceList(shipmentEntry);
+
+            Base.InvoiceOrder(arguments, list, created, massProcess, quickProcessFlow, false);
+
+            if (massProcess) // order is updated and saved somewhere in InvoiceOrder method
+                list.ForEach(o => shipmentEntry.soorder.Cache.RestoreCopy(o, SOOrder.PK.Find(shipmentEntry, o)));
+
+            if (!massProcess && created.Count > 0)
+            {
+                using (new PXTimeStampScope(null))
+                {
+                    SOInvoiceEntry ie = PXGraph.CreateInstance<SOInvoiceEntry>();
+                    ie.Document.Current = ie.Document.Search<ARInvoice.docType, ARInvoice.refNbr>(((ARInvoice)created[0]).DocType, ((ARInvoice)created[0]).RefNbr, ((ARInvoice)created[0]).DocType);
+                    throw new PXRedirectRequiredException(ie, "Invoice");
+                }
+            }
+        }
+
+        public delegate void InvoiceOrderDelegate(Dictionary<String, Object> parameters, IEnumerable<SOOrder> list, InvoiceList created, Boolean isMassProcess, ActionFlow quickProcessFlow, Boolean groupByCustomerOrderNumber);
+        [PXOverride]
+        public void InvoiceOrder(Dictionary<String, Object> parameters, IEnumerable<SOOrder> list, InvoiceList created, Boolean isMassProcess, ActionFlow quickProcessFlow, Boolean groupByCustomerOrderNumber, InvoiceOrderDelegate baseMethod)
+        {
+            bool optimizeExternalTaxCalc = isMassProcess;
+            SOShipmentEntry docgraph = PXGraph.CreateInstance<SOShipmentEntry>();
+            SOInvoiceEntry invoiceEntry = PXGraph.CreateInstance<SOInvoiceEntry>();
+
+            foreach (SOOrder order in list.OrderBy(o => o.OrderType).ThenBy(o => o.OrderNbr))
+            {
+                try
+                {
+                    if (isMassProcess) PXProcessing<SOOrder>.SetCurrentItem(order);
+
+                    TryGetNonStockError(order.OrderType,order.OrderNbr, out string errorMessage);
+
+                    if (errorMessage != null)
+                    {
+                        PXProcessing<SOOrder>.SetError(errorMessage);
+                    }
+                    else
+                    {
+                        invoiceEntry.Clear();
+                        invoiceEntry.Clear(PXClearOption.ClearQueriesOnly);
+                        invoiceEntry.ARSetup.Current.RequireControlTotal = false;
+
+                        List<PXResult<SOOrderShipment>> shipments = new List<PXResult<SOOrderShipment>>();
+                        PXResultset<SOShipLine, SOLine> details = null;
+
+                        foreach (PXResult<SOOrderType, SOOrderShipment, SOOrderTypeOperation, CurrencyInfo, SOAddress, SOContact, Customer> res in
+                            Base.GetOrderShipments(docgraph, order))
+                        {
+                            SOOrderShipment shipment = (SOOrderShipment)res;
+
+                            if (((SOOrderType)res).RequireShipping == false || ((SOOrderTypeOperation)res).INDocType == INTranType.NoUpdate)
+                            {
+                                //if order is created with zero lines, invoiced, and then new line added, this will save us
+                                if (shipment.ShipmentNbr == null)
+                                {
+                                    shipment = SOOrderShipment.FromSalesOrder(order);
+                                    shipment.ShipmentType = INTranType.DocType(((SOOrderTypeOperation)res).INDocType);
+                                }
+
+                                if (details == null)
+                                {
+                                    details = new PXResultset<SOShipLine, SOLine>();
+                                }
+
+                                foreach (SOLine line in PXSelectJoin<SOLine,
+                                    InnerJoin<InventoryItem,
+                                        On<SOLine.FK.InventoryItem>>,
+                                    Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+                                    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
+                                    And<SOLine.lineType, NotEqual<SOLineType.miscCharge>>>>>.Select(docgraph, order.OrderType, order.OrderNbr))
+                                {
+                                    details.Add(new PXResult<SOShipLine, SOLine>(SOShipLine.FromSOLine(line), line));
+                                }
+                            }
+                            else if (HasMiscLinesToInvoice(order) && shipment.ShipmentNbr == null)
+                            {
+                                shipment = SOOrderShipment.FromSalesOrder(order, miscOnly: true);
+                                shipment.ShipmentType = INDocType.Invoice;
+                            }
+
+                            if (shipment.ShipmentType == SOShipmentType.DropShip)
+                            {
+                                details = details ?? new PXResultset<SOShipLine, SOLine>();
+                                details.AddRange(docgraph.CollectDropshipDetails(shipment));
+                            }
+
+                            if (shipment.ShipmentNbr != null)
+                            {
+                                shipments.Add(new PXResult<SOOrderShipment, SOOrder, CurrencyInfo, SOAddress, SOContact, SOOrderType, SOOrderTypeOperation, Customer>(shipment, order, (CurrencyInfo)res, (SOAddress)res, (SOContact)res, (SOOrderType)res, (SOOrderTypeOperation)res, (Customer)res));
+                            }
+                        }
+
+                        shipments = new List<PXResult<SOOrderShipment>>(shipments.OrderBy(s => PXResult.Unwrap<SOOrderShipment>(s).Operation == PXResult.Unwrap<SOOrderType>(s).DefaultOperation ? 0 : 1)
+                            .ThenBy(s => PXResult.Unwrap<SOOrderShipment>(s).ShipmentNbr));
+
+                        foreach (PXResult<SOOrderShipment, SOOrder, CurrencyInfo, SOAddress, SOContact, SOOrderType, SOOrderTypeOperation> res in shipments)
+                        {
+
+                            Base.Clear();
+                            var soorder = (SOOrder)res;
+                            Base.Document.Current = Base.Document.Search<SOOrder.orderNbr>(soorder.OrderNbr, soorder.OrderType);
+                            if (PX.SM.WorkflowAction.HasWorkflowActionEnabled(Base, g => g.prepareInvoice, Base.Document.Current) == false)
+                            {
+                                throw new PXInvalidOperationException(PX.Objects.SO.Messages.ActionNotAvailableInCurrentState,
+                                    Base.prepareInvoice.GetCaption(), Base.Document.Cache.GetRowDescription(Base.Document.Current));
+                            }
+
+                            using (var ts = new PXTransactionScope())
+                            {
+                                invoiceEntry.InvoiceOrder(new InvoiceOrderArgs(res)
+                                {
+                                    InvoiceDate = invoiceEntry.Accessinfo.BusinessDate.Value,
+                                    Customer = Base.customer.Current,
+                                    List = created,
+                                    Details = details,
+                                    QuickProcessFlow = quickProcessFlow,
+                                    GroupByDefaultOperation = !isMassProcess,
+                                    GroupByCustomerOrderNumber = groupByCustomerOrderNumber,
+                                    OptimizeExternalTaxCalc = optimizeExternalTaxCalc
+                                });
+
+                                Base.Clear();
+                                ts.Complete();
+                            }
+
+                            PXProcessing<SOOrder>.SetProcessed();
+                        }
+                    }
+                }
+                catch (Exception ex) when (isMassProcess)
+                {
+                    PXProcessing<SOOrder>.SetError(ex);
+                }
+            }
+
+            if (optimizeExternalTaxCalc)
+            {
+                invoiceEntry.CompleteProcessingImpl(created);
+            }
+
+
+            //baseMethod(parameters, list, created, isMassProcess, quickProcessFlow, groupByCustomerOrderNumber);
+        }
+
 
 
         public delegate IEnumerable CreateShipmentIssueDelegate(PXAdapter adapter, Nullable<DateTime> shipDate, Nullable<Int32> siteID);
@@ -205,6 +414,12 @@ namespace CompiledVersion.Graphs
                 newItem.CommisionPct = item.CommisionPct;
             }
         }
+
+
+        protected virtual bool HasMiscLinesToInvoice(SOOrder order)
+            => (order.OrderQty == 0 || order.OpenLineCntr == 0 && order.IsLegacyMiscBilling == false)
+                && (order.CuryUnbilledMiscTot != 0 || order.UnbilledOrderQty > 0);
+
 
         public void ClearSalesPerson()
         {
@@ -662,6 +877,56 @@ namespace CompiledVersion.Graphs
             // Set the Extended Cost
             cache.SetValueExt<SOLine.curyExtCost>(line, extendedCost);
         }
+        private bool TryGetNonStockError(string ordertype, string orderNbr, out string errorMessage)
+        {
+            errorMessage = null;
+            if (string.IsNullOrEmpty(orderNbr))
+                return false;
+
+            var setupExt = Base.sosetup.Current.GetExtension<SOSetupExt>();
+            if (setupExt == null) return false;
+
+            var nonStockItems = new List<int?>();
+            if (setupExt.UsrNonstock1 != null) nonStockItems.Add(setupExt.UsrNonstock1);
+            if (setupExt.UsrNonstock2 != null) nonStockItems.Add(setupExt.UsrNonstock2);
+            if (setupExt.UsrNonstock3 != null) nonStockItems.Add(setupExt.UsrNonstock3);
+            if (nonStockItems.Count == 0)
+                return false;
+
+            var lines = PXSelect<SOLine,
+                Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+                    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>>
+                .Select(Base, ordertype, orderNbr)
+                .RowCast<SOLine>();
+
+            var invalidNonstock = new List<string>();
+
+
+            foreach (SOLine line in lines)
+            {
+                if (nonStockItems.Contains(line.InventoryID))
+                {
+                    InventoryItem item = PXSelect<InventoryItem,
+                        Where<InventoryItem.inventoryID, Equal<Required<InventoryItem.inventoryID>>>>
+                        .Select(Base, line.InventoryID);
+
+                    if (item != null)
+                        invalidNonstock.Add(item.InventoryCD);
+
+                    // Mark the line field so if user opens the shipment they see the problematic lines
+                    PXUIFieldAttribute.SetError<SOLine.inventoryID>(Base.Transactions.Cache, line,
+                        "You cannot invoice this non-stock item.");
+                }
+            }
+
+            if (invalidNonstock.Count > 0)
+            {
+                errorMessage = Messages.CannotInvoiceNonStockItems(string.Join(", ", invalidNonstock));
+                return true;
+            }
+
+            return false;
+        }
 
         public void CheckItemsForFlaggedNonStockItem()
         {
@@ -682,7 +947,13 @@ namespace CompiledVersion.Graphs
                 nonStockItems.Add(setupExt.UsrNonstock3);
             }
 
-            foreach (SOLine line in Base.Transactions.Select())
+            var lines = PXSelect<SOLine,
+                Where<SOLine.origOrderType, Equal<Required<SOLine.orderType>>,
+                    And<SOLine.origOrderNbr, Equal<Required<SOLine.orderNbr>>>>>
+                .Select(Base, Base.Document.Current.OrderType,Base.Document.Current.OrderNbr)
+                .RowCast<SOLine>();
+
+            foreach (SOLine line in lines)
             {
                 bool hasError = false;
                 //check if the line's inventory ID is in the list of non-stock items, then show a popup stating user cannot invoice the non-stock item

@@ -1,4 +1,5 @@
-﻿using PX.Data;
+﻿using PX.CS;
+using PX.Data;
 using PX.Objects.CS;
 using PX.Objects.IN;
 
@@ -105,6 +106,46 @@ namespace CompiledVersion.DAC
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         public bool? UsrHidePrintingMethod2 { get; set; }
         public abstract class usrHidePrintingMethod2 : PX.Data.BQL.BqlBool.Field<usrHidePrintingMethod2> { }
+        #endregion
+
+        // New settings under Invoice Settings in SO Preferences
+        // Attribute selectors for active attributes on SOOrder header
+        #region Attribute selector helpers
+        public sealed class soOrderEntityType : PX.Data.BQL.BqlString.Constant<soOrderEntityType>
+        {
+            public soOrderEntityType() : base(typeof(PX.Objects.SO.SOOrder).FullName) { }
+        }
+
+        public sealed class soOrderScreenID : PX.Data.BQL.BqlString.Constant<soOrderScreenID>
+        {
+            public soOrderScreenID() : base("SO301000") { }
+        }
+        #endregion
+
+        #region UsrFormType
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXUIField(DisplayName = "Form Type Attribute")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXSelector(typeof(Search2<PX.Objects.CS.CSAttribute.attributeID,
+            InnerJoin<CSScreenAttribute, On<CSScreenAttribute.attributeID, Equal<PX.Objects.CS.CSAttribute.attributeID>>>,
+
+            Where<CSScreenAttribute.screenID, Equal<soOrderScreenID>>>),
+            typeof(PX.Objects.CS.CSAttribute.description))]
+        public string UsrFormType { get; set; }
+        public abstract class usrFormType : PX.Data.BQL.BqlString.Field<usrFormType> { }
+        #endregion
+
+        #region UsrBillComplete
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXUIField(DisplayName = "Bill Complete Attribute")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXSelector(typeof(Search2<PX.Objects.CS.CSAttribute.attributeID,
+            InnerJoin<CSScreenAttribute, On<CSScreenAttribute.attributeID, Equal<PX.Objects.CS.CSAttribute.attributeID>>>,
+
+            Where<CSScreenAttribute.screenID, Equal<soOrderScreenID>>>),
+            typeof(PX.Objects.CS.CSAttribute.description))]
+        public string UsrBillComplete { get; set; }
+        public abstract class usrBillComplete : PX.Data.BQL.BqlString.Field<usrBillComplete> { }
         #endregion
     }
 }
