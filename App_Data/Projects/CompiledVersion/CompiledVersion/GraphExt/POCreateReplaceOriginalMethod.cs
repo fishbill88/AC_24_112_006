@@ -355,15 +355,16 @@ namespace CompiledVersion.Graphs
             SOOrderExt soOrderExt = soOrder?.GetExtension<SOOrderExt>();
             if (soLine != null)
             {
-                POLineExt lineExt = line?.GetExtension<POLineExt>();
-                lineExt.UsrVendorSpecTerms = soLineExt?.UsrVendorSpecTerms;
-                lineExt.UsrVendorNotes = soLineExt?.UsrVendorNotes;
+                if (poLineExt != null)
+                {
+                    poLineExt.UsrVendorSpecTerms = soLineExt?.UsrVendorSpecTerms;
+                    poLineExt.UsrVendorNotes = soLineExt?.UsrVendorNotes;
+                }
 
                 //SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
 
                 docgraph.CurrentDocument.Current.FOBPoint = soOrder?.FOBPoint;
                 docgraph.CurrentDocument.Current.ShipVia = soOrder?.ShipVia;
-
 
                 poOrderExt.UsrShipTermsID = soOrder?.ShipTermsID;
                 poOrderExt.UsrCustomerAccount = soOrderExt?.UsrCustomerAccount;
@@ -373,19 +374,24 @@ namespace CompiledVersion.Graphs
 
             SOOrderType orderType = SOOrderType.PK.Find(Base, soOrder?.OrderType);
             SOOrderTypeExt typeExt = orderType?.GetExtension<SOOrderTypeExt>();
-            if (typeExt?.UsrShowVendorID ?? false)
-                poLineExt.UsrVendorID = soLineExt?.UsrVendorID;
+            if (poLineExt != null)
+            {
+                if (typeExt?.UsrShowVendorID ?? false)
+                    poLineExt.UsrVendorID = soLineExt?.UsrVendorID;
 
-            if (typeExt?.UsrShowVendorLocationID ?? false)
-                poLineExt.UsrVendorLocationID = soLineExt?.UsrVendorLocationID;
+                if (typeExt?.UsrShowVendorLocationID ?? false)
+                    poLineExt.UsrVendorLocationID = soLineExt?.UsrVendorLocationID;
 
-            if (typeExt?.UsrShowVendorAddress ?? false)
-                poLineExt.UsrVendorAddress = soLineExt?.UsrVendorAddress;
+                if (typeExt?.UsrShowVendorAddress ?? false)
+                    poLineExt.UsrVendorAddress = soLineExt?.UsrVendorAddress;
 
-            poLineExt.UsrItemSpecs = soLineExt?.UsrItemSpecs ?? itemExt.UsrItemSpecs;
+                poLineExt.UsrItemSpecs = soLineExt?.UsrItemSpecs ?? itemExt.UsrItemSpecs;
+
+            }
 
             //POOrderExt poOrderExt = docgraph.CurrentDocument.Current.GetExtension<POOrderExt>();
-            poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
+            if (poOrderExt != null)
+                poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
 
             #region orig
             string replanType = null;
@@ -452,6 +458,9 @@ namespace CompiledVersion.Graphs
                     docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
                     //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
                 }
+
+                docgraph?.Transactions.Cache.SetValueExt<POLine.curyExtCost>(line, soLine?.CuryExtCost);
+                docgraph?.Transactions.Cache.SetValueExt<POLine.curyLineAmt>(line, soLine?.CuryExtCost);
             }
             else
             {

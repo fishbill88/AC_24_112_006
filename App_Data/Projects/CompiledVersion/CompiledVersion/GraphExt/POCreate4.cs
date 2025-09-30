@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using static PX.Objects.CA.PXModule;
 using static PX.Objects.PO.POOrderEntry;
 
-namespace SWKTechCustomization
+namespace CompiledVersion
 {
     public class POCreateExt : PXGraphExtension<POCreate>
     {
@@ -151,6 +151,8 @@ namespace SWKTechCustomization
                                   .Select(Base, demand.OrderType, demand.OrderNbr, demand.LineNbr);
 
             SOLineExt soLineExt = sOLine?.GetExtension<SOLineExt>();
+            if(sOLine == null || soLineExt == null)
+                return;
             if (soLineExt?.UsrVendorID != null && soLineExt?.UsrVendorLocationID != null)
             {
                 demandExt.UsrVendorID = soLineExt?.UsrVendorID;

@@ -136,7 +136,10 @@ namespace CompiledVersion.Graphs
 
                     if (errorMessage != null)
                     {
-                        PXProcessing<SOOrder>.SetError(errorMessage);
+                        if (isMassProcess)
+                            PXProcessing<SOOrder>.SetError(errorMessage);
+                        else
+                            throw new Exception(errorMessage);
                     }
                     else
                     {

@@ -199,8 +199,12 @@ namespace CompiledVersion.Graphs
                             PXProcessing<SOShipment>.SetCurrentItem(shipment);
 
                         TryGetNonStockError(shipment.ShipmentNbr, out string errorMessage);
-                        if (errorMessage != null) {
-                            PXProcessing<SOShipment>.SetError(errorMessage);
+                        if (errorMessage != null) 
+                        {
+                            if (adapterSlice.MassProcess)
+                                PXProcessing<SOShipment>.SetError(errorMessage);
+                            else
+                                throw new PXException(errorMessage);
                         }
                         else
                         {
