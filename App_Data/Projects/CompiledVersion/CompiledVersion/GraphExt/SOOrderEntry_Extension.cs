@@ -69,31 +69,6 @@ namespace CompiledVersion.Graphs
                 ext.InvoiceOrders(list, arguments, massProcess, quickProcessFlow);
             });
             yield return list;
-
-
-
-
-
-            //foreach (SOShipment shipment in adapter.Get<SOShipment>())
-            //{
-            //    if (shipment?.ShipmentNbr != null && TryGetNonStockError(shipment.ShipmentNbr, out string errorMessage))
-            //    {
-            //        // Proper log on Process Shipments page
-            //        if (adapter.MassProcess)
-            //        {
-            //            PXProcessing<SOOrder>.SetError(errorMessage);
-            //            yield return shipment; // return current row and stop
-            //            yield break;
-            //        }
-
-            //        // In single action, block with an exception
-            //        throw new PXException(errorMessage);
-            //    }
-            //    baseMethod(adapter);
-            //}
-
-            //CheckItemsForFlaggedNonStockItem();
-            //return baseMethod(adapter);
         }
 
         protected virtual void InvoiceOrders(List<SOOrder> list, Dictionary<string, object> arguments,
@@ -244,12 +219,23 @@ namespace CompiledVersion.Graphs
             {
                 invoiceEntry.CompleteProcessingImpl(created);
             }
-
-
-            //baseMethod(parameters, list, created, isMassProcess, quickProcessFlow, groupByCustomerOrderNumber);
         }
 
+        // Ensure all copied lines have costs recalculated after Copy Order finishes
+        public delegate void CopyOrderProcDelegate(SOOrder sourceOrder, PX.Objects.SO.CopyParamFilter copyFilter);
+        [PXOverride]
+        public virtual void CopyOrderProc(SOOrder sourceOrder, PX.Objects.SO.CopyParamFilter copyFilter, CopyOrderProcDelegate baseMethod)
+        {
+            baseMethod(sourceOrder, copyFilter);
 
+            PXCache lineCache = Base.Transactions.Cache;
+            foreach (SOLine line in Base.Transactions.Select().RowCast<SOLine>())
+            {
+                TryRecalculateUnitCost(lineCache,line);
+                RecalculateExtendedCost(lineCache,line);
+                lineCache.Update(line);
+            }
+        }
 
         public delegate IEnumerable CreateShipmentIssueDelegate(PXAdapter adapter, Nullable<DateTime> shipDate, Nullable<Int32> siteID);
         [PXOverride]
@@ -355,6 +341,10 @@ namespace CompiledVersion.Graphs
                 ext.UsrATAIRTHLineNbr = maxNbr + 1;
                 e.Cache.SetValueExt<SOLineExt.usrATAIRTHLineNbr>(row, ext.UsrATAIRTHLineNbr);
             }
+
+            // Force unit/extended cost recomputation for every inserted line (copy order inserts multiple lines)
+            TryRecalculateUnitCost(e.Cache, row);
+            RecalculateExtendedCost(e.Cache, row);
         }
 
         protected virtual void _(Events.RowDeleted<SOLine> e)
@@ -603,15 +593,10 @@ namespace CompiledVersion.Graphs
             POVendorInventory vendorInv = PXSelect<POVendorInventory,
                 Where<POVendorInventory.inventoryID, Equal<Required<SOLine.inventoryID>>,
                     And<POVendorInventory.vendorID, Equal<Required<SOLine.vendorID>>,
-                    And<POVendorInventory.isDefault,Equal<True>>>>>
+                    And<POVendorInventory.isDefault,Equal<True>>>>> 
                 .Select(Base, line.InventoryID, lineExt.UsrVendorID);
 
             lineExt.UsrVendorLocationID = vendorInv?.VendorLocationID;
-
-            //PX.Objects.CA.Light.Location location = PXSelect<PX.Objects.CA.Light.Location,
-            //    Where<PX.Objects.CA.Light.Location.bAccountID, Equal<Required<PX.Objects.CA.Light.Location.bAccountID>>,
-            //        And<PX.Objects.CA.Light.Location.locationID, Equal<Required<PX.Objects.CA.Light.Location.locationID>>>>>
-            //    .Select(Base, vendorInv?.VendorID, vendorInv?.VendorLocationID);
 
             PX.Objects.CR.Location loc = PX.Objects.CR.Location.PK.Find(Base, vendorInv?.VendorID, vendorInv?.VendorLocationID);
             Address address = PXSelect<Address,
@@ -711,15 +696,6 @@ namespace CompiledVersion.Graphs
             rowExt.UsrRTHCuryTaxTotal = row.CuryTaxTotal;
         }
 
-        //protected virtual void SOOrder_CuryOrderTotal_FieldUpdated(PXCache sender, PXFieldUpdatedEventArgs e)
-        //{
-        //    SOOrder row = (SOOrder)e.Row;
-        //    if (row == null) return;
-        //    SOOrderExt rowExt = row.GetExtension<SOOrderExt>();
-        //    //rowExt.UsrRTHCuryOrderTotal = row.CuryOrderTotal;
-        //    rowExt.UsrRTHCuryOrderTotal = (rowExt.UsrRTHCuryDetailExtPriceTotal - (rowExt.UsrRTHCuryLineDiscTotal + rowExt.UsrRTHCuryDiscTot)) + rowExt.UsrRTHCuryFreightTot + rowExt.UsrRTHCuryTaxTotal;
-        //}
-
         protected virtual void _(Events.FieldUpdated<SOOrderExt.usrRTHCuryDetailExtPriceTotal> e)
         {
             SOOrder row = (SOOrder)e.Row;
@@ -742,7 +718,6 @@ namespace CompiledVersion.Graphs
         }
 
         protected virtual void SOOrder_UsrRTHCuryFreightTot_FieldUpdated(PXCache sender, PXFieldUpdatedEventArgs e)
-        //protected virtual void _(Events.FieldUpdated<SOOrderExt.usrRTHCuryFreightTot> e)
         {
             SOOrder row = (SOOrder)e.Row;
             if (row == null) return;
@@ -774,7 +749,6 @@ namespace CompiledVersion.Graphs
                 rowExt.UsrRTHCuryFreightTot = rowExt.UsrFreightPriceLimit;
 
 
-            //rowExt.UsrRTHCuryOrderTotal = row.CuryOrderTotal;
             rowExt.UsrRTHCuryOrderTotal = ((rowExt.UsrRTHCuryDetailExtPriceTotal ?? 0m) - ((rowExt.UsrRTHCuryLineDiscTotal ?? 0m) + (rowExt.UsrRTHCuryDiscTot ?? 0m))) +
                                             ((rowExt.UsrFreightPriceLimit ?? 0m) > 0m ? (rowExt.UsrFreightPriceLimit ?? 0m) : (rowExt.UsrRTHCuryFreightTot ?? 0m)) + 
                                             (row.CuryTaxTotal ?? 0m);
@@ -855,7 +829,7 @@ namespace CompiledVersion.Graphs
                 }
             }
         }
-        private void RecalculateExtendedCost(PXCache cache, SOLine line)
+        private void RecalculateExtendedCost(PXCache cache,SOLine line)
         {
             if (line == null) return;
 
@@ -874,7 +848,7 @@ namespace CompiledVersion.Graphs
             else
             {
                 // Use standard calculation: Unit Cost * Quantity
-                extendedCost = (line.UnitCost ?? 0) * (line.OrderQty ?? 0);
+                extendedCost = (line.CuryUnitCost ?? 0) * (line.OrderQty ?? 0);
             }
 
             // Set the Extended Cost
@@ -978,7 +952,7 @@ namespace CompiledVersion.Graphs
             }
         }
 
-        private void TryRecalculateUnitCost(PXCache cache, SOLine line)
+        private void TryRecalculateUnitCost(PXCache cache,SOLine line)
         {
             if (line == null || line.InventoryID == null)
                 return;
