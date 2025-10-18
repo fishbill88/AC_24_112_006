@@ -8,6 +8,7 @@ namespace CompiledVersion.DAC
     public sealed class POOrderExt : PXCacheExtension<POOrder>
     {
         public static bool IsActive() => true;
+
         #region UsrSONotesCopied
         public abstract class usrSONotesCopied : PX.Data.BQL.BqlBool.Field<usrSONotesCopied> { }
         [PXDBBool]
@@ -38,15 +39,13 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region UsrFreightPrice
-
         [PXDBDecimal(2)]
         [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Freight Price")]
         public decimal? UsrFreightPrice { get; set; }
         public abstract class usrFreightPrice : PX.Data.BQL.BqlDecimal.Field<usrFreightPrice> { }
-
         #endregion
-            
+
         #region UsrShowFreightPrice 
         [PXBool]
         [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
@@ -56,6 +55,7 @@ namespace CompiledVersion.DAC
 
         #region UsrShippingInstructions
         [PXDBString(500, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Shipping Instructions")]
         public string UsrShippingInstructions { get; set; }
         public abstract class usrShippingInstructions : PX.Data.BQL.BqlString.Field<usrShippingInstructions> { }
@@ -65,6 +65,7 @@ namespace CompiledVersion.DAC
         [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
         [PXUIField(DisplayName = "Shipping Terms")]
         [PXSelector(typeof(ShipTerms.shipTermsID), DescriptionField = typeof(ShipTerms.description), CacheGlobal = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrShipTermsID { get; set; }
         public abstract class usrShipTermsID : PX.Data.BQL.BqlString.Field<usrShipTermsID> { }
         #endregion
@@ -72,12 +73,14 @@ namespace CompiledVersion.DAC
         #region UsrCustomerAccount
         [PXDBString(255, IsUnicode = true)]
         [PXUIField(DisplayName = "Carrier Account")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrCustomerAccount { get; set; }
         public abstract class usrCustomerAccount : PX.Data.BQL.BqlString.Field<usrCustomerAccount> { }
         #endregion
 
         #region UsrRTHDetailTotal
         [PXDBDecimal(2)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "RTH Detail Total", Enabled = false)]
         public decimal? UsrRTHDetailTotal { get; set; }
         public abstract class usrRTHDetailTotal : PX.Data.BQL.BqlDecimal.Field<usrRTHDetailTotal> { }
@@ -85,6 +88,7 @@ namespace CompiledVersion.DAC
 
         #region UsrRTHLineDiscount
         [PXDBDecimal(2)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "RTH Line Discount", Enabled = false)]
         public decimal? UsrRTHLineDiscount { get; set; }
         public abstract class usrRTHLineDiscount : PX.Data.BQL.BqlDecimal.Field<usrRTHLineDiscount> { }
@@ -92,6 +96,7 @@ namespace CompiledVersion.DAC
 
         #region UsrRTHDocDiscount
         [PXDBDecimal(2)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "RTH Doc. Discount", Enabled = false)]
         public decimal? UsrRTHDocDiscount { get; set; }
         public abstract class usrRTHDocDiscount : PX.Data.BQL.BqlDecimal.Field<usrRTHDocDiscount> { }
@@ -99,6 +104,7 @@ namespace CompiledVersion.DAC
 
         #region UsrRTHTaxTotal
         [PXDBDecimal(2)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "RTH Tax Total", Enabled = false)]
         public decimal? UsrRTHTaxTotal { get; set; }
         public abstract class usrRTHTaxTotal : PX.Data.BQL.BqlDecimal.Field<usrRTHTaxTotal> { }
@@ -106,6 +112,7 @@ namespace CompiledVersion.DAC
 
         #region UsrRTHOrderTotal
         [PXDBDecimal(2)]
+        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "RTH Order Total", Enabled = false)]
         public decimal? UsrRTHOrderTotal { get; set; }
         public abstract class usrRTHOrderTotal : PX.Data.BQL.BqlDecimal.Field<usrRTHOrderTotal> { }
@@ -113,6 +120,7 @@ namespace CompiledVersion.DAC
 
         #region UsrCustomerOrderNbr
         [PXDBString(40, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Customer PO Nbr")]
         public string UsrCustomerOrderNbr { get; set; }
         public abstract class usrCustomerOrderNbr : PX.Data.BQL.BqlString.Field<usrCustomerOrderNbr> { }

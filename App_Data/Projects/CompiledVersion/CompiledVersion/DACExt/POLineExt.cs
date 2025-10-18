@@ -15,6 +15,7 @@ namespace CompiledVersion.DAC
 
         #region UsrVendorSpecTerms
         [PXDBString(250, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Vendor Special Terms")]
         public string UsrVendorSpecTerms { get; set; }
         public abstract class usrVendorSpecTerms : PX.Data.BQL.BqlString.Field<usrVendorSpecTerms> { }
@@ -22,6 +23,7 @@ namespace CompiledVersion.DAC
 
         #region UsrVendorNotes
         [PXDBString(500, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Vendor Notes")]
         public string UsrVendorNotes { get; set; }
         public abstract class usrVendorNotes : PX.Data.BQL.BqlString.Field<usrVendorNotes> { }
@@ -37,6 +39,7 @@ namespace CompiledVersion.DAC
 
         #region UsrSkipPrint
         [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Skip Print")]
         public bool? UsrSkipPrint { get; set; }
         public abstract class usrSkipPrint : PX.Data.BQL.BqlBool.Field<usrSkipPrint> { }
@@ -44,34 +47,33 @@ namespace CompiledVersion.DAC
 
         #region UsrPrepaymentLine
         [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Prepayment Line")]
         public bool? UsrPrepaymentLine { get; set; }
         public abstract class usrPrepaymentLine : PX.Data.BQL.BqlBool.Field<usrPrepaymentLine> { }
         #endregion
 
         #region UsrVendorID
-        [Vendor(typeof(Search2<BAccountR.bAccountID, LeftJoin<BranchAlias, On<BAccount.isBranch, Equal<True>, And<BranchAlias.bAccountID, Equal<BAccountR.bAccountID>>>>, Where<Vendor.type, NotEqual<BAccountType.employeeType>>>))]
-        [PXRestrictor(typeof(Where<Vendor.vStatus, IsNull, Or<Vendor.vStatus, In3<VendorStatus.active, VendorStatus.oneTime, VendorStatus.holdPayments>>>), "The vendor status is '{0}'.", new Type[] { typeof(Vendor.vStatus) })]
-        //[VendorActive(DisplayName = "Vendor", DescriptionField = typeof(Vendor.acctName), Enabled = false)]
+        [Vendor(typeof(Search2<BAccountR.bAccountID,
+            LeftJoin<BranchAlias, On<BAccount.isBranch, Equal<True>, And<BranchAlias.bAccountID, Equal<BAccountR.bAccountID>>>>,
+            Where<Vendor.type, NotEqual<BAccountType.employeeType>>>))]
+        [PXRestrictor(typeof(Where<Vendor.vStatus, IsNull, Or<Vendor.vStatus, In3<VendorStatus.active, VendorStatus.oneTime, VendorStatus.holdPayments>>>),
+            "The vendor status is '{0}'.", new Type[] { typeof(Vendor.vStatus) })]
         public int? UsrVendorID { get; set; }
         public abstract class usrVendorID : PX.Data.BQL.BqlInt.Field<usrVendorID> { }
         #endregion
 
         #region UsrVendorLocationID
-        [LocationID(typeof(Where<Location.bAccountID, Equal<Current<usrVendorID>>>), DescriptionField = typeof(Location.descr), Visibility = PXUIVisibility.SelectorVisible)]
+        [LocationID(typeof(Where<Location.bAccountID, Equal<Current<usrVendorID>>>),
+            DescriptionField = typeof(Location.descr), Visibility = PXUIVisibility.SelectorVisible)]
         [PXFormula(typeof(Default<usrVendorID>))]
-        //[LocationActive(typeof(Where<PX.Objects.CR.Location.bAccountID, Equal<Optional<usrVendorID>>, And<MatchWithBranch<PX.Objects.CR.Location.vBranchID>>>), 
-        //    DescriptionField = typeof(PX.Objects.CR.Location.descr), 
-        //    Visibility = PXUIVisibility.SelectorVisible, 
-        //    Enabled = false)]
-        //[PXDefault(typeof(Coalesce<Search2<Vendor.defLocationID, InnerJoin<PX.Objects.CR.Standalone.Location, On<PX.Objects.CR.Standalone.Location.locationID, Equal<Vendor.defLocationID>, And<PX.Objects.CR.Standalone.Location.bAccountID, Equal<Vendor.bAccountID>>>>, Where<Vendor.bAccountID, Equal<Current<usrVendorID>>, And<PX.Objects.CR.Standalone.Location.isActive, Equal<True>, And<MatchWithBranch<PX.Objects.CR.Standalone.Location.vBranchID>>>>>, Search<PX.Objects.CR.Standalone.Location.locationID, Where<PX.Objects.CR.Standalone.Location.bAccountID, Equal<Current<usrVendorID>>, And<PX.Objects.CR.Standalone.Location.isActive, Equal<True>, And<MatchWithBranch<PX.Objects.CR.Standalone.Location.vBranchID>>>>>>), PersistingCheck = PXPersistingCheck.Nothing)]
-        //[PXForeignReference(typeof(CompositeKey<Field<usrVendorID>.IsRelatedTo<PX.Objects.CR.Location.bAccountID>, Field<usrVendorLocationID>.IsRelatedTo<PX.Objects.CR.Location.locationID>>))]
         public int? UsrVendorLocationID { get; set; }
         public abstract class usrVendorLocationID : PX.Data.BQL.BqlInt.Field<usrVendorLocationID> { }
         #endregion
 
         #region UsrVendorAddress
         [PXDBString(2000, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Vendor Address", Enabled = false)]
         public string UsrVendorAddress { get; set; }
         public abstract class usrVendorAddress : PX.Data.BQL.BqlString.Field<usrVendorAddress> { }
@@ -79,6 +81,7 @@ namespace CompiledVersion.DAC
 
         #region UsrItemSpecs
         [PXDBString(2000, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Specification", Enabled = false)]
         public string UsrItemSpecs { get; set; }
         public abstract class usrItemSpecs : PX.Data.BQL.BqlString.Field<usrItemSpecs> { }
@@ -94,6 +97,7 @@ namespace CompiledVersion.DAC
 
         #region UsrSWKSPCCode
         [PXDBString(30, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "SPC Code", Enabled = false)]
         public string UsrSWKSPCCode { get; set; }
         public abstract class usrSWKSPCCode : PX.Data.BQL.BqlString.Field<usrSWKSPCCode> { }

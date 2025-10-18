@@ -212,7 +212,7 @@ namespace CompiledVersion.Graphs
         public void PostPersist(PostPersistDelegate baseMethod)
         {
             baseMethod();
-
+            if (Base.Accessinfo.ScreenID == "PO.30.10.00") return;
             if (_postPersistSaveInProgress)
                 return;
 
@@ -250,7 +250,7 @@ namespace CompiledVersion.Graphs
                 SOLine soLine;
                 SOOrder soOrder;
                 bool hasSO = TryGetLinkedSOLine(line, out soLine, out soOrder);
-                if (!hasSO)
+                if (!hasSO || soOrder == null)
                     continue;
 
                 // Copy header note and attachments once, as per old logic
@@ -259,11 +259,12 @@ namespace CompiledVersion.Graphs
                     if (setupExt.UsrCopyHeaderNotesToPO == true)
                     {
                         string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrder);
-
-                        // Set in cache/UI and enforce at DB level
-                        PXNoteAttribute.SetNote(orderCache, order, noteText);
-                        ForceCopyHeaderNoteWithPXDatabase(order, soOrder, orderCache, soOrderCache);
-                        copiedAnything = true;
+                        if(!string.IsNullOrEmpty(noteText))
+                        {
+                            PXNoteAttribute.SetNote(orderCache, order, noteText);
+                            ForceCopyHeaderNoteWithPXDatabase(order, soOrder, orderCache, soOrderCache);
+                            copiedAnything = true;
+                        }
                     }
 
                     if (setupExt.UsrCopyHeaderAttachmentsToPO == true)

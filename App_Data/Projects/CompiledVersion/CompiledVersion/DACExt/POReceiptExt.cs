@@ -12,6 +12,7 @@ namespace CompiledVersion.DAC
         [PXDBString(15, IsUnicode = true)]
         [PXUIField(DisplayName = "FOB Point", Enabled = false)]
         [PXSelector(typeof(Search<FOBPoint.fOBPointID>), DescriptionField = typeof(FOBPoint.description), CacheGlobal = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrFOBPoint { get; set; }
         public abstract class usrFOBPoint : PX.Data.BQL.BqlString.Field<usrFOBPoint> { }
         #endregion
@@ -20,6 +21,7 @@ namespace CompiledVersion.DAC
         [PXDBString(15, IsUnicode = true)]
         [PXUIField(DisplayName = "Ship Via", Enabled = false)]
         [PXSelector(typeof(Search<Carrier.carrierID>), CacheGlobal = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrShipVia { get; set; }
         public abstract class usrShipVia : PX.Data.BQL.BqlString.Field<usrShipVia> { }
         #endregion
@@ -28,6 +30,7 @@ namespace CompiledVersion.DAC
         [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
         [PXUIField(DisplayName = "Shipping Terms", Enabled = false)]
         [PXSelector(typeof(ShipTerms.shipTermsID), DescriptionField = typeof(ShipTerms.description), CacheGlobal = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrShipTermsID { get; set; }
         public abstract class usrShipTermsID : PX.Data.BQL.BqlString.Field<usrShipTermsID> { }
         #endregion
@@ -51,6 +54,7 @@ namespace CompiledVersion.DAC
         #region UsrCarrierAccount
         [PXDBString(255, IsUnicode = true)]
         [PXUIField(DisplayName = "Carrier Account", Enabled = false)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrCarrierAccount { get; set; }
         public abstract class usrCarrierAccount : PX.Data.BQL.BqlString.Field<usrCarrierAccount> { }
         #endregion
@@ -58,6 +62,7 @@ namespace CompiledVersion.DAC
         #region UsrTrackingNumber
         [PXDBString(100, IsUnicode = true)]
         [PXUIField(DisplayName = "Tracking Number")]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrTrackingNumber { get; set; }
         public abstract class usrTrackingNumber : PX.Data.BQL.BqlString.Field<usrTrackingNumber> { }
         #endregion
@@ -67,6 +72,7 @@ namespace CompiledVersion.DAC
         #region UsrHasShippingTab
         [PXDBBool]
         [PXUIField(DisplayName = "From Drop-Ship", Visible = false)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public bool? UsrHasShippingTab { get; set; }
         public abstract class usrHasShippingTab : PX.Data.BQL.BqlBool.Field<usrHasShippingTab> { }
         #endregion

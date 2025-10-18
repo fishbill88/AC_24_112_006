@@ -353,19 +353,31 @@ namespace CompiledVersion.Graphs
             var lines = Base.Transactions.Select().RowCast<SOLine>()
                 .OrderBy(l => l.LineNbr)
                 .ToList();
+
             int nbr = 1;
             foreach (var line in lines)
             {
                 var ext = PXCache<SOLine>.GetExtension<SOLineExt>(line);
                 if (ext != null)
                 {
-                    //e.Cache.SetValueExt<SOLineExt.usrATAIRTHLineNbr>(line, nbr);
                     ext.UsrATAIRTHLineNbr = nbr;
                     e.Cache.Update(line);
                 }
                 nbr++;
             }
-            Base.Transactions.View.RequestRefresh(); // Refresh the view to show updated line numbers
+
+            // Ensure header aggregates update and our custom totals recompute
+            var order = Base.Document.Current;
+            if (order != null)
+            {
+                // Update the header so SumCalc aggregates are recalculated
+                order = Base.Document.Update(order);
+                // Recompute our custom summary from the recalculated SOOrder totals
+                RecalculateRthCuryOrderTotal(order);
+                Base.Document.View.RequestRefresh();
+            }
+
+            Base.Transactions.View.RequestRefresh();
         }
         #endregion
 
@@ -511,7 +523,36 @@ namespace CompiledVersion.Graphs
         protected virtual void _(Events.FieldUpdated<SOLine, SOLineExt.usrSWKSPCCost> e)
         {
             if (e.Row == null) return;
+
+            var lineExt = e.Row.GetExtension<SOLineExt>();
+            // Toggle Manual Cost based on SPC Cost and enforce/clear SPC Code requirement
+            if ((lineExt?.UsrSWKSPCCost ?? 0m) > 0m)
+            {
+                lineExt.UsrSWKManualCost = true;
+                try
+                {
+                    if (!SuppressCodeRequired)
+                        e.Cache.RaiseExceptionHandling<SOLineExt.usrSWKSPCCode>(e.Row, lineExt.UsrSWKSPCCode,
+                            string.IsNullOrEmpty(lineExt.UsrSWKSPCCode)
+                                ? new PXSetPropertyException(e.Row, Messages.SPCCodeRequired, PXErrorLevel.Error)
+                                : null);
+                }
+                catch { }
+            }
+            else
+            {
+                // If SPC Cost is zero/null, clear SPC Code and uncheck Manual Cost
+                lineExt.UsrSWKManualCost = false;
+                lineExt.UsrSWKSPCCode = null;
+                try
+                {
+                    e.Cache.RaiseExceptionHandling<SOLineExt.usrSWKSPCCode>(e.Row, null, null);
+                }
+                catch { }
+            }
+
             TryRecalculateUnitCost(e.Cache, e.Row);
+            RecalculateExtendedCost(e.Cache, e.Row);
         }
 
         protected virtual void _(Events.FieldVerifying<SOLine, SOLineExt.usrSWKSPCCode> e)
@@ -741,17 +782,37 @@ namespace CompiledVersion.Graphs
         public void RecalculateRthCuryOrderTotal(SOOrder row)
         {
             if (row == null) return;
+
             SOOrderExt rowExt = row.GetExtension<SOOrderExt>();
+            if (rowExt == null) return;
 
-            if ((rowExt.UsrFreightPriceLimit ?? 0m) <= 0m)
-                rowExt.UsrRTHCuryFreightTot = row.CuryFreightTot;
-            else
+            // Read from SOOrder base (authoritative) totals
+            decimal detail = row.CuryDetailExtPriceTotal ?? 0m;
+            decimal lineDisc = row.CuryLineDiscTotal ?? 0m;
+            decimal docDisc = row.CuryDiscTot ?? 0m;
+            decimal freight = row.CuryFreightTot ?? 0m;
+            decimal tax = row.CuryTaxTotal ?? 0m;
+
+            // Cap/override freight if a limit is provided
+            if ((rowExt.UsrFreightPriceLimit ?? 0m) > 0m)
                 rowExt.UsrRTHCuryFreightTot = rowExt.UsrFreightPriceLimit;
+            else
+                rowExt.UsrRTHCuryFreightTot = freight;
 
+            // Keep mirrors in sync (no SetValueExt to avoid recursive events)
+            rowExt.UsrRTHCuryDetailExtPriceTotal = detail;
+            rowExt.UsrRTHCuryLineDiscTotal = lineDisc;
+            rowExt.UsrRTHCuryDiscTot = docDisc;
+            rowExt.UsrRTHCuryTaxTotal = tax;
 
-            rowExt.UsrRTHCuryOrderTotal = ((rowExt.UsrRTHCuryDetailExtPriceTotal ?? 0m) - ((rowExt.UsrRTHCuryLineDiscTotal ?? 0m) + (rowExt.UsrRTHCuryDiscTot ?? 0m))) +
-                                            ((rowExt.UsrFreightPriceLimit ?? 0m) > 0m ? (rowExt.UsrFreightPriceLimit ?? 0m) : (rowExt.UsrRTHCuryFreightTot ?? 0m)) + 
-                                            (row.CuryTaxTotal ?? 0m);
+            // Final custom total
+            rowExt.UsrRTHCuryOrderTotal =
+                (detail - (lineDisc + docDisc))
+                + (rowExt.UsrRTHCuryFreightTot ?? 0m)
+                + tax;
+
+            // Mark header dirty to reflect UI changes
+            Base.Document.Cache.MarkUpdated(row);
         }
 
         protected virtual void _(Events.RowPersisting<SOLine> e)
@@ -995,7 +1056,7 @@ namespace CompiledVersion.Graphs
             INUnit conversion = PXSelect<INUnit,
                 Where<INUnit.inventoryID, Equal<Required<INUnit.inventoryID>>,
                     And<INUnit.fromUnit, Equal<Required<INUnit.fromUnit>>,
-                    And<INUnit.toUnit, Equal<Required<INUnit.toUnit>>>>>>
+                    And<INUnit.toUnit, Equal<Required<INUnit.toUnit>>>>> >
                 .Select(Base, item.InventoryID, line.UOM, item.BaseUnit);
 
             if (conversion != null && conversion.UnitRate != null && conversion.UnitRate != 0)
