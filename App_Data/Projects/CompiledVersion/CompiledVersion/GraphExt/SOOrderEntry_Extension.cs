@@ -31,6 +31,43 @@ namespace CompiledVersion.Graphs
             .And<SOCustSalesPeople.orderNbr.IsEqual<SOOrder.orderNbr.FromCurrent>>>.View SalesPeople;
         #endregion
 
+        #region Helpers
+        private decimal RoundCury(SOOrder order, decimal value)
+        {
+            try
+            {
+                if (order?.CuryInfoID != null)
+                {
+                    var ci = PXSelect<CurrencyInfo, Where<CurrencyInfo.curyInfoID, Equal<Required<CurrencyInfo.curyInfoID>>>>.Select(Base, order.CuryInfoID)
+                        .TopFirst;
+                    int prec = ci?.CuryPrecision ??2;
+                    return Math.Round(value, prec, MidpointRounding.AwayFromZero);
+                }
+            }
+            catch { }
+            return Math.Round(value,2, MidpointRounding.AwayFromZero);
+        }
+
+        private void RecalculatePrepaymentRequiredAmount(SOOrder order)
+        {
+            if (order == null) return;
+
+            // Respect manual override
+            if (order.OverridePrepayment == true) return;
+
+            var ext = order.GetExtension<SOOrderExt>();
+            decimal pct = order.PrepaymentReqPct ??0m;
+            decimal baseTotal = (ext?.UsrRTHCuryOrderTotal ??0m);
+
+            // Fallback if custom total not available yet
+            if (baseTotal <=0m)
+                baseTotal = order.CuryOrderTotal ??0m;
+
+            decimal amt = RoundCury(order, pct * baseTotal /100m);
+            Base.Document.Cache.SetValueExt<SOOrder.curyPrepaymentReqAmt>(order, amt);
+        }
+        #endregion
+
         #region Overrides
 
         public delegate IEnumerable PrepareInvoiceDelegate(PXAdapter adapter);
@@ -82,7 +119,7 @@ namespace CompiledVersion.Graphs
             if (massProcess) // order is updated and saved somewhere in InvoiceOrder method
                 list.ForEach(o => shipmentEntry.soorder.Cache.RestoreCopy(o, SOOrder.PK.Find(shipmentEntry, o)));
 
-            if (!massProcess && created.Count > 0)
+            if (!massProcess && created.Count >0)
             {
                 using (new PXTimeStampScope(null))
                 {
@@ -272,7 +309,7 @@ namespace CompiledVersion.Graphs
             if (item?.InventoryID != null)
             {
                 var itemExt = item.GetExtension<InventoryItemExt>();
-                if ((itemExt?.UsrSWKRTHCost ?? 0m) > 0m)
+                if ((itemExt?.UsrSWKRTHCost ??0m) >0m)
                 {
                     // Calculate Unit Cost with UOM conversion
                     decimal calculatedCost = CalculateUnitCostWithUOM(line, item, itemExt.UsrSWKRTHCost.Value);
@@ -286,6 +323,9 @@ namespace CompiledVersion.Graphs
             baseMethod?.Invoke(e.Cache, e.Args);
             SOOrder order = (SOOrder)e.Row;
             if (order == null) return;
+
+            // Recompute prepayment to reflect custom total in UI
+            RecalculatePrepaymentRequiredAmount(order);
 
             SOOrderType orderType = SOOrderType.PK.Find(Base, order.OrderType);
             SOOrderTypeExt typeExt = orderType.GetExtension<SOOrderTypeExt>();
@@ -310,6 +350,20 @@ namespace CompiledVersion.Graphs
             PXUIFieldAttribute.SetEnabled<SOOrderExt.usrHubspotDealID>(e.Cache, order, false);
         }
 
+        protected virtual void _(Events.FieldUpdated<SOOrder, SOOrder.prepaymentReqPct> e)
+        {
+            var order = (SOOrder)e.Row;
+            if (order == null) return;
+            RecalculatePrepaymentRequiredAmount(order);
+        }
+
+        protected virtual void _(Events.FieldUpdated<SOOrderExt.usrRTHCuryOrderTotal> e)
+        {
+            var order = Base.Document.Current;
+            if (order == null) return;
+            RecalculatePrepaymentRequiredAmount(order);
+        }
+
         protected virtual void _(Events.RowSelected<SOLine> e)
         {
             if (e.Row == null) return;
@@ -318,7 +372,7 @@ namespace CompiledVersion.Graphs
 
             // Enable/disable SPC Code based on SPC Cost
             PXUIFieldAttribute.SetEnabled<SOLineExt.usrSWKSPCCode>(e.Cache, e.Row,
-                (lineExt?.UsrSWKSPCCost ?? 0) > 0);
+                (lineExt?.UsrSWKSPCCost ??0) >0);
 
             // Manual Cost checkbox is always disabled (read-only)
             PXUIFieldAttribute.SetEnabled<SOLineExt.usrSWKManualCost>(e.Cache, e.Row, false);
@@ -337,8 +391,8 @@ namespace CompiledVersion.Graphs
                 var lines = Base.Transactions.Select().RowCast<SOLine>()
                     .Where(l => PXCache<SOLine>.GetExtension<SOLineExt>(l)?.UsrATAIRTHLineNbr != null)
                     .ToList();
-                int maxNbr = lines.Count > 0 ? lines.Max(l => PXCache<SOLine>.GetExtension<SOLineExt>(l).UsrATAIRTHLineNbr ?? 0) : 0;
-                ext.UsrATAIRTHLineNbr = maxNbr + 1;
+                int maxNbr = lines.Count >0 ? lines.Max(l => PXCache<SOLine>.GetExtension<SOLineExt>(l).UsrATAIRTHLineNbr ??0) :0;
+                ext.UsrATAIRTHLineNbr = maxNbr +1;
                 e.Cache.SetValueExt<SOLineExt.usrATAIRTHLineNbr>(row, ext.UsrATAIRTHLineNbr);
             }
 
@@ -354,7 +408,7 @@ namespace CompiledVersion.Graphs
                 .OrderBy(l => l.LineNbr)
                 .ToList();
 
-            int nbr = 1;
+            int nbr =1;
             foreach (var line in lines)
             {
                 var ext = PXCache<SOLine>.GetExtension<SOLineExt>(line);
@@ -472,9 +526,9 @@ namespace CompiledVersion.Graphs
             if (e.Row == null) return;
             TryRecalculateUnitCost(e.Cache, e.Row);
             var lineExt = e.Row.GetExtension<SOLineExt>();
-            if (lineExt?.UsrSWKSPCCost > 0)
+            if (lineExt?.UsrSWKSPCCost >0)
             {
-                // Automatically check the Manual Cost checkbox when SPC Cost > 0
+                // Automatically check the Manual Cost checkbox when SPC Cost >0
                 lineExt.UsrSWKManualCost = true;
 
                 // Force validation of SPC Code field
@@ -488,7 +542,7 @@ namespace CompiledVersion.Graphs
                 }
                 catch { }
             }
-            else if (lineExt?.UsrSWKSPCCost == 0)
+            else if (lineExt?.UsrSWKSPCCost ==0)
             {
                 // Clear SPC Code when SPC Cost is zero
                 lineExt.UsrSWKSPCCode = null;
@@ -504,9 +558,9 @@ namespace CompiledVersion.Graphs
             if (e.Row == null) return;
 
             var lineExt = e.Row.GetExtension<SOLineExt>();
-            if (!string.IsNullOrEmpty(lineExt?.UsrSWKSPCCode) && (lineExt.UsrSWKSPCCost ?? 0) == 0)
+            if (!string.IsNullOrEmpty(lineExt?.UsrSWKSPCCode) && (lineExt.UsrSWKSPCCost ??0) ==0)
             {
-                // If SPC Code is entered but SPC Cost is 0, clear the code
+                // If SPC Code is entered but SPC Cost is0, clear the code
                 lineExt.UsrSWKSPCCode = null;
                 if (!SuppressCodeRequired)
                     e.Cache.RaiseExceptionHandling<SOLineExt.usrSWKSPCCode>(e.Row, null,
@@ -526,7 +580,7 @@ namespace CompiledVersion.Graphs
 
             var lineExt = e.Row.GetExtension<SOLineExt>();
             // Toggle Manual Cost based on SPC Cost and enforce/clear SPC Code requirement
-            if ((lineExt?.UsrSWKSPCCost ?? 0m) > 0m)
+            if ((lineExt?.UsrSWKSPCCost ??0m) >0m)
             {
                 lineExt.UsrSWKManualCost = true;
                 try
@@ -564,7 +618,7 @@ namespace CompiledVersion.Graphs
                 return;
 
             var lineExt = e.Row.GetExtension<SOLineExt>();
-            if (lineExt?.UsrSWKSPCCost > 0 && string.IsNullOrEmpty((string)e.NewValue))
+            if (lineExt?.UsrSWKSPCCost >0 && string.IsNullOrEmpty((string)e.NewValue))
             {
                 if (!SuppressCodeRequired)
                     throw new PXSetPropertyException(e.Row,Messages.SPCCodeRequired, PXErrorLevel.Error);
@@ -716,7 +770,7 @@ namespace CompiledVersion.Graphs
             SOOrder row = (SOOrder)e.Row;
             if (row == null) return;
             SOOrderExt rowExt = row.GetExtension<SOOrderExt>();
-            if((rowExt.UsrFreightPriceLimit ?? 0m) <= 0m)
+            if((rowExt.UsrFreightPriceLimit ??0m) <=0m)
                 rowExt.UsrRTHCuryFreightTot = row.CuryFreightTot;
             RecalculateRthCuryOrderTotal(row);
         }
@@ -725,7 +779,7 @@ namespace CompiledVersion.Graphs
             SOOrder row = (SOOrder)e.Row;
             if (row == null) return;
             SOOrderExt rowExt = row.GetExtension<SOOrderExt>();
-            rowExt.UsrRTHCuryFreightTot = ((decimal?)e.NewValue ?? 0m);
+            rowExt.UsrRTHCuryFreightTot = ((decimal?)e.NewValue ??0m);
             RecalculateRthCuryOrderTotal(row);
         }
 
@@ -787,14 +841,14 @@ namespace CompiledVersion.Graphs
             if (rowExt == null) return;
 
             // Read from SOOrder base (authoritative) totals
-            decimal detail = row.CuryDetailExtPriceTotal ?? 0m;
-            decimal lineDisc = row.CuryLineDiscTotal ?? 0m;
-            decimal docDisc = row.CuryDiscTot ?? 0m;
-            decimal freight = row.CuryFreightTot ?? 0m;
-            decimal tax = row.CuryTaxTotal ?? 0m;
+            decimal detail = row.CuryDetailExtPriceTotal ??0m;
+            decimal lineDisc = row.CuryLineDiscTotal ??0m;
+            decimal docDisc = row.CuryDiscTot ??0m;
+            decimal freight = row.CuryFreightTot ??0m;
+            decimal tax = row.CuryTaxTotal ??0m;
 
             // Cap/override freight if a limit is provided
-            if ((rowExt.UsrFreightPriceLimit ?? 0m) > 0m)
+            if ((rowExt.UsrFreightPriceLimit ??0m) >0m)
                 rowExt.UsrRTHCuryFreightTot = rowExt.UsrFreightPriceLimit;
             else
                 rowExt.UsrRTHCuryFreightTot = freight;
@@ -808,7 +862,7 @@ namespace CompiledVersion.Graphs
             // Final custom total
             rowExt.UsrRTHCuryOrderTotal =
                 (detail - (lineDisc + docDisc))
-                + (rowExt.UsrRTHCuryFreightTot ?? 0m)
+                + (rowExt.UsrRTHCuryFreightTot ??0m)
                 + tax;
 
             // Mark header dirty to reflect UI changes
@@ -825,8 +879,8 @@ namespace CompiledVersion.Graphs
 
             var lineExt = e.Row.GetExtension<SOLineExt>();
 
-            // Validate SPC Code is provided when SPC Cost > 0
-            if ((lineExt?.UsrSWKSPCCost ?? 0) > 0 && string.IsNullOrEmpty(lineExt?.UsrSWKSPCCode))
+            // Validate SPC Code is provided when SPC Cost >0
+            if ((lineExt?.UsrSWKSPCCost ??0) >0 && string.IsNullOrEmpty(lineExt?.UsrSWKSPCCode))
             {
                 if (!SuppressCodeRequired)
                     e.Cache.RaiseExceptionHandling<SOLineExt.usrSWKSPCCode>(e.Row, lineExt?.UsrSWKSPCCode,
@@ -841,6 +895,15 @@ namespace CompiledVersion.Graphs
                 Mult<SOLine.orderQty, SOLineExt.usrSWKSPCCost>>,
             Mult<SOLine.orderQty, SOLine.unitCost>>))]
         protected virtual void _(Events.CacheAttached<SOLine.extCost> e) { }
+
+        // Use RTH custom order total for prepayment required amount
+        [PXMergeAttributes(Method = MergeMethod.Merge)]
+        [PXRemoveBaseAttribute(typeof(PXFormulaAttribute))]
+        [PXFormula(typeof(Switch<
+            Case<Where<SOOrder.overridePrepayment, NotEqual<True>>,
+                Div<Mult<SOOrder.prepaymentReqPct, SOOrderExt.usrRTHCuryOrderTotal>, decimal100>>,
+            SOOrder.curyPrepaymentReqAmt>))]
+        protected virtual void _(Events.CacheAttached<SOOrder.curyPrepaymentReqAmt> e) { }
 
         private void UpdateCustomerAccount(PXCache sender, SOOrder order)
         {
@@ -897,19 +960,19 @@ namespace CompiledVersion.Graphs
             var lineExt = line.GetExtension<SOLineExt>();
 
             // Calculate Extended Cost: 
-            // If SPC Cost > 0, use SPC Cost * Quantity (no UOM conversion)
+            // If SPC Cost >0, use SPC Cost * Quantity (no UOM conversion)
             // Otherwise, use standard Unit Cost * Quantity calculation
-            decimal extendedCost = 0m;
+            decimal extendedCost =0m;
 
-            if ((lineExt?.UsrSWKSPCCost ?? 0) > 0)
+            if ((lineExt?.UsrSWKSPCCost ??0) >0)
             {
                 // Use SPC Cost without UOM calculation
-                extendedCost = (lineExt.UsrSWKSPCCost ?? 0) * (line.OrderQty ?? 0);
+                extendedCost = (lineExt.UsrSWKSPCCost ??0) * (line.OrderQty ??0);
             }
             else
             {
                 // Use standard calculation: Unit Cost * Quantity
-                extendedCost = (line.CuryUnitCost ?? 0) * (line.OrderQty ?? 0);
+                extendedCost = (line.CuryUnitCost ??0) * (line.OrderQty ??0);
             }
 
             // Set the Extended Cost
@@ -928,7 +991,7 @@ namespace CompiledVersion.Graphs
             if (setupExt.UsrNonstock1 != null) nonStockItems.Add(setupExt.UsrNonstock1);
             if (setupExt.UsrNonstock2 != null) nonStockItems.Add(setupExt.UsrNonstock2);
             if (setupExt.UsrNonstock3 != null) nonStockItems.Add(setupExt.UsrNonstock3);
-            if (nonStockItems.Count == 0)
+            if (nonStockItems.Count ==0)
                 return false;
 
             var lines = PXSelect<SOLine,
@@ -957,7 +1020,7 @@ namespace CompiledVersion.Graphs
                 }
             }
 
-            if (invalidNonstock.Count > 0)
+            if (invalidNonstock.Count >0)
             {
                 errorMessage = Messages.CannotInvoiceNonStockItems(string.Join(", ", invalidNonstock));
                 return true;
@@ -1024,12 +1087,12 @@ namespace CompiledVersion.Graphs
 
             var itemExt = item.GetExtension<InventoryItemExt>();
             var soLineExt = line.GetExtension<SOLineExt>();
-            soLineExt.UsrSWKRTHCost = (itemExt?.UsrSWKRTHCost ?? 0m);
+            soLineExt.UsrSWKRTHCost = (itemExt?.UsrSWKRTHCost ??0m);
             // If neither RTH nor SPC cost provided, do nothing
-            if ((itemExt?.UsrSWKRTHCost ?? 0m) <= 0m && (soLineExt?.UsrSWKSPCCost ?? 0m) <= 0m)
+            if ((itemExt?.UsrSWKRTHCost ??0m) <=0m && (soLineExt?.UsrSWKSPCCost ??0m) <=0m)
                 return;
 
-            decimal rthCost = (itemExt?.UsrSWKRTHCost ?? 0m);
+            decimal rthCost = (itemExt?.UsrSWKRTHCost ??0m);
             decimal calculatedCost = CalculateUnitCostWithUOM(line, item, rthCost);
 
             // Set CuryUnitCost so ExtCost recalculates via PXFormula
@@ -1039,8 +1102,8 @@ namespace CompiledVersion.Graphs
         protected virtual decimal CalculateUnitCostWithUOM(SOLine line, InventoryItem item, decimal rthCost)
         {
             SOLineExt soLineExt = line.GetExtension<SOLineExt>();
-            if ((soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
-                return (soLineExt?.UsrSWKSPCCost ?? 0m);
+            if ((soLineExt?.UsrSWKSPCCost ??0m) >0m)
+                return (soLineExt?.UsrSWKSPCCost ??0m);
 
             if (line?.UOM == null || item?.BaseUnit == null)
                 return rthCost;
@@ -1059,7 +1122,7 @@ namespace CompiledVersion.Graphs
                     And<INUnit.toUnit, Equal<Required<INUnit.toUnit>>>>> >
                 .Select(Base, item.InventoryID, line.UOM, item.BaseUnit);
 
-            if (conversion != null && conversion.UnitRate != null && conversion.UnitRate != 0)
+            if (conversion != null && conversion.UnitRate != null && conversion.UnitRate !=0)
             {
                 // Apply UOM conversion based on UnitMultDiv
                 if (conversion.UnitMultDiv == "M") // Multiply

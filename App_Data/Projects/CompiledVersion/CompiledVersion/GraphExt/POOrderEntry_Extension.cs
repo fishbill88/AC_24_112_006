@@ -1,5 +1,6 @@
 ﻿using CompiledVersion.DAC;
 using PX.Data;
+using PX.Common;
 using PX.Objects.AP;
 using PX.Objects.Common.DAC;
 using PX.Objects.Extensions.MultiCurrency;
@@ -35,7 +36,7 @@ namespace CompiledVersion.Graphs
             if (line == null || !POLineType.IsDropShip(line.LineType))
                 return null;
 
-            return STDropShipLinks.SelectWindowed(0, 1, line.OrderType, line.OrderNbr, line.LineNbr);
+            return STDropShipLinks.SelectWindowed(0,1, line.OrderType, line.OrderNbr, line.LineNbr);
         }
 
         private void RecalculateRTHHeaderTotals()
@@ -47,15 +48,15 @@ namespace CompiledVersion.Graphs
             var lines = Base.Transactions.Select().RowCast<POLine>()
                 .Where(l => l.GetExtension<POLineExt>()?.UsrPrepaymentLine != true);
 
-            orderExt.UsrRTHDetailTotal = lines.Sum(l => l.CuryLineAmt ?? 0m);
-            orderExt.UsrRTHLineDiscount = lines.Sum(l => l.CuryDiscAmt ?? 0m);
-            // For Doc Discount and Tax, you may need to recalculate or copy as needed. Here, set to 0 for now.
+            orderExt.UsrRTHDetailTotal = lines.Sum(l => l.CuryLineAmt ??0m);
+            orderExt.UsrRTHLineDiscount = lines.Sum(l => l.CuryDiscAmt ??0m);
+            // For Doc Discount and Tax, you may need to recalculate or copy as needed. Here, set to0 for now.
             orderExt.UsrRTHDocDiscount = order.CuryDiscTot;
             orderExt.UsrRTHTaxTotal = order.CuryTaxTotal;
-            orderExt.UsrRTHOrderTotal = (orderExt.UsrRTHDetailTotal ?? 0m)
-                - (orderExt.UsrRTHLineDiscount ?? 0m)
-                - (orderExt.UsrRTHDocDiscount ?? 0m)
-                + (orderExt.UsrRTHTaxTotal ?? 0m);
+            orderExt.UsrRTHOrderTotal = (orderExt.UsrRTHDetailTotal ??0m)
+                - (orderExt.UsrRTHLineDiscount ??0m)
+                - (orderExt.UsrRTHDocDiscount ??0m)
+                + (orderExt.UsrRTHTaxTotal ??0m);
 
             Base.Document.Cache.SetValueExt<POOrderExt.usrRTHDetailTotal>(order, orderExt.UsrRTHDetailTotal);
             Base.Document.Cache.SetValueExt<POOrderExt.usrRTHLineDiscount>(order, orderExt.UsrRTHLineDiscount);
@@ -88,6 +89,73 @@ namespace CompiledVersion.Graphs
                 return true;
             }
             return false;
+        }
+
+        private static decimal RoundByPrecision(decimal value, int precision)
+        {
+            return Math.Round(value, precision <0 ?2 : precision, MidpointRounding.AwayFromZero);
+        }
+
+        private decimal RoundCury(POOrder order, decimal value)
+        {
+            try
+            {
+                if (order?.CuryInfoID != null)
+                {
+                    var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
+                    int prec = ci?.GetCM()?.CuryPrecision ??2;
+                    return RoundByPrecision(value, prec);
+                }
+            }
+            catch { }
+            return RoundByPrecision(value,2);
+        }
+
+        private void EnsureExtCostAndUnitCostFailsafe(PXCache cache, POLine line, bool raiseErrors)
+        {
+            if (line == null) return;
+
+            var order = Base.Document.Current;
+            var qty = line.OrderQty ??0m;
+            var unitCost = line.CuryUnitCost ??0m;
+            var ext = line.CuryExtCost ??0m;
+
+            var lineExt = line.GetExtension<POLineExt>();
+            var rthUnit = lineExt?.UsrSWKRTHCost ??0m;
+
+            // Ensure UnitCost is not below RTH Unit Cost
+            if (rthUnit >0m && unitCost < rthUnit)
+            {
+                var newUnit = rthUnit;
+                cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, unitCost,
+                new PXSetPropertyException(line,Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
+                if (Math.Abs(unitCost - newUnit) >0.0000001m)
+                {
+                    cache.SetValueExt<POLine.curyUnitCost>(line, newUnit);
+                    unitCost = newUnit;
+                }
+            }
+
+            // Failsafe: re-calc Extended Cost from (UnitCost * Qty)
+            var expected = RoundCury(order, unitCost * qty);
+            if (Math.Abs(ext - expected) >0.009m || line.CuryExtCost == null)
+            {
+                cache.SetValueExt<POLine.curyExtCost>(line, expected);
+                ext = expected;
+            }
+
+            // Hard validation: ext cost should not be below RTH minimum
+            var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ??0m) * qty);
+            if (ext +0.009m < rthMin)
+            {
+                var msg = Messages.ExtCostBelowRTH;
+                cache.RaiseExceptionHandling<POLine.curyExtCost>(line, ext,
+                new PXSetPropertyException(line,msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
+                if (raiseErrors)
+                {
+                    throw new PXSetPropertyException(line, msg);
+                }
+            }
         }
         #endregion
 
@@ -124,7 +192,7 @@ namespace CompiledVersion.Graphs
             var poLineExt = e.Row.GetExtension<POLineExt>();
             InventoryItem item = InventoryItem.PK.Find(Base, e.Row.InventoryID);
             InventoryItemExt itemExt = item.GetExtension<InventoryItemExt>();
-            poLineExt.UsrSWKRTHCost = (itemExt?.UsrSWKRTHCost ?? 0m);
+            poLineExt.UsrSWKRTHCost = (itemExt?.UsrSWKRTHCost ??0m);
         }
         protected virtual void POLine_CuryUnitCost_FieldDefaulting(PXCache sender, PXFieldDefaultingEventArgs e)
         {
@@ -156,6 +224,69 @@ namespace CompiledVersion.Graphs
                 }
 
                 APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, pOLine, e.NewValue);
+            }
+        }
+
+        // Ensure Unit Cost is never below RTH Unit Cost
+        protected virtual void _(Events.FieldVerifying<POLine, POLine.curyUnitCost> e)
+        {
+            if (e.Row == null) return;
+            var line = e.Row as POLine;
+            var lineExt = line?.GetExtension<POLineExt>();
+            if (lineExt == null) return;
+
+            var rth = lineExt.UsrSWKRTHCost ??0m;
+            if (rth >0m && e.NewValue is decimal newUC && newUC < rth)
+            {
+                e.NewValue = rth;
+                e.Cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, newUC,
+                new PXSetPropertyException(line, Messages.UnitCostRaisedToRTH, PXErrorLevel.Warning));
+            }
+        }
+
+        // Failsafe recalc when unit cost changes
+        protected virtual void _(Events.FieldUpdated<POLine, POLine.curyUnitCost> e)
+        {
+            if (e.Row == null) return;
+            EnsureExtCostAndUnitCostFailsafe(e.Cache, (POLine)e.Row, raiseErrors: false);
+        }
+
+        // Failsafe recalc when quantity changes
+        protected virtual void _(Events.FieldUpdated<POLine, POLine.orderQty> e)
+        {
+            if (e.Row == null) return;
+            EnsureExtCostAndUnitCostFailsafe(e.Cache, (POLine)e.Row, raiseErrors: false);
+        }
+
+        // Validate user-entered Extended Cost, and fix if off formula
+        protected virtual void _(Events.FieldVerifying<POLine, POLine.curyExtCost> e)
+        {
+            if (e.Row == null) return;
+
+            var line = (POLine)e.Row;
+            var order = Base.Document.Current;
+            var qty = line.OrderQty ??0m;
+            var unitCost = line.CuryUnitCost ??0m;
+
+            var expected = RoundCury(order, unitCost * qty);
+            if (!(e.NewValue is decimal newExt)) newExt =0m;
+
+            // If new ext cost deviates from expected, snap back to expected
+            if (Math.Abs(newExt - expected) >0.009m)
+            {
+                e.NewValue = expected;
+                e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
+                new PXSetPropertyException(line, Messages.ExtCostAdjustedToFormula, PXErrorLevel.Warning));
+            }
+
+            // Make sure it is not below RTH minimum
+            var rthUnit = line.GetExtension<POLineExt>()?.UsrSWKRTHCost ??0m;
+            var min = RoundCury(order, rthUnit * qty);
+            if (newExt +0.009m < min)
+            {
+                e.NewValue = min;
+                e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
+                new PXSetPropertyException(line, Messages.ExtCostRaisedToRTHMin, PXErrorLevel.Warning));
             }
         }
 
@@ -486,18 +617,31 @@ namespace CompiledVersion.Graphs
                 }
             }
 
+            // Ensure ext. cost is consistent on insert as well
+            EnsureExtCostAndUnitCostFailsafe(sender, line, raiseErrors: false);
+
             RecalculateRTHHeaderTotals();
         }
         protected void _(Events.RowUpdated<POLine> e)
         {
             if (e.Row != null)
+            {
+                EnsureExtCostAndUnitCostFailsafe(e.Cache, (POLine)e.Row, raiseErrors: false);
                 RecalculateRTHHeaderTotals();
+            }
         }
 
         protected void _(Events.RowDeleted<POLine> e)
         {
             if (e.Row != null)
                 RecalculateRTHHeaderTotals();
+        }
+
+        protected virtual void _(Events.RowPersisting<POLine> e)
+        {
+            if (e.Row == null) return;
+            // Enforce rule during save
+            EnsureExtCostAndUnitCostFailsafe(e.Cache, (POLine)e.Row, raiseErrors: true);
         }
         #endregion
 

@@ -132,5 +132,11 @@ namespace CompiledVersion
         public const string Failed = "Failed";
         public const string InProgress = "In Progress";
         #endregion
+
+        public const string UnitCostRaisedToRTH = "Unit Cost raised to meet RTH Cost.";
+        public const string UnitCostIncreasedToRTH = "Unit Cost increased to RTH Cost.";
+        public const string ExtCostAdjustedToFormula = "Extended Cost adjusted to Unit Cost x Quantity.";
+        public const string ExtCostRaisedToRTHMin = "Extended Cost increased to meet RTH minimum.";
+        public const string ExtCostBelowRTH = "Extended Cost is below RTH Cost x Quantity.";
     }
 }
