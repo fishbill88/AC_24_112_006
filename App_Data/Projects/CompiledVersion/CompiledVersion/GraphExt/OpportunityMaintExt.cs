@@ -52,14 +52,11 @@ namespace CompiledVersion
         protected virtual void _(Events.FieldUpdated<CROpportunityProducts, CROpportunityProducts.inventoryID> e)
         {
             var row = e.Row; if (row == null) return;
-            // populate RTH field
+            // populate RTH field and persist into cache
             var item = InventoryItem.PK.Find(Base, row.InventoryID);
             var itemExt = item?.GetExtension<InventoryItemExt>();
-            var lineExt = row.GetExtension<CROpportunityProductsExt>();
-            if (lineExt != null)
-            {
-                lineExt.UsrSWKRTHCost = itemExt?.UsrSWKRTHCost ?? 0m;
-            }
+            var rth = itemExt?.UsrSWKRTHCost ?? 0m;
+            e.Cache.SetValueExt<CROpportunityProductsExt.usrSWKRTHCost>(row, rth);
             // reset unit cost to default from RTH/SPC
             e.Cache.SetDefaultExt<CROpportunityProducts.curyUnitCost>(row);
         }

@@ -12,11 +12,14 @@ namespace CompiledVersion
 
         #region UsrSWKRTHCost
         [PXDBDecimal(2)]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "RTH Cost", Enabled = false)]
+        // Refresh when Inventory changes
         [PXFormula(typeof(Default<CROpportunityProducts.inventoryID>))]
-        [PXUnboundDefault(typeof(Search<InventoryItemExt.usrSWKRTHCost,
-        Where<InventoryItem.inventoryID, Equal<Current<CROpportunityProducts.inventoryID>>>>))]
+        // Persist default from InventoryItemExt when InventoryID is set (only if null)
+        [PXDefault(
+        typeof(Search<InventoryItemExt.usrSWKRTHCost,
+        Where<InventoryItem.inventoryID, Equal<Current<CROpportunityProducts.inventoryID>>>>),
+        PersistingCheck = PXPersistingCheck.Nothing)]
         public decimal? UsrSWKRTHCost { get; set; }
         public abstract class usrSWKRTHCost : PX.Data.BQL.BqlDecimal.Field<usrSWKRTHCost> { }
         #endregion
