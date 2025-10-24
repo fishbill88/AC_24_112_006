@@ -46,19 +46,6 @@ namespace CompiledVersion.DAC
 
         #region UsrVendorID
         [PXDBInt()]
-        //[PXSelector(
-        //    typeof(Search2<
-        //        BAccountR.bAccountID,
-        //        LeftJoin<BranchAlias,
-        //            On<BAccountR.isBranch, Equal<True>,
-        //            And<BranchAlias.bAccountID, Equal<BAccountR.bAccountID>>>>,
-        //        Where<BAccountR.type, NotEqual<BAccountType.employeeType>>>),
-        //    typeof(BAccountR.acctCD),
-        //    typeof(BAccountR.acctName),
-        //    typeof(BAccountR.classID),
-        //    typeof(BAccountR.vStatus),
-        //    SubstituteKey = typeof(BAccountR.acctCD)
-        //    )]
         [PXSelector(
             typeof(Search2<
                 BAccountR.bAccountID,
@@ -84,9 +71,6 @@ namespace CompiledVersion.DAC
         #region UsrVendorLocationID
         [LocationActive(typeof(Where<Location.bAccountID, Equal<Current<usrVendorID>>>), DescriptionField = typeof(Location.descr), Visibility = PXUIVisibility.Invisible, Visible = false)]
         [PXFormula(typeof(Default<usrVendorID>))]
-        //[LocationActive(typeof(Where<PX.Objects.CR.Location.bAccountID, Equal<Optional<usrVendorID>>, And<MatchWithBranch<PX.Objects.CR.Location.vBranchID>>>), DescriptionField = typeof(PX.Objects.CR.Location.descr), Visibility = PXUIVisibility.SelectorVisible,IsDBField = false)]
-        //[PXDefault(typeof(Coalesce<Search2<Vendor.defLocationID, InnerJoin<PX.Objects.CR.Standalone.Location, On<PX.Objects.CR.Standalone.Location.locationID, Equal<Vendor.defLocationID>, And<PX.Objects.CR.Standalone.Location.bAccountID, Equal<Vendor.bAccountID>>>>, Where<Vendor.bAccountID, Equal<Current<usrVendorID>>, And<PX.Objects.CR.Standalone.Location.isActive, Equal<True>, And<MatchWithBranch<PX.Objects.CR.Standalone.Location.vBranchID>>>>>, Search<PX.Objects.CR.Standalone.Location.locationID, Where<PX.Objects.CR.Standalone.Location.bAccountID, Equal<Current<usrVendorID>>, And<PX.Objects.CR.Standalone.Location.isActive, Equal<True>, And<MatchWithBranch<PX.Objects.CR.Standalone.Location.vBranchID>>>>>>), PersistingCheck = PXPersistingCheck.Nothing)]
-        //[PXForeignReference(typeof(CompositeKey<Field<usrVendorID>.IsRelatedTo<PX.Objects.CR.Location.bAccountID>, Field<usrVendorLocationID>.IsRelatedTo<PX.Objects.CR.Location.locationID>>))]
         public int? UsrVendorLocationID { get; set; }
         public abstract class usrVendorLocationID : PX.Data.BQL.BqlInt.Field<usrVendorLocationID> { }
         #endregion
@@ -106,6 +90,54 @@ namespace CompiledVersion.DAC
         public string UsrSWKSPCCode { get; set; }
         public abstract class usrSWKSPCCode : PX.Data.BQL.BqlString.Field<usrSWKSPCCode> { }
         #endregion
+
+        #region UsrSOSPCCost
+        [PXDecimal(2)]
+        [PXDBScalar(typeof(Search<SOLineExt.usrSWKSPCCost,
+            Where<SOLine.orderType, Equal<POFixedDemand.orderType>,
+            And<SOLine.orderNbr, Equal<POFixedDemand.orderNbr>,
+            And<SOLine.lineNbr, Equal<POFixedDemand.lineNbr>>>>>))]
+        [PXFormula(typeof(Default<POFixedDemand.orderType, POFixedDemand.orderNbr, POFixedDemand.lineNbr>))]
+        [PXUIField(DisplayName = "SO SPC Cost", Enabled = false)]
+        public decimal? UsrSOSPCCost { get; set; }
+        public abstract class usrSOSPCCost : PX.Data.BQL.BqlDecimal.Field<usrSOSPCCost> { }
+        #endregion
+
+        #region UsrSOSPCCode
+        [PXString(30, IsUnicode = true)]
+        [PXDBScalar(typeof(Search<SOLineExt.usrSWKSPCCode,
+            Where<SOLine.orderType, Equal<POFixedDemand.orderType>,
+            And<SOLine.orderNbr, Equal<POFixedDemand.orderNbr>,
+            And<SOLine.lineNbr, Equal<POFixedDemand.lineNbr>>>>>))]
+        [PXFormula(typeof(Default<POFixedDemand.orderType, POFixedDemand.orderNbr, POFixedDemand.lineNbr>))]
+        [PXUIField(DisplayName = "SO SPC Code", Enabled = false)]
+        public string UsrSOSPCCode { get; set; }
+        public abstract class usrSOSPCCode : PX.Data.BQL.BqlString.Field<usrSOSPCCode> { }
+        #endregion
+
+        #region UsrSOVendorNotes
+        [PXString(500, IsUnicode = true)]
+        [PXDBScalar(typeof(Search<SOLineExt.usrVendorNotes,
+            Where<SOLine.orderType, Equal<POFixedDemand.orderType>,
+            And<SOLine.orderNbr, Equal<POFixedDemand.orderNbr>,
+            And<SOLine.lineNbr, Equal<POFixedDemand.lineNbr>>>>>))]
+        [PXFormula(typeof(Default<POFixedDemand.orderType, POFixedDemand.orderNbr, POFixedDemand.lineNbr>))]
+        [PXUIField(DisplayName = "SO Vendor Notes", Enabled = false)]
+        public string UsrSOVendorNotes { get; set; }
+        public abstract class usrSOVendorNotes : PX.Data.BQL.BqlString.Field<usrSOVendorNotes> { }
+        #endregion
+
+        #region UsrSOVendorSpecialTerms
+        [PXString(250, IsUnicode = true)]
+        [PXDBScalar(typeof(Search<SOLineExt.usrVendorSpecTerms,
+            Where<SOLine.orderType, Equal<POFixedDemand.orderType>,
+            And<SOLine.orderNbr, Equal<POFixedDemand.orderNbr>,
+            And<SOLine.lineNbr, Equal<POFixedDemand.lineNbr>>>>>))]
+        [PXFormula(typeof(Default<POFixedDemand.orderType, POFixedDemand.orderNbr, POFixedDemand.lineNbr>))]
+        [PXUIField(DisplayName = "SO Vendor Special Terms", Enabled = false)]
+        public string UsrSOVendorSpecialTerms { get; set; }
+        public abstract class usrSOVendorSpecialTerms : PX.Data.BQL.BqlString.Field<usrSOVendorSpecialTerms> { }
+        #endregion
     }
 
     public sealed class INItemPlanExt : PXCacheExtension<INItemPlan>
@@ -113,7 +145,7 @@ namespace CompiledVersion.DAC
         public static bool IsActive() => true;
 
         #region UsrVendorID
-        [PXDBInt] // Declare unbound integer type so VendorAttribute can work correctly
+        [PXDBInt]
         [PXSelector(
             typeof(Search2<
                 BAccountR.bAccountID,
@@ -135,9 +167,6 @@ namespace CompiledVersion.DAC
         #region UsrVendorLocationID
         [LocationActive(typeof(Where<Location.bAccountID, Equal<Current<usrVendorID>>>), DescriptionField = typeof(Location.descr), Visibility = PXUIVisibility.SelectorVisible)]
         [PXFormula(typeof(Default<usrVendorID>))]
-        //[LocationActive(typeof(Where<PX.Objects.CR.Location.bAccountID, Equal<Optional<usrVendorID>>, And<MatchWithBranch<PX.Objects.CR.Location.vBranchID>>>), DescriptionField = typeof(PX.Objects.CR.Location.descr), Visibility = PXUIVisibility.SelectorVisible,IsDBField = false)]
-        //[PXDefault(typeof(Coalesce<Search2<Vendor.defLocationID, InnerJoin<PX.Objects.CR.Standalone.Location, On<PX.Objects.CR.Standalone.Location.locationID, Equal<Vendor.defLocationID>, And<PX.Objects.CR.Standalone.Location.bAccountID, Equal<Vendor.bAccountID>>>>, Where<Vendor.bAccountID, Equal<Current<usrVendorID>>, And<PX.Objects.CR.Standalone.Location.isActive, Equal<True>, And<MatchWithBranch<PX.Objects.CR.Standalone.Location.vBranchID>>>>>, Search<PX.Objects.CR.Standalone.Location.locationID, Where<PX.Objects.CR.Standalone.Location.bAccountID, Equal<Current<usrVendorID>>, And<PX.Objects.CR.Standalone.Location.isActive, Equal<True>, And<MatchWithBranch<PX.Objects.CR.Standalone.Location.vBranchID>>>>>>), PersistingCheck = PXPersistingCheck.Nothing)]
-        //[PXForeignReference(typeof(CompositeKey<Field<usrVendorID>.IsRelatedTo<PX.Objects.CR.Location.bAccountID>, Field<usrVendorLocationID>.IsRelatedTo<PX.Objects.CR.Location.locationID>>))]
         public int? UsrVendorLocationID { get; set; }
         public abstract class usrVendorLocationID : PX.Data.BQL.BqlInt.Field<usrVendorLocationID> { }
         #endregion
@@ -155,7 +184,6 @@ namespace CompiledVersion.DAC
         [PXUIField(DisplayName = "Vendor Address", Enabled = false)]
         public string UsrVendorAddress { get; set; }
         public abstract class usrVendorAddress : PX.Data.BQL.BqlString.Field<usrVendorAddress> { }
-
         #endregion
     }
 }

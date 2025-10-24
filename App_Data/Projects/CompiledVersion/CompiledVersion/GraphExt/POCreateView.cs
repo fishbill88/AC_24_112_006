@@ -93,48 +93,58 @@ namespace CompiledVersion.Graphs
                                 .Select(Base, soLineExt?.UsrVendorID, soLineExt?.UsrVendorLocationID);
                             demandRow.VendorLocationID = loc?.LocationID;
                         }
+
+                        // Map read-only display fields from SOLine to POFixedDemand extension
+                        POFixedDemandExt demandExt = demandRow.GetExtension<POFixedDemandExt>();
+                        if (demandExt != null)
+                        {
+                            demandExt.UsrSOSPCCost = soLineExt?.UsrSWKSPCCost;
+                            demandExt.UsrSOSPCCode = soLineExt?.UsrSWKSPCCode;
+                            demandExt.UsrSOVendorNotes = soLineExt?.UsrVendorNotes;
+                            demandExt.UsrSOVendorSpecialTerms = soLineExt?.UsrVendorSpecTerms;
+                        }
                     }
-                    if (Base.Filter.Current.VendorID != null)
-                        if (demandRow.VendorID != Base.Filter.Current.VendorID)
-                            continue;
+
+                    if (Base.Filter.Current.VendorID != null && demandRow.VendorID != Base.Filter.Current.VendorID)
+                        continue;
 
                     InventoryItem item = InventoryItem.PK.Find(Base, demandRow.InventoryID);
                     INItemXRef iNItemXRef = PXSelect<INItemXRef,
-                        Where<INItemXRef.inventoryID, Equal<Required<INItemXRef.inventoryID>>,
-                            And<INItemXRef.alternateType, Equal<INAlternateType.global>>>>.
-                        Select(Base, demandRow.InventoryID);
-                    if (item != null && iNItemXRef != null)
-                        demandRow.AlternateID = iNItemXRef.AlternateID;
-                    else
-                        demandRow.AlternateID = null;
-                    //if (demandRow.InventoryID != null && demandRow.VendorID == null && demandRow.VendorLocationID == null)
-                    //{
-                    //    //get the default vendor from POVendorInventory
-                    //    InventoryItemMaint maint = PXGraph.CreateInstance<InventoryItemMaint>();
-                    //    maint.Clear();
-                    //    InventoryItem item = InventoryItem.PK.Find(Base, demandRow.InventoryID);
-                    //    maint.Item.Current = item;
+         Where<INItemXRef.inventoryID, Equal<Required<INItemXRef.inventoryID>>,
+      And<INItemXRef.alternateType, Equal<INAlternateType.global>>>>.
+      Select(Base, demandRow.InventoryID);
+      if (item != null && iNItemXRef != null)
+         demandRow.AlternateID = iNItemXRef.AlternateID;
+        else
+demandRow.AlternateID = null;
+   //if (demandRow.InventoryID != null && demandRow.VendorID == null && demandRow.VendorLocationID == null)
+             //{
+     //    //get the default vendor from POVendorInventory
+             //InventoryItemMaint maint = PXGraph.CreateInstance<InventoryItemMaint>();
+        //    maint.Clear();
+         //    InventoryItem item = InventoryItem.PK.Find(Base, demandRow.InventoryID);
+           //    maint.Item.Current = item;
 
-                    //    maint.VendorItems.Select();
-                    //    foreach (POVendorInventory vendorInventory in maint.VendorItems.Select())
-                    //    {
-                    //        if (vendorInventory.IsDefault == true && vendorInventory.Active == true)
-                    //        {
-                    //            demandRow.VendorID = vendorInventory.VendorID;
-                    //            demandRow.VendorLocationID = vendorInventory.VendorLocationID;
-                    //            break;
-                    //        }
+             //    maint.VendorItems.Select();
+         //    foreach (POVendorInventory vendorInventory in maint.VendorItems.Select())
+           //    {
+            //   if (vendorInventory.IsDefault == true && vendorInventory.Active == true)
+      //      {
+       //            demandRow.VendorID = vendorInventory.VendorID;
+       //        demandRow.VendorLocationID = vendorInventory.VendorLocationID;
+     //            break;
+      //   }
 
-                    //    }
-                    //}
+    //    }
+     //}
 
-                    fixedDemands.Add(demand);
-                }
-            }
+      fixedDemands.Add(demand);
+      }
+     }
 
-            PXView.StartRow = 0;
+PXView.StartRow = 0;
 
-            return fixedDemands;
+     return fixedDemands;
         }
     }
 }
