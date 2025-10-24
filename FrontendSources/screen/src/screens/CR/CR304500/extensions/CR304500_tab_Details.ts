@@ -55,4 +55,9 @@ export class CROpportunityProducts extends PXView {
 	LineNbr: PXFieldState;
 	AMConfigKeyID: PXFieldState<PXFieldOptions.CommitChanges>;
 	TextForProductsGrid: PXFieldState;
+
+	// New custom fields
+	UsrSWKRTHCost: PXFieldState; // RTH Cost (read-only)
+	UsrSWKSPCCost: PXFieldState; // SPC Cost
+	UsrSWKSPCCode: PXFieldState; // SPC Code
 }
