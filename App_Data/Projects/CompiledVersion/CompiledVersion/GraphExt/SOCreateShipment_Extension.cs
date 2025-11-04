@@ -47,5 +47,17 @@ namespace CompiledVersion.Graphs
 
             e.ReturnValue = formType;
         }
+
+        // Provide Bill-To Email in processing grid
+        protected virtual void _(Events.FieldSelecting<SOOrder, SOOrderExt.usrBillToEmail> e)
+        {
+            if (e.Row == null) return;
+            var row = e.Row;
+            var ext = row.GetExtension<SOOrderExt>();
+            if (!string.IsNullOrEmpty(ext?.UsrBillToEmail)) { e.ReturnValue = ext.UsrBillToEmail; return; }
+            if (row.BillContactID == null) { e.ReturnValue = null; return; }
+            SOBillingContact bill = SOBillingContact.PK.Find(Base, row.BillContactID);
+            e.ReturnValue = bill?.Email;
+         }
     }
 }

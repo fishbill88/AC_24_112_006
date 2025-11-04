@@ -21,6 +21,17 @@ namespace CompiledVersion.Graphs
     {
         public static bool IsActive() => true;
 
+        #region Messages
+        [PXLocalizable]
+        internal static class Messages
+        {
+            public const string DropShipLineInvalid = "The line cannot be drop-shipped because it is split into multiple lines or allocated in the Line Details dialog box.";
+            public const string POOrderCreated = "Purchase Order '{0}' created.";
+            public const string SpecialOrderCurrencyDiffNoOverride = "The vendor with the currency that differs from the currency of the sales order is selected and it is not possible to override the currency in purchase orders. The purchase order for the special-order item cannot be created.";
+            public const string SpecialOrderCurrencyDiffWillCreate = "The vendor with the currency that differs from the currency of the sales order is selected. A purchase order with the currency of the sales order will be created.";
+        }
+        #endregion
+
         #region CreateProc
         public delegate void CreateProcDelegate(List<POFixedDemand> list, Nullable<DateTime> orderDate, Boolean extSort, Nullable<Int32> branchID);
         [PXOverride]
@@ -71,7 +82,7 @@ namespace CompiledVersion.Graphs
                     POOrderEntry.SOLineSplit3 soline = PXSelectBase<POOrderEntry.SOLineSplit3, PXSelect<POOrderEntry.SOLineSplit3, Where<POOrderEntry.SOLineSplit3.planID, Equal<Required<POOrderEntry.SOLineSplit3.planID>>>>.Config>.Select(docgraph, demand.PlanID);
                     if (soline != null && soline.POSource.IsIn("D", "L") && soline.IsValidForDropShip != true)
                     {
-                        throw new PXException("The line cannot be drop-shipped because it is split into multiple lines or allocated in the Line Details dialog box.");
+                        throw new PXException(Messages.DropShipLineInvalid);
                     }
                     bool requireSingleProject = docgraph.apsetup.Current.RequireSingleProjectPerDocument == true;
                     order = FindOrCreatePOOrder(created, order, demand, soorder, soline, requireSingleProject);
@@ -147,11 +158,11 @@ namespace CompiledVersion.Graphs
                     }
                     if (ErrorLevel == PXErrorLevel.RowInfo)
                     {
-                        PXProcessing<POFixedDemand>.SetInfo(PXMessages.LocalizeFormatNoPrefixNLA("Purchase Order '{0}' created.", docgraph.Document.Current.OrderNbr) + "\r\n" + ErrorText);
+                        PXProcessing<POFixedDemand>.SetInfo(PXMessages.LocalizeFormatNoPrefixNLA(Messages.POOrderCreated, docgraph.Document.Current.OrderNbr) + "\r\n" + ErrorText);
                     }
                     else
                     {
-                        PXProcessing<POFixedDemand>.SetWarning(PXMessages.LocalizeFormatNoPrefixNLA("Purchase Order '{0}' created.", docgraph.Document.Current.OrderNbr) + "\r\n" + ErrorText);
+                        PXProcessing<POFixedDemand>.SetWarning(PXMessages.LocalizeFormatNoPrefixNLA(Messages.POOrderCreated, docgraph.Document.Current.OrderNbr) + "\r\n" + ErrorText);
                     }
                     if (created.Find(docgraph.Document.Current) == null)
                     {
@@ -275,11 +286,11 @@ namespace CompiledVersion.Graphs
             {
                 if (vendor == null || vendor.AllowOverrideCury != true)
                 {
-                    message = "The vendor with the currency that differs from the currency of the sales order is selected and it is not possible to override the currency in purchase orders. The purchase order for the special-order item cannot be created.";
+                    message = Messages.SpecialOrderCurrencyDiffNoOverride;
                 }
                 else if (!onlyErrors)
                 {
-                    message = "The vendor with the currency that differs from the currency of the sales order is selected. A purchase order with the currency of the sales order will be created.";
+                    message = Messages.SpecialOrderCurrencyDiffWillCreate;
                 }
             }
             return message;
@@ -390,7 +401,7 @@ namespace CompiledVersion.Graphs
             }
 
             //POOrderExt poOrderExt = docgraph.CurrentDocument.Current.GetExtension<POOrderExt>();
-            if (poOrderExt != null)
+            if (poOrderExt != null && demand.PlanType == INPlanConstants.Plan6D)
                 poOrderExt.UsrCustomerOrderNbr = soOrder?.CustomerOrderNbr;
 
             #region orig
@@ -419,7 +430,7 @@ namespace CompiledVersion.Graphs
                             PXDBQuantityAttribute.CalcTranQty<POLine.orderQty>(docgraph.Transactions.Cache, line);
                         }
                         ErrorLevel = PXErrorLevel.RowWarning;
-                        ErrorText += PXMessages.LocalizeFormatNoPrefixNLA("Purchase Order '{0}' created.", line.PONbr);
+                        ErrorText += PXMessages.LocalizeFormatNoPrefixNLA(Messages.POOrderCreated, line.PONbr);
                     }
                     line.CuryUnitCost = blanket_line.CuryUnitCost;
                     line.UnitCost = blanket_line.UnitCost;
@@ -439,15 +450,15 @@ namespace CompiledVersion.Graphs
                 docgraph?.CurrentDocument.Cache.SetValueExt<POOrderExt.usrShippingInstructions>(docgraph.CurrentDocument.Current, soOrderExt?.UsrShippingInstructions);
             // Find the related SO Line
             //SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-            //    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-            //    .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
+            // And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+            // .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
 
             //SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
 
             // Overwrite PO Line Unit Cost if SOLine.usrSWKSPCCost has value
             if (soLine != null)
             {
-                if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ?? 0m) > 0m)
+                if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ??0m) >0m)
                 {
                     //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
                     docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);

@@ -255,5 +255,13 @@ namespace CompiledVersion.DAC
         [PXUIField(DisplayName = "Form Type", Enabled = false)]
         public string UsrFormTypeDisplay { get; set; }
         #endregion
+
+        // New: Bill-To Email (SOBillingContact.Email) for processing screens like SO501000
+        #region UsrBillToEmail
+        public abstract class usrBillToEmail : PX.Data.BQL.BqlString.Field<usrBillToEmail> { }
+        [PXString(255, IsUnicode = true)]
+        [PXUIField(DisplayName = "Bill-To Email", Enabled = false)]
+        public string UsrBillToEmail { get; set; }
+        #endregion
     }
 }

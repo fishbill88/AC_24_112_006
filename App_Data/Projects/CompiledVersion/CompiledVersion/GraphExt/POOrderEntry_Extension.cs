@@ -123,16 +123,28 @@ namespace CompiledVersion.Graphs
             var lineExt = line.GetExtension<POLineExt>();
             var rthUnit = lineExt?.UsrSWKRTHCost ??0m;
 
-            // Ensure UnitCost is not below RTH Unit Cost
-            if (rthUnit >0m && unitCost < rthUnit)
+            // If vendor price was used, honor it: do not bump to RTH, only ensure non-negative
+            if (lineExt?.UsrUsedVendorPrice == true)
             {
-                var newUnit = rthUnit;
-                cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, unitCost,
-                new PXSetPropertyException(line,Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
-                if (Math.Abs(unitCost - newUnit) >0.0000001m)
+                if (unitCost <0m)
                 {
-                    cache.SetValueExt<POLine.curyUnitCost>(line, newUnit);
-                    unitCost = newUnit;
+                    cache.SetValueExt<POLine.curyUnitCost>(line,0m);
+                    unitCost =0m;
+                }
+            }
+            else
+            {
+                // Ensure UnitCost is not below RTH Unit Cost
+                if (rthUnit >0m && unitCost < rthUnit)
+                {
+                    var newUnit = rthUnit;
+                    cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, unitCost,
+                    new PXSetPropertyException(line,Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
+                    if (Math.Abs(unitCost - newUnit) >0.0000001m)
+                    {
+                        cache.SetValueExt<POLine.curyUnitCost>(line, newUnit);
+                        unitCost = newUnit;
+                    }
                 }
             }
 
@@ -144,16 +156,19 @@ namespace CompiledVersion.Graphs
                 ext = expected;
             }
 
-            // Hard validation: ext cost should not be below RTH minimum
-            var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ??0m) * qty);
-            if (ext +0.009m < rthMin)
+            // Enforce RTH minimum on ExtCost only if vendor price was NOT used
+            if (lineExt?.UsrUsedVendorPrice != true)
             {
-                var msg = Messages.ExtCostBelowRTH;
-                cache.RaiseExceptionHandling<POLine.curyExtCost>(line, ext,
-                new PXSetPropertyException(line,msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
-                if (raiseErrors)
+                var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ??0m) * qty);
+                if (ext +0.009m < rthMin)
                 {
-                    throw new PXSetPropertyException(line, msg);
+                    var msg = Messages.ExtCostBelowRTH;
+                    cache.RaiseExceptionHandling<POLine.curyExtCost>(line, ext,
+                    new PXSetPropertyException(line,msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
+                    if (raiseErrors)
+                    {
+                        throw new PXSetPropertyException(line, msg);
+                    }
                 }
             }
         }
@@ -201,30 +216,63 @@ namespace CompiledVersion.Graphs
                 return;
             }
 
-            POLine pOLine = e.Row as POLine;
-            POOrder current = Base.Document.Current;
-            if (pOLine != null && pOLine.ManualPrice == true)
-            {
-                e.NewValue = pOLine.CuryUnitCost.GetValueOrDefault();
-            }
-            else if (pOLine != null && pOLine.InventoryID.HasValue && current != null && current.VendorID.HasValue)
-            {
-                decimal? num = null;
-                if (pOLine.UOM != null)
-                {
-                    DateTime value = Base.Document.Current.OrderDate.Value;
-                    PX.Objects.CM.Extensions.CurrencyInfo currencyInfo = Base.FindImplementation<IPXCurrencyHelper>().GetCurrencyInfo(current.CuryInfoID);
-                    num = APVendorPriceMaint.CalculateUnitCost(sender, pOLine.VendorID, current.VendorLocationID, pOLine.InventoryID, pOLine.SiteID, currencyInfo.GetCM(), pOLine.UOM, pOLine.OrderQty, value, pOLine.CuryUnitCost);
-                    e.NewValue = num;
-                }
+            POLine line = e.Row as POLine;
+            POOrder order = Base.Document.Current;
+            if (line == null || order == null || !line.InventoryID.HasValue)
+                return;
 
-                if (!num.HasValue)
-                {
-                    e.NewValue = POItemCostManager.Fetch<POLine.inventoryID, POLine.curyInfoID>(sender.Graph, pOLine, current.VendorID, current.VendorLocationID, current.OrderDate, current.CuryID, pOLine.InventoryID, pOLine.SubItemID, pOLine.SiteID, pOLine.UOM);
-                }
+            var lineExt = line.GetExtension<POLineExt>();
+            lineExt.UsrUsedVendorPrice = false;
 
-                APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, pOLine, e.NewValue);
+            // i) Try Vendor Price
+            decimal? vendorUnit = null;
+            if (line.UOM != null && order.VendorID != null)
+            {
+                var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
+                vendorUnit = APVendorPriceMaint.CalculateUnitCost(sender, order.VendorID, order.VendorLocationID, line.InventoryID, line.SiteID, ci.GetCM(), line.UOM, line.OrderQty, order.OrderDate ?? Base.Accessinfo.BusinessDate.GetValueOrDefault(), line.CuryUnitCost);
+                if (vendorUnit.HasValue && vendorUnit.Value >0m)
+                {
+                    e.NewValue = vendorUnit;
+                    e.Cancel = true;
+                    lineExt.UsrUsedVendorPrice = true;
+                    return;
+                }
             }
+
+            // ii) RTH Cost from SO line or Item
+            decimal? rth = lineExt?.UsrSWKRTHCost;
+            if (!rth.HasValue || rth.Value <=0m)
+            {
+                InventoryItem item = InventoryItem.PK.Find(Base, line.InventoryID);
+                var itemExt = item?.GetExtension<InventoryItemExt>();
+                rth = itemExt?.UsrSWKRTHCost;
+            }
+            if (rth.HasValue && rth.Value >0m)
+            {
+                e.NewValue = rth.Value;
+                e.Cancel = true;
+                return;
+            }
+
+            // iii) SPC Cost (from linked SO line if any)
+            decimal? spc = null;
+            DropShipLink ds = GetDropShipLink(line);
+            if (ds != null)
+            {
+                SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>> >.Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
+                if (soLine != null)
+                    spc = soLine.GetExtension<CompiledVersion.DAC.SOLineExt>()?.UsrSWKSPCCost;
+            }
+            if (spc.HasValue && spc.Value >0m)
+            {
+                e.NewValue = spc.Value;
+                e.Cancel = true;
+                return;
+            }
+
+            // iv) Last Cost fallback
+            e.NewValue = POItemCostManager.Fetch<POLine.inventoryID, POLine.curyInfoID>(sender.Graph, line, order.VendorID, order.VendorLocationID, order.OrderDate, order.CuryID, line.InventoryID, line.SubItemID, line.SiteID, line.UOM);
+            APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, line, e.NewValue);
         }
 
         // Ensure Unit Cost is never below RTH Unit Cost
@@ -234,6 +282,14 @@ namespace CompiledVersion.Graphs
             var line = e.Row as POLine;
             var lineExt = line?.GetExtension<POLineExt>();
             if (lineExt == null) return;
+
+            // If vendor price was used, allow unit cost as-is (still clamp to >=0)
+            if (lineExt.UsrUsedVendorPrice == true)
+            {
+                if (e.NewValue is decimal v && v <0m)
+                    e.NewValue =0m;
+                return;
+            }
 
             var rth = lineExt.UsrSWKRTHCost ??0m;
             if (rth >0m && e.NewValue is decimal newUC && newUC < rth)
@@ -279,14 +335,18 @@ namespace CompiledVersion.Graphs
                 new PXSetPropertyException(line, Messages.ExtCostAdjustedToFormula, PXErrorLevel.Warning));
             }
 
-            // Make sure it is not below RTH minimum
-            var rthUnit = line.GetExtension<POLineExt>()?.UsrSWKRTHCost ??0m;
-            var min = RoundCury(order, rthUnit * qty);
-            if (newExt +0.009m < min)
+            // Make sure it is not below RTH minimum when vendor price not used
+            var lineExt = line.GetExtension<POLineExt>();
+            if (lineExt?.UsrUsedVendorPrice != true)
             {
-                e.NewValue = min;
-                e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
-                new PXSetPropertyException(line, Messages.ExtCostRaisedToRTHMin, PXErrorLevel.Warning));
+                var rthUnit = lineExt?.UsrSWKRTHCost ??0m;
+                var min = RoundCury(order, rthUnit * qty);
+                if (newExt +0.009m < min)
+                {
+                    e.NewValue = min;
+                    e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
+                    new PXSetPropertyException(line, Messages.ExtCostRaisedToRTHMin, PXErrorLevel.Warning));
+                }
             }
         }
 

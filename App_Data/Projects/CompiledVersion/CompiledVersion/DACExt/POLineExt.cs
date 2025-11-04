@@ -102,5 +102,13 @@ namespace CompiledVersion.DAC
         public string UsrSWKSPCCode { get; set; }
         public abstract class usrSWKSPCCode : PX.Data.BQL.BqlString.Field<usrSWKSPCCode> { }
         #endregion
+
+        #region UsrUsedVendorPrice
+        [PXDBBool]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIField(DisplayName = "Used Vendor Price", Visible = false, Enabled = false)]
+        public bool? UsrUsedVendorPrice { get; set; }
+        public abstract class usrUsedVendorPrice : PX.Data.BQL.BqlBool.Field<usrUsedVendorPrice> { }
+        #endregion
     }
 }
