@@ -7,7 +7,7 @@ namespace CompiledVersion.DAC
 {
     public sealed class CROpportunityReasonExt : PXCacheExtension<CROpportunity>
     {
-        public static bool IsActive() => false;
+        public static bool IsActive() => true;
 
         #region UsrResolution
         public abstract class usrResolution : PX.Data.BQL.BqlString.Field<usrResolution> { }

@@ -10,7 +10,7 @@ namespace CompiledVersion.GraphExt
 {
     public class CROpportunityClassMaint_StageReasons : PXGraphExtension<CROpportunityClassMaint>
     {
-        public static bool IsActive() => false;
+        public static bool IsActive() => true;
 
         [PXViewName("Reasons")]
         public SelectFrom<CROpportunityClassStageReason>
@@ -34,6 +34,24 @@ namespace CompiledVersion.GraphExt
         }
 
         // Populate ReasonDescription for CROpportunityClassStageReason on RowSelecting
+        protected virtual void _(Events.FieldUpdated<CROpportunityClassStageReason, CROpportunityClassStageReason.reason> e)
+        {
+            var row = e.Row;
+            if (row == null) return;
+            var reasonCode = row.Reason;
+            if (string.IsNullOrWhiteSpace(reasonCode))
+            {
+                row.ReasonDescription = "NO DATA FOUND";
+            }
+            else if (OpportunityMaint_StageReasonExt.ReasonCodeCatalog.TryGetValue(reasonCode.Trim(), out var description))
+            {
+                row.ReasonDescription = description;
+            }
+            else
+            {
+                row.ReasonDescription = "NO DATA FOUND";
+            }
+        }
         protected virtual void _(Events.RowSelecting<CROpportunityClassStageReason> e)
         {
             var row = e.Row;

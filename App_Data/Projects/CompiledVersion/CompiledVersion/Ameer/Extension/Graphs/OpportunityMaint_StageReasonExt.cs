@@ -12,46 +12,7 @@ namespace CompiledVersion
 {
     public class OpportunityMaint_StageReasonExt : PXGraphExtension<OpportunityMaint>
     {
-        public static bool IsActive() => false;
-
-        //public override void Configure(PXScreenConfiguration config)
-        //{
-        //    var context = config.GetScreenConfigurationContext<OpportunityMaint, CROpportunity>();
-
-        //    // Create an empty value-collection and bind it to Resolution in all states so workflow won't override our list
-        //    //var emptyResolutionListKey = context.ValueCollections.Create("CV_EmptyResolution", list => { });
-
-        //    context.UpdateScreenConfigurationFor(screen => screen
-        //        .UpdateDefaultFlow(flow => flow
-        //            .WithFlowStates(states =>
-        //            {
-
-        //                states.Update<OpportunityStatus.@new>(state => state
-        //                    .WithFieldStates(fields =>
-        //                        fields.RemoveField<CROpportunity.resolution>()));
-
-        //                states.Update<OpportunityStatus.@new>(state => state
-        //                    .WithFieldStates(fields =>
-        //                        fields.AddField<CROpportunity.resolution>(field => field
-        //        .DefaultValue(OpportunityReason.Created))));
-
-
-        //                states.Update<OpportunityStatus.open>(state => state
-        //                    .WithFieldStates(fields =>
-        //                        fields.AddField<CROpportunity.resolution>(field => field
-        //        .DefaultValue(OpportunityReason.Created))));
-
-        //                states.Update<OpportunityStatus.won>(state => state
-        //                    .WithFieldStates(fields =>
-        //                        fields.AddField<CROpportunity.resolution>(field => field
-        //        .DefaultValue(OpportunityReason.Created))));
-
-        //                states.Update<OpportunityStatus.lost>(state => state
-        //                    .WithFieldStates(fields =>
-        //                        fields.AddField<CROpportunity.resolution>(field => field
-        //        .DefaultValue(OpportunityReason.Created))));
-        //            })));
-        //}
+        public static bool IsActive() => true;
 
         // Keep list current on row selected - set list on UsrResolution
         protected virtual void _(Events.RowSelected<CROpportunity> e)
@@ -61,95 +22,121 @@ namespace CompiledVersion
             if (ext == null) return;
 
             var list = BuildReasonList(row.ClassID, row.StageID);
-   
-         // Conditional visibility: if list is empty, show Resolution and hide UsrResolution
-    // Otherwise, show UsrResolution and hide Resolution
-  bool hasCustomReasons = list.values.Length > 0;
-      
-    PXUIFieldAttribute.SetVisible<CROpportunity.resolution>(e.Cache, row, !hasCustomReasons);
-    PXUIFieldAttribute.SetVisible<CROpportunityReasonExt.usrResolution>(e.Cache, row, hasCustomReasons);
-       
-    if (hasCustomReasons)
-{
-          PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, list.values, list.labels);
+
+            // Always hide Resolution and always show UsrResolution
+            PXUIFieldAttribute.SetVisible<CROpportunity.resolution>(e.Cache, row, false);
+            PXUIFieldAttribute.SetVisible<CROpportunityReasonExt.usrResolution>(e.Cache, row, true);
+
+            if (list.values.Length >0)
+            {
+                // Use custom reasons
+                PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, list.values, list.labels);
             }
             else
-          {
-   var baseVals = GetBaseReasonValues();
-                var baseLabels = GetBaseReasonLabels();
-  // Set list on Resolution when showing the standard field
-     PXStringListAttribute.SetList<CROpportunity.resolution>(e.Cache, row, baseVals, baseLabels);
-         }
+            {
+                // Fallback to base reasons driven by Status
+                var baseVals = GetBaseReasonValues(row.Status);
+                var baseLabels = GetBaseReasonLabels(row.Status);
+                PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, baseVals, baseLabels);
+            }
         }
 
         // Clear UsrResolution on stage change and refresh list via RowSelected
-      protected virtual void _(Events.FieldUpdated<CROpportunity, CROpportunity.stageID> e)
-     {
- var row = e.Row; if (row == null) return;
-       var ext = row.GetExtension<CROpportunityReasonExt>();
-  if (ext == null) return;
+        protected virtual void _(Events.FieldUpdated<CROpportunity, CROpportunity.stageID> e)
+        {
+            var row = e.Row; if (row == null) return;
+            var ext = row.GetExtension<CROpportunityReasonExt>();
+            if (ext == null) return;
 
             // Clear both fields to ensure clean state
-     e.Cache.SetValueExt<CROpportunityReasonExt.usrResolution>(row, null);
-       e.Cache.SetValueExt<CROpportunity.resolution>(row, null);
+            e.Cache.SetValueExt<CROpportunityReasonExt.usrResolution>(row, null);
+            e.Cache.SetValueExt<CROpportunity.resolution>(row, null);
             e.Cache.RaiseRowSelected(row);
         }
 
         // Render-time override: ensure our values win over workflow ComboBoxValues - set on UsrResolution
         protected virtual void _(Events.FieldSelecting<CROpportunity, CROpportunityReasonExt.usrResolution> e)
- {
-   var row = e.Row; if (row == null) return;
-        var list = BuildReasonList(row.ClassID, row.StageID);
-       
-       // Only apply custom list if we have custom reasons
-     if (list.values.Length == 0) return;
-   
- string[] vals = list.values;
-            string[] labels = list.labels;
-          
-e.ReturnState = PXStringState.CreateInstance(
-             e.ReturnValue,
-  2,
-        null,
-      nameof(CROpportunityReasonExt.usrResolution),
-  false,
-   1,
-   null,
-  vals,
-        labels,
-      true,
-    null);
+        {
+            var row = e.Row; if (row == null) return;
+            var list = BuildReasonList(row.ClassID, row.StageID);
+
+            string[] vals;
+            string[] labels;
+
+            if (list.values.Length >0)
+            {
+                vals = list.values;
+                labels = list.labels;
+            }
+            else
+            {
+                // Ensure fallback is status-driven as well
+                vals = GetBaseReasonValues(row.Status);
+                labels = GetBaseReasonLabels(row.Status);
+            }
+
+            e.ReturnState = PXStringState.CreateInstance(
+                         e.ReturnValue,
+              2,
+                    null,
+                  nameof(CROpportunityReasonExt.usrResolution),
+              false,
+               1,
+               null,
+              vals,
+                    labels,
+                  true,
+                null);
         }
 
-        private static string[] GetBaseReasonValues() => new[]
+        // Master mapping of standard reason code -> label (used for base reasons)
+        private static readonly Dictionary<string, string> BaseReasonLabels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            OpportunityReason.Created,
-            OpportunityReason.Technology,
-            OpportunityReason.Relationship,
-            OpportunityReason.Price,
-            OpportunityReason.Other,
-            OpportunityReason.InProcess,
-            OpportunityReason.CompanyMaturity,
-            OpportunityReason.ConvertedFromLead,
-            OpportunityReason.Qualified,
-            OpportunityReason.OrderPlaced,
-        };
-        private static string[] GetBaseReasonLabels() => new[]
-        {
-            "Created",
-  "Technology",
-        "Relationship",
-  "Price",
-       "Other",
-        "In Process",
-    "Company Maturity",
- "Converted from Lead",
-            "Qualified",
-            "Order Placed",
+            { OpportunityReason.Created, "Created" },
+            { OpportunityReason.Technology, "Technology" },
+            { OpportunityReason.Relationship, "Relationship" },
+            { OpportunityReason.Price, "Price" },
+            { OpportunityReason.Other, "Other" },
+            { OpportunityReason.InProcess, "In Process" },
+            { OpportunityReason.CompanyMaturity, "Company Maturity" },
+            { OpportunityReason.ConvertedFromLead, "Converted from Lead" },
+            { OpportunityReason.Qualified, "Qualified" },
+            { OpportunityReason.OrderPlaced, "Order Placed" },
         };
 
+        // Status-driven base reason codes
+        private static readonly Dictionary<string, string[]> StatusToReasonCodes = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+        {
+            // Status: New -> CR, FL, QL
+            { "N", new [] { OpportunityReason.Created, OpportunityReason.ConvertedFromLead, OpportunityReason.Qualified } },
+            // Status: Open -> IP, QL
+            { "O", new [] { OpportunityReason.InProcess, OpportunityReason.Qualified } },
+            // Status: Won -> TH, RL, PR, OT, OP
+            { "W", new [] { OpportunityReason.Technology, OpportunityReason.Relationship, OpportunityReason.Price, OpportunityReason.Other, OpportunityReason.OrderPlaced } },
+            // Status: Lost -> TH, RL, PR, OT, CM
+            { "L", new [] { OpportunityReason.Technology, OpportunityReason.Relationship, OpportunityReason.Price, OpportunityReason.Other, OpportunityReason.CompanyMaturity } },
+        };
+
+        private static string[] GetBaseReasonValues(string status)
+        {
+            if (!string.IsNullOrWhiteSpace(status))
+            {
+                var key = status.Trim().ToUpperInvariant();
+                if (StatusToReasonCodes.TryGetValue(key, out var codes))
+                    return codes;
+            }
+            // Strict fallback: no global list, remain status-driven only
+            return new string[0];
+        }
+
+        private static string[] GetBaseReasonLabels(string status)
+        {
+            var codes = GetBaseReasonValues(status);
+            return codes.Select(c => BaseReasonLabels.TryGetValue(c, out var lbl) ? lbl : c).ToArray();
+        }
+
         // Master catalog of reason codes -> description (fill out with full list)
-     public static readonly Dictionary<string, string> ReasonCodeCatalog = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> ReasonCodeCatalog = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
      {
          // A-series
             {"A1","New inquiry received"},
