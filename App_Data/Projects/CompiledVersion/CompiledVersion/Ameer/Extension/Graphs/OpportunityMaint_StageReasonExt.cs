@@ -11,7 +11,7 @@ namespace CompiledVersion
 {
     public class OpportunityMaint_StageReasonExt : PXGraphExtension<OpportunityMaint>
     {
-        public static bool IsActive() => true;
+        public static bool IsActive() => false;
 
         // Keep list current on row selected - set list on UsrResolution
         protected virtual void _(Events.RowSelected<CROpportunity> e)

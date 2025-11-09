@@ -7,7 +7,7 @@ namespace CompiledVersion.GraphExt
 {
     public class OpportunityMaint_ReasonSyncExt : PXGraphExtension<OpportunityMaint>
     {
-        public static bool IsActive() => true;
+        public static bool IsActive() => false;
 
         // Sync UsrResolution to Resolution when user changes UsrResolution
         protected virtual void _(Events.FieldUpdated<CROpportunity, CROpportunityReasonExt.usrResolution> e)

@@ -10,7 +10,7 @@ namespace CompiledVersion.GraphExt
 {
     public class CROpportunityClassMaint_StageReasons : PXGraphExtension<CROpportunityClassMaint>
     {
-        public static bool IsActive() => true;
+        public static bool IsActive() => false;
 
         [PXViewName("Reasons")]
         public SelectFrom<CROpportunityClassStageReason>

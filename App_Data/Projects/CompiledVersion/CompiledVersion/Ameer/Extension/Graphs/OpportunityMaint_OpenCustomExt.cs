@@ -13,7 +13,7 @@ namespace CompiledVersion
     /// </summary>
     public class OpportunityMaint_OpenCustomExt : PXGraphExtension<OpportunityMaint>
     {
-        public static bool IsActive() => true;
+        public static bool IsActive() => false;
 
         #region Data View - Filter
 
