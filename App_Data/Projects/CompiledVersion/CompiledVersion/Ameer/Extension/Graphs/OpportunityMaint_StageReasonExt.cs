@@ -4,7 +4,6 @@ using PX.Data;
 using PX.Data.WorkflowAPI;
 using PX.Objects.CR;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,25 +17,20 @@ namespace CompiledVersion
         protected virtual void _(Events.RowSelected<CROpportunity> e)
         {
             var row = e.Row; if (row == null) return;
-            var ext = row.GetExtension<CROpportunityReasonExt>();
-            if (ext == null) return;
-
-            var list = BuildReasonList(row.ClassID, row.StageID);
+            var ext = row.GetExtension<CROpportunityReasonExt>(); if (ext == null) return;
+            var list = BuildReasonList(Base, row.ClassID, row.StageID);
 
             // Always hide Resolution and always show UsrResolution
             PXUIFieldAttribute.SetVisible<CROpportunity.resolution>(e.Cache, row, false);
             PXUIFieldAttribute.SetVisible<CROpportunityReasonExt.usrResolution>(e.Cache, row, true);
 
             if (list.values.Length >0)
-            {
                 // Use custom reasons
                 PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, list.values, list.labels);
-            }
             else
             {
                 // Fallback to base reasons driven by Status
-                var baseVals = GetBaseReasonValues(row.Status);
-                var baseLabels = GetBaseReasonLabels(row.Status);
+                var baseVals = GetBaseReasonValues(row.Status); var baseLabels = GetBaseReasonLabels(row.Status);
                 PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, baseVals, baseLabels);
             }
         }
@@ -45,8 +39,7 @@ namespace CompiledVersion
         protected virtual void _(Events.FieldUpdated<CROpportunity, CROpportunity.stageID> e)
         {
             var row = e.Row; if (row == null) return;
-            var ext = row.GetExtension<CROpportunityReasonExt>();
-            if (ext == null) return;
+            var ext = row.GetExtension<CROpportunityReasonExt>(); if (ext == null) return;
 
             // Clear both fields to ensure clean state
             e.Cache.SetValueExt<CROpportunityReasonExt.usrResolution>(row, null);
@@ -54,26 +47,25 @@ namespace CompiledVersion
             e.Cache.RaiseRowSelected(row);
         }
 
-        // Render-time override: ensure our values win over workflow ComboBoxValues - set on UsrResolution
+        private static string GetPendingOrValue(PXCache cache, object data, string fieldName, string currentValue)
+        {
+            object pending = cache?.GetValuePending(data, fieldName);
+            if (pending is PXFieldState fs && fs.Value is string s1) return s1;
+            if (pending is string s) return s;
+            return currentValue;
+        }
+
+        // Render-time override for custom list - set on UsrResolution
         protected virtual void _(Events.FieldSelecting<CROpportunity, CROpportunityReasonExt.usrResolution> e)
         {
             var row = e.Row; if (row == null) return;
-            var list = BuildReasonList(row.ClassID, row.StageID);
+            // Use pending Stage from popup if available
+            var stage = GetPendingOrValue(e.Cache, row, nameof(CROpportunity.StageID), row.StageID);
+            var list = BuildReasonList(Base, row.ClassID, stage);
+            string[] vals; string[] labels;
 
-            string[] vals;
-            string[] labels;
-
-            if (list.values.Length >0)
-            {
-                vals = list.values;
-                labels = list.labels;
-            }
-            else
-            {
-                // Ensure fallback is status-driven as well
-                vals = GetBaseReasonValues(row.Status);
-                labels = GetBaseReasonLabels(row.Status);
-            }
+            if (list.values.Length >0) { vals = list.values; labels = list.labels; }
+            else { vals = GetBaseReasonValues(row.Status); labels = GetBaseReasonLabels(row.Status); }
 
             e.ReturnState = PXStringState.CreateInstance(
                          e.ReturnValue,
@@ -84,6 +76,31 @@ namespace CompiledVersion
                1,
                null,
               vals,
+                    labels,
+                  true,
+                null);
+        }
+
+        // Provide custom/status-driven list for Resolution field (used in popup/filter dialogs)
+        protected virtual void _(Events.FieldSelecting<CROpportunity, CROpportunity.resolution> e)
+        {
+            var row = e.Row; if (row == null) return;
+            // Use pending Stage from popup if available
+            var stage = GetPendingOrValue(e.Cache, row, nameof(CROpportunity.StageID), row.StageID);
+            var list = BuildReasonList(Base, row.ClassID, stage);
+            string[] codes; string[] labels;
+            if (list.values.Length >0) { codes = list.values; labels = list.labels; }
+            else { codes = GetBaseReasonValues(row.Status); labels = GetBaseReasonLabels(row.Status); }
+            if (codes.Length ==0) return; // leave default state if no mapping
+            e.ReturnState = PXStringState.CreateInstance(
+                         e.ReturnValue,
+              2,
+                    null,
+                  nameof(CROpportunity.Resolution),
+              false,
+               1,
+               null,
+              codes,
                     labels,
                   true,
                 null);
@@ -117,19 +134,18 @@ namespace CompiledVersion
             { "L", new [] { OpportunityReason.Technology, OpportunityReason.Relationship, OpportunityReason.Price, OpportunityReason.Other, OpportunityReason.CompanyMaturity } },
         };
 
-        private static string[] GetBaseReasonValues(string status)
+        public static string[] GetBaseReasonValues(string status)
         {
             if (!string.IsNullOrWhiteSpace(status))
             {
                 var key = status.Trim().ToUpperInvariant();
-                if (StatusToReasonCodes.TryGetValue(key, out var codes))
-                    return codes;
+                if (StatusToReasonCodes.TryGetValue(key, out var codes)) return codes;
             }
             // Strict fallback: no global list, remain status-driven only
             return new string[0];
         }
 
-        private static string[] GetBaseReasonLabels(string status)
+        public static string[] GetBaseReasonLabels(string status)
         {
             var codes = GetBaseReasonValues(status);
             return codes.Select(c => BaseReasonLabels.TryGetValue(c, out var lbl) ? lbl : c).ToArray();
@@ -272,27 +288,13 @@ namespace CompiledVersion
             return false;
         }
 
-        // Search method: For the selected Class+Stage, find CROpportunityClassStageReason rows whose Reason matches a known catalog code or description.
-        // Returns pairs (code, description) to be used as a string list.
-        private (string[] values, string[] labels) BuildReasonList(string classID, string stageID)
+        // Public so other extensions (workflow) can reuse
+        public static (string[] values, string[] labels) BuildReasonList(PXGraph graph, string classID, string stageID)
         {
-            var values = new List<string>();
-            var labels = new List<string>();
-            if (string.IsNullOrEmpty(classID) || string.IsNullOrEmpty(stageID))
-                return (values.ToArray(), labels.ToArray());
-
-            foreach (CROpportunityClassStageReason r in PXSelect<CROpportunityClassStageReason,
-                Where<CROpportunityClassStageReason.classID, Equal<Required<CROpportunityClassStageReason.classID>>,
-                And<CROpportunityClassStageReason.stageCode, Equal<Required<CROpportunityClassStageReason.stageCode>>>>>.
-                Select(Base, classID, stageID))
+            var values = new List<string>(); var labels = new List<string>(); if (string.IsNullOrEmpty(classID)|| string.IsNullOrEmpty(stageID)) return (values.ToArray(), labels.ToArray());
+            foreach (CROpportunityClassStageReason r in PXSelect<CROpportunityClassStageReason, Where<CROpportunityClassStageReason.classID, Equal<Required<CROpportunityClassStageReason.classID>>, And<CROpportunityClassStageReason.stageCode, Equal<Required<CROpportunityClassStageReason.stageCode>>>>>.Select(graph, classID, stageID))
             {
-                var input = r.Reason ?? string.Empty;
-                if (TryResolveReason(input, out var code, out var description))
-                {
-                    // Include catalog-matched reason code/description
-                    values.Add(code);
-                    labels.Add(description);
-                }
+                var input = r.Reason ?? string.Empty; if (TryResolveReason(input,out var code,out var description)) { values.Add(code); labels.Add(description); }
             }
             return (values.ToArray(), labels.ToArray());
         }
