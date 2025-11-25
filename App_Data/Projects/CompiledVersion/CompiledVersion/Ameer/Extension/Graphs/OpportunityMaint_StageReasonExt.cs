@@ -20,19 +20,23 @@ namespace CompiledVersion
             var ext = row.GetExtension<CROpportunityReasonExt>(); if (ext == null) return;
             var list = BuildReasonList(Base, row.ClassID, row.StageID);
 
-            // Always hide Resolution and always show UsrResolution
+            // Always hide standard Resolution and show custom UsrResolution field
             PXUIFieldAttribute.SetVisible<CROpportunity.resolution>(e.Cache, row, false);
             PXUIFieldAttribute.SetVisible<CROpportunityReasonExt.usrResolution>(e.Cache, row, true);
 
+            string[] values; string[] labels;
             if (list.values.Length >0)
-                // Use custom reasons
-                PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, list.values, list.labels);
+            {
+                // Use class/stage specific list
+                values = list.values; labels = list.labels;
+            }
             else
             {
-                // Fallback to base reasons driven by Status
-                var baseVals = GetBaseReasonValues(row.Status); var baseLabels = GetBaseReasonLabels(row.Status);
-                PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, baseVals, baseLabels);
+                // Fallback to status-driven base reasons (StatusToReasonCodes)
+                values = GetBaseReasonValues(row.Status);
+                labels = GetBaseReasonLabels(row.Status);
             }
+            PXStringListAttribute.SetList<CROpportunityReasonExt.usrResolution>(e.Cache, row, values, labels);
         }
 
         // Clear UsrResolution on stage change and refresh list via RowSelected
@@ -41,9 +45,8 @@ namespace CompiledVersion
             var row = e.Row; if (row == null) return;
             var ext = row.GetExtension<CROpportunityReasonExt>(); if (ext == null) return;
 
-            // Clear both fields to ensure clean state
             e.Cache.SetValueExt<CROpportunityReasonExt.usrResolution>(row, null);
-            e.Cache.SetValueExt<CROpportunity.resolution>(row, null);
+            // Do NOT touch CROpportunity.resolution; it remains hidden and unmanaged.
             e.Cache.RaiseRowSelected(row);
         }
 
@@ -55,18 +58,22 @@ namespace CompiledVersion
             return currentValue;
         }
 
-        // Render-time override for custom list - set on UsrResolution
+        // Render-time override for custom list (or status fallback) on UsrResolution only
         protected virtual void _(Events.FieldSelecting<CROpportunity, CROpportunityReasonExt.usrResolution> e)
         {
             var row = e.Row; if (row == null) return;
-            // Use pending Stage from popup if available
             var stage = GetPendingOrValue(e.Cache, row, nameof(CROpportunity.StageID), row.StageID);
             var list = BuildReasonList(Base, row.ClassID, stage);
-            string[] vals; string[] labels;
-
-            if (list.values.Length >0) { vals = list.values; labels = list.labels; }
-            else { vals = GetBaseReasonValues(row.Status); labels = GetBaseReasonLabels(row.Status); }
-
+            string[] values; string[] labels;
+            if (list.values.Length >0)
+            {
+                values = list.values; labels = list.labels;
+            }
+            else
+            {
+                values = GetBaseReasonValues(row.Status);
+                labels = GetBaseReasonLabels(row.Status);
+            }
             e.ReturnState = PXStringState.CreateInstance(
                          e.ReturnValue,
               2,
@@ -75,35 +82,16 @@ namespace CompiledVersion
               false,
                1,
                null,
-              vals,
+              values,
                     labels,
                   true,
                 null);
         }
 
-        // Provide custom/status-driven list for Resolution field (used in popup/filter dialogs)
+        // Do not override standard Resolution field list; keep it hidden
         protected virtual void _(Events.FieldSelecting<CROpportunity, CROpportunity.resolution> e)
         {
-            var row = e.Row; if (row == null) return;
-            // Use pending Stage from popup if available
-            var stage = GetPendingOrValue(e.Cache, row, nameof(CROpportunity.StageID), row.StageID);
-            var list = BuildReasonList(Base, row.ClassID, stage);
-            string[] codes; string[] labels;
-            if (list.values.Length >0) { codes = list.values; labels = list.labels; }
-            else { codes = GetBaseReasonValues(row.Status); labels = GetBaseReasonLabels(row.Status); }
-            if (codes.Length ==0) return; // leave default state if no mapping
-            e.ReturnState = PXStringState.CreateInstance(
-                         e.ReturnValue,
-              2,
-                    null,
-                  nameof(CROpportunity.Resolution),
-              false,
-               1,
-               null,
-              codes,
-                    labels,
-                  true,
-                null);
+            // Intentionally left blank so default attribute logic applies (field hidden in UI)
         }
 
         // Master mapping of standard reason code -> label (used for base reasons)
@@ -126,6 +114,8 @@ namespace CompiledVersion
         {
             // Status: New -> CR, FL, QL
             { "N", new [] { OpportunityReason.Created, OpportunityReason.ConvertedFromLead, OpportunityReason.Qualified } },
+            // Status: Hold -> CR, FL, QL
+            { "H", new [] { OpportunityReason.InProcess, OpportunityReason.Qualified } },
             // Status: Open -> IP, QL
             { "O", new [] { OpportunityReason.InProcess, OpportunityReason.Qualified } },
             // Status: Won -> TH, RL, PR, OT, OP

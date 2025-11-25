@@ -36,7 +36,7 @@ namespace CompiledVersion.Graphs
             if (line == null || !POLineType.IsDropShip(line.LineType))
                 return null;
 
-            return STDropShipLinks.SelectWindowed(0,1, line.OrderType, line.OrderNbr, line.LineNbr);
+            return STDropShipLinks.SelectWindowed(0, 1, line.OrderType, line.OrderNbr, line.LineNbr);
         }
 
         private void RecalculateRTHHeaderTotals()
@@ -48,15 +48,15 @@ namespace CompiledVersion.Graphs
             var lines = Base.Transactions.Select().RowCast<POLine>()
                 .Where(l => l.GetExtension<POLineExt>()?.UsrPrepaymentLine != true);
 
-            orderExt.UsrRTHDetailTotal = lines.Sum(l => l.CuryLineAmt ??0m);
-            orderExt.UsrRTHLineDiscount = lines.Sum(l => l.CuryDiscAmt ??0m);
+            orderExt.UsrRTHDetailTotal = lines.Sum(l => l.CuryLineAmt ?? 0m);
+            orderExt.UsrRTHLineDiscount = lines.Sum(l => l.CuryDiscAmt ?? 0m);
             // For Doc Discount and Tax, you may need to recalculate or copy as needed. Here, set to0 for now.
             orderExt.UsrRTHDocDiscount = order.CuryDiscTot;
             orderExt.UsrRTHTaxTotal = order.CuryTaxTotal;
-            orderExt.UsrRTHOrderTotal = (orderExt.UsrRTHDetailTotal ??0m)
-                - (orderExt.UsrRTHLineDiscount ??0m)
-                - (orderExt.UsrRTHDocDiscount ??0m)
-                + (orderExt.UsrRTHTaxTotal ??0m);
+            orderExt.UsrRTHOrderTotal = (orderExt.UsrRTHDetailTotal ?? 0m)
+                - (orderExt.UsrRTHLineDiscount ?? 0m)
+                - (orderExt.UsrRTHDocDiscount ?? 0m)
+                + (orderExt.UsrRTHTaxTotal ?? 0m);
 
             Base.Document.Cache.SetValueExt<POOrderExt.usrRTHDetailTotal>(order, orderExt.UsrRTHDetailTotal);
             Base.Document.Cache.SetValueExt<POOrderExt.usrRTHLineDiscount>(order, orderExt.UsrRTHLineDiscount);
@@ -93,7 +93,7 @@ namespace CompiledVersion.Graphs
 
         private static decimal RoundByPrecision(decimal value, int precision)
         {
-            return Math.Round(value, precision <0 ?2 : precision, MidpointRounding.AwayFromZero);
+            return Math.Round(value, precision < 0 ? 2 : precision, MidpointRounding.AwayFromZero);
         }
 
         private decimal RoundCury(POOrder order, decimal value)
@@ -103,12 +103,12 @@ namespace CompiledVersion.Graphs
                 if (order?.CuryInfoID != null)
                 {
                     var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
-                    int prec = ci?.GetCM()?.CuryPrecision ??2;
+                    int prec = ci?.GetCM()?.CuryPrecision ?? 2;
                     return RoundByPrecision(value, prec);
                 }
             }
             catch { }
-            return RoundByPrecision(value,2);
+            return RoundByPrecision(value, 2);
         }
 
         private void EnsureExtCostAndUnitCostFailsafe(PXCache cache, POLine line, bool raiseErrors)
@@ -116,31 +116,31 @@ namespace CompiledVersion.Graphs
             if (line == null) return;
 
             var order = Base.Document.Current;
-            var qty = line.OrderQty ??0m;
-            var unitCost = line.CuryUnitCost ??0m;
-            var ext = line.CuryExtCost ??0m;
+            var qty = line.OrderQty ?? 0m;
+            var unitCost = line.CuryUnitCost ?? 0m;
+            var ext = line.CuryExtCost ?? 0m;
 
             var lineExt = line.GetExtension<POLineExt>();
-            var rthUnit = lineExt?.UsrSWKRTHCost ??0m;
+            var rthUnit = lineExt?.UsrSWKRTHCost ?? 0m;
 
             // If vendor price was used, honor it: do not bump to RTH, only ensure non-negative
             if (lineExt?.UsrUsedVendorPrice == true)
             {
-                if (unitCost <0m)
+                if (unitCost < 0m)
                 {
-                    cache.SetValueExt<POLine.curyUnitCost>(line,0m);
-                    unitCost =0m;
+                    cache.SetValueExt<POLine.curyUnitCost>(line, 0m);
+                    unitCost = 0m;
                 }
             }
             else
             {
                 // Ensure UnitCost is not below RTH Unit Cost
-                if (rthUnit >0m && unitCost < rthUnit)
+                if (rthUnit > 0m && unitCost < rthUnit)
                 {
                     var newUnit = rthUnit;
                     cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, unitCost,
-                    new PXSetPropertyException(line,Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
-                    if (Math.Abs(unitCost - newUnit) >0.0000001m)
+                    new PXSetPropertyException(line, Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
+                    if (Math.Abs(unitCost - newUnit) > 0.0000001m)
                     {
                         cache.SetValueExt<POLine.curyUnitCost>(line, newUnit);
                         unitCost = newUnit;
@@ -150,7 +150,7 @@ namespace CompiledVersion.Graphs
 
             // Failsafe: re-calc Extended Cost from (UnitCost * Qty)
             var expected = RoundCury(order, unitCost * qty);
-            if (Math.Abs(ext - expected) >0.009m || line.CuryExtCost == null)
+            if (Math.Abs(ext - expected) > 0.009m || line.CuryExtCost == null)
             {
                 cache.SetValueExt<POLine.curyExtCost>(line, expected);
                 ext = expected;
@@ -159,12 +159,12 @@ namespace CompiledVersion.Graphs
             // Enforce RTH minimum on ExtCost only if vendor price was NOT used
             if (lineExt?.UsrUsedVendorPrice != true)
             {
-                var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ??0m) * qty);
-                if (ext +0.009m < rthMin)
+                var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ?? 0m) * qty);
+                if (ext + 0.009m < rthMin)
                 {
                     var msg = Messages.ExtCostBelowRTH;
                     cache.RaiseExceptionHandling<POLine.curyExtCost>(line, ext,
-                    new PXSetPropertyException(line,msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
+                    new PXSetPropertyException(line, msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
                     if (raiseErrors)
                     {
                         throw new PXSetPropertyException(line, msg);
@@ -207,7 +207,7 @@ namespace CompiledVersion.Graphs
             var poLineExt = e.Row.GetExtension<POLineExt>();
             InventoryItem item = InventoryItem.PK.Find(Base, e.Row.InventoryID);
             InventoryItemExt itemExt = item.GetExtension<InventoryItemExt>();
-            poLineExt.UsrSWKRTHCost = (itemExt?.UsrSWKRTHCost ??0m);
+            poLineExt.UsrSWKRTHCost = (itemExt?.UsrSWKRTHCost ?? 0m);
         }
         protected virtual void POLine_CuryUnitCost_FieldDefaulting(PXCache sender, PXFieldDefaultingEventArgs e)
         {
@@ -239,7 +239,25 @@ namespace CompiledVersion.Graphs
                 }
             }
 
-            // ii) RTH Cost from SO line or Item
+            // ii) SPC Cost (from linked SO line if any)
+            decimal? spc = null;
+            DropShipLink ds = GetDropShipLink(line);
+            if (ds != null)
+            {
+                SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>.Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
+                if (soLine != null)
+                    spc = soLine.GetExtension<CompiledVersion.DAC.SOLineExt>()?.UsrSWKSPCCost;
+            }
+            if (spc.HasValue && spc.Value >0m)
+            {
+                e.NewValue = spc.Value;
+                e.Cancel = true;
+                // Treat SPC like vendor price for enforcement bypass
+                lineExt.UsrUsedVendorPrice = true;
+                return;
+            }
+
+            // iii) RTH Cost from SO line or Item
             decimal? rth = lineExt?.UsrSWKRTHCost;
             if (!rth.HasValue || rth.Value <=0m)
             {
@@ -250,22 +268,6 @@ namespace CompiledVersion.Graphs
             if (rth.HasValue && rth.Value >0m)
             {
                 e.NewValue = rth.Value;
-                e.Cancel = true;
-                return;
-            }
-
-            // iii) SPC Cost (from linked SO line if any)
-            decimal? spc = null;
-            DropShipLink ds = GetDropShipLink(line);
-            if (ds != null)
-            {
-                SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>> >.Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
-                if (soLine != null)
-                    spc = soLine.GetExtension<CompiledVersion.DAC.SOLineExt>()?.UsrSWKSPCCost;
-            }
-            if (spc.HasValue && spc.Value >0m)
-            {
-                e.NewValue = spc.Value;
                 e.Cancel = true;
                 return;
             }
@@ -286,13 +288,13 @@ namespace CompiledVersion.Graphs
             // If vendor price was used, allow unit cost as-is (still clamp to >=0)
             if (lineExt.UsrUsedVendorPrice == true)
             {
-                if (e.NewValue is decimal v && v <0m)
-                    e.NewValue =0m;
+                if (e.NewValue is decimal v && v < 0m)
+                    e.NewValue = 0m;
                 return;
             }
 
-            var rth = lineExt.UsrSWKRTHCost ??0m;
-            if (rth >0m && e.NewValue is decimal newUC && newUC < rth)
+            var rth = lineExt.UsrSWKRTHCost ?? 0m;
+            if (rth > 0m && e.NewValue is decimal newUC && newUC < rth)
             {
                 e.NewValue = rth;
                 e.Cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, newUC,
@@ -321,14 +323,14 @@ namespace CompiledVersion.Graphs
 
             var line = (POLine)e.Row;
             var order = Base.Document.Current;
-            var qty = line.OrderQty ??0m;
-            var unitCost = line.CuryUnitCost ??0m;
+            var qty = line.OrderQty ?? 0m;
+            var unitCost = line.CuryUnitCost ?? 0m;
 
             var expected = RoundCury(order, unitCost * qty);
-            if (!(e.NewValue is decimal newExt)) newExt =0m;
+            if (!(e.NewValue is decimal newExt)) newExt = 0m;
 
             // If new ext cost deviates from expected, snap back to expected
-            if (Math.Abs(newExt - expected) >0.009m)
+            if (Math.Abs(newExt - expected) > 0.009m)
             {
                 e.NewValue = expected;
                 e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
@@ -339,9 +341,9 @@ namespace CompiledVersion.Graphs
             var lineExt = line.GetExtension<POLineExt>();
             if (lineExt?.UsrUsedVendorPrice != true)
             {
-                var rthUnit = lineExt?.UsrSWKRTHCost ??0m;
+                var rthUnit = lineExt?.UsrSWKRTHCost ?? 0m;
                 var min = RoundCury(order, rthUnit * qty);
-                if (newExt +0.009m < min)
+                if (newExt + 0.009m < min)
                 {
                     e.NewValue = min;
                     e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
@@ -398,115 +400,128 @@ namespace CompiledVersion.Graphs
             return soLine != null && soOrder != null;
         }
 
-        public delegate void PostPersistDelegate();
-        [PXOverride]
-        public void PostPersist(PostPersistDelegate baseMethod)
-        {
-            baseMethod();
-            if (Base.Accessinfo.ScreenID == "PO.30.10.00") return;
-            if (_postPersistSaveInProgress)
-                return;
+        //public delegate Boolean PrePersistDelegate();
+        //[PXOverride]
+        //public Boolean PrePersist(PrePersistDelegate baseMethod)
+        //{
+        //    // Call base first to ensure proper state
+        //    var result = baseMethod();
 
-            POOrder order = Base.CurrentDocument.Current;
-            if (order == null)
-                return;
+        //    // Only copy notes after successful PrePersist validation and when not on PO entry screen
+        //    if (result && Base.Accessinfo.ScreenID != "PO.30.10.00")
+        //    {
+        //        GetNotes();
+        //    }
 
-            // Read setup once
-            sosetup.Current = sosetup.Select();
-            SOSetupExt setupExt = sosetup.Current?.GetExtension<SOSetupExt>();
-            if (setupExt == null)
-                return;
+        //    return result;
+        //}
 
-            PXCache orderCache = Base.Caches[typeof(POOrder)];
-            PXCache lineCache = Base.Caches[typeof(POLine)];
-            PXCache soOrderCache = Base.Caches[typeof(SOOrder)];
-            PXCache soLineCache = Base.Caches[typeof(SOLine)];
+        //public void GetNotes()
+        //{
+        //    // Prevent recursive saves
+        //    if (_postPersistSaveInProgress)
+        //        return;
 
-            bool copiedAnything = false;
-            bool headerCopiedThisSession = false;
+        //    POOrder order = Base.CurrentDocument.Current;
+        //    if (order == null)
+        //        return;
 
-            // Ensure NoteID exists for header before any copy
-            PXNoteAttribute.GetNoteID<POOrder.noteID>(orderCache, order);
+        //    // Read setup once
+        //    sosetup.Current = sosetup.Select();
+        //    SOSetupExt setupExt = sosetup.Current?.GetExtension<SOSetupExt>();
+        //    if (setupExt == null)
+        //        return;
 
-            // Process all lines available (retain current line-level logic)
-            var allLines = PXSelect<POLine,
-                Where<POLine.orderType, Equal<Required<POLine.orderType>>,
-                  And<POLine.orderNbr, Equal<Required<POLine.orderNbr>>>>>.Select(Base, order.OrderType, order.OrderNbr).RowCast<POLine>();
+        //    PXCache orderCache = Base.Caches[typeof(POOrder)];
+        //    PXCache lineCache = Base.Caches[typeof(POLine)];
+        //    PXCache soOrderCache = Base.Caches[typeof(SOOrder)];
+        //    PXCache soLineCache = Base.Caches[typeof(SOLine)];
 
-            foreach (POLine line in allLines)
-            {
-                // Ensure destination NoteID exists for line before any copy
-                PXNoteAttribute.GetNoteID<POLine.noteID>(lineCache, line);
+        //    bool copiedAnything = false;
+        //    bool headerCopiedThisSession = false;
 
-                SOLine soLine;
-                SOOrder soOrder;
-                bool hasSO = TryGetLinkedSOLine(line, out soLine, out soOrder);
-                if (!hasSO || soOrder == null)
-                    continue;
+        //    // Ensure NoteID exists for header before any copy
+        //    PXNoteAttribute.GetNoteID<POOrder.noteID>(orderCache, order);
 
-                // Copy header note and attachments once, as per old logic
-                if (!headerCopiedThisSession)
-                {
-                    if (setupExt.UsrCopyHeaderNotesToPO == true)
-                    {
-                        string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrder);
-                        if(!string.IsNullOrEmpty(noteText))
-                        {
-                            PXNoteAttribute.SetNote(orderCache, order, noteText);
-                            ForceCopyHeaderNoteWithPXDatabase(order, soOrder, orderCache, soOrderCache);
-                            copiedAnything = true;
-                        }
-                    }
+        //    // Process all lines available (retain current line-level logic)
+        //    var allLines = PXSelect<POLine,
+        //              Where<POLine.orderType, Equal<Required<POLine.orderType>>,
+        //    And<POLine.orderNbr, Equal<Required<POLine.orderNbr>>>>>.Select(Base, order.OrderType, order.OrderNbr).RowCast<POLine>();
 
-                    if (setupExt.UsrCopyHeaderAttachmentsToPO == true)
-                    {
-                        // Copy both notes and files to ensure attachments are moved, as in old code
-                        PXNoteAttribute.CopyNoteAndFiles(soOrderCache, soOrder, orderCache, order, true, true);
-                        orderCache.Update(order);
-                        copiedAnything = true;
-                    }
+        //    foreach (POLine line in allLines)
+        //    {
+        //        // Ensure destination NoteID exists for line before any copy
+        //        PXNoteAttribute.GetNoteID<POLine.noteID>(lineCache, line);
 
-                    headerCopiedThisSession = true;
-                }
+        //        SOLine soLine;
+        //        SOOrder soOrder;
+        //        bool hasSO = TryGetLinkedSOLine(line, out soLine, out soOrder);
+        //        if (!hasSO || soOrder == null)
+        //            continue;
 
-                // Retain current logic for line notes
-                if (setupExt.UsrCopyLineNotesToPO == true)
-                {
-                    string destNote = PXNoteAttribute.GetNote(lineCache, line);
-                    if (string.IsNullOrWhiteSpace(destNote))
-                    {
-                        PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, true, false);
-                        lineCache.Update(line);
-                        copiedAnything = true;
-                    }
-                }
+        //        // Copy header note and attachments once, as per old logic
+        //        if (!headerCopiedThisSession)
+        //        {
+        //            if (setupExt.UsrCopyHeaderNotesToPO == true)
+        //            {
+        //                string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrder);
+        //                if (!string.IsNullOrEmpty(noteText))
+        //                {
+        //                    PXNoteAttribute.SetNote(orderCache, order, noteText);
+        //                    ForceCopyHeaderNoteWithPXDatabase(order, soOrder, orderCache, soOrderCache);
+        //                    copiedAnything = true;
+        //                }
+        //            }
 
-                // Retain current logic for line attachments
-                if (setupExt.UsrCopyLineAttachmentsToPO == true)
-                {
-                    bool lineHasFiles = (PXNoteAttribute.GetFileNotes(lineCache, line)?.Any() ?? false);
-                    if (!lineHasFiles)
-                    {
-                        PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, false, true);
-                        lineCache.Update(line);
-                        copiedAnything = true;
-                    }
-                }
-            }
+        //            if (setupExt.UsrCopyHeaderAttachmentsToPO == true)
+        //            {
+        //                // Copy both notes and files to ensure attachments are moved, as in old code
+        //                PXNoteAttribute.CopyNoteAndFiles(soOrderCache, soOrder, orderCache, order, true, true);
+        //                orderCache.Update(order);
+        //                copiedAnything = true;
+        //            }
 
-            if (copiedAnything)
-            {
-                _postPersistSaveInProgress = true;
-                try
-                {
-                    Base.Actions.PressSave();
-                }
-                finally
-                {
-                    _postPersistSaveInProgress = false;
-                }
-            }
-        }
+        //            headerCopiedThisSession = true;
+        //        }
+
+        //        // Retain current logic for line notes
+        //        if (setupExt.UsrCopyLineNotesToPO == true)
+        //        {
+        //            string destNote = PXNoteAttribute.GetNote(lineCache, line);
+        //            if (string.IsNullOrWhiteSpace(destNote))
+        //            {
+        //                PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, true, false);
+        //                lineCache.Update(line);
+        //                copiedAnything = true;
+        //            }
+        //        }
+
+        //        // Retain current logic for line attachments
+        //        if (setupExt.UsrCopyLineAttachmentsToPO == true)
+        //        {
+        //            bool lineHasFiles = (PXNoteAttribute.GetFileNotes(lineCache, line)?.Any() ?? false);
+        //            if (!lineHasFiles)
+        //            {
+        //                PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, false, true);
+        //                lineCache.Update(line);
+        //                copiedAnything = true;
+        //            }
+        //        }
+        //    }
+
+        //    if (copiedAnything)
+        //    {
+        //        _postPersistSaveInProgress = true;
+        //        try
+        //        {
+        //            Base.Caches[typeof(POOrder)].Persist(PXDBOperation.Update);
+        //        }
+        //        finally
+        //        {
+        //            _postPersistSaveInProgress = false;
+        //        }
+        //    }
+        //}
 
         private SOOrder GetSourceSOOrder(POOrder order)
         {

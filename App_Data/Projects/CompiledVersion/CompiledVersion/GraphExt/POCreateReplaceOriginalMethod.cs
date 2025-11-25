@@ -14,6 +14,9 @@ using System;
 using System.Collections.Generic;
 using static PX.Objects.PO.POOrderEntry;
 using CommonServiceLocator;
+using PX.Objects.Extensions.MultiCurrency;
+using PX.Objects.Common.DAC;
+using System.Linq;
 
 namespace CompiledVersion.Graphs
 {
@@ -156,6 +159,17 @@ namespace CompiledVersion.Graphs
                         }
                         scope.Complete();
                     }
+                    // After successful save, copy notes/attachments outside of persistence events to avoid Awaiting Link
+                    try
+                    {
+                        var postGraph = PXGraph.CreateInstance<POOrderEntry>();
+                        postGraph.Document.Current = postGraph.Document.Search<POOrder.orderNbr>(docgraph.Document.Current.OrderNbr, new object[] { docgraph.Document.Current.OrderType });
+                        if (postGraph.Document.Current != null)
+                        {
+                            CopyNotesFromSOToPO(postGraph);
+                        }
+                    }
+                    catch { }
                     if (ErrorLevel == PXErrorLevel.RowInfo)
                     {
                         PXProcessing<POFixedDemand>.SetInfo(PXMessages.LocalizeFormatNoPrefixNLA(Messages.POOrderCreated, docgraph.Document.Current.OrderNbr) + "\r\n" + ErrorText);
@@ -357,6 +371,12 @@ namespace CompiledVersion.Graphs
             SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
                   And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
                                   .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
+            // Fallback: for regular special orders soline (split) can be null; use demand keys
+            if (soLine == null && demand?.OrderType != null && demand?.OrderNbr != null && demand?.LineNbr != null)
+            {
+                soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+                .Select(Base, demand.OrderType, demand.OrderNbr, demand.LineNbr);
+            }
             SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
             POLineExt poLineExt = line?.GetExtension<POLineExt>();
             POOrderExt poOrderExt = docgraph?.CurrentDocument?.Current?.GetExtension<POOrderExt>();
@@ -439,55 +459,138 @@ namespace CompiledVersion.Graphs
             #endregion
 
             var result = replanType;//baseMethod(line, docgraph, demand, soline, ref ErrorLevel, ref ErrorText);
-            //POLineExt poLineExt = line?.GetExtension<POLineExt>();
-            var docGraphExt = docgraph?.GetExtension<POOrderEntry_Extension>();
-            if (docGraphExt != null)
-                docGraphExt.skipCostDefaulting = true;
+            // Ensure Unit Cost defaulting is handled only in POLine_CuryUnitCost_FieldDefaulting
+            // Do not toggle skipCostDefaulting here.
 
             // this only runs when the plantype is dropship
             // Set Shipping Instructions from SO Order to PO Order
             if (demand.PlanDate != null && demand.PlanType == INPlanConstants.Plan6D)
                 docgraph?.CurrentDocument.Cache.SetValueExt<POOrderExt.usrShippingInstructions>(docgraph.CurrentDocument.Current, soOrderExt?.UsrShippingInstructions);
-            // Find the related SO Line
-            //SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-            // And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-            // .Select(Base, soline?.OrderType, soline?.OrderNbr, soline?.LineNbr);
 
-            //SOLineExt soLineExt = soLine?.GetExtension<SOLineExt>();
-
-            // Overwrite PO Line Unit Cost if SOLine.usrSWKSPCCost has value
-            if (soLine != null)
+            // Maintain existing behavior for SPC Code & Ext Cost population (not unit cost)
+            try
             {
-                if (soLineExt != null && (soLineExt?.UsrSWKSPCCost ??0m) >0m)
+                POLineExt lineExt = line?.GetExtension<POLineExt>();
+                bool assignedCost = false;
+                if (lineExt != null) lineExt.UsrUsedVendorPrice = false;
+
+                Func<decimal, decimal> round = v =>
                 {
-                    //line.CuryUnitCost = soLineExt.UsrSWKSPCCost;
-                    docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLineExt?.UsrSWKSPCCost);
-                }
-                else
+                    int prec = 2;
+                    try
+                    {
+                        var ci = docgraph.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(docgraph.Document.Current?.CuryInfoID);
+                        prec = ci?.GetCM()?.CuryPrecision ?? 2;
+                    }
+                    catch { }
+                    return Math.Round(v, prec, MidpointRounding.AwayFromZero);
+                };
+
+                // Priority i: SPC Cost from SO line (highest, override all if >0)
+                decimal? spcCostFirst = soLineExt?.UsrSWKSPCCost;
+                if (spcCostFirst.HasValue && spcCostFirst.Value >0m)
                 {
-                    //line.CuryUnitCost = demand.EffPrice;
-                    docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, soLine?.CuryUnitCost);
-                    //docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, demand.EffPrice);
+                    docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(spcCostFirst.Value));
+                    line.CuryUnitCost = round(spcCostFirst.Value);
+                    if (lineExt != null) lineExt.UsrUsedVendorPrice = true; // treat as protected from RTH bump
+                    assignedCost = true;
                 }
 
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyExtCost>(line, soLine?.CuryExtCost);
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyLineAmt>(line, soLine?.CuryExtCost);
+                // Priority ii: Active Vendor Price (next if SPC not applied)
+                if (!assignedCost)
+                {
+                    decimal? vendorPrice = null;
+                    if (soOrder != null && line.InventoryID != null && line.UOM != null && docgraph.Document.Current?.VendorID != null)
+                    {
+                        var ci = docgraph.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(docgraph.Document.Current.CuryInfoID);
+                        vendorPrice = APVendorPriceMaint.CalculateUnitCost(
+                            docgraph.Transactions.Cache,
+                            docgraph.Document.Current.VendorID,
+                            docgraph.Document.Current.VendorLocationID,
+                            line.InventoryID,
+                            line.SiteID,
+                            ci?.GetCM(),
+                            line.UOM,
+                            line.OrderQty,
+                            docgraph.Document.Current.OrderDate ?? docgraph.Accessinfo.BusinessDate.GetValueOrDefault(),
+                            line.CuryUnitCost);
+                    }
+                    if (vendorPrice.HasValue && vendorPrice.Value >0m)
+                    {
+                        docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(vendorPrice.Value));
+                        line.CuryUnitCost = round(vendorPrice.Value);
+                        if (lineExt != null) lineExt.UsrUsedVendorPrice = true;
+                        assignedCost = true;
+                    }
+                }
+
+                // Priority iii: RTH Cost (SO line, then item, then demand) if neither SPC nor Vendor applied
+                if (!assignedCost)
+                {
+                    decimal? rthCost = soLineExt?.UsrSWKRTHCost;
+                    if (!(rthCost >0m)) rthCost = itemExt?.UsrSWKRTHCost;
+                    if (!(rthCost >0m)) rthCost = demandExt?.UsrSWKRTHCost;
+                    if (rthCost >0m)
+                    {
+                        docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(rthCost.Value));
+                        line.CuryUnitCost = round(rthCost.Value);
+                        if (lineExt != null) lineExt.UsrUsedVendorPrice = false;
+                        assignedCost = true;
+                    }
+                }
+
+                // Priority iv: Last Cost fallback (leave as defaulted earlier if still unassigned)
+
+                // Failsafe: ensure non-negative unit cost
+                if ((line.CuryUnitCost ?? 0m) < 0m)
+                {
+                    docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, 0m);
+                    line.CuryUnitCost = 0m;
+                }
+
+                // Recalculate Ext Cost from formula (Unit * Qty)
+                decimal qty = line.OrderQty ?? 0m;
+                decimal unit = line.CuryUnitCost ?? 0m;
+                decimal expectedExt = round(unit * qty);
+                decimal currentExt = line.CuryExtCost ?? 0m;
+                if (Math.Abs(currentExt - expectedExt) > 0.009m || line.CuryExtCost == null)
+                {
+                    docgraph.Transactions.Cache.SetValueExt<POLine.curyExtCost>(line, expectedExt);
+                    docgraph.Transactions.Cache.SetValueExt<POLine.curyLineAmt>(line, expectedExt);
+                }
+
+                // Enforce RTH minimum when vendor/SPC not used
+                if (lineExt != null && lineExt.UsrUsedVendorPrice != true)
+                {
+                    decimal rthUnit = soLineExt?.UsrSWKRTHCost ?? itemExt?.UsrSWKRTHCost ?? demandExt?.UsrSWKRTHCost ?? 0m;
+                    if (rthUnit > 0m)
+                    {
+                        decimal minExt = round(rthUnit * qty);
+                        decimal newExt = line.CuryExtCost ?? 0m;
+                        if (newExt + 0.009m < minExt)
+                        {
+                            // Raise warning and bump
+                            docgraph.Transactions.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
+                                new PXSetPropertyException(POCreateReplaceOriginalMethod.Messages.POOrderCreated, PXErrorLevel.Warning, docgraph.Document.Current?.OrderNbr));
+                            docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(rthUnit));
+                            line.CuryUnitCost = round(rthUnit);
+                            docgraph.Transactions.Cache.SetValueExt<POLine.curyExtCost>(line, minExt);
+                            docgraph.Transactions.Cache.SetValueExt<POLine.curyLineAmt>(line, minExt);
+                        }
+                    }
+                }
+
+                // Ensure SPC Code is set on the PO line
+                if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && lineExt != null)
+                {
+                    docgraph?.Transactions.Cache.SetValueExt<POLineExt.usrSWKSPCCode>(line, soLineExt?.UsrSWKSPCCode);
+                }
             }
-            else
+            catch
             {
-                //line.CuryUnitCost = demand.EffPrice;
-                docgraph?.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, (demandExt.UsrSWKRTHCost ?? demand.EffPrice));
+                // swallow - non-critical mapping
             }
 
-            if (soLineExt != null && soLineExt?.UsrSWKSPCCode != null && poLineExt != null)
-            {
-                //poLineExt.UsrSWKSPCCode = soLineExt.UsrSWKSPCCode;
-                docgraph?.Transactions.Cache.SetValueExt<POLineExt.usrSWKSPCCode>(line, soLineExt?.UsrSWKSPCCode);
-            }
-
-            //-------------
-
-            //return replanType;
             return result;
         }
 
@@ -555,8 +658,133 @@ namespace CompiledVersion.Graphs
             }
         }
 
+        private void CopyNotesFromSOToPO(POOrderEntry graph)
+        {
+            var order = graph.Document.Current;
+            if (order == null) return;
+            SOSetup sosetup = PXSelect<SOSetup>.Select(graph);
+            var setupExt = sosetup?.GetExtension<SOSetupExt>();
+            if (setupExt == null) return;
+            var orderCache = graph.Caches[typeof(POOrder)];
+            var lineCache = graph.Caches[typeof(POLine)];
+            var soOrderCache = graph.Caches[typeof(SOOrder)];
+            var soLineCache = graph.Caches[typeof(SOLine)];
+
+            // Ensure NoteID exists for header
+            PXNoteAttribute.GetNoteID<POOrder.noteID>(orderCache, order);
+            bool headerDone = false;
+
+            foreach (POLine line in PXSelect<POLine, Where<POLine.orderType, Equal<Required<POLine.orderType>>, And<POLine.orderNbr, Equal<Required<POLine.orderNbr>>>>>
+ .Select(graph, order.OrderType, order.OrderNbr).RowCast<POLine>())
+            {
+                PXNoteAttribute.GetNoteID<POLine.noteID>(lineCache, line);
+
+                SOLine soLine; SOOrder soOrder;
+                if (!TryGetLinkedSOLine(graph, line, out soLine, out soOrder) || soOrder == null)
+                    continue;
+
+                // Header notes/attachments once
+                if (!headerDone)
+                {
+                    if (setupExt.UsrCopyHeaderNotesToPO == true)
+                    {
+                        string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrder);
+                        if (!string.IsNullOrEmpty(noteText))
+                        {
+                            PXNoteAttribute.SetNote(orderCache, order, noteText);
+                            orderCache.MarkUpdated(order);
+                        }
+                    }
+                    if (setupExt.UsrCopyHeaderAttachmentsToPO == true)
+                    {
+                        PXNoteAttribute.CopyNoteAndFiles(soOrderCache, soOrder, orderCache, order, true, true);
+                        orderCache.MarkUpdated(order);
+                    }
+                    headerDone = true;
+                }
+
+                // Line notes
+                if (setupExt.UsrCopyLineNotesToPO == true)
+                {
+                    string destNote = PXNoteAttribute.GetNote(lineCache, line);
+                    if (string.IsNullOrWhiteSpace(destNote))
+                    {
+                        PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, true, false);
+                        lineCache.MarkUpdated(line);
+                    }
+                }
+
+                // Line attachments
+                if (setupExt.UsrCopyLineAttachmentsToPO == true)
+                {
+                    bool lineHasFiles = (PXNoteAttribute.GetFileNotes(lineCache, line)?.Any() ?? false);
+                    if (!lineHasFiles)
+                    {
+                        PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, false, true);
+                        lineCache.MarkUpdated(line);
+                    }
+                }
+            }
+
+            // Persist via normal save to ensure proper events run
+            try
+            {
+                graph.Actions.PressSave();
+            }
+            catch
+            {
+                // fallback direct persist if PressSave blocked
+                orderCache.Persist(PXDBOperation.Update);
+                lineCache.Persist(PXDBOperation.Update);
+            }
+        }
+
+        private bool TryGetLinkedSOLine(POOrderEntry graph, POLine poLine, out SOLine soLine, out SOOrder soOrder)
+        {
+            soLine = null; soOrder = null;
+            if (poLine == null) return false;
+            if (POLineType.IsDropShip(poLine.LineType))
+            {
+                DropShipLink ds = PXSelect<DropShipLink,
+                Where<DropShipLink.pOOrderType, Equal<Required<DropShipLink.pOOrderType>>,
+                And<DropShipLink.pOOrderNbr, Equal<Required<DropShipLink.pOOrderNbr>>,
+                And<DropShipLink.pOLineNbr, Equal<Required<DropShipLink.pOLineNbr>>>>>>
+                .Select(graph, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
+                if (ds != null)
+                {
+                    soLine = PXSelect<SOLine,
+                    Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+                    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
+                    And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+                    .Select(graph, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
+                    if (soLine != null)
+                        soOrder = PXSelect<SOOrder,
+                        Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
+                        And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>.Select(graph, soLine.OrderType, soLine.OrderNbr);
+                }
+            }
+            if (soLine == null)
+            {
+                PXResult<SOLine, SOLineSplit> soRes = (PXResult<SOLine, SOLineSplit>)PXSelectJoin<SOLine, InnerJoin<SOLineSplit,
+                On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+                And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+                And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+                Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
+                And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
+                And<SOLineSplit.pOLineNbr, Equal<Required<SOLineSplit.pOLineNbr>>>>>>
+                .Select(graph, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
+                if (soRes != null)
+                {
+                    soLine = soRes;
+                    if (soLine != null)
+                    {
+                        soOrder = PXSelect<SOOrder, Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>, And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>.Select(graph, soLine.OrderType, soLine.OrderNbr);
+                    }
+                }
+            }
+            return soLine != null && soOrder != null;
+        }
 
         #endregion
     }
-
 }

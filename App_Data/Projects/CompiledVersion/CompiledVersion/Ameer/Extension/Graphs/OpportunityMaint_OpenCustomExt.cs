@@ -15,6 +15,16 @@ namespace CompiledVersion
     {
         public static bool IsActive() => false;
 
+        // Tracks the intended resulting status during popup rendering so the Reason list
+        // can be based on the post-action status. Only used for the popup logic.
+        private string _pendingPopupStatus;
+
+        private const string StatusNew = "N";
+        private const string StatusHold = "H";
+        private const string StatusOpen = "O";
+        private const string StatusWon = "W";
+        private const string StatusLost = "L";
+
         #region Data View - Filter
 
         /// <summary>
@@ -76,17 +86,17 @@ namespace CompiledVersion
                  Where<CROpportunityClassProbability.classID, Equal<Required<CROpportunity.classID>>>>.Select(Base, opp.ClassID);
 
             var stageCount = stages.Count;
-            if (stageCount == 0)
+            if (stageCount ==0)
             {
-                e.ReturnState = PXStringState.CreateInstance(e.ReturnValue, 2, null,
-       nameof(OpportunityStatusFilter.FilterStage), false, 1, null, null, null, true, null);
+                e.ReturnState = PXStringState.CreateInstance(e.ReturnValue,2, null,
+       nameof(OpportunityStatusFilter.FilterStage), false,1, null, null, null, true, null);
                 return;
             }
 
             string[] values = new string[stageCount];
             string[] labels = new string[stageCount];
 
-            int i = 0;
+            int i =0;
             foreach (PXResult<CROpportunityClassProbability, CROpportunityProbability> result in stages)
             {
                 var stage = (CROpportunityProbability)result;
@@ -95,8 +105,8 @@ namespace CompiledVersion
                 i++;
             }
 
-            e.ReturnState = PXStringState.CreateInstance(e.ReturnValue, 2, null,
-     nameof(OpportunityStatusFilter.FilterStage), false, 1, null, values, labels, true, null);
+            e.ReturnState = PXStringState.CreateInstance(e.ReturnValue,2, null,
+     nameof(OpportunityStatusFilter.FilterStage), false,1, null, values, labels, true, null);
         }
 
         /// <summary>
@@ -111,11 +121,16 @@ namespace CompiledVersion
 
             string stage = filt.FilterStage ?? opp.StageID;
             var list = OpportunityMaint_StageReasonExt.BuildReasonList(Base, opp.ClassID, stage);
-            string[] values = list.values.Length > 0 ? list.values : OpportunityMaint_StageReasonExt.GetBaseReasonValues(opp.Status);
-            string[] labels = list.values.Length > 0 ? list.labels : OpportunityMaint_StageReasonExt.GetBaseReasonLabels(opp.Status);
 
-            e.ReturnState = PXStringState.CreateInstance(e.ReturnValue, 10, null,
-     nameof(OpportunityStatusFilter.FilterResolution), false, 1, null, values, labels, true, null);
+            // For popup only: when no class-stage list, fallback to base reasons tied to the
+            // status that will result AFTER the clicked action is performed.
+            string statusForReasons = !string.IsNullOrEmpty(_pendingPopupStatus) ? _pendingPopupStatus : opp.Status;
+
+            string[] values = list.values.Length >0 ? list.values : OpportunityMaint_StageReasonExt.GetBaseReasonValues(statusForReasons);
+            string[] labels = list.values.Length >0 ? list.labels : OpportunityMaint_StageReasonExt.GetBaseReasonLabels(statusForReasons);
+
+            e.ReturnState = PXStringState.CreateInstance(e.ReturnValue,10, null,
+     nameof(OpportunityStatusFilter.FilterResolution), false,1, null, values, labels, true, null);
         }
 
         /// <summary>
@@ -146,7 +161,7 @@ namespace CompiledVersion
         [PXUIField(DisplayName = "Open", MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Select)]
         protected IEnumerable openFromNewCustom(PXAdapter adapter)
         {
-            ExecuteStatusChange(() => Base.OpenFromNew.PressImpl(internalCall: true));
+            ExecuteStatusChange(() => Base.OpenFromNew.PressImpl(internalCall: true), StatusOpen);
             return adapter.Get();
         }
 
@@ -165,7 +180,7 @@ namespace CompiledVersion
         [PXUIField(DisplayName = "Open", MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Select)]
         protected IEnumerable openCustom(PXAdapter adapter)
         {
-            ExecuteStatusChange(() => Base.Open.PressImpl(internalCall: true));
+            ExecuteStatusChange(() => Base.Open.PressImpl(internalCall: true), StatusOpen);
             return adapter.Get();
         }
 
@@ -184,7 +199,7 @@ namespace CompiledVersion
         [PXUIField(DisplayName = "Close as Won", MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Select)]
         protected IEnumerable closeAsWonCustom(PXAdapter adapter)
         {
-            ExecuteStatusChange(() => Base.CloseAsWon.PressImpl(internalCall: true));
+            ExecuteStatusChange(() => Base.CloseAsWon.PressImpl(internalCall: true), StatusWon);
             return adapter.Get();
         }
 
@@ -203,7 +218,7 @@ namespace CompiledVersion
         [PXUIField(DisplayName = "Close as Lost", MapEnableRights = PXCacheRights.Update, MapViewRights = PXCacheRights.Select)]
         protected IEnumerable closeAsLostCustom(PXAdapter adapter)
         {
-            ExecuteStatusChange(() => Base.CloseAsLost.PressImpl(internalCall: true));
+            ExecuteStatusChange(() => Base.CloseAsLost.PressImpl(internalCall: true), StatusLost);
             return adapter.Get();
         }
 
@@ -218,58 +233,70 @@ namespace CompiledVersion
         /// Shows the Stage/Reason popup, updates the opportunity, and executes the workflow action.
         /// </summary>
         /// <param name="workflowAction">The underlying workflow action to execute after user confirms</param>
-        private void ExecuteStatusChange(Action workflowAction)
+        /// <param name="targetStatusForPopup">The status that will result after the action (used only to build popup reason list)</param>
+        private void ExecuteStatusChange(Action workflowAction, string targetStatusForPopup)
         {
             var row = Base.Opportunity.Current;
             if (row == null)
                 return;
 
-            // Initialize filter only when opening the dialog
-            if (StatusChangeFilter.View.Answer == WebDialogResult.None)
-            {
-                var ext = row.GetExtension<CROpportunityReasonExt>();
-                string currentResolution = ext?.UsrResolution;
+            // Set the pending status for popup rendering
+            _pendingPopupStatus = targetStatusForPopup;
 
-                StatusChangeFilter.Cache.Clear();
-                StatusChangeFilter.Cache.Insert(new OpportunityStatusFilter
+            try
+            {
+                // Initialize filter only when opening the dialog
+                if (StatusChangeFilter.View.Answer == WebDialogResult.None)
                 {
-                    FilterStage = row.StageID,
-                    FilterResolution = currentResolution
-                });
-            }
+                    var ext = row.GetExtension<CROpportunityReasonExt>();
+                    string currentResolution = ext?.UsrResolution;
 
-            if (StatusChangeFilter.AskExt() != WebDialogResult.OK)
-                return;
-
-            var filter = StatusChangeFilter.Current;
-
-            // Execute the underlying workflow action first
-            workflowAction();
-
-            // Refresh current after workflow
-            row = Base.Opportunity.Current;
-            if (row == null)
-                return;
-
-            // Apply user-selected values after workflow transition
-            if (!string.IsNullOrEmpty(filter?.FilterStage) && filter.FilterStage != row.StageID)
-            {
-                Base.Opportunity.Cache.SetValueExt<CROpportunity.stageID>(row, filter.FilterStage);
-            }
-
-            if (!string.IsNullOrEmpty(filter?.FilterResolution))
-            {
-                var oppExt = row.GetExtension<CROpportunityReasonExt>();
-                if (oppExt != null)
-                {
-                    Base.Opportunity.Cache.SetValueExt<CROpportunityReasonExt.usrResolution>(row, filter.FilterResolution);
-                    Base.Opportunity.Cache.SetValueExt<CROpportunity.resolution>(row, filter.FilterResolution);
+                    StatusChangeFilter.Cache.Clear();
+                    StatusChangeFilter.Cache.Insert(new OpportunityStatusFilter
+                    {
+                        FilterStage = row.StageID,
+                        FilterResolution = currentResolution
+                    });
                 }
-            }
 
-            // Persist and reset dialog state for next use
-            Base.Actions.PressSave();
-            StatusChangeFilter.View.Answer = WebDialogResult.None;
+                if (StatusChangeFilter.AskExt() != WebDialogResult.OK)
+                    return;
+
+                var filter = StatusChangeFilter.Current;
+
+                // Execute the underlying workflow action first
+                workflowAction();
+
+                // Refresh current after workflow
+                row = Base.Opportunity.Current;
+                if (row == null)
+                    return;
+
+                // Apply user-selected values after workflow transition
+                if (!string.IsNullOrEmpty(filter?.FilterStage) && filter.FilterStage != row.StageID)
+                {
+                    Base.Opportunity.Cache.SetValueExt<CROpportunity.stageID>(row, filter.FilterStage);
+                }
+
+                if (!string.IsNullOrEmpty(filter?.FilterResolution))
+                {
+                    var oppExt = row.GetExtension<CROpportunityReasonExt>();
+                    if (oppExt != null)
+                    {
+                        Base.Opportunity.Cache.SetValueExt<CROpportunityReasonExt.usrResolution>(row, filter.FilterResolution);
+                        Base.Opportunity.Cache.SetValueExt<CROpportunity.resolution>(row, filter.FilterResolution);
+                    }
+                }
+
+                // Persist and reset dialog state for next use
+                Base.Actions.PressSave();
+            }
+            finally
+            {
+                // Always clear popup state
+                StatusChangeFilter.View.Answer = WebDialogResult.None;
+                _pendingPopupStatus = null;
+            }
         }
 
         #endregion

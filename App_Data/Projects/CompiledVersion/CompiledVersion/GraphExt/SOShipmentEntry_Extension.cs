@@ -3,7 +3,9 @@ using CompiledVersion.Helpers;
 using PX.Data;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.AR;
+using PX.Objects.CM;
 using PX.Objects.CN.Compliance.PO.CacheExtensions;
+using PX.Objects.CS;
 using PX.Objects.IN;
 using PX.Objects.SO;
 using System;
@@ -107,6 +109,250 @@ namespace CompiledVersion.Graphs
             }
 
         }
+
+        /// <summary>
+        /// Event handler to set INTran costs from SOLine when creating INIssue documents.
+        /// This is triggered by the Update IN button.
+        /// </summary>
+        protected virtual void _(Events.RowInserted<INTran> e)
+        {
+            if (e.Row == null) return;
+
+            INTran tran = e.Row;
+
+            // Only process if this transaction is related to a sales order
+            if (string.IsNullOrEmpty(tran.SOOrderType) || string.IsNullOrEmpty(tran.SOOrderNbr))
+                return;
+
+            // Find the original SOLine to get the cost
+            SOLine soLine = PXSelect<SOLine,
+      Where<SOLine.orderType, Equal<Required<INTran.sOOrderType>>,
+     And<SOLine.orderNbr, Equal<Required<INTran.sOOrderNbr>>,
+    And<SOLine.lineNbr, Equal<Required<INTran.sOOrderLineNbr>>>>>>
+      .Select(Base, tran.SOOrderType, tran.SOOrderNbr, tran.SOOrderLineNbr);
+
+            if (soLine == null) return;
+
+            // Override the costs with values from the sales order line
+            // Map SOLine.CuryUnitCost to INTran.UnitCost
+            if (soLine.CuryUnitCost != null && soLine.CuryUnitCost != 0m)
+            {
+                e.Cache.SetValueExt<INTran.unitCost>(tran, soLine.CuryUnitCost);
+            }
+
+            // Map SOLine.CuryExtCost to INTran.TranCost (Extended Cost)
+            if (soLine.CuryExtCost != null && soLine.CuryExtCost != 0m)
+            {
+                e.Cache.SetValueExt<INTran.tranCost>(tran, soLine.CuryExtCost);
+            }
+        }
+
+        /// <summary>
+        /// Event handler to ensure INTran costs are not recalculated before persisting to database.
+        /// This prevents the system from overwriting costs with inventory costs during save.
+        /// </summary>
+        protected virtual void _(Events.RowPersisting<INTran> e)
+        {
+            if (e.Row == null) return;
+            if (e.Operation != PXDBOperation.Insert && e.Operation != PXDBOperation.Update) return;
+
+            INTran tran = e.Row;
+
+            // Only process if this transaction is related to a sales order
+            if (string.IsNullOrEmpty(tran.SOOrderType) || string.IsNullOrEmpty(tran.SOOrderNbr))
+                return;
+
+            // Find the original SOLine to get the cost
+            SOLine soLine = PXSelect<SOLine,
+           Where<SOLine.orderType, Equal<Required<INTran.sOOrderType>>,
+         And<SOLine.orderNbr, Equal<Required<INTran.sOOrderNbr>>,
+    And<SOLine.lineNbr, Equal<Required<INTran.sOOrderLineNbr>>>>>>
+           .Select(Base, tran.SOOrderType, tran.SOOrderNbr, tran.SOOrderLineNbr);
+
+            if (soLine == null) return;
+
+            // Set the override flag FIRST to prevent recalculation
+            tran.OverrideUnitCost = true;
+
+            // Force the costs to match SOLine values right before saving
+            if (soLine.CuryUnitCost != null && soLine.CuryUnitCost != 0m)
+            {
+                tran.UnitCost = soLine.CuryUnitCost;
+            }
+
+            if (soLine.CuryExtCost != null && soLine.CuryExtCost != 0m)
+            {
+                tran.TranCost = soLine.CuryExtCost;
+            }
+        }
+
+        /// <summary>
+        /// Event handler to override SOShipLine.UnitCost with SOLine.CuryUnitCost before persisting.
+        /// This ensures the shipment line uses the currency-based unit cost from the order.
+        /// </summary>
+        protected virtual void _(Events.RowPersisting<SOShipLine> e)
+        {
+            if (e.Row == null) return;
+            if (e.Operation != PXDBOperation.Insert && e.Operation != PXDBOperation.Update) return;
+
+            SOShipLine shipLine = e.Row;
+
+            // Only process if this shipment line is linked to an order line
+            if (string.IsNullOrEmpty(shipLine.OrigOrderType) || string.IsNullOrEmpty(shipLine.OrigOrderNbr) || shipLine.OrigLineNbr == null)
+                return;
+
+            // Find the original SOLine to get the currency-based costs
+            SOLine soLine = PXSelect<SOLine,
+           Where<SOLine.orderType, Equal<Required<SOShipLine.origOrderType>>,
+        And<SOLine.orderNbr, Equal<Required<SOShipLine.origOrderNbr>>,
+                And<SOLine.lineNbr, Equal<Required<SOShipLine.origLineNbr>>>>>>
+   .Select(Base, shipLine.OrigOrderType, shipLine.OrigOrderNbr, shipLine.OrigLineNbr);
+
+            if (soLine == null) return;
+
+            // Override UnitCost with CuryUnitCost from SOLine
+            if (soLine.CuryUnitCost != null)
+            {
+                shipLine.UnitCost = soLine.CuryUnitCost;
+            }
+
+            // Override ExtCost with CuryExtCost from SOLine (proportional to shipped quantity)
+            if (soLine.CuryExtCost != null && soLine.OrderQty != null && soLine.OrderQty != 0m)
+            {
+                // Calculate proportional cost based on shipped quantity
+                decimal? proportionalExtCost = (shipLine.ShippedQty / soLine.OrderQty) * soLine.CuryExtCost;
+                shipLine.ExtCost = proportionalExtCost;
+            }
+            else if (soLine.CuryUnitCost != null && shipLine.ShippedQty != null)
+            {
+                // Fallback: Calculate ExtCost from UnitCost * ShippedQty
+                shipLine.ExtCost = soLine.CuryUnitCost * shipLine.ShippedQty;
+            }
+        }
+
+        /// <summary>
+        /// Event handler to set default UnitCost from SOLine.CuryUnitCost when shipment line is created.
+        /// </summary>
+        protected virtual void _(Events.FieldDefaulting<SOShipLine, SOShipLine.unitCost> e)
+        {
+            if (e.Row == null) return;
+
+            SOShipLine shipLine = e.Row;
+
+            // Only process if this shipment line is linked to an order line
+            if (string.IsNullOrEmpty(shipLine.OrigOrderType) || string.IsNullOrEmpty(shipLine.OrigOrderNbr) || shipLine.OrigLineNbr == null)
+                return;
+
+            // Find the original SOLine to get the currency-based unit cost
+            SOLine soLine = PXSelect<SOLine,
+                Where<SOLine.orderType, Equal<Required<SOShipLine.origOrderType>>,
+        And<SOLine.orderNbr, Equal<Required<SOShipLine.origOrderNbr>>,
+        And<SOLine.lineNbr, Equal<Required<SOShipLine.origLineNbr>>>>>>
+    .Select(Base, shipLine.OrigOrderType, shipLine.OrigOrderNbr, shipLine.OrigLineNbr);
+
+            if (soLine != null && soLine.CuryUnitCost != null)
+            {
+                e.NewValue = soLine.CuryUnitCost;
+                e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// Ensure SOShipLine inherits cost from SOLine when the line is created (e.g. Create Shipment from Sales Order).
+        /// Keeps SOShipLine cost uniform with SOLine.CuryUnitCost.
+        /// </summary>
+        protected virtual void _(Events.RowInserted<SOShipLine> e)
+        {
+            var shipLine = e.Row; if (shipLine == null) return;
+
+            if (string.IsNullOrEmpty(shipLine.OrigOrderType) || string.IsNullOrEmpty(shipLine.OrigOrderNbr) || shipLine.OrigLineNbr == null)
+                return;
+
+            SOLine soLine = PXSelect<SOLine,
+                Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+                And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
+                And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+            .Select(Base, shipLine.OrigOrderType, shipLine.OrigOrderNbr, shipLine.OrigLineNbr);
+
+            if (soLine?.CuryUnitCost != null && soLine.CuryUnitCost != 0m)
+            {
+                shipLine.UnitCost = soLine.CuryUnitCost;
+                if (shipLine.ShippedQty != null)
+                {
+                    shipLine.ExtCost = (shipLine.UnitCost ?? 0m) * (shipLine.ShippedQty ?? 0m);
+                }
+                Base.Transactions.Update(shipLine);
+            }
+        }
+
+        /// <summary>
+        /// Override GetINTranUnitCost to ensure INTran uses the correct cost from SOLine.CuryUnitCost.
+        /// This method is called during PostShipment (Update IN) to determine the cost for INTran records.
+        /// </summary>
+        public delegate decimal? GetINTranUnitCostDelegate(SOLine soline, SOShipLine line, SOShipLineSplit split);
+        [PXOverride]
+        public virtual decimal? GetINTranUnitCost(SOLine soline, SOShipLine line, SOShipLineSplit split, GetINTranUnitCostDelegate baseMethod)
+        {
+            // Special handling for receipt operations with specific lot/serial numbers
+            if (line.Operation == SOOperation.Receipt && !string.IsNullOrEmpty(line.LotSerialNbr))
+            {
+                var item = InventoryItem.PK.Find(Base, line.InventoryID);
+
+                if (item?.ValMethod == INValMethod.Specific)
+                {
+                    // Query all cost records for this invoice line (without filtering by lot/serial in SQL)
+                    var allCosts = PXSelectJoin<
+          INTranCost,
+           InnerJoin<INTran,
+                  On<INTranCost.FK.Tran>,
+         InnerJoin<ARTran,
+          On<ARTran.tranType, Equal<INTran.aRDocType>,
+             And<ARTran.refNbr, Equal<INTran.aRRefNbr>,
+              And<ARTran.lineNbr, Equal<INTran.aRLineNbr>>>>>>,
+            Where<ARTran.tranType, Equal<Required<ARTran.tranType>>,
+                  And<ARTran.refNbr, Equal<Required<ARTran.refNbr>>,
+                And<ARTran.lineNbr, Equal<Required<ARTran.lineNbr>>>>>>
+            .Select(Base,
+            soline.InvoiceType,
+           soline.InvoiceNbr,
+                 soline.InvoiceLineNbr)
+               .RowCast<INTranCost>()
+            .ToList();
+
+                    // Filter in memory using ordinal string comparison to handle special characters like ®
+                    var matchingCosts = allCosts
+                .Where(c => string.Equals(
+              c.LotSerialNbr,
+         line.LotSerialNbr,
+                StringComparison.Ordinal))
+                         .ToList();
+
+                    if (matchingCosts.Any())
+                    {
+                        decimal? qtySum = matchingCosts.Sum(c => c.Qty);
+                        if (qtySum != null && qtySum != 0m)
+                        {
+                            return INUnitAttribute.ConvertToBase(
+                                  Base.Transactions.Cache,
+                                  line.InventoryID,
+                           line.UOM,
+                            matchingCosts.Sum(c => c.TranCost).Value / qtySum.Value,
+                            INPrecision.UNITCOST);
+                        }
+                    }
+                }
+            }
+
+            // For all other cases, use SOLine.CuryUnitCost if available
+            if (soline != null && soline.CuryUnitCost != null && soline.CuryUnitCost != 0m)
+            {
+                return soline.CuryUnitCost;
+            }
+
+            // Fallback to SOShipLine.UnitCost
+            return line.UnitCost;
+        }
+
         protected void SOShipment_RowSelected(PXCache cache, PXRowSelectedEventArgs e, PXRowSelected InvokeBaseHandler)
         {
             if (InvokeBaseHandler != null)
@@ -199,7 +445,7 @@ namespace CompiledVersion.Graphs
                             PXProcessing<SOShipment>.SetCurrentItem(shipment);
 
                         TryGetNonStockError(shipment.ShipmentNbr, out string errorMessage);
-                        if (errorMessage != null) 
+                        if (errorMessage != null)
                         {
                             if (adapterSlice.MassProcess)
                                 PXProcessing<SOShipment>.SetError(errorMessage);
@@ -329,6 +575,8 @@ namespace CompiledVersion.Graphs
 
             return false;
         }
+
+
 
         private bool CheckItemsForFlaggedNonStockItem(string shipmentNbr)
         {
@@ -480,5 +728,77 @@ namespace CompiledVersion.Graphs
         //    //return results.Count > 0 ? results : shipments;
         //}
         #endregion
+
+        /// <summary>
+        /// Keep SOShipLine.UnitCost in sync with SOLine.CuryUnitCost even if Orig* fields are populated after insert (e.g., Create Shipment flow).
+        /// </summary>
+        protected virtual void _(Events.RowUpdated<SOShipLine> e)
+        {
+            var row = e.Row as SOShipLine; var old = e.OldRow as SOShipLine;
+            if (row == null) return;
+
+            // Only when linked to SO
+            if (string.IsNullOrEmpty(row.OrigOrderType) || string.IsNullOrEmpty(row.OrigOrderNbr) || row.OrigLineNbr == null)
+                return;
+
+            // Avoid unnecessary work if unchanged and already correct
+            bool origJustSet = (old == null) || old.OrigOrderNbr != row.OrigOrderNbr || old.OrigLineNbr != row.OrigLineNbr || old.OrigOrderType != row.OrigOrderType;
+
+            // Always verify and align cost if orig changed or if UnitCost equals inventory cost but differs from SO
+            SOLine soLine = PXSelect<SOLine,
+            Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+            And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
+            And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+            .Select(Base, row.OrigOrderType, row.OrigOrderNbr, row.OrigLineNbr);
+
+            if (soLine == null) return;
+
+            decimal? soCost = soLine.CuryUnitCost;
+            if (soCost == null || soCost == 0m) return;
+
+            if (row.UnitCost != soCost)
+            {
+                row.UnitCost = soCost;
+                if (row.ShippedQty != null)
+                {
+                    row.ExtCost = (row.UnitCost ?? 0m) * (row.ShippedQty ?? 0m);
+                }
+            }
+        }
+
+        public delegate void PostShipmentDelegate(INRegisterEntryBase docgraph, PXResult<SOOrderShipment, SOOrder> sh, DocumentList<INRegister> list, ARInvoice invoice);
+        [PXOverride]
+        public void PostShipment(INRegisterEntryBase docgraph, PXResult<SOOrderShipment, SOOrder> sh, DocumentList<INRegister> list, ARInvoice invoice, PostShipmentDelegate baseMethod)
+        {
+            baseMethod(docgraph, sh, list, invoice);
+            SOOrderShipment soOrderShipment = (SOOrderShipment)sh;
+
+            foreach (INTran item in docgraph.LSSelectDataMember.Select().RowCast<INTran>().Where(r => r.SOOrderNbr == soOrderShipment.OrderNbr && r.SOOrderType == soOrderShipment.OrderType))
+            {
+                //get SOShipLine
+                SOShipLine shipLine = PXSelect<SOShipLine,
+                    Where<SOShipLine.shipmentNbr, Equal<Required<SOShipLine.shipmentNbr>>,
+                    And<SOShipLine.lineNbr, Equal<Required<SOShipLine.lineNbr>>,
+                        And<SOShipLine.shipmentType, Equal<Required<SOShipLine.shipmentType>>>>>>
+                    .Select(Base, item.SOShipmentNbr, item.SOShipmentLineNbr, item.SOShipmentType);
+
+                if (shipLine == null) continue;
+
+                // Use PXDatabase to update INTran directly without triggering cache events
+                PXDatabase.Update<INTran>(
+                     new PXDataFieldAssign<INTran.unitCost>(shipLine.UnitCost),
+                    new PXDataFieldAssign<INTran.tranCost>(shipLine.ExtCost),
+                        new PXDataFieldRestrict<INTran.docType>(item.DocType),
+                      new PXDataFieldRestrict<INTran.refNbr>(item.RefNbr),
+                  new PXDataFieldRestrict<INTran.lineNbr>(item.LineNbr)
+                  );
+
+                // CRITICAL: Set OverrideUnitCost in cache so release process respects the cost
+                //item.OverrideUnitCost = true;
+                //item.UnitCost = shipLine.UnitCost;
+                //item.TranCost = shipLine.ExtCost;
+                //docgraph.LSSelectDataMember.Update(item);
+            }
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace CompiledVersion.Graphs
         public static bool IsActive() => true;
 
         public bool SuppressCodeRequired = false;
+        private bool _isDocumentDeleting; // flag to suppress line renumber when deleting entire order
 
         #region Views
         public SelectFrom<SOCustSalesPeople>.Where<SOCustSalesPeople.orderType.IsEqual<SOOrder.orderType.FromCurrent>
@@ -370,9 +371,9 @@ namespace CompiledVersion.Graphs
 
             var lineExt = e.Row.GetExtension<SOLineExt>();
 
-            // Enable/disable SPC Code based on SPC Cost
+            //Enable / disable SPC Code based on SPC Cost
             PXUIFieldAttribute.SetEnabled<SOLineExt.usrSWKSPCCode>(e.Cache, e.Row,
-                (lineExt?.UsrSWKSPCCost ??0) >0);
+                (lineExt?.UsrSWKSPCCost ?? 0) > 0);
 
             // Manual Cost checkbox is always disabled (read-only)
             PXUIFieldAttribute.SetEnabled<SOLineExt.usrSWKManualCost>(e.Cache, e.Row, false);
@@ -403,8 +404,14 @@ namespace CompiledVersion.Graphs
 
         protected virtual void _(Events.RowDeleted<SOLine> e)
         {
-            // Renumber all lines after a delete
+            if (e.Row == null) return;
+            // Skip renumbering when entire order is being deleted to avoid aggregate validation error.
+            if (_isDocumentDeleting || Base.Document.Cache.GetStatus(Base.Document.Current) == PXEntryStatus.Deleted)
+                return;
+
+            // Renumber all remaining lines after an individual delete
             var lines = Base.Transactions.Select().RowCast<SOLine>()
+                .Where(l => Base.Transactions.Cache.GetStatus(l) != PXEntryStatus.Deleted)
                 .OrderBy(l => l.LineNbr)
                 .ToList();
 
@@ -412,25 +419,21 @@ namespace CompiledVersion.Graphs
             foreach (var line in lines)
             {
                 var ext = PXCache<SOLine>.GetExtension<SOLineExt>(line);
-                if (ext != null)
+                if (ext != null && ext.UsrATAIRTHLineNbr != nbr)
                 {
-                    ext.UsrATAIRTHLineNbr = nbr;
-                    e.Cache.Update(line);
+                    Base.Transactions.Cache.SetValueExt<SOLineExt.usrATAIRTHLineNbr>(line, nbr);
                 }
                 nbr++;
             }
 
-            // Ensure header aggregates update and our custom totals recompute
+            // Update header mirrors & totals
             var order = Base.Document.Current;
             if (order != null)
             {
-                // Update the header so SumCalc aggregates are recalculated
-                order = Base.Document.Update(order);
-                // Recompute our custom summary from the recalculated SOOrder totals
                 RecalculateRthCuryOrderTotal(order);
+                Base.Document.Cache.MarkUpdated(order);
                 Base.Document.View.RequestRefresh();
             }
-
             Base.Transactions.View.RequestRefresh();
         }
         #endregion
@@ -585,7 +588,7 @@ namespace CompiledVersion.Graphs
                 lineExt.UsrSWKManualCost = true;
                 try
                 {
-                    if (!SuppressCodeRequired)
+                    if (!SuppressCodeRequired && !Base.IsCopyPasteContext)
                         e.Cache.RaiseExceptionHandling<SOLineExt.usrSWKSPCCode>(e.Row, lineExt.UsrSWKSPCCode,
                             string.IsNullOrEmpty(lineExt.UsrSWKSPCCode)
                                 ? new PXSetPropertyException(e.Row, Messages.SPCCodeRequired, PXErrorLevel.Error)
