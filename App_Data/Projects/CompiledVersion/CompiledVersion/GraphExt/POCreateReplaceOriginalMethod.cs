@@ -60,6 +60,7 @@ namespace CompiledVersion.Graphs
             list = docgraph.SortPOFixDemandList(list);
             POOrder order = null;
             bool hasErrors = false;
+
             foreach (POFixedDemand demand in list)
             {
                 PXProcessing<POFixedDemand>.SetCurrentItem(demand);
@@ -159,17 +160,7 @@ namespace CompiledVersion.Graphs
                         }
                         scope.Complete();
                     }
-                    // After successful save, copy notes/attachments outside of persistence events to avoid Awaiting Link
-                    try
-                    {
-                        var postGraph = PXGraph.CreateInstance<POOrderEntry>();
-                        postGraph.Document.Current = postGraph.Document.Search<POOrder.orderNbr>(docgraph.Document.Current.OrderNbr, new object[] { docgraph.Document.Current.OrderType });
-                        if (postGraph.Document.Current != null)
-                        {
-                            CopyNotesFromSOToPO(postGraph);
-                        }
-                    }
-                    catch { }
+
                     if (ErrorLevel == PXErrorLevel.RowInfo)
                     {
                         PXProcessing<POFixedDemand>.SetInfo(PXMessages.LocalizeFormatNoPrefixNLA(Messages.POOrderCreated, docgraph.Document.Current.OrderNbr) + "\r\n" + ErrorText);
@@ -191,6 +182,22 @@ namespace CompiledVersion.Graphs
                     hasErrors = true;
                 }
             }
+            // Copy notes/attachments for all created PO orders after main processing is complete
+            foreach (POOrder createdOrder in created)
+            {
+                try
+                {
+                    // Reload the order in a fresh graph to avoid cache conflicts
+                    var noteGraph = PXGraph.CreateInstance<POOrderEntry>();
+                    noteGraph.Document.Current = noteGraph.Document.Search<POOrder.orderNbr>(createdOrder.OrderNbr, new object[] { createdOrder.OrderType });
+                    if (noteGraph.Document.Current != null)
+                    {
+                        CopyNotesFromSOToPO(noteGraph);
+                    }
+                }
+                catch { }
+            }
+
             if (!hasErrors && created.Count == 1)
             {
                 using (new PXTimeStampScope(null))
@@ -488,7 +495,7 @@ namespace CompiledVersion.Graphs
 
                 // Priority i: SPC Cost from SO line (highest, override all if >0)
                 decimal? spcCostFirst = soLineExt?.UsrSWKSPCCost;
-                if (spcCostFirst.HasValue && spcCostFirst.Value >0m)
+                if (spcCostFirst.HasValue && spcCostFirst.Value > 0m)
                 {
                     docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(spcCostFirst.Value));
                     line.CuryUnitCost = round(spcCostFirst.Value);
@@ -515,7 +522,7 @@ namespace CompiledVersion.Graphs
                             docgraph.Document.Current.OrderDate ?? docgraph.Accessinfo.BusinessDate.GetValueOrDefault(),
                             line.CuryUnitCost);
                     }
-                    if (vendorPrice.HasValue && vendorPrice.Value >0m)
+                    if (vendorPrice.HasValue && vendorPrice.Value > 0m)
                     {
                         docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(vendorPrice.Value));
                         line.CuryUnitCost = round(vendorPrice.Value);
@@ -528,9 +535,9 @@ namespace CompiledVersion.Graphs
                 if (!assignedCost)
                 {
                     decimal? rthCost = soLineExt?.UsrSWKRTHCost;
-                    if (!(rthCost >0m)) rthCost = itemExt?.UsrSWKRTHCost;
-                    if (!(rthCost >0m)) rthCost = demandExt?.UsrSWKRTHCost;
-                    if (rthCost >0m)
+                    if (!(rthCost > 0m)) rthCost = itemExt?.UsrSWKRTHCost;
+                    if (!(rthCost > 0m)) rthCost = demandExt?.UsrSWKRTHCost;
+                    if (rthCost > 0m)
                     {
                         docgraph.Transactions.Cache.SetValueExt<POLine.curyUnitCost>(line, round(rthCost.Value));
                         line.CuryUnitCost = round(rthCost.Value);
@@ -672,10 +679,13 @@ namespace CompiledVersion.Graphs
 
             // Ensure NoteID exists for header
             PXNoteAttribute.GetNoteID<POOrder.noteID>(orderCache, order);
-            bool headerDone = false;
+
+            // Collect all SO sources for header notes (group by SO Order)
+            var soOrdersForHeader = new Dictionary<string, SOOrder>(); // key: OrderType|OrderNbr
+            var soLinesForPOLines = new Dictionary<int?, List<(SOLine soLine, SOOrder soOrder)>>(); // key: POLine.LineNbr
 
             foreach (POLine line in PXSelect<POLine, Where<POLine.orderType, Equal<Required<POLine.orderType>>, And<POLine.orderNbr, Equal<Required<POLine.orderNbr>>>>>
- .Select(graph, order.OrderType, order.OrderNbr).RowCast<POLine>())
+              .Select(graph, order.OrderType, order.OrderNbr).RowCast<POLine>())
             {
                 PXNoteAttribute.GetNoteID<POLine.noteID>(lineCache, line);
 
@@ -683,45 +693,126 @@ namespace CompiledVersion.Graphs
                 if (!TryGetLinkedSOLine(graph, line, out soLine, out soOrder) || soOrder == null)
                     continue;
 
-                // Header notes/attachments once
-                if (!headerDone)
+                string soKey = $"{soOrder.OrderType}|{soOrder.OrderNbr}";
+                if (!soOrdersForHeader.ContainsKey(soKey))
+                    soOrdersForHeader[soKey] = soOrder;
+
+                if (!soLinesForPOLines.ContainsKey(line.LineNbr))
+                    soLinesForPOLines[line.LineNbr] = new List<(SOLine, SOOrder)>();
+                soLinesForPOLines[line.LineNbr].Add((soLine, soOrder));
+            }
+
+            // Process Header Notes
+            if (soOrdersForHeader.Count > 0)
+            {
+                if (setupExt.UsrCopyHeaderNotesToPO == true)
                 {
-                    if (setupExt.UsrCopyHeaderNotesToPO == true)
+                    var soOrders = soOrdersForHeader.Values.ToList();
+                    if (soOrders.Count == 1)
                     {
-                        string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrder);
+                        // Single SO Order - copy note directly
+                        string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrders[0]);
                         if (!string.IsNullOrEmpty(noteText))
                         {
                             PXNoteAttribute.SetNote(orderCache, order, noteText);
                             orderCache.MarkUpdated(order);
                         }
                     }
-                    if (setupExt.UsrCopyHeaderAttachmentsToPO == true)
+                    else
                     {
-                        PXNoteAttribute.CopyNoteAndFiles(soOrderCache, soOrder, orderCache, order, true, true);
+                        // Multiple SO Orders - concatenate with bullets and order info
+                        var combinedNote = new System.Text.StringBuilder();
+                        foreach (var soOrder in soOrders)
+                        {
+                            string noteText = PXNoteAttribute.GetNote(soOrderCache, soOrder);
+                            if (!string.IsNullOrEmpty(noteText))
+                            {
+                                combinedNote.AppendLine($"• SO {soOrder.OrderType} {soOrder.OrderNbr}:");
+                                combinedNote.AppendLine(noteText);
+                                combinedNote.AppendLine();
+                            }
+                        }
+                        if (combinedNote.Length > 0)
+                        {
+                            PXNoteAttribute.SetNote(orderCache, order, combinedNote.ToString().TrimEnd());
+                            orderCache.MarkUpdated(order);
+                        }
+                    }
+                }
+
+                if (setupExt.UsrCopyHeaderAttachmentsToPO == true)
+                {
+                    // Copy attachments from all SO orders (always add as separate files)
+                    foreach (var soOrder in soOrdersForHeader.Values)
+                    {
+                        PXNoteAttribute.CopyNoteAndFiles(soOrderCache, soOrder, orderCache, order, false, true);
                         orderCache.MarkUpdated(order);
                     }
-                    headerDone = true;
                 }
+            }
 
-                // Line notes
+            // Process Line Notes
+            foreach (var kvp in soLinesForPOLines)
+            {
+                int? poLineNbr = kvp.Key;
+                var soLineSources = kvp.Value;
+
+                POLine poLine = PXSelect<POLine,
+          Where<POLine.orderType, Equal<Required<POLine.orderType>>,
+                 And<POLine.orderNbr, Equal<Required<POLine.orderNbr>>,
+              And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>>
+             .Select(graph, order.OrderType, order.OrderNbr, poLineNbr);
+
+                if (poLine == null) continue;
+
+                // Line Notes
                 if (setupExt.UsrCopyLineNotesToPO == true)
                 {
-                    string destNote = PXNoteAttribute.GetNote(lineCache, line);
+                    string destNote = PXNoteAttribute.GetNote(lineCache, poLine);
                     if (string.IsNullOrWhiteSpace(destNote))
                     {
-                        PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, true, false);
-                        lineCache.MarkUpdated(line);
+                        if (soLineSources.Count == 1)
+                        {
+                            // Single SO Line - copy note directly
+                            var soLine = soLineSources[0].soLine;
+                            PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, poLine, true, false);
+                            lineCache.MarkUpdated(poLine);
+                        }
+                        else
+                        {
+                            // Multiple SO Lines - concatenate with bullets and order info
+                            var combinedNote = new System.Text.StringBuilder();
+                            foreach (var (soLine, soOrder) in soLineSources)
+                            {
+                                string noteText = PXNoteAttribute.GetNote(soLineCache, soLine);
+                                if (!string.IsNullOrEmpty(noteText))
+                                {
+                                    combinedNote.AppendLine($"• SO {soOrder.OrderType} {soOrder.OrderNbr} Line {soLine.LineNbr}:");
+                                    combinedNote.AppendLine(noteText);
+                                    combinedNote.AppendLine();
+                                }
+                            }
+                            if (combinedNote.Length > 0)
+                            {
+                                PXNoteAttribute.SetNote(lineCache, poLine, combinedNote.ToString().TrimEnd());
+                                lineCache.MarkUpdated(poLine);
+                            }
+                        }
                     }
                 }
 
-                // Line attachments
+                // Line Attachments
                 if (setupExt.UsrCopyLineAttachmentsToPO == true)
                 {
-                    bool lineHasFiles = (PXNoteAttribute.GetFileNotes(lineCache, line)?.Any() ?? false);
+                    bool lineHasFiles = (PXNoteAttribute.GetFileNotes(lineCache, poLine)?.Any() ?? false);
                     if (!lineHasFiles)
                     {
-                        PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, line, false, true);
-                        lineCache.MarkUpdated(line);
+                        // Copy attachments from all SO lines (always add as separate files)
+                        foreach (var (soLine, soOrder) in soLineSources)
+                        {
+                            PXNoteAttribute.CopyNoteAndFiles(soLineCache, soLine, lineCache, poLine, false, true);
+                            lineCache.MarkUpdated(poLine);
+                        }
                     }
                 }
             }
@@ -746,33 +837,33 @@ namespace CompiledVersion.Graphs
             if (POLineType.IsDropShip(poLine.LineType))
             {
                 DropShipLink ds = PXSelect<DropShipLink,
-                Where<DropShipLink.pOOrderType, Equal<Required<DropShipLink.pOOrderType>>,
-                And<DropShipLink.pOOrderNbr, Equal<Required<DropShipLink.pOOrderNbr>>,
-                And<DropShipLink.pOLineNbr, Equal<Required<DropShipLink.pOLineNbr>>>>>>
-                .Select(graph, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
+                        Where<DropShipLink.pOOrderType, Equal<Required<DropShipLink.pOOrderType>>,
+                  And<DropShipLink.pOOrderNbr, Equal<Required<DropShipLink.pOOrderNbr>>,
+             And<DropShipLink.pOLineNbr, Equal<Required<DropShipLink.pOLineNbr>>>>>>
+                  .Select(graph, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
                 if (ds != null)
                 {
                     soLine = PXSelect<SOLine,
-                    Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
-                    And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
-                    And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
-                    .Select(graph, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
+                           Where<SOLine.orderType, Equal<Required<SOLine.orderType>>,
+                         And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>,
+                        And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>
+                        .Select(graph, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
                     if (soLine != null)
                         soOrder = PXSelect<SOOrder,
-                        Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
-                        And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>.Select(graph, soLine.OrderType, soLine.OrderNbr);
+                           Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
+                               And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>.Select(graph, soLine.OrderType, soLine.OrderNbr);
                 }
             }
             if (soLine == null)
             {
                 PXResult<SOLine, SOLineSplit> soRes = (PXResult<SOLine, SOLineSplit>)PXSelectJoin<SOLine, InnerJoin<SOLineSplit,
-                On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+               On<SOLine.orderType, Equal<SOLineSplit.orderType>,
                 And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
                 And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
-                Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
-                And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
-                And<SOLineSplit.pOLineNbr, Equal<Required<SOLineSplit.pOLineNbr>>>>>>
-                .Select(graph, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
+              Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
+                        And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
+              And<SOLineSplit.pOLineNbr, Equal<Required<SOLineSplit.pOLineNbr>>>>>>
+                 .Select(graph, poLine.OrderType, poLine.OrderNbr, poLine.LineNbr);
                 if (soRes != null)
                 {
                     soLine = soRes;

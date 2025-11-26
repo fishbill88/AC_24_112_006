@@ -380,70 +380,160 @@ namespace CompiledVersion.Graphs
         {
             if (skipCostDefaulting)
             {
-                return;
+return;
             }
 
             POLine line = e.Row as POLine;
-            POOrder order = Base.Document.Current;
-            if (line == null || order == null || !line.InventoryID.HasValue)
-                return;
+    POOrder order = Base.Document.Current;
+    if (line == null || order == null || !line.InventoryID.HasValue)
+   return;
 
-            var lineExt = line.GetExtension<POLineExt>();
-            lineExt.UsrUsedVendorPrice = false;
+    var lineExt = line.GetExtension<POLineExt>();
+    lineExt.UsrUsedVendorPrice = false;
 
-            // i) Try Vendor Price
-            decimal? vendorUnit = null;
-            if (line.UOM != null && order.VendorID != null)
-            {
-                var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
-                vendorUnit = APVendorPriceMaint.CalculateUnitCost(sender, order.VendorID, order.VendorLocationID, line.InventoryID, line.SiteID, ci.GetCM(), line.UOM, line.OrderQty, order.OrderDate ?? Base.Accessinfo.BusinessDate.GetValueOrDefault(), line.CuryUnitCost);
-                if (vendorUnit.HasValue && vendorUnit.Value > 0m)
-                {
-                    e.NewValue = vendorUnit;
-                    e.Cancel = true;
-                    lineExt.UsrUsedVendorPrice = true;
-                    return;
-                }
-            }
-
-            // ii) SPC Cost (from linked SO line if any)
-            decimal? spc = null;
-            DropShipLink ds = GetDropShipLink(line);
-            if (ds != null)
-            {
-                SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>.Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
-                if (soLine != null)
-                    spc = soLine.GetExtension<CompiledVersion.DAC.SOLineExt>()?.UsrSWKSPCCost;
-            }
-            if (spc.HasValue && spc.Value > 0m)
-            {
-                e.NewValue = spc.Value;
-                e.Cancel = true;
-                // Treat SPC like vendor price for enforcement bypass
-                lineExt.UsrUsedVendorPrice = true;
-                return;
-            }
-
-            // iii) RTH Cost from SO line or Item
-            decimal? rth = lineExt?.UsrSWKRTHCost;
-            if (!rth.HasValue || rth.Value <= 0m)
-            {
-                InventoryItem item = InventoryItem.PK.Find(Base, line.InventoryID);
-                var itemExt = item?.GetExtension<InventoryItemExt>();
-                rth = itemExt?.UsrSWKRTHCost;
-            }
-            if (rth.HasValue && rth.Value > 0m)
-            {
-                e.NewValue = rth.Value;
-                e.Cancel = true;
-                return;
-            }
-
-            // iv) Last Cost fallback
-            e.NewValue = POItemCostManager.Fetch<POLine.inventoryID, POLine.curyInfoID>(sender.Graph, line, order.VendorID, order.VendorLocationID, order.OrderDate, order.CuryID, line.InventoryID, line.SubItemID, line.SiteID, line.UOM);
-            APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, line, e.NewValue);
+    // i) Try Vendor Price
+    decimal? vendorUnit = null;
+    if (line.UOM != null && order.VendorID != null)
+    {
+        var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
+  vendorUnit = APVendorPriceMaint.CalculateUnitCost(sender, order.VendorID, order.VendorLocationID, line.InventoryID, line.SiteID, ci.GetCM(), line.UOM, line.OrderQty, order.OrderDate ?? Base.Accessinfo.BusinessDate.GetValueOrDefault(), line.CuryUnitCost);
+        if (vendorUnit.HasValue && vendorUnit.Value > 0m)
+        {
+    e.NewValue = vendorUnit;
+            e.Cancel = true;
+    lineExt.UsrUsedVendorPrice = true;
+    return;
         }
+    }
 
+    // ii) SPC Cost (from linked SO line if any)
+  decimal? spc = null;
+ SOLine soLine = null;
+    
+    // ⭐ Try multiple strategies to find the SO line(s) - UPDATED for merged lines
+    
+    // Strategy 1: DropShipLink (works for existing drop-ship PO lines)
+    DropShipLink ds = GetDropShipLink(line);
+    if (ds != null)
+    {
+        soLine = PXSelect<SOLine, 
+     Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, 
+ And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, 
+        And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>.Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
+    }
+ 
+    // Strategy 2: SOLineSplit lookup for drop-ship during Insert (when DropShipLink doesn't exist yet)
+    // ⭐ UPDATED: Handle merged SO lines by selecting HIGHEST SPC cost
+    if (soLine == null && POLineType.IsDropShip(line.LineType))
+    {
+   var allDropShipMatches = PXSelectJoin<SOLine,
+       InnerJoin<SOLineSplit, On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+     And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+         Where<SOLineSplit.pOCreate, Equal<True>,
+       And<SOLineSplit.inventoryID, Equal<Required<SOLineSplit.inventoryID>>,
+       And<SOLineSplit.siteID, Equal<Required<SOLineSplit.siteID>>,
+        And<SOLineSplit.vendorID, Equal<Required<SOLineSplit.vendorID>>>>>>>
+  .Select(Base, line.InventoryID, line.SiteID, order.VendorID)
+    .RowCast<SOLine>()
+    .ToList();
+        
+        if (allDropShipMatches.Any())
+        {
+   // Pick SO line with highest SPC cost (handles merged lines)
+         soLine = allDropShipMatches
+    .OrderByDescending(so => so.GetExtension<SOLineExt>()?.UsrSWKSPCCost ?? 0m)
+   .FirstOrDefault();
+        }
+    }
+
+    // Strategy 3: SOLineSplit lookup for regular "Mark for PO" lines (works for both Insert and existing)
+    // ⭐ UPDATED: Handle merged SO lines by selecting HIGHEST SPC cost
+    if (soLine == null && !POLineType.IsDropShip(line.LineType))
+    {
+    // Try existing link first (for editing existing lines)
+        if (line.OrderType != null && line.OrderNbr != null && line.LineNbr != null)
+    {
+            var soSplitLinked = PXSelectJoin<SOLine,
+          InnerJoin<SOLineSplit, On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+       And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+        And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+           Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
+And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
+     And<SOLineSplit.pOLineNbr, Equal<Required<SOLineSplit.pOLineNbr>>>>>>
+     .Select(Base, line.OrderType, line.OrderNbr, line.LineNbr)
+                .RowCast<SOLine>()
+         .ToList();
+ 
+      if (soSplitLinked.Any())
+            {
+       // Pick SO line with highest SPC cost (handles merged lines)
+         soLine = soSplitLinked
+         .OrderByDescending(so => so.GetExtension<SOLineExt>()?.UsrSWKSPCCost ?? 0m)
+      .FirstOrDefault();
+    }
+        }
+        
+        // During Insert: Match by criteria (inventory/site/vendor, POCreate=true, not yet linked)
+        if (soLine == null && line.InventoryID != null && line.SiteID != null && order.VendorID != null)
+      {
+          var soSplitPending = PXSelectJoin<SOLine,
+      InnerJoin<SOLineSplit, On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+        And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+         And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+            Where<SOLineSplit.pOCreate, Equal<True>,
+ And<SOLineSplit.inventoryID, Equal<Required<SOLineSplit.inventoryID>>,
+      And<SOLineSplit.siteID, Equal<Required<SOLineSplit.siteID>>,
+   And<SOLineSplit.vendorID, Equal<Required<SOLineSplit.vendorID>>,
+          And<SOLineSplit.pONbr, IsNull>>>>>>
+   .Select(Base, line.InventoryID, line.SiteID, order.VendorID)
+  .RowCast<SOLine>()
+      .ToList();
+  
+   if (soSplitPending.Any())
+            {
+           // Pick SO line with highest SPC cost (handles merged lines)
+     soLine = soSplitPending
+.OrderByDescending(so => so.GetExtension<SOLineExt>()?.UsrSWKSPCCost ?? 0m)
+      .FirstOrDefault();
+   }
+        }
+    }
+  
+    // Get SPC cost if SO line found
+    if (soLine != null)
+    {
+ spc = soLine.GetExtension<CompiledVersion.DAC.SOLineExt>()?.UsrSWKSPCCost;
+    }
+    
+    if (spc.HasValue && spc.Value > 0m)
+    {
+        e.NewValue = spc.Value;
+        e.Cancel = true;
+   // Treat SPC like vendor price for enforcement bypass
+      lineExt.UsrUsedVendorPrice = true;
+        return;
+    }
+
+    // iii) RTH Cost from SO line or Item
+    decimal? rth = lineExt?.UsrSWKRTHCost;
+    if (!rth.HasValue || rth.Value <= 0m)
+    {
+        InventoryItem item = InventoryItem.PK.Find(Base, line.InventoryID);
+        var itemExt = item?.GetExtension<InventoryItemExt>();
+        rth = itemExt?.UsrSWKRTHCost;
+    }
+    if (rth.HasValue && rth.Value > 0m)
+    {
+    e.NewValue = rth.Value;
+        e.Cancel = true;
+    return;
+    }
+
+    // iv) Last Cost fallback
+    e.NewValue = POItemCostManager.Fetch<POLine.inventoryID, POLine.curyInfoID>(sender.Graph, line, order.VendorID, order.VendorLocationID, order.OrderDate, order.CuryID, line.InventoryID, line.SubItemID, line.SiteID, line.UOM);
+    APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, line, e.NewValue);
+}
         // Ensure Unit Cost is never below RTH Unit Cost
         protected virtual void _(Events.FieldVerifying<POLine, POLine.curyUnitCost> e)
         {
