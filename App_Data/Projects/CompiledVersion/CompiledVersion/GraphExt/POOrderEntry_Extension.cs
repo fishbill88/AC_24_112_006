@@ -127,7 +127,7 @@ namespace CompiledVersion.Graphs
             PXTrace.WriteInformation($"Initial Values: Qty={qty}, UnitCost={unitCost}, ExtCost={ext}, RTHUnitCost={rthUnit}, skipCostDefaulting={skipCostDefaulting}");
 
             // =====================================================================================
-            // Price Hierarchy Re-Evaluation (Vendor Price -> SPC Cost -> RTH Cost -> Last Cost)
+            // Price Hierarchy Re-Evaluation (SPC Cost -> Vendor Price -> RTH Cost -> Last Cost)
             // Only attempt if not explicitly skipping cost defaulting.
             // =====================================================================================
             if (!skipCostDefaulting)
@@ -136,8 +136,115 @@ namespace CompiledVersion.Graphs
                 bool expectedIsVendorOrSPC = false; // determines bypass of RTH enforcement
                 string costSource = "None";
 
-                //1) Active Vendor Price
-                if (line.UOM != null && order?.VendorID != null && order?.CuryInfoID != null)
+                //1) SPC Cost (from linked SO line hierarchy)
+                try
+                {
+                    DropShipLink ds0 = GetDropShipLink(line);
+                    if (ds0 != null)
+                    {
+                        SOLine soLine0 = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>.Select(Base, ds0.SOOrderType, ds0.SOOrderNbr, ds0.SOLineNbr);
+                        if (soLine0 != null)
+                        {
+                            var soLineExt0 = soLine0.GetExtension<SOLineExt>();
+                            if (soLineExt0?.UsrSWKSPCCost > 0m)
+                            {
+                                expectedUnitCost = soLineExt0.UsrSWKSPCCost;
+                                expectedIsVendorOrSPC = true;
+                                costSource = "SPC Cost (DropShip link)";
+                                PXTrace.WriteInformation($"✓ Using SPC Cost (DropShip link): {expectedUnitCost}");
+                            }
+                        }
+                    }
+
+                    if (!expectedUnitCost.HasValue && POLineType.IsDropShip(line.LineType))
+                    {
+                        var allDropShipMatches = PXSelectJoin<SOLine,
+                            InnerJoin<SOLineSplit, On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+                                And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+                                And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+                            Where<SOLineSplit.pOCreate, Equal<True>,
+                                And<SOLineSplit.inventoryID, Equal<Required<SOLineSplit.inventoryID>>,
+                                And<SOLineSplit.siteID, Equal<Required<SOLineSplit.siteID>>,
+                                And<SOLineSplit.vendorID, Equal<Required<SOLineSplit.vendorID>>>>>>>
+                            .Select(Base, line.InventoryID, line.SiteID, order?.VendorID)
+                            .RowCast<SOLine>()
+                            .ToList();
+                        if (allDropShipMatches.Any())
+                        {
+                            var best = allDropShipMatches.OrderByDescending(so => so.GetExtension<SOLineExt>()?.UsrSWKSPCCost ?? 0m).First();
+                            var bExt = best.GetExtension<SOLineExt>();
+                            if (bExt?.UsrSWKSPCCost > 0m)
+                            {
+                                expectedUnitCost = bExt.UsrSWKSPCCost;
+                                expectedIsVendorOrSPC = true;
+                                costSource = "SPC Cost (DropShip search)";
+                                PXTrace.WriteInformation($"✓ Using SPC Cost (search): {expectedUnitCost}");
+                            }
+                        }
+                    }
+                    if (!expectedUnitCost.HasValue && !POLineType.IsDropShip(line.LineType))
+                    {
+                        if (line.OrderType != null && line.OrderNbr != null && line.LineNbr != null)
+                        {
+                            var soSplitLinked = PXSelectJoin<SOLine,
+                                InnerJoin<SOLineSplit, On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+                                    And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+                                    And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+                                Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
+                                    And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
+                                    And<SOLineSplit.pOLineNbr, Equal<Required<SOLineSplit.pOLineNbr>>>>>>
+                            .Select(Base, line.OrderType, line.OrderNbr, line.LineNbr)
+                            .RowCast<SOLine>()
+                            .ToList();
+                            if (soSplitLinked.Any())
+                            {
+                                var best = soSplitLinked.OrderByDescending(so => so.GetExtension<SOLineExt>()?.UsrSWKSPCCost ?? 0m).First();
+                                var bExt = best.GetExtension<SOLineExt>();
+                                if (bExt?.UsrSWKSPCCost > 0m)
+                                {
+                                    expectedUnitCost = bExt.UsrSWKSPCCost;
+                                    expectedIsVendorOrSPC = true;
+                                    costSource = "SPC Cost (linked)";
+                                    PXTrace.WriteInformation($"✓ Using SPC Cost (linked): {expectedUnitCost}");
+                                }
+                            }
+                        }
+                    }
+                    if (!expectedUnitCost.HasValue && line.InventoryID != null && line.SiteID != null && order?.VendorID != null)
+                    {
+                        var soSplitPending = PXSelectJoin<SOLine,
+                            InnerJoin<SOLineSplit, On<SOLine.orderType, Equal<SOLineSplit.orderType>,
+                                And<SOLine.orderNbr, Equal<SOLineSplit.orderNbr>,
+                                And<SOLine.lineNbr, Equal<SOLineSplit.lineNbr>>>>>,
+                            Where<SOLineSplit.pOCreate, Equal<True>,
+                                And<SOLineSplit.inventoryID, Equal<Required<SOLineSplit.inventoryID>>,
+                                And<SOLineSplit.siteID, Equal<Required<SOLineSplit.siteID>>,
+                                And<SOLineSplit.vendorID, Equal<Required<SOLineSplit.vendorID>>,
+                                And<SOLineSplit.pONbr, IsNull>>>>>>
+                            .Select(Base, line.InventoryID, line.SiteID, order.VendorID)
+                            .RowCast<SOLine>()
+                            .ToList();
+                        if (soSplitPending.Any())
+                        {
+                            var best = soSplitPending.OrderByDescending(so => so.GetExtension<SOLineExt>()?.UsrSWKSPCCost ?? 0m).First();
+                            var bExt = best.GetExtension<SOLineExt>();
+                            if (bExt?.UsrSWKSPCCost > 0m)
+                            {
+                                expectedUnitCost = bExt.UsrSWKSPCCost;
+                                expectedIsVendorOrSPC = true;
+                                costSource = "SPC Cost (pending)";
+                                PXTrace.WriteInformation($"✓ Using SPC Cost (pending): {expectedUnitCost}");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    PXTrace.WriteError($"SPC Cost Lookup Failed: {ex.Message}");
+                }
+
+                //2) Vendor Price (if SPC not found)
+                if (!expectedUnitCost.HasValue && line.UOM != null && order?.VendorID != null && order?.CuryInfoID != null)
                 {
                     try
                     {
@@ -147,7 +254,7 @@ namespace CompiledVersion.Graphs
                         if (vendCost.HasValue && vendCost.Value > 0m)
                         {
                             expectedUnitCost = vendCost.Value;
-                            expectedIsVendorOrSPC = true;
+                            expectedIsVendorOrSPC = true; // vendor bypasses RTH floor
                             costSource = "Vendor Price";
                             PXTrace.WriteInformation($"✓ Using Vendor Price: {vendCost.Value}");
                         }
@@ -157,43 +264,8 @@ namespace CompiledVersion.Graphs
                         PXTrace.WriteError($"Vendor Price Lookup Failed: {ex.Message}");
                     }
                 }
-                else
-                {
-                    PXTrace.WriteInformation($"Vendor Price Skipped: UOM={line.UOM}, VendorID={order?.VendorID}, CuryInfoID={order?.CuryInfoID}");
-                }
 
-                //2) SPC Cost (from linked SO line) if vendor price not found
-                if (!expectedUnitCost.HasValue)
-                {
-                    try
-                    {
-                        DropShipLink ds = GetDropShipLink(line);
-                        PXTrace.WriteInformation($"DropShip Link Lookup: Found={ds != null}");
-                        if (ds != null)
-                        {
-                            SOLine soLine = PXSelect<SOLine, Where<SOLine.orderType, Equal<Required<SOLine.orderType>>, And<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>, And<SOLine.lineNbr, Equal<Required<SOLine.lineNbr>>>>>>.Select(Base, ds.SOOrderType, ds.SOOrderNbr, ds.SOLineNbr);
-                            if (soLine != null)
-                            {
-                                var soLineExt = soLine.GetExtension<SOLineExt>();
-                                var spcCost = soLineExt?.UsrSWKSPCCost;
-                                PXTrace.WriteInformation($"SPC Cost from SO Line {ds.SOOrderType}-{ds.SOOrderNbr}-{ds.SOLineNbr}: {spcCost}");
-                                if (soLineExt?.UsrSWKSPCCost.HasValue == true && soLineExt.UsrSWKSPCCost.Value > 0m)
-                                {
-                                    expectedUnitCost = soLineExt.UsrSWKSPCCost.Value;
-                                    expectedIsVendorOrSPC = true; // SPC acts like vendor cost for bypass logic
-                                    costSource = "SPC Cost";
-                                    PXTrace.WriteInformation($"✓ Using SPC Cost: {soLineExt.UsrSWKSPCCost.Value}");
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        PXTrace.WriteError($"SPC Cost Lookup Failed: {ex.Message}");
-                    }
-                }
-
-                //3) RTH Cost (from line or item) if still not found
+                //3) RTH Cost
                 if (!expectedUnitCost.HasValue)
                 {
                     try
@@ -247,96 +319,99 @@ namespace CompiledVersion.Graphs
                 // Apply expected unit cost if materially different
                 if (expectedUnitCost.HasValue && Math.Abs(unitCost - expectedUnitCost.Value) > 0.0000001m)
                 {
-                    PXTrace.WriteInformation($"WOULD UPDATE UnitCost: {unitCost} -> {expectedUnitCost.Value} (Diff: {Math.Abs(unitCost - expectedUnitCost.Value)})");
-      //cache.SetValueExt<POLine.curyUnitCost>(line, expectedUnitCost.Value);
-  //unitCost = expectedUnitCost.Value;
+                    PXTrace.WriteInformation($"APPLY UnitCost: {unitCost} -> {expectedUnitCost.Value}");
+                    cache.SetValueExt<POLine.curyUnitCost>(line, expectedUnitCost.Value);
+                    unitCost = expectedUnitCost.Value;
                 }
-     else
-   {
-          PXTrace.WriteInformation($"UnitCost unchanged: Current={unitCost}, Expected={expectedUnitCost}");
-        }
+                else
+                {
+                    PXTrace.WriteInformation($"UnitCost unchanged: Current={unitCost}, Expected={expectedUnitCost}");
+                }
 
-        // Maintain flag for downstream RTH enforcement
-      //lineExt.UsrUsedVendorPrice = expectedIsVendorOrSPC;
-   PXTrace.WriteInformation($"WOULD SET UsrUsedVendorPrice = {expectedIsVendorOrSPC}");
-    }
-    else
-    {
-        PXTrace.WriteInformation("Cost hierarchy evaluation SKIPPED (skipCostDefaulting = true)");
-    }
+                // Maintain flag for downstream RTH enforcement
+                lineExt.UsrUsedVendorPrice = expectedIsVendorOrSPC;
+                PXTrace.WriteInformation($"SET UsrUsedVendorPrice = {expectedIsVendorOrSPC}");
+            }
+            else
+            {
+                PXTrace.WriteInformation("Cost hierarchy evaluation SKIPPED (skipCostDefaulting = true)");
+            }
 
-    // If vendor price or SPC cost was used, honor it: do not bump to RTH, only ensure non-negative
-  if (lineExt?.UsrUsedVendorPrice == true)
-    {
-        PXTrace.WriteInformation("Vendor/SPC price used - RTH enforcement BYPASSED, only checking non-negative");
-   if (unitCost < 0m)
-   {
-            PXTrace.WriteInformation($"WOULD SET UnitCost is negative ({unitCost}), setting to 0");
-            //cache.SetValueExt<POLine.curyUnitCost>(line, 0m);
-            //unitCost = 0m;
-}
-    }
-    else
-    {
-        PXTrace.WriteInformation($"RTH Enforcement Active: RTHUnitCost={rthUnit}, CurrentUnitCost={unitCost}");
-        // Ensure UnitCost is not below RTH Unit Cost
-        if (rthUnit > 0m && unitCost < rthUnit)
-   {
-            var newUnit = rthUnit;
-            PXTrace.WriteInformation($"UnitCost below RTH minimum! WOULD RAISE to RTH: {unitCost} -> {newUnit}");
-      cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, unitCost,
-     new PXSetPropertyException(line, Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
-            //if (Math.Abs(unitCost - newUnit) > 0.0000001m)
-     //{
-            //  cache.SetValueExt<POLine.curyUnitCost>(line, newUnit);
-       //    unitCost = newUnit;
-            //}
-        }
-    }
+            // If vendor price or SPC cost was used, honor it: do not bump to RTH, only ensure non-negative
+            if (lineExt?.UsrUsedVendorPrice == true)
+            {
+                PXTrace.WriteInformation("Vendor/SPC price used - RTH enforcement BYPASSED, only checking non-negative");
+                if (unitCost < 0m)
+                {
+                    PXTrace.WriteInformation($"UnitCost negative ({unitCost}), setting to0");
+                    cache.SetValueExt<POLine.curyUnitCost>(line, 0m);
+                    unitCost = 0m;
+                }
+            }
+            else
+            {
+                PXTrace.WriteInformation($"RTH Enforcement Active: RTHUnitCost={rthUnit}, CurrentUnitCost={unitCost}");
+                // Ensure UnitCost is not below RTH Unit Cost
+                if (rthUnit > 0m && unitCost < rthUnit)
+                {
+                    var newUnit = rthUnit;
+                    PXTrace.WriteInformation($"UnitCost below RTH minimum! RAISE to RTH: {unitCost} -> {newUnit}");
+                    cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, unitCost,
+                    new PXSetPropertyException(line, Messages.UnitCostIncreasedToRTH, PXErrorLevel.Warning));
+                    cache.SetValueExt<POLine.curyUnitCost>(line, newUnit);
+                    unitCost = newUnit;
+                }
+            }
 
- // Failsafe: re-calc Extended Cost from (UnitCost * Qty)
-    var expectedExt = RoundCury(order, unitCost * qty);
-    PXTrace.WriteInformation($"ExtCost Recalculation: Formula = UnitCost({unitCost}) × Qty({qty}) = {unitCost * qty}, Rounded = {expectedExt}");
-    if (Math.Abs(ext - expectedExt) > 0.009m || line.CuryExtCost == null)
-    {
-    PXTrace.WriteInformation($"WOULD UPDATE ExtCost: {ext} -> {expectedExt} (Diff: {Math.Abs(ext - expectedExt)}, IsNull: {line.CuryExtCost == null})");
-        //cache.SetValueExt<POLine.curyExtCost>(line, expectedExt);
-    //ext = expectedExt;
-    }
-    else
-    {
-  PXTrace.WriteInformation($"ExtCost unchanged: Current={ext}, Expected={expectedExt}");
-    }
+            // Failsafe: re-calc Extended Cost from (UnitCost * Qty)
+            var expectedExt = RoundCury(order, unitCost * qty);
+            PXTrace.WriteInformation($"ExtCost Recalculation: UnitCost({unitCost}) × Qty({qty}) = {unitCost * qty}, Rounded = {expectedExt}");
+            if (Math.Abs(ext - expectedExt) > 0.009m || line.CuryExtCost == null)
+            {
+                PXTrace.WriteInformation($"APPLY ExtCost: {ext} -> {expectedExt} (Diff: {Math.Abs(ext - expectedExt)}, IsNull: {line.CuryExtCost == null})");
+                cache.SetValueExt<POLine.curyExtCost>(line, expectedExt);
+                ext = expectedExt;
+            }
+            else
+            {
+                PXTrace.WriteInformation($"ExtCost unchanged: Current={ext}, Expected={expectedExt}");
+            }
 
-    // Enforce RTH minimum on ExtCost only if vendor price/SPC not used
-    if (lineExt?.UsrUsedVendorPrice != true)
-    {
-   var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ?? 0m) * qty);
-        PXTrace.WriteInformation($"RTH ExtCost Minimum Check: RTHUnitCost({lineExt?.UsrSWKRTHCost ?? 0m}) × Qty({qty}) = {(lineExt?.UsrSWKRTHCost ?? 0m) * qty}, Rounded = {rthMin}");
-        PXTrace.WriteInformation($"Current ExtCost={ext}, RTH Minimum={rthMin}, Tolerance=0.009");
-        if (ext + 0.009m < rthMin)
-        {
-       var msg = Messages.ExtCostBelowRTH;
-            PXTrace.WriteWarning($"ExtCost below RTH minimum! ExtCost={ext}, RTHMin={rthMin}, raiseErrors={raiseErrors}");
-   cache.RaiseExceptionHandling<POLine.curyExtCost>(line, ext,
-    new PXSetPropertyException(line, msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
-          if (raiseErrors)
-      {
-   PXTrace.WriteError($"WOULD THROW exception: {msg}");
-              //throw new PXSetPropertyException(line, msg);
-     }
-        }
-        else
-   {
-       PXTrace.WriteInformation($"ExtCost meets RTH minimum requirement");
-    }
-    }
-    else
-    {
- PXTrace.WriteInformation("RTH ExtCost enforcement SKIPPED (Vendor/SPC price was used)");
-}
+            // Enforce RTH minimum on ExtCost only if vendor price/SPC not used
+            if (lineExt?.UsrUsedVendorPrice != true)
+            {
+                var rthMin = RoundCury(order, (lineExt?.UsrSWKRTHCost ?? 0m) * qty);
+                PXTrace.WriteInformation($"RTH ExtCost Minimum Check: Current ExtCost={ext}, RTH Minimum={rthMin}");
+                if (ext + 0.009m < rthMin)
+                {
+                    var msg = Messages.ExtCostBelowRTH;
+                    PXTrace.WriteWarning($"ExtCost below RTH minimum! ExtCost={ext}, RTHMin={rthMin}, raiseErrors={raiseErrors}");
+                    cache.RaiseExceptionHandling<POLine.curyExtCost>(line, ext,
+                    new PXSetPropertyException(line, msg, raiseErrors ? PXErrorLevel.Error : PXErrorLevel.Warning));
+                    if (raiseErrors)
+                    {
+                        PXTrace.WriteError($"THROW exception: {msg}");
+                        throw new PXSetPropertyException(line, msg);
+                    }
+                    // Force to minimum if warning-only path
+                    if (!raiseErrors)
+                    {
+                        cache.SetValueExt<POLine.curyExtCost>(line, rthMin);
+                        ext = rthMin;
+                        PXTrace.WriteInformation($"ExtCost raised to RTH minimum: {ext}");
+                    }
+                }
+                else
+                {
+                    PXTrace.WriteInformation("ExtCost meets RTH minimum requirement");
+                }
+            }
+            else
+            {
+                PXTrace.WriteInformation("RTH ExtCost enforcement SKIPPED (Vendor/SPC price was used)");
+            }
 
-    PXTrace.WriteInformation($"=== EnsureExtCostAndUnitCostFailsafe END === Final: UnitCost={unitCost}, ExtCost={ext}");
+            PXTrace.WriteInformation($"=== EnsureExtCostAndUnitCostFailsafe END === Final: UnitCost={unitCost}, ExtCost={ext}");
         }
 
         #endregion
@@ -391,23 +466,10 @@ return;
     var lineExt = line.GetExtension<POLineExt>();
     lineExt.UsrUsedVendorPrice = false;
 
-    // i) Try Vendor Price
-    decimal? vendorUnit = null;
-    if (line.UOM != null && order.VendorID != null)
-    {
-        var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
-  vendorUnit = APVendorPriceMaint.CalculateUnitCost(sender, order.VendorID, order.VendorLocationID, line.InventoryID, line.SiteID, ci.GetCM(), line.UOM, line.OrderQty, order.OrderDate ?? Base.Accessinfo.BusinessDate.GetValueOrDefault(), line.CuryUnitCost);
-        if (vendorUnit.HasValue && vendorUnit.Value > 0m)
-        {
-    e.NewValue = vendorUnit;
-            e.Cancel = true;
-    lineExt.UsrUsedVendorPrice = true;
-    return;
-        }
-    }
+    // New hierarchy: SPC Cost -> Vendor Price -> RTH Cost -> Last Cost
 
-    // ii) SPC Cost (from linked SO line if any)
-  decimal? spc = null;
+    //1) SPC Cost
+    decimal? spc = null;
  SOLine soLine = null;
     
     // ⭐ Try multiple strategies to find the SO line(s) - UPDATED for merged lines
@@ -513,6 +575,21 @@ And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
    // Treat SPC like vendor price for enforcement bypass
       lineExt.UsrUsedVendorPrice = true;
         return;
+    }
+
+    // ii) Vendor Price
+    decimal? vendorUnit = null;
+    if (line.UOM != null && order.VendorID != null)
+    {
+        var ci = Base.FindImplementation<IPXCurrencyHelper>()?.GetCurrencyInfo(order.CuryInfoID);
+  vendorUnit = APVendorPriceMaint.CalculateUnitCost(sender, order.VendorID, order.VendorLocationID, line.InventoryID, line.SiteID, ci.GetCM(), line.UOM, line.OrderQty, order.OrderDate ?? Base.Accessinfo.BusinessDate.GetValueOrDefault(), line.CuryUnitCost);
+        if (vendorUnit.HasValue && vendorUnit.Value > 0m)
+        {
+    e.NewValue = vendorUnit;
+            e.Cancel = true;
+    lineExt.UsrUsedVendorPrice = true; // vendor bypasses RTH floor
+    return;
+        }
     }
 
     // iii) RTH Cost from SO line or Item
@@ -800,7 +877,7 @@ And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
                 if (so != null) return so;
             }
 
-            // 3) Try SOLineSplit referencing this PO header
+            // 3) Try SOLineSplit referencing this PO
             var splitRes = PXSelect<SOLineSplit,
                 Where<SOLineSplit.pOType, Equal<Required<SOLineSplit.pOType>>,
                   And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>>>>
