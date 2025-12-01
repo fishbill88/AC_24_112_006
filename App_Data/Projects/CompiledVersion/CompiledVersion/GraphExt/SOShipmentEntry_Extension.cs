@@ -387,13 +387,13 @@ namespace CompiledVersion.Graphs
             SOOrderExt ext = order.GetExtension<SOOrderExt>();
             decimal? totalFreight = 0m;
             var shipmentlist = PXSelectJoin<SOOrderShipment,
-                                    LeftJoin<SOShipment, On<SOShipment.shipmentNbr, Equal<SOOrderShipment.shipmentNbr>,
-                                        And<SOShipment.shipmentType, Equal<SOOrderShipment.shipmentType>>>>,
-                                        Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
-                                            And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
-                                                And<SOShipment.status, Equal<SOShipmentStatus.confirmed>>>>,
-                                            OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
-                                    .Select(Base, order.OrderType, order.OrderNbr);
+           LeftJoin<SOShipment, On<SOShipment.shipmentNbr, Equal<SOOrderShipment.shipmentNbr>,
+    And<SOShipment.shipmentType, Equal<SOOrderShipment.shipmentType>>>>,
+           Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
+         And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
+     And<SOShipment.status, Equal<SOShipmentStatus.confirmed>>>>,
+  OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
+         .Select(Base, order.OrderType, order.OrderNbr);
             foreach (var item in shipmentlist)
             {
 
@@ -410,9 +410,14 @@ namespace CompiledVersion.Graphs
             SOSetupExt sOSetupExt = Base.sosetup.Current.GetExtension<SOSetupExt>();
             if (sOSetupExt.UsrNotToExceed == order.ShipTermsID && order.CuryPremiumFreightAmt != totalFreight)
             {
-                order.CuryPremiumFreightAmt = totalFreight;
+                // Use PXDatabase to update CuryPremiumFreightAmt directly without triggering cache events
+                PXDatabase.Update<SOOrder>(
+            new PXDataFieldAssign<SOOrder.curyPremiumFreightAmt>(totalFreight),
+              new PXDataFieldAssign<SOOrder.premiumFreightAmt>(totalFreight), // Also update base currency amount
+             new PXDataFieldRestrict<SOOrder.orderType>(order.OrderType),
+            new PXDataFieldRestrict<SOOrder.orderNbr>(order.OrderNbr)
+             );
             }
-            Base.Caches[typeof(SOOrder)].Persist(order, PXDBOperation.Update);
         }
 
         public delegate IEnumerable CreateInvoiceDelegate(PXAdapter adapter);

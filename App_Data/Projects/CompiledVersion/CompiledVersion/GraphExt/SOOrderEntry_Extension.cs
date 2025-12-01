@@ -106,7 +106,9 @@ namespace CompiledVersion.Graphs
                 SOOrderEntry_Extension ext = graph.GetExtension<SOOrderEntry_Extension>();
                 ext.InvoiceOrders(list, arguments, massProcess, quickProcessFlow);
             });
-            yield return list;
+
+            // IMPORTANT: Return the list (enumerates SOOrder items). Do NOT 'yield return list;'
+            return list;
         }
 
         protected virtual void InvoiceOrders(List<SOOrder> list, Dictionary<string, object> arguments,

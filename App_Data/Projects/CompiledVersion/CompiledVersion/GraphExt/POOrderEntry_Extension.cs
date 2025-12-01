@@ -612,29 +612,29 @@ And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
     APVendorPriceMaint.CheckNewUnitCost<POLine, POLine.curyUnitCost>(sender, line, e.NewValue);
 }
         // Ensure Unit Cost is never below RTH Unit Cost
-        protected virtual void _(Events.FieldVerifying<POLine, POLine.curyUnitCost> e)
-        {
-            if (e.Row == null) return;
-            var line = e.Row as POLine;
-            var lineExt = line?.GetExtension<POLineExt>();
-            if (lineExt == null) return;
+        //protected virtual void _(Events.FieldVerifying<POLine, POLine.curyUnitCost> e)
+        //{
+        //    if (e.Row == null) return;
+        //    var line = e.Row as POLine;
+        //    var lineExt = line?.GetExtension<POLineExt>();
+        //    if (lineExt == null) return;
 
-            // If vendor price was used, allow unit cost as-is (still clamp to >=0)
-            if (lineExt.UsrUsedVendorPrice == true)
-            {
-                if (e.NewValue is decimal v && v < 0m)
-                    e.NewValue = 0m;
-                return;
-            }
+        //    // If vendor price was used, allow unit cost as-is (still clamp to >=0)
+        //    if (lineExt.UsrUsedVendorPrice == true)
+        //    {
+        //        if (e.NewValue is decimal v && v < 0m)
+        //            e.NewValue = 0m;
+        //        return;
+        //    }
 
-            var rth = lineExt.UsrSWKRTHCost ?? 0m;
-            if (rth > 0m && e.NewValue is decimal newUC && newUC < rth)
-            {
-                e.NewValue = rth;
-                e.Cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, newUC,
-                new PXSetPropertyException(line, Messages.UnitCostRaisedToRTH, PXErrorLevel.Warning));
-            }
-        }
+        //    var rth = lineExt.UsrSWKRTHCost ?? 0m;
+        //    if (rth > 0m && e.NewValue is decimal newUC && newUC < rth)
+        //    {
+        //        e.NewValue = rth;
+        //        e.Cache.RaiseExceptionHandling<POLine.curyUnitCost>(line, newUC,
+        //        new PXSetPropertyException(line, Messages.UnitCostRaisedToRTH, PXErrorLevel.Warning));
+        //    }
+        //}
 
         // Failsafe recalc when unit cost changes
         //protected virtual void _(Events.FieldUpdated<POLine, POLine.curyUnitCost> e)
@@ -651,40 +651,40 @@ And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
         //}
 
         // Validate user-entered Extended Cost, and fix if off formula
-        protected virtual void _(Events.FieldVerifying<POLine, POLine.curyExtCost> e)
-        {
-            if (e.Row == null) return;
+        //protected virtual void _(Events.FieldVerifying<POLine, POLine.curyExtCost> e)
+        //{
+        //    if (e.Row == null) return;
 
-            var line = (POLine)e.Row;
-            var order = Base.Document.Current;
-            var qty = line.OrderQty ?? 0m;
-            var unitCost = line.CuryUnitCost ?? 0m;
+        //    var line = (POLine)e.Row;
+        //    var order = Base.Document.Current;
+        //    var qty = line.OrderQty ?? 0m;
+        //    var unitCost = line.CuryUnitCost ?? 0m;
 
-            var expected = RoundCury(order, unitCost * qty);
-            if (!(e.NewValue is decimal newExt)) newExt = 0m;
+        //    var expected = RoundCury(order, unitCost * qty);
+        //    if (!(e.NewValue is decimal newExt)) newExt = 0m;
 
-            // If new ext cost deviates from expected, snap back to expected
-            if (Math.Abs(newExt - expected) > 0.009m)
-            {
-                e.NewValue = expected;
-                e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
-                new PXSetPropertyException(line, Messages.ExtCostAdjustedToFormula, PXErrorLevel.Warning));
-            }
+        //    // If new ext cost deviates from expected, snap back to expected
+        //    if (Math.Abs(newExt - expected) > 0.009m)
+        //    {
+        //        e.NewValue = expected;
+        //        e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
+        //        new PXSetPropertyException(line, Messages.ExtCostAdjustedToFormula, PXErrorLevel.Warning));
+        //    }
 
-            // Make sure it is not below RTH minimum when vendor price not used
-            var lineExt = line.GetExtension<POLineExt>();
-            if (lineExt?.UsrUsedVendorPrice != true)
-            {
-                var rthUnit = lineExt?.UsrSWKRTHCost ?? 0m;
-                var min = RoundCury(order, rthUnit * qty);
-                if (newExt + 0.009m < min)
-                {
-                    e.NewValue = min;
-                    e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
-                    new PXSetPropertyException(line, Messages.ExtCostRaisedToRTHMin, PXErrorLevel.Warning));
-                }
-            }
-        }
+        //    // Make sure it is not below RTH minimum when vendor price not used
+        //    var lineExt = line.GetExtension<POLineExt>();
+        //    if (lineExt?.UsrUsedVendorPrice != true)
+        //    {
+        //        var rthUnit = lineExt?.UsrSWKRTHCost ?? 0m;
+        //        var min = RoundCury(order, rthUnit * qty);
+        //        if (newExt + 0.009m < min)
+        //        {
+        //            e.NewValue = min;
+        //            e.Cache.RaiseExceptionHandling<POLine.curyExtCost>(line, newExt,
+        //            new PXSetPropertyException(line, Messages.ExtCostRaisedToRTHMin, PXErrorLevel.Warning));
+        //        }
+        //    }
+        //}
 
         private bool TryGetLinkedSOLine(POLine poLine, out SOLine soLine, out SOOrder soOrder)
         {
