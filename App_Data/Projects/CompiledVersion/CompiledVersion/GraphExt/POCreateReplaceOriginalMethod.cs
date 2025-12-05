@@ -260,12 +260,9 @@ namespace CompiledVersion.Graphs
                     new FieldLookup<POLine.costCenterID>(demand.CostCenterID),
                 };
 
-                // Only add the SPC discriminator when present to split merged lines by SPC Code
-                if (!string.IsNullOrWhiteSpace(spcCode))
-                {
-                    // Using the POLine extension field as a discriminator is supported by DocumentList key matching
-                    lineSearchValues.Add(new FieldLookup<POLineExt.usrSWKSPCCode>(spcCode));
-                }
+                // ALWAYS add SPC Code discriminator to ensure lines with different SPC codes (including null) never merge
+                // This prevents merging of lines with SPC Cost/Code and lines without SPC Cost/Code
+                lineSearchValues.Add(new FieldLookup<POLineExt.usrSWKSPCCode>(spcCode));
 
                 if (poSetup.CopyLineDescrSO == true && soline != null)
                 {
