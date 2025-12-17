@@ -99,6 +99,10 @@ namespace CompiledVersion
         public const string AttributeFORMTYPE = "FORMTYPE";
         #endregion
 
+        #region Email Process Messages
+        public const string RelatedEntityTypeRequired = "Related Entity Type is required for processing.";
+        #endregion
+
         #region Warning Messages
         public const string NonStockItemInvoiceWarning = "Warning: This line contains a non-stock item that cannot be invoiced.";
         public const string VendorInformationMissing = "Vendor information is incomplete for this item.";

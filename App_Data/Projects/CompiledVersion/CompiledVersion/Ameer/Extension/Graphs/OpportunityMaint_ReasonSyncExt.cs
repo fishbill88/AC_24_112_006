@@ -5,6 +5,7 @@ using System;
 
 namespace CompiledVersion.GraphExt
 {
+    //skip documentation for this
     public class OpportunityMaint_ReasonSyncExt : PXGraphExtension<OpportunityMaint>
     {
         public static bool IsActive() => false;

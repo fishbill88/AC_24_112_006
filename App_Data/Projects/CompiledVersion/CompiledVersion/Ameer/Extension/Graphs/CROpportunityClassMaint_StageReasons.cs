@@ -8,6 +8,7 @@ using CompiledVersion.DAC;
 
 namespace CompiledVersion.GraphExt
 {
+    //skip documentation for this
     public class CROpportunityClassMaint_StageReasons : PXGraphExtension<CROpportunityClassMaint>
     {
         public static bool IsActive() => false;

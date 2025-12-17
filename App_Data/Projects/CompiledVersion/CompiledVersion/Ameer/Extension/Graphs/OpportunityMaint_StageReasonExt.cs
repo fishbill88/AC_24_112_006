@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace CompiledVersion
 {
+    //skip documentation for this
     public class OpportunityMaint_StageReasonExt : PXGraphExtension<OpportunityMaint>
     {
         public static bool IsActive() => false;

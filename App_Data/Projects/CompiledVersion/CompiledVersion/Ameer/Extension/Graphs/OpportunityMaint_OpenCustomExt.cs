@@ -6,6 +6,7 @@ using CompiledVersion.DAC; // for CROpportunityReasonExt extension
 
 namespace CompiledVersion
 {
+    //skip documentation for this
     /// <summary>
     /// Adds custom workflow action popups (Stage / Reason selection) to replace standard workflow buttons.
     /// This extension intercepts OpenFromNew, Open, CloseAsWon, and CloseAsLost actions to show a custom dialog

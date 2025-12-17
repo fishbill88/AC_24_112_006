@@ -5,6 +5,7 @@ using System;
 
 namespace CompiledVersion.DAC
 {
+    //skip documentation for this
     public sealed class CROpportunityReasonExt : PXCacheExtension<CROpportunity>
     {
         public static bool IsActive() => true;
