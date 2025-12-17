@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{931FCBF7-3DDC-4790-8A8B-BDBE2E9F0AE6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CompiledVersion</RootNamespace>
+    <AssemblyName>CompiledVersion</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <WarningLevel>3</WarningLevel>
+    <FileVersion>24.112.0026</FileVersion>
+    <InformationalVersion>24.112.0026</InformationalVersion>
+    <Copyright>Copyright © 2005-2024 Acumatica, Inc. All rights reserved.</Copyright>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Bin\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\25-200-0248\Bin\PX.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Common.Std, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\25-200-0248\Bin\PX.Common.Std.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.CS.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\25-200-0248\Bin\PX.CS.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\25-200-0248\Bin\PX.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Data.BQL.Fluent, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\25-200-0248\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+    </Reference>
+    <Reference Include="PX.Objects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\25-200-0248\Bin\PX.Objects.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ameer\Extension\Graphs\OpportunityMaint_OpenCustomExt.cs" />
+    <Compile Include="Ameer\Extension\Workflows\OpportunityMaint_WorkflowFormExt.cs" />
+    <Compile Include="DACExt\ARInvoiceExt.cs" />
+    <Compile Include="DACExt\CROpportunityExt.cs" />
+    <Compile Include="DACExt\CROpportunityProductsExt.cs" />
+    <Compile Include="Ameer\Extension\DAC\CROpportunityReasonExt.cs" />
+    <Compile Include="DACExt\CRQuoteExt.cs" />
+    <Compile Include="DACExt\CustomerExt.cs" />
+    <Compile Include="DACExt\INSetupExt.cs" />
+    <Compile Include="DACExt\InventoryItemExt.cs" />
+    <Compile Include="DACExt\POCreateFilterExt.cs" />
+    <Compile Include="DACExt\POFixedDemandExt.cs" />
+    <Compile Include="DACExt\POLineExt.cs" />
+    <Compile Include="DACExt\POOrderExt.cs" />
+    <Compile Include="DACExt\POReceiptExt.cs" />
+    <Compile Include="Ameer\DAC\CROpportunityClassStageReason.cs" />
+    <Compile Include="Discarded DAC\SOInvoiceShipmentExt.cs" />
+    <Compile Include="DACExt\SOLineExt.cs" />
+    <Compile Include="DACExt\SOLineSplit3Ext.cs" />
+    <Compile Include="DACExt\SOOrderExt.cs" />
+    <Compile Include="DACExt\SOOrderTypeExt.cs" />
+    <Compile Include="DACExt\SOSetupExt.cs" />
+    <Compile Include="DACExt\SOShipmentExt.cs" />
+    <Compile Include="DAC\InventoryRequest.cs" />
+    <Compile Include="DAC\SOCustSalesPeople.cs" />
+    <Compile Include="Discarded Graphs\CRTaskMaint_ReadyForRequestor.cs" />
+    <Compile Include="Discarded Graphs\CRTaskMaint_ReadyForRequestorEditableExt.cs" />
+    <Compile Include="Discarded Graphs\CRTaskMaint_Workflow.cs" />
+    <Compile Include="Ameer\Extension\Graphs\CROpportunityClassMaint_StageReasons.cs" />
+    <Compile Include="GraphExt\InventoryItemMaintExt.cs" />
+    <Compile Include="GraphExt\NonStockItemMaintExt.cs" />
+    <Compile Include="GraphExt\OpportunityMaintExt.cs" />
+    <Compile Include="Ameer\Extension\Graphs\OpportunityMaint_ReasonSyncExt.cs" />
+    <Compile Include="Ameer\Extension\Graphs\OpportunityMaint_StageReasonExt.cs" />
+    <Compile Include="GraphExt\POCreate3.cs" />
+    <Compile Include="GraphExt\POCreate4.cs" />
+    <Compile Include="GraphExt\POCreateReplaceOriginalMethod.cs" />
+    <Compile Include="GraphExt\POCreateView.cs" />
+    <Compile Include="GraphExt\POCreate_2.cs" />
+    <Compile Include="Discarded Graphs\POCreate_1.cs" />
+    <Compile Include="GraphExt\POOrderEntry_Extension.cs" />
+    <Compile Include="GraphExt\POReceiptEntry_Extension.cs" />
+    <Compile Include="GraphExt\QuoteMaintCRCreateSalesOrderExt.cs" />
+    <Compile Include="GraphExt\QuoteMaint_Extension.cs" />
+    <Compile Include="GraphExt\SOCreateShipment_Extension.cs" />
+    <Compile Include="GraphExt\SOInvoiceEntry_Extension.cs" />
+    <Compile Include="Discarded Graphs\SOInvoiceShipmentActionsExt.cs" />
+    <Compile Include="GraphExt\SOOrderEntryCopyOppFieldsExt.cs" />
+    <Compile Include="GraphExt\SOOrderEntry_Extension.cs" />
+    <Compile Include="GraphExt\SOReleaseInvoice_Extension.cs" />
+    <Compile Include="GraphExt\SOSetupMaint_Extension.cs" />
+    <Compile Include="GraphExt\SOShipmentEntry_Extension.cs" />
+    <Compile Include="Discarded Graphs\POCreate_Extension.cs" />
+    <Compile Include="Discarded Graphs\SOShipmentEntry_WorkflowExt.cs" />
+    <Compile Include="GraphExt\TestCustomerMaint_Extension.cs" />
+    <Compile Include="Graphs\ItemRequestEntry.cs" />
+    <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Messages\Messages.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
+      <Version>8.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>6.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

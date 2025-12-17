@@ -391,7 +391,7 @@
             </px:PXTabItem>
 			<px:PXTabItem Text="Landed Costs" VisibleExp="DataControls[&quot;chkShowLandedCostsTab&quot;].Value == 1" BindingContext="form">
                 <Template>
-                    <px:PXGrid ID="gridLandedCosts" runat="server" DataSourceID="ds" Width="100%" SkinID="Details" BorderStyle="None" AdjustPageSize="Auto" >
+                    <px:PXGrid ID="gridLandedCosts" runat="server" DataSourceID="ds" Width="100%" SkinID="Details" BorderStyle="None" AdjustPageSize="Auto">
                         <Levels>
                             <px:PXGridLevel DataMember="landedCosts" >
                                 <RowTemplate>
