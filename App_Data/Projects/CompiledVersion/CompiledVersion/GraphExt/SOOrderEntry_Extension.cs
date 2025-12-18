@@ -321,6 +321,36 @@ namespace CompiledVersion.Graphs
                 }
             }
         }
+        protected virtual void _(Events.FieldSelecting<SOOrder, SOOrderExt.usrFreightTotal> e)
+        {
+            if (e.Row == null) return;
+
+            SOOrder order = e.Row;
+            
+            // Calculate freight total from all confirmed and invoiced shipments
+            decimal? totalFreight = 0m;
+            var shipmentlist = PXSelectJoin<SOOrderShipment,
+                LeftJoin<SOShipment, On<SOShipment.shipmentNbr, Equal<SOOrderShipment.shipmentNbr>,
+                    And<SOShipment.shipmentType, Equal<SOOrderShipment.shipmentType>>>>,
+                Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
+                    And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
+                    And<Where<SOShipment.status, Equal<SOShipmentStatus.confirmed>,
+                        Or<SOShipment.status, Equal<SOShipmentStatus.invoiced>>>>>>,
+                OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
+                .Select(Base, order.OrderType, order.OrderNbr);
+
+            foreach (PXResult<SOOrderShipment, SOShipment> item in shipmentlist)
+            {
+                SOShipment _shipment = item;
+                if (_shipment.Status == SOShipmentStatus.Confirmed || _shipment.Status == SOShipmentStatus.Invoiced)
+                {
+                    totalFreight += (_shipment.CuryFreightAmt ?? 0m);
+                }
+            }
+
+            e.ReturnValue = totalFreight;
+        }
+
         protected virtual void _(Events.RowSelected<SOOrder> e, PXRowSelected baseMethod)
         {
             baseMethod?.Invoke(e.Cache, e.Args);

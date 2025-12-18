@@ -42,47 +42,56 @@ namespace CompiledVersion.Graphs
             SOOrderExt orderExt = order.GetExtension<SOOrderExt>();
             SOSetupExt sOSetupExt = Base.sosetup.Current.GetExtension<SOSetupExt>();
             if (orderExt == null) return;
-            // Assuming UsrFreightPriceLimit is a decimal field in SOOrderExt
-            decimal? freightLimit = orderExt.UsrFreightPriceLimit ?? 0m;
+
+            // Only enforce limit if UsrFreightPriceLimit has a value and shipping terms match
+            if (orderExt.UsrFreightPriceLimit == null || orderExt.UsrFreightPriceLimit <= 0m || 
+                order.ShipTermsID != sOSetupExt.UsrNotToExceed || !(shipment.OverrideFreightAmount ?? false))
+            {
+                // Clear any previous error
+                e.Cache.RaiseExceptionHandling<SOShipment.curyFreightAmt>(shipment, newAmt, null);
+                return;
+            }
+
+            decimal? freightLimit = orderExt.UsrFreightPriceLimit;
             decimal? currentFreight = 0m;
 
-
+            // Calculate freight from OTHER confirmed/invoiced shipments (exclude current shipment)
             var shipmentlist = PXSelectJoin<SOOrderShipment,
                                     LeftJoin<SOShipment, On<SOShipment.shipmentNbr, Equal<SOOrderShipment.shipmentNbr>,
                                         And<SOShipment.shipmentType, Equal<SOOrderShipment.shipmentType>>>>,
                                         Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
                                             And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
-                                                And<SOShipment.status, Equal<SOShipmentStatus.confirmed>>>>,
+                                                And<SOShipment.shipmentNbr, NotEqual<Required<SOShipment.shipmentNbr>>,
+                                                And<Where<SOShipment.status, Equal<SOShipmentStatus.confirmed>,
+                                                    Or<SOShipment.status, Equal<SOShipmentStatus.invoiced>>>>>>>,
                                             OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
-                                    .Select(Base, order.OrderType, order.OrderNbr);
+                                    .Select(Base, order.OrderType, order.OrderNbr, shipment.ShipmentNbr);
             foreach (var item in shipmentlist)
             {
-
                 SOOrderShipment orderShipment = item.GetItem<SOOrderShipment>();
                 SOShipment _shipment = item.GetItem<SOShipment>();
-                if (_shipment.Status == SOShipmentStatus.Confirmed)
+                if (_shipment.ShipmentNbr != shipment.ShipmentNbr && 
+                    (_shipment.Status == SOShipmentStatus.Confirmed || _shipment.Status == SOShipmentStatus.Invoiced))
                 {
                     currentFreight += (_shipment.CuryFreightAmt ?? 0m);
                 }
             }
 
             // Check if the new freight amount exceeds the limit
-            // if newAMt is greater than the limit show an error on the field and replace the value with the limit
-            if ((newAmt + currentFreight) > freightLimit && (shipment.OverrideFreightAmount ?? false) && order.ShipTermsID == sOSetupExt.UsrNotToExceed)
+            if ((newAmt + currentFreight) > freightLimit)
             {
                 decimal? exceedAmt = (newAmt + currentFreight) - freightLimit;
-                //PXUIFieldAttribute.SetError<SOShipment.curyFreightAmt>(e.Cache, shipment, "Freight amount exceeds the limit set in the order.");
-                e.Cache.SetValue<SOShipment.curyFreightAmt>(shipment, freightLimit); // Set freight amount to limit
-                shipment.CuryFreightAmt = freightLimit - currentFreight; // Update the shipment's freight amount to the limit
-                                                                         // Optionally, you can also set the focus back to the field
-                                                                         //throw new PXException("Freight amount exceeds the limit set in the order.");
+                decimal? adjustedAmt = freightLimit - currentFreight;
+                
+                e.Cache.SetValue<SOShipment.curyFreightAmt>(shipment, adjustedAmt);
+                shipment.CuryFreightAmt = adjustedAmt;
 
-                e.Cache.RaiseExceptionHandling<SOShipment.curyFreightAmt>(e.Row, freightLimit, new PXSetPropertyException(e.Row, Messages.FreightExceedsLimit(exceedAmt), PXErrorLevel.RowError));
-                //e.Cache.RaiseExceptionHandling<SOShipment.curyFreightAmt>(shipment, newAmt, new PXSetPropertyException("Freight amount exceeds the limit set in the order."));
+                e.Cache.RaiseExceptionHandling<SOShipment.curyFreightAmt>(e.Row, adjustedAmt, 
+                    new PXSetPropertyException(Messages.FreightExceedsLimit(exceedAmt), PXErrorLevel.RowError));
             }
             else
             {
-                // Optionally clear any previous error if the new amount is valid
+                // Clear any previous error if the new amount is valid
                 e.Cache.RaiseExceptionHandling<SOShipment.curyFreightAmt>(shipment, newAmt, null);
             }
 
@@ -391,7 +400,8 @@ namespace CompiledVersion.Graphs
     And<SOShipment.shipmentType, Equal<SOOrderShipment.shipmentType>>>>,
            Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
          And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
-     And<SOShipment.status, Equal<SOShipmentStatus.confirmed>>>>,
+     And<Where<SOShipment.status, Equal<SOShipmentStatus.confirmed>,
+         Or<SOShipment.status, Equal<SOShipmentStatus.invoiced>>>>>>,
   OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
          .Select(Base, order.OrderType, order.OrderNbr);
             foreach (var item in shipmentlist)
@@ -399,7 +409,7 @@ namespace CompiledVersion.Graphs
 
                 SOOrderShipment orderShipment = item.GetItem<SOOrderShipment>();
                 SOShipment _shipment = item.GetItem<SOShipment>();
-                if (_shipment.Status == SOShipmentStatus.Confirmed)
+                if (_shipment.Status == SOShipmentStatus.Confirmed || _shipment.Status == SOShipmentStatus.Invoiced)
                 {
                     totalFreight += (_shipment.CuryFreightAmt ?? 0m);
                 }

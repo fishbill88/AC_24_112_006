@@ -17,9 +17,8 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region UsrFreightCost
-        [PXDBDecimal(2)]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXUIField(DisplayName = "Freight Cost")]
+        [PXDecimal(2)]
+        [PXUIField(DisplayName = "Freight Cost", Enabled = false)]
         public decimal? UsrFreightCost { get; set; }
         public abstract class usrFreightCost : PX.Data.BQL.BqlDecimal.Field<usrFreightCost> { }
         #endregion
@@ -39,9 +38,8 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region UsrFreightPrice
-        [PXDBDecimal(2)]
-        [PXDefault(TypeCode.Decimal, "0.0", PersistingCheck = PXPersistingCheck.Nothing)]
-        [PXUIField(DisplayName = "Freight Price")]
+        [PXDecimal(2)]
+        [PXUIField(DisplayName = "Freight Price", Enabled = false)]
         public decimal? UsrFreightPrice { get; set; }
         public abstract class usrFreightPrice : PX.Data.BQL.BqlDecimal.Field<usrFreightPrice> { }
         #endregion

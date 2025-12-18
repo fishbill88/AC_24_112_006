@@ -7,6 +7,7 @@ using PX.Objects.CR;
 
 namespace CompiledVersion.DAC
 {
+    //skip documentation for this
     [Serializable]
     [PXCacheName("Opportunity Class Stage Reason")]
     public partial class CROpportunityClassStageReason : PXBqlTable, IBqlTable

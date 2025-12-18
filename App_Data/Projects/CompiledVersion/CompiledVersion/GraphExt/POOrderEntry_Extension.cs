@@ -2,6 +2,7 @@
 using PX.Data;
 using PX.Common;
 using PX.Objects.AP;
+using PX.Objects.AR;
 using PX.Objects.Common.DAC;
 using PX.Objects.Extensions.MultiCurrency;
 using PX.Objects.IN;
@@ -1054,6 +1055,114 @@ And<SOLineSplit.pONbr, Equal<Required<SOLineSplit.pONbr>>,
         #endregion
 
         #region POOrder
+        protected virtual void _(Events.FieldSelecting<POOrder, POOrderExt.usrFreightCost> e)
+        {
+            if (e.Row == null) return;
+            POOrder order = e.Row;
+
+            // Only calculate for drop-ship orders linked to SO
+            if (order.SOOrderType == null || order.SOOrderNbr == null)
+            {
+                e.ReturnValue = 0m;
+                return;
+            }
+
+            // Get all SO orders linked to this PO (handles merged SOs)
+            var linkedSOOrders = PXSelectJoin<SOOrder,
+                InnerJoin<DropShipLink,
+                    On<DropShipLink.sOOrderType, Equal<SOOrder.orderType>,
+                    And<DropShipLink.sOOrderNbr, Equal<SOOrder.orderNbr>>>>,
+                Where<DropShipLink.pOOrderType, Equal<Required<POOrder.orderType>>,
+                    And<DropShipLink.pOOrderNbr, Equal<Required<POOrder.orderNbr>>>>>
+                .Select(Base, order.OrderType, order.OrderNbr)
+                .RowCast<SOOrder>()
+                .ToList();
+
+            if (!linkedSOOrders.Any())
+            {
+                e.ReturnValue = 0m;
+                return;
+            }
+
+            decimal totalFreightCost = 0m;
+
+            // For each linked SO, find invoices created from shipments
+            foreach (SOOrder soOrder in linkedSOOrders)
+            {
+                // Get all invoices created from this SO's shipments
+                var invoices = PXSelectJoin<ARInvoice,
+                    InnerJoin<SOOrderShipment,
+                        On<SOOrderShipment.invoiceType, Equal<ARInvoice.docType>,
+                        And<SOOrderShipment.invoiceNbr, Equal<ARInvoice.refNbr>>>>,
+                    Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
+                        And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
+                    .Select(Base, soOrder.OrderType, soOrder.OrderNbr)
+                    .RowCast<ARInvoice>()
+                    .ToList();
+
+                foreach (ARInvoice invoice in invoices)
+                {
+                    totalFreightCost += (invoice.CuryFreightCost ?? 0m);
+                }
+            }
+
+            e.ReturnValue = totalFreightCost;
+        }
+
+        protected virtual void _(Events.FieldSelecting<POOrder, POOrderExt.usrFreightPrice> e)
+        {
+            if (e.Row == null) return;
+            POOrder order = e.Row;
+
+            // Only calculate for drop-ship orders linked to SO
+            if (order.SOOrderType == null || order.SOOrderNbr == null)
+            {
+                e.ReturnValue = 0m;
+                return;
+            }
+
+            // Get all SO orders linked to this PO (handles merged SOs)
+            var linkedSOOrders = PXSelectJoin<SOOrder,
+                InnerJoin<DropShipLink,
+                    On<DropShipLink.sOOrderType, Equal<SOOrder.orderType>,
+                    And<DropShipLink.sOOrderNbr, Equal<SOOrder.orderNbr>>>>,
+                Where<DropShipLink.pOOrderType, Equal<Required<POOrder.orderType>>,
+                    And<DropShipLink.pOOrderNbr, Equal<Required<POOrder.orderNbr>>>>>
+                .Select(Base, order.OrderType, order.OrderNbr)
+                .RowCast<SOOrder>()
+                .ToList();
+
+            if (!linkedSOOrders.Any())
+            {
+                e.ReturnValue = 0m;
+                return;
+            }
+
+            decimal totalFreightPrice = 0m;
+
+            // For each linked SO, find invoices created from shipments
+            foreach (SOOrder soOrder in linkedSOOrders)
+            {
+                // Get all invoices created from this SO's shipments
+                var invoices = PXSelectJoin<ARInvoice,
+                    InnerJoin<SOOrderShipment,
+                        On<SOOrderShipment.invoiceType, Equal<ARInvoice.docType>,
+                        And<SOOrderShipment.invoiceNbr, Equal<ARInvoice.refNbr>>>>,
+                    Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
+                        And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
+                    .Select(Base, soOrder.OrderType, soOrder.OrderNbr)
+                    .RowCast<ARInvoice>()
+                    .ToList();
+
+                foreach (ARInvoice invoice in invoices)
+                {
+                    totalFreightPrice += (invoice.CuryFreightAmt ?? 0m);
+                }
+            }
+
+            e.ReturnValue = totalFreightPrice;
+        }
+
         protected virtual void _(Events.RowSelected<POOrder> e, PXRowSelected baseMethod)
         {
             POOrder order = (POOrder)e.Row;
