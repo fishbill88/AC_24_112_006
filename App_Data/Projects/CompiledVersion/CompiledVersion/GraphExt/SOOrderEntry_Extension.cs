@@ -381,6 +381,10 @@ namespace CompiledVersion.Graphs
                 (typeExt?.UsrShowVendorAddress ?? false) ? PXUIVisibility.Visible : PXUIVisibility.Invisible);
 
             PXUIFieldAttribute.SetEnabled<SOOrderExt.usrHubspotDealID>(e.Cache, order, false);
+            
+            // Shipping Instructions should only be editable when status is Hold
+            bool isOnHold = order.Status == SOOrderStatus.Hold;
+            PXUIFieldAttribute.SetEnabled<SOOrderExt.usrShippingInstructions>(e.Cache, order, isOnHold);
         }
 
         protected virtual void _(Events.FieldUpdated<SOOrder, SOOrder.prepaymentReqPct> e)

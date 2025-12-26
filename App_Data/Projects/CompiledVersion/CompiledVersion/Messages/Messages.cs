@@ -24,6 +24,9 @@ namespace CompiledVersion
         public static string FreightExceedsLimit(decimal? amount) =>
             PXLocalizer.LocalizeFormat(_freightExceedsLimit, amount);
 
+        private const string _poTotalExceedsNTE = "Total PO amount for Sales Order {0} ({1}) exceeds Not-To-Exceed limit ({2}) by {3}.";
+        public static string POTotalExceedsNTE(string soOrderNbr, decimal? totalPO, decimal? nteLimit, decimal? exceedAmt) =>
+            PXLocalizer.LocalizeFormat(_poTotalExceedsNTE, soOrderNbr, totalPO, nteLimit, exceedAmt);
 
         public const string _cannotInvoiceNonStockItems = "You cannot invoice non-stock items: {0}";
         public static string CannotInvoiceNonStockItems(string nonstocks) =>

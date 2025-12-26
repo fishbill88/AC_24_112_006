@@ -393,7 +393,35 @@ namespace CompiledVersion.Graphs
                 if (poLineExt != null)
                 {
                     poLineExt.UsrVendorSpecTerms = soLineExt?.UsrVendorSpecTerms;
-                    poLineExt.UsrVendorNotes = soLineExt?.UsrVendorNotes;
+                    
+                    // Concatenate Vendor Notes when merging lines, up to 250 characters
+                    string newVendorNotes = soLineExt?.UsrVendorNotes;
+                    if (!string.IsNullOrWhiteSpace(newVendorNotes))
+                    {
+                        if (string.IsNullOrWhiteSpace(poLineExt.UsrVendorNotes))
+                        {
+                            // First note - just set it, truncate if needed
+                            poLineExt.UsrVendorNotes = newVendorNotes.Length > 250 
+                                ? newVendorNotes.Substring(0, 250) 
+                                : newVendorNotes;
+                        }
+                        else if (poLineExt.UsrVendorNotes.Length < 250)
+                        {
+                            // Existing notes - concatenate with separator
+                            string separator = " | ";
+                            string combined = poLineExt.UsrVendorNotes + separator + newVendorNotes;
+                            poLineExt.UsrVendorNotes = combined.Length > 250 
+                                ? combined.Substring(0, 250) 
+                                : combined;
+                        }
+                        // If already at 250 chars, don't add more
+                    }
+                    
+                    // Copy Shipping Terms - only use the first one when merging multiple SO lines
+                    if (string.IsNullOrWhiteSpace(poLineExt.UsrShippingTerms))
+                    {
+                        poLineExt.UsrShippingTerms = soLineExt?.UsrShippingTerms;
+                    }
                 }
 
                 //SOOrder soOrder = SOOrder.PK.Find(Base, soline.OrderType, soline.OrderNbr);
@@ -401,8 +429,12 @@ namespace CompiledVersion.Graphs
                 docgraph.CurrentDocument.Current.FOBPoint = soOrder?.FOBPoint;
                 docgraph.CurrentDocument.Current.ShipVia = soOrder?.ShipVia;
 
-                poOrderExt.UsrShipTermsID = soOrder?.ShipTermsID;
-                poOrderExt.UsrCustomerAccount = soOrderExt?.UsrCustomerAccount;
+                // Copy Shipping Terms and Carrier Account only for Drop-Ship orders
+                if (demand.PlanType == INPlanConstants.Plan6D || demand.PlanType == "6D")
+                {
+                    poOrderExt.UsrShipTermsID = soOrder?.ShipTermsID;
+                    poOrderExt.UsrCustomerAccount = soOrderExt?.UsrCustomerAccount;
+                }
             }
 
 

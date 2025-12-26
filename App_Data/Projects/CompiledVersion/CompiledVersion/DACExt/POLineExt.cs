@@ -22,7 +22,7 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region UsrVendorNotes
-        [PXDBString(500, IsUnicode = true)]
+        [PXDBString(250, IsUnicode = true)]
         [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         [PXUIField(DisplayName = "Vendor Notes")]
         public string UsrVendorNotes { get; set; }
@@ -30,9 +30,10 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region UsrShippingTerms
-        [PXString(1, IsFixed = true)]
-        [SOShipComplete.List()]
-        [PXUIField(DisplayName = "Shipping Rule", Enabled = false)]
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXUIField(DisplayName = "Shipping Terms")]
+        [PXSelector(typeof(ShipTerms.shipTermsID), DescriptionField = typeof(ShipTerms.description), CacheGlobal = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
         public string UsrShippingTerms { get; set; }
         public abstract class usrShippingTerms : PX.Data.BQL.BqlString.Field<usrShippingTerms> { }
         #endregion

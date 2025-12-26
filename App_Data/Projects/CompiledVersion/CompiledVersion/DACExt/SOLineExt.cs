@@ -37,10 +37,19 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region UsrVendorNotes
-        [PXDBString(500, IsUnicode = true)]
+        [PXDBString(250, IsUnicode = true)]
         [PXUIField(DisplayName = "Vendor Notes")]
         public string UsrVendorNotes { get; set; }
         public abstract class usrVendorNotes : PX.Data.BQL.BqlString.Field<usrVendorNotes> { }
+        #endregion
+
+        #region UsrShippingTerms
+        [PXDBString(10, IsUnicode = true, InputMask = ">aaaaaaaaaa")]
+        [PXUIField(DisplayName = "Shipping Terms")]
+        [PXSelector(typeof(ShipTerms.shipTermsID), DescriptionField = typeof(ShipTerms.description), CacheGlobal = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        public string UsrShippingTerms { get; set; }
+        public abstract class usrShippingTerms : PX.Data.BQL.BqlString.Field<usrShippingTerms> { }
         #endregion
 
         #region UsrItemSpecs

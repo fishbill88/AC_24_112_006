@@ -69,6 +69,14 @@ namespace CompiledVersion.DAC
         public abstract class usrCopyLineAttachmentsToPO : PX.Data.BQL.BqlBool.Field<usrCopyLineAttachmentsToPO> { }
         #endregion
 
+        #region UsrEnforcePONTE
+        [PXDBBool]
+        [PXUIField(DisplayName = "Enforce PO Not-To-Exceed Limit")]
+        [PXDefault(false, PersistingCheck = PXPersistingCheck.Nothing)]
+        public bool? UsrEnforcePONTE { get; set; }
+        public abstract class usrEnforcePONTE : PX.Data.BQL.BqlBool.Field<usrEnforcePONTE> { }
+        #endregion
+
         #endregion
 
         #region UsrNonstock1
