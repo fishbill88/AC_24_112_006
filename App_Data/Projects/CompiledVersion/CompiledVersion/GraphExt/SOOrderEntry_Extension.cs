@@ -563,8 +563,47 @@ namespace CompiledVersion.Graphs
         protected virtual void _(Events.FieldUpdated<SOLine, SOLine.inventoryID> e)
         {
             if (e.Row == null) return;
-            TryRecalculateUnitCost(e.Cache, e.Row);
+            
+            // Copy default vendor to UsrVendorID
             var lineExt = e.Row.GetExtension<SOLineExt>();
+            POVendorInventory defaultVendor = null;
+            foreach (POVendorInventory defVen in PXSelect<POVendorInventory,
+                Where<POVendorInventory.inventoryID, Equal<Required<POVendorInventory.inventoryID>>>>
+                .Select(Base, e.Row.InventoryID))
+            {
+                if (defVen.IsDefault == true)
+                {
+                    defaultVendor = defVen;
+                    break;
+                }
+            }
+
+            if (defaultVendor != null)
+            {
+                e.Cache.SetValueExt<SOLineExt.usrVendorID>(e.Row, defaultVendor.VendorID);
+                e.Cache.SetValueExt<SOLineExt.usrVendorLocationID>(e.Row, defaultVendor.VendorLocationID);
+
+                Address address = PXSelect<Address,
+                    Where<Address.bAccountID, Equal<Required<Address.bAccountID>>>>
+                    .Select(Base, defaultVendor.VendorID);
+
+                if (address != null)
+                {
+                    lineExt.UsrVendorAddress = string.Format("{0}{1}{2}, {3} {4}",
+                        address.AddressLine1 ?? "",
+                        string.IsNullOrWhiteSpace(address.AddressLine2) ? "" : " " + address.AddressLine2,
+                        string.IsNullOrWhiteSpace(address.City) ? "" : ", " + address.City,
+                        address.State ?? "",
+                        address.PostalCode ?? ""
+                    ).Trim();
+                }
+                else
+                {
+                    lineExt.UsrVendorAddress = null;
+                }
+            }
+
+            TryRecalculateUnitCost(e.Cache, e.Row);
             if (lineExt?.UsrSWKSPCCost >0)
             {
                 // Automatically check the Manual Cost checkbox when SPC Cost >0

@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CompiledVersion.DAC;
+using System;
 
 namespace CompiledVersion.Graphs
 {
@@ -306,6 +307,15 @@ namespace CompiledVersion.Graphs
 
                     // Set the note on the Shipment
                     PXNoteAttribute.SetNote(itemGraph.Item.Cache, item, noteText);
+                    #endregion
+
+                    #region Copy Files
+                    // Copy files/attachments from Item Request to Inventory Item
+                    Guid[] files = PXNoteAttribute.GetFileNotes(Caches[typeof(InventoryRequest)], request);
+                    if (files != null && files.Length > 0)
+                    {
+                        PXNoteAttribute.SetFileNotes(itemGraph.Item.Cache, item, files);
+                    }
                     #endregion
 
                     // Save all changes
