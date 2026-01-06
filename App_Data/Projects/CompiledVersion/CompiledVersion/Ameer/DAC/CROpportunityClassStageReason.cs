@@ -5,7 +5,7 @@ using PX.Data.BQL.Fluent;
 using PX.Data.ReferentialIntegrity.Attributes;
 using PX.Objects.CR;
 
-namespace CompiledVersion.DAC
+namespace ACustom
 {
     //skip documentation for this
     [Serializable]

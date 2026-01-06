@@ -1,9 +1,8 @@
 using PX.Data;
-using PX.Data;
 using PX.Objects.CR;
 using System;
 
-namespace CompiledVersion.DAC
+namespace ACustom
 {
     //skip documentation for this
     public sealed class CROpportunityReasonExt : PXCacheExtension<CROpportunity>

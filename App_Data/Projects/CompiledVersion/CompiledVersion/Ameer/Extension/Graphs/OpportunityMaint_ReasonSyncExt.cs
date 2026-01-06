@@ -1,9 +1,9 @@
-using CompiledVersion.DAC;
+using ACustom;
 using PX.Data;
 using PX.Objects.CR;
 using System;
 
-namespace CompiledVersion.GraphExt
+namespace ACustom
 {
     //skip documentation for this
     public class OpportunityMaint_ReasonSyncExt : PXGraphExtension<OpportunityMaint>

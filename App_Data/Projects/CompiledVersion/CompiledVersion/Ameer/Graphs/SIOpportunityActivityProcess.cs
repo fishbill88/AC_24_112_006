@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PX.Objects.EP;
+using ACustom;
 
 namespace PX.Objects.CR
 {
@@ -134,14 +135,14 @@ namespace PX.Objects.CR
             var opportunityExt = opportunity.GetExtension<PX.Objects.CR.CROpportunityExt2>();
             if (opportunityExt == null)
             {
-                throw new PXException("Unable to get opportunity extension.");
+                throw new PXException(ACustom.Messages.UnableToGetOpportunityExtension);
             }
 
             string activityNote = opportunityExt.UsrActivityNote;
             
             if (string.IsNullOrWhiteSpace(activityNote))
             {
-                throw new PXException("Activity Note is required.");
+                throw new PXException(ACustom.Messages.ActivityNoteRequired);
             }
 
             // Create the activity using CRActivityMaint graph

@@ -1,5 +1,5 @@
 //using CompiledVersion.Attributes;
-using CompiledVersion.DAC;
+using ACustom;
 using PX.Data;
 using PX.Data.WorkflowAPI;
 using PX.Objects.CR;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CompiledVersion
+namespace ACustom
 {
     //skip documentation for this
     public class OpportunityMaint_StageReasonExt : PXGraphExtension<OpportunityMaint>

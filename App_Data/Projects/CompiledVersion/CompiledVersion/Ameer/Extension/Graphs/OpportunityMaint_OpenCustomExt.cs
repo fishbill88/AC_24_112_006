@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using PX.Data;
 using PX.Objects.CR;
-using CompiledVersion.DAC; // for CROpportunityReasonExt extension
+using ACustom; // for CROpportunityReasonExt extension
 
-namespace CompiledVersion
+namespace ACustom
 {
     //skip documentation for this
     /// <summary>

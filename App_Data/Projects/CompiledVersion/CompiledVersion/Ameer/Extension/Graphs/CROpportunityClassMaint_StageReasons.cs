@@ -1,12 +1,11 @@
 using PX.Data;
-using PX.Data;
 using PX.Objects.CR;
 using System.Collections.Generic;
 using System;
 using PX.Data.BQL.Fluent;
-using CompiledVersion.DAC;
+using ACustom;
 
-namespace CompiledVersion.GraphExt
+namespace ACustom
 {
     //skip documentation for this
     public class CROpportunityClassMaint_StageReasons : PXGraphExtension<CROpportunityClassMaint>

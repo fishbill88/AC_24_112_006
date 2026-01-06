@@ -3,7 +3,7 @@ using PX.Data.BQL;
 using PX.Objects.CR.Standalone;
 using System;
 
-namespace CompiledVersion.DAC
+namespace ACustom
 {
     public sealed class StandaloneCROpportunityAmeerExt : PXCacheExtension<CROpportunity>
     {

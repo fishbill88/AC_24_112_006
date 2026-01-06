@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <LangVersion>6</LangVersion>
     <WarningLevel>3</WarningLevel>
     <FileVersion>24.112.0026</FileVersion>
     <InformationalVersion>24.112.0026</InformationalVersion>
@@ -70,6 +71,10 @@
   <ItemGroup>
     <Compile Include="Ameer\Extension\Graphs\OpportunityMaint_OpenCustomExt.cs" />
     <Compile Include="Ameer\Extension\Workflows\OpportunityMaint_WorkflowFormExt.cs" />
+    <Compile Include="Ameer\Extension\DAC\INItemClassExt.cs" />
+    <Compile Include="Ameer\Extension\Graphs\INItemClassMaintExt.cs" />
+    <Compile Include="Ameer\Extension\Graphs\InventoryItemMaintExt.cs" />
+    <Compile Include="Ameer\Extension\Graphs\NonStockItemMaintExt.cs" />
     <Compile Include="DACExt\ARInvoiceExt.cs" />
     <Compile Include="DACExt\CROpportunityExt.cs" />
     <Compile Include="DACExt\CROpportunityProductsExt.cs" />
@@ -126,6 +131,7 @@
     <Compile Include="GraphExt\TestCustomerMaint_Extension.cs" />
     <Compile Include="Graphs\ItemRequestEntry.cs" />
     <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Helpers\ItemClassHierarchyHelper.cs" />
     <Compile Include="Messages\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
