@@ -327,24 +327,50 @@ namespace CompiledVersion.Graphs
 
             SOOrder order = e.Row;
             
-            // Calculate freight total from all confirmed and invoiced shipments
-            decimal? totalFreight = 0m;
-            var shipmentlist = PXSelectJoin<SOOrderShipment,
-                LeftJoin<SOShipment, On<SOShipment.shipmentNbr, Equal<SOOrderShipment.shipmentNbr>,
-                    And<SOShipment.shipmentType, Equal<SOOrderShipment.shipmentType>>>>,
+            // Calculate freight total from all shipment lines regardless of status
+            // Handles different shipment types: Issue, DropShip, Transfer, Invoice
+            decimal totalFreight = 0m;
+
+            // Get all SOOrderShipment records (lines under Shipments tab)
+            var shipmentLines = PXSelect<SOOrderShipment,
                 Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
-                    And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
-                    And<Where<SOShipment.status, Equal<SOShipmentStatus.confirmed>,
-                        Or<SOShipment.status, Equal<SOShipmentStatus.invoiced>>>>>>,
-                OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
+                    And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
                 .Select(Base, order.OrderType, order.OrderNbr);
 
-            foreach (PXResult<SOOrderShipment, SOShipment> item in shipmentlist)
+            foreach (SOOrderShipment orderShipment in shipmentLines.RowCast<SOOrderShipment>())
             {
-                SOShipment _shipment = item;
-                if (_shipment.Status == SOShipmentStatus.Confirmed || _shipment.Status == SOShipmentStatus.Invoiced)
+                if (orderShipment.ShipmentType == SOShipmentType.DropShip)
                 {
-                    totalFreight += (_shipment.CuryFreightAmt ?? 0m);
+                    // DropShip: Get freight from PO Receipt via ShippingRefNoteID
+                    if (orderShipment.ShippingRefNoteID != null)
+                    {
+                        POReceipt receipt = PXSelect<POReceipt,
+                            Where<POReceipt.noteID, Equal<Required<POReceipt.noteID>>>>
+                            .Select(Base, orderShipment.ShippingRefNoteID);
+
+                        if (receipt != null)
+                        {
+                            POReceiptExt receiptExt = receipt.GetExtension<POReceiptExt>();
+                            totalFreight += (receiptExt?.UsrFreightPrice ?? 0m);
+                        }
+                    }
+                }
+                else
+                {
+                    // Issue, Transfer, or other types: Get freight from SOShipment
+                    if (!string.IsNullOrEmpty(orderShipment.ShipmentNbr) && 
+                        orderShipment.ShipmentNbr != PX.Objects.SO.Constants.NoShipmentNbr)
+                    {
+                        SOShipment shipment = PXSelect<SOShipment,
+                            Where<SOShipment.shipmentNbr, Equal<Required<SOShipment.shipmentNbr>>,
+                                And<SOShipment.shipmentType, Equal<Required<SOShipment.shipmentType>>>>>
+                            .Select(Base, orderShipment.ShipmentNbr, orderShipment.ShipmentType);
+
+                        if (shipment != null)
+                        {
+                            totalFreight += (shipment.CuryFreightAmt ?? 0m);
+                        }
+                    }
                 }
             }
 

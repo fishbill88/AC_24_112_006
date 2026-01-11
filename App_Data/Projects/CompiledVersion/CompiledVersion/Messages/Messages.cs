@@ -22,11 +22,25 @@ namespace CompiledVersion
         #region With Params
         private const string _freightExceedsLimit = "Freight price exceeds limit by {0}.";
         public static string FreightExceedsLimit(decimal? amount) =>
-            PXLocalizer.LocalizeFormat(_freightExceedsLimit, amount);
+            PXLocalizer.LocalizeFormat(_freightExceedsLimit, FormatCurrency(amount));
 
         private const string _poTotalExceedsNTE = "Total PO amount for Sales Order {0} ({1}) exceeds Not-To-Exceed limit ({2}) by {3}.";
         public static string POTotalExceedsNTE(string soOrderNbr, decimal? totalPO, decimal? nteLimit, decimal? exceedAmt) =>
-            PXLocalizer.LocalizeFormat(_poTotalExceedsNTE, soOrderNbr, totalPO, nteLimit, exceedAmt);
+            PXLocalizer.LocalizeFormat(_poTotalExceedsNTE, soOrderNbr, FormatCurrency(totalPO), FormatCurrency(nteLimit), FormatCurrency(exceedAmt));
+
+        private const string _poReceiptFreightExceedsNTE = "Total freight for Sales Order {0} ({1}) exceeds Not-To-Exceed limit ({2}) by {3}.";
+        public static string POReceiptFreightExceedsNTE(string soOrderNbr, decimal? totalFreight, decimal? nteLimit, decimal? exceedAmt) =>
+            PXLocalizer.LocalizeFormat(_poReceiptFreightExceedsNTE, soOrderNbr, FormatCurrency(totalFreight), FormatCurrency(nteLimit), FormatCurrency(exceedAmt));
+
+        private const string _shipmentFreightExceedsNTE = "Total freight for Sales Order {0} ({1}) exceeds Not-To-Exceed limit ({2}) by {3}.";
+        public static string ShipmentFreightExceedsNTE(string soOrderNbr, decimal? totalFreight, decimal? nteLimit, decimal? exceedAmt) =>
+            PXLocalizer.LocalizeFormat(_shipmentFreightExceedsNTE, soOrderNbr, FormatCurrency(totalFreight), FormatCurrency(nteLimit), FormatCurrency(exceedAmt));
+
+        /// <summary>
+        /// Formats a decimal value as currency with $ symbol and 2 decimal places.
+        /// </summary>
+        private static string FormatCurrency(decimal? value) =>
+            string.Format("$ {0:#,##0.00}", value ?? 0m);
 
         public const string _cannotInvoiceNonStockItems = "You cannot invoice non-stock items: {0}";
         public static string CannotInvoiceNonStockItems(string nonstocks) =>

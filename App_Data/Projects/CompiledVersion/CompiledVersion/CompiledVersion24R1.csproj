@@ -60,22 +60,24 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ameer\Extension\Graphs\OpportunityMaint_OpenCustomExt.cs" />
     <Compile Include="Ameer\Extension\Workflows\OpportunityMaint_WorkflowFormExt.cs" />
-    <Compile Include="Ameer\Helper\ItemClassHierarchyHelper.cs" />
+    <Compile Include="Ameer\ItemClassCustomization\Helper\ItemClassHierarchyHelper.cs" />
+    <Compile Include="Ameer\ItemClassCustomization\Messages.cs" />
     <Compile Include="DACExt\ARInvoiceExt.cs" />
     <Compile Include="DACExt\CROpportunityExt.cs" />
     <Compile Include="DACExt\CROpportunityProductsExt.cs" />
     <Compile Include="Ameer\Extension\DAC\CROpportunityExt.cs" />
     <Compile Include="Ameer\Extension\DAC\CROpportunityReasonExt.cs" />
     <Compile Include="Ameer\Extension\DAC\StandaloneCROpportunityExt.cs" />
-    <Compile Include="Ameer\Extension\DAC\INItemClassExt.cs" />
-    <Compile Include="Ameer\Extension\Graphs\INItemClassMaintExt.cs" />
-    <Compile Include="Ameer\Extension\Graphs\InventoryItemMaintExt.cs" />
-    <Compile Include="Ameer\Extension\Graphs\NonStockItemMaintExt.cs" />
+    <Compile Include="Ameer\ItemClassCustomization\DAC\INItemClassExt.cs" />
+    <Compile Include="Ameer\ItemClassCustomization\Graphs\INItemClassMaintExt.cs" />
+    <Compile Include="Ameer\ItemClassCustomization\Graphs\InventoryItemMaintExt.cs" />
+    <Compile Include="Ameer\ItemClassCustomization\Graphs\NonStockItemMaintExt.cs" />
     <Compile Include="DACExt\CRQuoteExt.cs" />
     <Compile Include="DACExt\CustomerExt.cs" />
     <Compile Include="DACExt\INSetupExt.cs" />
@@ -129,7 +131,6 @@
     <Compile Include="GraphExt\TestCustomerMaint_Extension.cs" />
     <Compile Include="Graphs\ItemRequestEntry.cs" />
     <Compile Include="Helpers\Helper.cs" />
-    <Compile Include="Helpers\ItemClassHierarchyHelper.cs" />
     <Compile Include="Messages\Messages.cs" />
     <Compile Include="Ameer\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

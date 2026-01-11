@@ -7,6 +7,7 @@ using PX.Objects.CM;
 using PX.Objects.CN.Compliance.PO.CacheExtensions;
 using PX.Objects.CS;
 using PX.Objects.IN;
+using PX.Objects.PO;
 using PX.Objects.SO;
 using System;
 using System.Collections;
@@ -401,7 +402,9 @@ namespace CompiledVersion.Graphs
            Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
          And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>,
      And<Where<SOShipment.status, Equal<SOShipmentStatus.confirmed>,
-         Or<SOShipment.status, Equal<SOShipmentStatus.invoiced>>>>>>,
+         Or<SOShipment.status, Equal<SOShipmentStatus.partiallyInvoiced>,
+         Or<SOShipment.status, Equal<SOShipmentStatus.invoiced>,
+         Or<SOShipment.status, Equal<SOShipmentStatus.completed>>>>>>>>,
   OrderBy<Asc<SOOrderShipment.shipmentNbr>>>
          .Select(Base, order.OrderType, order.OrderNbr);
             foreach (var item in shipmentlist)
@@ -409,7 +412,10 @@ namespace CompiledVersion.Graphs
 
                 SOOrderShipment orderShipment = item.GetItem<SOOrderShipment>();
                 SOShipment _shipment = item.GetItem<SOShipment>();
-                if (_shipment.Status == SOShipmentStatus.Confirmed || _shipment.Status == SOShipmentStatus.Invoiced)
+                if (_shipment.Status == SOShipmentStatus.Confirmed || 
+                    _shipment.Status == SOShipmentStatus.PartiallyInvoiced || 
+                    _shipment.Status == SOShipmentStatus.Invoiced || 
+                    _shipment.Status == SOShipmentStatus.Completed)
                 {
                     totalFreight += (_shipment.CuryFreightAmt ?? 0m);
                 }
@@ -815,5 +821,173 @@ namespace CompiledVersion.Graphs
                 //docgraph.LSSelectDataMember.Update(item);
             }
         }
+
+        #region NTE Freight Validation for SO Shipments
+        /// <summary>
+        /// Validates that the total freight cost across all shipments for a Sales Order
+        /// does not exceed the Not-To-Exceed limit defined on the Sales Order.
+        /// </summary>
+        protected virtual void _(Events.RowPersisting<SOShipment> e)
+        {
+            if (e.Row == null) return;
+            if (e.Operation == PXDBOperation.Delete) return;
+
+            SOShipment shipment = e.Row;
+
+            // Skip if no freight cost on this shipment
+            decimal currentFreightCost = shipment.CuryFreightAmt ?? 0m;
+            if (currentFreightCost <= 0m) return;
+
+            // Get linked SO order from the shipment
+            var linkedSO = GetLinkedSOForShipment(shipment);
+            if (linkedSO == null) return; // No SO link, skip validation
+
+            SOOrderExt soExt = linkedSO.GetExtension<SOOrderExt>();
+            SOSetupExt setupExt = Base.sosetup.Current?.GetExtension<SOSetupExt>();
+
+            // Check if this SO has NTE shipping terms
+            if (linkedSO.ShipTermsID != setupExt?.UsrNotToExceed) return;
+
+            // Check if SO has NTE limit set
+            decimal? nteLimit = soExt?.UsrFreightPriceLimit;
+            if (nteLimit == null || nteLimit <= 0m) return;
+
+            // Calculate total freight cost across ALL shipments for this SO
+            decimal? totalFreightCost = CalculateTotalFreightCostForSOShipments(linkedSO, shipment, currentFreightCost);
+
+            // Validate against limit
+            if (totalFreightCost > nteLimit)
+            {
+                decimal? exceedAmt = totalFreightCost - nteLimit;
+                string errorMsg = Messages.ShipmentFreightExceedsNTE(
+                    $"{linkedSO.OrderType}-{linkedSO.OrderNbr}",
+                    totalFreightCost,
+                    nteLimit,
+                    exceedAmt
+                );
+
+                // Use setup toggle to determine error level
+                PXErrorLevel errorLevel = (setupExt?.UsrEnforcePONTE == true) 
+                    ? PXErrorLevel.Error 
+                    : PXErrorLevel.Warning;
+
+                e.Cache.RaiseExceptionHandling<SOShipment.curyFreightAmt>(
+                    shipment, 
+                    currentFreightCost, 
+                    new PXSetPropertyException(errorMsg, errorLevel)
+                );
+
+                // If hard stop mode, throw exception to block save
+                if (errorLevel == PXErrorLevel.Error)
+                {
+                    throw new PXException(errorMsg);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the linked Sales Order for the shipment.
+        /// Uses OrderList to get the first linked SO, or queries SOOrderShipment.
+        /// </summary>
+        private SOOrder GetLinkedSOForShipment(SOShipment shipment)
+        {
+            if (shipment == null) return null;
+
+            // First try to get from OrderList view (already loaded)
+            SOOrder order = Base.OrderList.Select().FirstOrDefault()?.GetItem<SOOrder>();
+            if (order != null) return order;
+
+            // Fallback: Query SOOrderShipment to find linked order
+            var orderShipment = PXSelect<SOOrderShipment,
+                Where<SOOrderShipment.shipmentType, Equal<Required<SOOrderShipment.shipmentType>>,
+                    And<SOOrderShipment.shipmentNbr, Equal<Required<SOOrderShipment.shipmentNbr>>>>>
+                .SelectWindowed(Base, 0, 1, shipment.ShipmentType, shipment.ShipmentNbr)
+                .RowCast<SOOrderShipment>()
+                .FirstOrDefault();
+
+            if (orderShipment != null)
+            {
+                return PXSelect<SOOrder,
+                    Where<SOOrder.orderType, Equal<Required<SOOrder.orderType>>,
+                        And<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
+                    .Select(Base, orderShipment.OrderType, orderShipment.OrderNbr);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Calculates the cumulative total freight price from all SOOrderShipment records for a Sales Order.
+        /// Uses SOOrderShipment as the single source of truth (same as Shipments grid on SO).
+        /// Handles both regular shipments and drop-ship PO receipts.
+        /// </summary>
+        private decimal? CalculateTotalFreightCostForSOShipments(SOOrder soOrder, SOShipment currentShipment, decimal currentFreightCost)
+        {
+            if (soOrder == null) return 0m;
+
+            decimal totalFreight = 0m;
+            bool currentShipmentIncluded = false;
+
+            // Get all SOOrderShipment records for this Sales Order (same as Shipments grid)
+            var orderShipments = PXSelect<SOOrderShipment,
+                Where<SOOrderShipment.orderType, Equal<Required<SOOrder.orderType>>,
+                    And<SOOrderShipment.orderNbr, Equal<Required<SOOrder.orderNbr>>>>>
+                .Select(Base, soOrder.OrderType, soOrder.OrderNbr);
+
+            foreach (SOOrderShipment orderShipment in orderShipments.RowCast<SOOrderShipment>())
+            {
+                if (orderShipment.ShipmentType == SOShipmentType.DropShip)
+                {
+                    // Drop-Ship: Get freight from PO Receipt via ShippingRefNoteID
+                    if (orderShipment.ShippingRefNoteID != null)
+                    {
+                        POReceipt receipt = PXSelect<POReceipt,
+                            Where<POReceipt.noteID, Equal<Required<POReceipt.noteID>>>>
+                            .Select(Base, orderShipment.ShippingRefNoteID);
+
+                        if (receipt != null)
+                        {
+                            POReceiptExt receiptExt = receipt.GetExtension<POReceiptExt>();
+                            totalFreight += (receiptExt?.UsrFreightPrice ?? 0m);
+                        }
+                    }
+                }
+                else
+                {
+                    // Regular shipment: Get freight from SOShipment
+                    if (!string.IsNullOrEmpty(orderShipment.ShipmentNbr))
+                    {
+                        SOShipment shipment = PXSelect<SOShipment,
+                            Where<SOShipment.shipmentNbr, Equal<Required<SOShipment.shipmentNbr>>,
+                                And<SOShipment.shipmentType, Equal<Required<SOShipment.shipmentType>>>>>
+                            .Select(Base, orderShipment.ShipmentNbr, orderShipment.ShipmentType);
+
+                        if (shipment != null)
+                        {
+                            // Check if this is the current shipment being saved
+                            if (shipment.ShipmentType == currentShipment.ShipmentType && 
+                                shipment.ShipmentNbr == currentShipment.ShipmentNbr)
+                            {
+                                totalFreight += currentFreightCost;
+                                currentShipmentIncluded = true;
+                            }
+                            else
+                            {
+                                totalFreight += (shipment.CuryFreightAmt ?? 0m);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // If current shipment wasn't found in SOOrderShipment (new shipment not yet linked), add its freight
+            if (!currentShipmentIncluded)
+            {
+                totalFreight += currentFreightCost;
+            }
+
+            return totalFreight;
+        }
+        #endregion
     }
 }
