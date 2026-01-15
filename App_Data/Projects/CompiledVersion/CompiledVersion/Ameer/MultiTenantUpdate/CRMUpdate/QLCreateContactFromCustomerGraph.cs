@@ -1,5 +1,4 @@
-﻿using CompiledVersion.Ameer.MultiTenantUpdate;
-using PX.Data;
+﻿using PX.Data;
 using PX.Objects.AR;
 using PX.Objects.CR;
 using PX.Objects.CR.Extensions;
