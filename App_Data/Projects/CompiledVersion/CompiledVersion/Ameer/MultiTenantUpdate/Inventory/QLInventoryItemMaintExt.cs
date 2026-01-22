@@ -15,7 +15,7 @@ namespace MTUInventory
 
         protected void _(Events.RowPersisted<InventoryItem> e)
         {
-            if (e.TranStatus == PXTranStatus.Open && IsExtEnabled && IsMultiTenantEnabled() &&
+            if (e.TranStatus == PXTranStatus.Open && IsExtEnabled && IsMultiTenantSendEnabled() &&
                 (e.Operation == PXDBOperation.Insert || e.Operation == PXDBOperation.Update))
             {
                 InventoryItem item = e.Row;
@@ -25,7 +25,7 @@ namespace MTUInventory
             }
         }
 
-        private bool IsMultiTenantEnabled()
+        private bool IsMultiTenantSendEnabled()
         {
             INSetup setup = null;
             foreach (PXResult<INSetup> result in PXSelect<INSetup>.Select(this.Base))
@@ -35,16 +35,21 @@ namespace MTUInventory
             }
             if (setup == null) return false;
             QLINSetupExt setupExt = PXCache<INSetup>.GetExtension<QLINSetupExt>(setup);
-            return setupExt?.UsrMultiTenantStockItem == true;
+            // Check new Send field first, fallback to deprecated field for backward compatibility
+            return setupExt?.UsrMultiTenantStockItemSend == true || setupExt?.UsrMultiTenantStockItem == true;
         }
 
         private void Initialize()
         {
             string callerTenantName = base.Base.Accessinfo.CompanyName;
+            List<string> allTenants;
             using (CustomSqlConnection conn = new CustomSqlConnection(PX.Data.PXDatabase.Provider.GetConnectionString()))
             {
-                targetTenantNames = conn.GetOtherCompanyNames(callerTenantName);
+                allTenants = conn.GetOtherCompanyNames(callerTenantName);
             }
+            PXTrace.WriteInformation($"[Stock Sync] Found {allTenants.Count} other tenants");
+            targetTenantNames = MultiTenantSyncCache.GetEnabledTenantsForStockItems(allTenants);
+            PXTrace.WriteInformation($"[Stock Sync] {targetTenantNames.Count} tenants enabled to receive stock items");
         }
 
         private void SyncToOtherTenants(InventoryItem item)

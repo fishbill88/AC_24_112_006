@@ -15,7 +15,7 @@ namespace MTUInventory
 
         public bool IsExtEnabled { get; set; } = true;
 
-        private bool IsMultiTenantEnabled()
+        private bool IsMultiTenantSendEnabled()
         {
             INSetup setup = null;
             foreach (PXResult<INSetup> result in PXSelectReadonly<INSetup>.Select(this.Base))
@@ -26,20 +26,38 @@ namespace MTUInventory
             if (setup == null) return false;
 
             var setupExt = PXCache<INSetup>.GetExtension<QLINSetupExt>(setup);
-            return setupExt?.UsrMultiTenantNonStockItem == true;
+            // Check new Send field first, then fallback to deprecated field for backward compatibility
+            return setupExt?.UsrMultiTenantNonStockItemSend == true || setupExt?.UsrMultiTenantNonStockItem == true;
+        }
+
+        private static bool IsVerboseLoggingEnabled(PXGraph graph)
+        {
+            INSetup setup = null;
+            foreach (PXResult<INSetup> result in PXSelectReadonly<INSetup>.Select(graph))
+            {
+                setup = result;
+                break;
+            }
+            if (setup == null) return false;
+
+            var setupExt = PXCache<INSetup>.GetExtension<QLINSetupExt>(setup);
+            return setupExt?.UsrEnableVerboseSyncLogging == true;
         }
 
         public override void Initialize()
         {
             using (CustomSqlConnection sqlConnection = new CustomSqlConnection(PXDatabase.Provider.GetConnectionString()))
             {
-                this.otherTenantNames = sqlConnection.GetOtherCompanyNames(base.Base.Accessinfo.CompanyName);
+                var allTenants = sqlConnection.GetOtherCompanyNames(base.Base.Accessinfo.CompanyName);
+                PXTrace.WriteInformation($"[Non-Stock Sync] Found {allTenants.Count} other tenants");
+                this.otherTenantNames = MultiTenantSyncCache.GetEnabledTenantsForNonStockItems(allTenants);
+                PXTrace.WriteInformation($"[Non-Stock Sync] {this.otherTenantNames.Count} tenants enabled to receive non-stock items");
             }
         }
 
         protected virtual void _(Events.RowPersisted<InventoryItem> e)
         {
-            if (!IsMultiTenantEnabled()) return;
+            if (!IsMultiTenantSendEnabled()) return;
             if (!this.IsExtEnabled) return;
             if (e.Row == null) return;
             
@@ -159,6 +177,8 @@ namespace MTUInventory
             // Now sync to each target tenant
             foreach (string tenantName in tenants)
             {
+                SyncResult result = new SyncResult(tenantName, inventoryCD);
+                
                 try
                 {
                     PXTrace.WriteInformation($"[Non-Stock Sync] Syncing {inventoryCD} to tenant {tenantName}");
@@ -172,11 +192,13 @@ namespace MTUInventory
                             targetGraphExt.IsExtEnabled = false;
                         }
 
+                        bool verboseLogging = IsVerboseLoggingEnabled(targetGraph);
+
                         InventoryItem existingItem = null;
-                        foreach (PXResult<InventoryItem> result in PXSelectReadonly<InventoryItem,
+                        foreach (PXResult<InventoryItem> pxResult in PXSelectReadonly<InventoryItem,
                             Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.Select(targetGraph, inventoryCD))
                         {
-                            existingItem = result;
+                            existingItem = pxResult;
                             break;
                         }
 
@@ -185,9 +207,20 @@ namespace MTUInventory
                             InventoryItem targetItem = targetGraph.Item.Search<InventoryItem.inventoryCD>(inventoryCD);
                             if (targetItem != null)
                             {
-                                UpdateItemFromSourceData(sourceData, targetItem, targetGraph);
-                                targetGraph.Actions.PressSave();
-                                PXTrace.WriteInformation($"[Non-Stock Sync] Updated {inventoryCD} in tenant {tenantName}");
+                                UpdateItemFromSourceData(sourceData, targetItem, targetGraph, result, verboseLogging);
+                                
+                                try
+                                {
+                                    targetGraph.Actions.PressSave();
+                                    result.Success = true;
+                                    PXTrace.WriteInformation($"[Non-Stock Sync] Updated {inventoryCD} in tenant {tenantName} - {result.GetSummary()}");
+                                }
+                                catch (Exception saveEx)
+                                {
+                                    result.Success = false;
+                                    result.ErrorMessage = $"Save failed: {saveEx.Message}";
+                                    PXTrace.WriteWarning($"[Non-Stock Sync] Save failed for {inventoryCD} in tenant {tenantName}: {saveEx.Message}");
+                                }
                             }
                         }
                         else
@@ -195,14 +228,27 @@ namespace MTUInventory
                             InventoryItem newItem = targetGraph.Item.Insert();
                             newItem.InventoryCD = inventoryCD;
                             newItem = targetGraph.Item.Update(newItem);
-                            UpdateItemFromSourceData(sourceData, newItem, targetGraph);
-                            targetGraph.Actions.PressSave();
-                            PXTrace.WriteInformation($"[Non-Stock Sync] Created {inventoryCD} in tenant {tenantName}");
+                            UpdateItemFromSourceData(sourceData, newItem, targetGraph, result, verboseLogging);
+                            
+                            try
+                            {
+                                targetGraph.Actions.PressSave();
+                                result.Success = true;
+                                PXTrace.WriteInformation($"[Non-Stock Sync] Created {inventoryCD} in tenant {tenantName} - {result.GetSummary()}");
+                            }
+                            catch (Exception saveEx)
+                            {
+                                result.Success = false;
+                                result.ErrorMessage = $"Save failed: {saveEx.Message}";
+                                PXTrace.WriteWarning($"[Non-Stock Sync] Save failed for {inventoryCD} in tenant {tenantName}: {saveEx.Message}");
+                            }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
+                    result.Success = false;
+                    result.ErrorMessage = ex.Message;
                     PXTrace.WriteError($"Error syncing non-stock item {inventoryCD} to tenant {tenantName}: {ex.Message}\n{ex.StackTrace}");
                 }
             }
@@ -277,128 +323,246 @@ namespace MTUInventory
             }
         }
 
-        private static void UpdateItemFromSourceData(SourceItemData sourceData, InventoryItem targetItem, NonStockItemMaint targetGraph)
+        private static void UpdateItemFromSourceData(SourceItemData sourceData, InventoryItem targetItem, NonStockItemMaint targetGraph, SyncResult syncResult, bool verboseLogging)
         {
-            PXTrace.WriteInformation($"[Non-Stock Sync] Applying source data to item: {sourceData.InventoryCD}");
+            if (verboseLogging)
+                PXTrace.WriteInformation($"[Non-Stock Sync] Applying source data to item: {sourceData.InventoryCD}");
             
-            // Core Fields
-            targetItem.Descr = sourceData.Descr;
-            targetItem.ItemStatus = sourceData.ItemStatus;
-            targetItem.ItemType = sourceData.ItemType;
-            targetItem.BaseUnit = sourceData.BaseUnit;
-            targetItem.SalesUnit = sourceData.SalesUnit;
-            targetItem.PurchaseUnit = sourceData.PurchaseUnit;
-            targetItem.PostClassID = sourceData.PostClassID;
+            // Core Fields - Direct assignment (no lookup needed)
+            try
+            {
+                targetItem.Descr = sourceData.Descr;
+                targetItem.ItemStatus = sourceData.ItemStatus;
+                targetItem.ItemType = sourceData.ItemType;
+                targetItem.BaseUnit = sourceData.BaseUnit;
+                targetItem.SalesUnit = sourceData.SalesUnit;
+                targetItem.PurchaseUnit = sourceData.PurchaseUnit;
+                targetItem.PostClassID = sourceData.PostClassID;
+                
+                syncResult.FieldResults.Add(new FieldSyncResult("CoreFields", FieldSyncStatus.Success, null, null));
+            }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("CoreFields", FieldSyncStatus.SkippedError, null, $"Error: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Core fields error: {ex.Message}");
+            }
 
             // Item Class ID Mapping (lookup by CD in target tenant)
-            if (!string.IsNullOrEmpty(sourceData.ItemClassCD))
+            TrySafeItemClassMapping(sourceData, targetItem, targetGraph, syncResult, verboseLogging);
+
+            // Default Warehouse (lookup by CD in target tenant)
+            int? targetSiteID = TrySafeSiteMapping(sourceData, targetGraph, syncResult, verboseLogging);
+
+            // GL Accounts - Expense Account
+            TrySafeAccountMapping("InvtAccount", sourceData.InvtAcctCD, 
+                (acctID) => targetItem.InvtAcctID = acctID, targetGraph, syncResult, verboseLogging);
+
+            // GL Accounts - Expense Sub
+            TrySafeSubMapping("InvtSub", sourceData.InvtSubCD, 
+                (subID) => targetItem.InvtSubID = subID, targetGraph, syncResult, verboseLogging);
+
+            // Sales Account
+            TrySafeAccountMapping("SalesAccount", sourceData.SalesAcctCD, 
+                (acctID) => targetItem.SalesAcctID = acctID, targetGraph, syncResult, verboseLogging);
+
+            // Sales Sub
+            TrySafeSubMapping("SalesSub", sourceData.SalesSubCD, 
+                (subID) => targetItem.SalesSubID = subID, targetGraph, syncResult, verboseLogging);
+
+            // COGS Account
+            TrySafeAccountMapping("COGSAccount", sourceData.COGSAcctCD, 
+                (acctID) => targetItem.COGSAcctID = acctID, targetGraph, syncResult, verboseLogging);
+
+            // COGS Sub
+            TrySafeSubMapping("COGSSub", sourceData.COGSSubCD, 
+                (subID) => targetItem.COGSSubID = subID, targetGraph, syncResult, verboseLogging);
+
+            // First Update call
+            try
+            {
+                targetItem = targetGraph.Item.Update(targetItem);
+            }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("FirstUpdate", FieldSyncStatus.SkippedError, null, $"Update failed: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] First Update() failed: {ex.Message}");
+            }
+
+            // Base Price and Physical Properties
+            try
+            {
+                if (sourceData.BasePrice != null)
+                    targetItem.BasePrice = sourceData.BasePrice;
+
+                if (targetSiteID != null)
+                    targetItem.DfltSiteID = targetSiteID;
+                    
+                targetItem.BaseWeight = sourceData.BaseWeight;
+                targetItem.BaseVolume = sourceData.BaseVolume;
+                targetItem.WeightUOM = sourceData.WeightUOM;
+                targetItem.VolumeUOM = sourceData.VolumeUOM;
+                targetItem.TaxCategoryID = sourceData.TaxCategoryID;
+                targetItem.Visibility = sourceData.Visibility;
+                
+                syncResult.FieldResults.Add(new FieldSyncResult("PriceAndProperties", FieldSyncStatus.Success, null, null));
+            }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("PriceAndProperties", FieldSyncStatus.SkippedError, null, $"Error: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Price/Properties error: {ex.Message}");
+            }
+
+            // Second Update call
+            try
+            {
+                targetItem = targetGraph.Item.Update(targetItem);
+            }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("SecondUpdate", FieldSyncStatus.SkippedError, null, $"Update failed: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Second Update() failed: {ex.Message}");
+            }
+            
+            if (verboseLogging)
+                PXTrace.WriteInformation($"[Non-Stock Sync] Completed applying data for item: {sourceData.InventoryCD}");
+        }
+
+        private static void TrySafeItemClassMapping(SourceItemData sourceData, InventoryItem targetItem, NonStockItemMaint targetGraph, SyncResult syncResult, bool verboseLogging)
+        {
+            if (string.IsNullOrEmpty(sourceData.ItemClassCD))
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("ItemClass", FieldSyncStatus.SkippedNull, null, "Source ItemClass is null"));
+                return;
+            }
+
+            try
             {
                 INItemClass targetItemClass = PXSelectReadonly<INItemClass,
                     Where<INItemClass.itemClassCD, Equal<Required<INItemClass.itemClassCD>>>>.Select(targetGraph, sourceData.ItemClassCD);
+                
                 if (targetItemClass != null)
                 {
                     targetItem.ItemClassID = targetItemClass.ItemClassID;
+                    syncResult.FieldResults.Add(new FieldSyncResult("ItemClass", FieldSyncStatus.Success, sourceData.ItemClassCD, null));
+                }
+                else
+                {
+                    syncResult.FieldResults.Add(new FieldSyncResult("ItemClass", FieldSyncStatus.SkippedNotFound, sourceData.ItemClassCD, 
+                        $"Item Class '{sourceData.ItemClassCD}' not found in target tenant"));
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Item Class '{sourceData.ItemClassCD}' not found in target tenant");
                 }
             }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("ItemClass", FieldSyncStatus.SkippedError, sourceData.ItemClassCD, $"Error: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] ItemClass mapping error: {ex.Message}");
+            }
+        }
 
-            // Default Warehouse (lookup by CD in target tenant)
-            int? targetSiteID = null;
-            if (!string.IsNullOrEmpty(sourceData.DfltSiteCD))
+        private static int? TrySafeSiteMapping(SourceItemData sourceData, NonStockItemMaint targetGraph, SyncResult syncResult, bool verboseLogging)
+        {
+            if (string.IsNullOrEmpty(sourceData.DfltSiteCD))
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("DefaultSite", FieldSyncStatus.SkippedNull, null, "Source Site is null"));
+                return null;
+            }
+
+            try
             {
                 INSite targetSite = PXSelectReadonly<INSite,
                     Where<INSite.siteCD, Equal<Required<INSite.siteCD>>>>.Select(targetGraph, sourceData.DfltSiteCD);
+                
                 if (targetSite != null)
                 {
-                    targetSiteID = targetSite.SiteID;
+                    syncResult.FieldResults.Add(new FieldSyncResult("DefaultSite", FieldSyncStatus.Success, sourceData.DfltSiteCD, null));
+                    return targetSite.SiteID;
+                }
+                else
+                {
+                    syncResult.FieldResults.Add(new FieldSyncResult("DefaultSite", FieldSyncStatus.SkippedNotFound, sourceData.DfltSiteCD, 
+                        $"Site '{sourceData.DfltSiteCD}' not found in target tenant"));
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Site '{sourceData.DfltSiteCD}' not found in target tenant");
+                    return null;
                 }
             }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult("DefaultSite", FieldSyncStatus.SkippedError, sourceData.DfltSiteCD, $"Error: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Site mapping error: {ex.Message}");
+                return null;
+            }
+        }
 
-            // GL Accounts - Expense Account
-            if (!string.IsNullOrEmpty(sourceData.InvtAcctCD))
+        private static void TrySafeAccountMapping(string fieldName, string accountCD, Action<int?> setAction, NonStockItemMaint targetGraph, SyncResult syncResult, bool verboseLogging)
+        {
+            if (string.IsNullOrEmpty(accountCD))
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.SkippedNull, null, $"Source {fieldName} is null"));
+                return;
+            }
+
+            try
             {
                 Account targetAcct = PXSelectReadonly<Account,
-                    Where<Account.accountCD, Equal<Required<Account.accountCD>>>>.Select(targetGraph, sourceData.InvtAcctCD);
+                    Where<Account.accountCD, Equal<Required<Account.accountCD>>>>.Select(targetGraph, accountCD);
+                
                 if (targetAcct != null)
                 {
-                    targetItem.InvtAcctID = targetAcct.AccountID;
+                    setAction(targetAcct.AccountID);
+                    syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.Success, accountCD, null));
+                }
+                else
+                {
+                    syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.SkippedNotFound, accountCD, 
+                        $"Account '{accountCD}' not found in target tenant"));
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Account '{accountCD}' ({fieldName}) not found in target tenant");
                 }
             }
+            catch (Exception ex)
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.SkippedError, accountCD, $"Error: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] {fieldName} mapping error: {ex.Message}");
+            }
+        }
 
-            // GL Accounts - Expense Sub
-            if (!string.IsNullOrEmpty(sourceData.InvtSubCD))
+        private static void TrySafeSubMapping(string fieldName, string subCD, Action<int?> setAction, NonStockItemMaint targetGraph, SyncResult syncResult, bool verboseLogging)
+        {
+            if (string.IsNullOrEmpty(subCD))
+            {
+                syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.SkippedNull, null, $"Source {fieldName} is null"));
+                return;
+            }
+
+            try
             {
                 Sub targetSub = PXSelectReadonly<Sub,
-                    Where<Sub.subCD, Equal<Required<Sub.subCD>>>>.Select(targetGraph, sourceData.InvtSubCD);
+                    Where<Sub.subCD, Equal<Required<Sub.subCD>>>>.Select(targetGraph, subCD);
+                
                 if (targetSub != null)
                 {
-                    targetItem.InvtSubID = targetSub.SubID;
+                    setAction(targetSub.SubID);
+                    syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.Success, subCD, null));
                 }
-            }
-
-            // Sales Account
-            if (!string.IsNullOrEmpty(sourceData.SalesAcctCD))
-            {
-                Account targetAcct = PXSelectReadonly<Account,
-                    Where<Account.accountCD, Equal<Required<Account.accountCD>>>>.Select(targetGraph, sourceData.SalesAcctCD);
-                if (targetAcct != null)
+                else
                 {
-                    targetItem.SalesAcctID = targetAcct.AccountID;
+                    syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.SkippedNotFound, subCD, 
+                        $"Sub-Account '{subCD}' not found in target tenant"));
+                    PXTrace.WriteWarning($"[Non-Stock Sync] Sub-Account '{subCD}' ({fieldName}) not found in target tenant");
                 }
             }
-
-            // Sales Sub
-            if (!string.IsNullOrEmpty(sourceData.SalesSubCD))
+            catch (Exception ex)
             {
-                Sub targetSub = PXSelectReadonly<Sub,
-                    Where<Sub.subCD, Equal<Required<Sub.subCD>>>>.Select(targetGraph, sourceData.SalesSubCD);
-                if (targetSub != null)
-                {
-                    targetItem.SalesSubID = targetSub.SubID;
-                }
+                syncResult.FieldResults.Add(new FieldSyncResult(fieldName, FieldSyncStatus.SkippedError, subCD, $"Error: {ex.Message}"));
+                if (verboseLogging)
+                    PXTrace.WriteWarning($"[Non-Stock Sync] {fieldName} mapping error: {ex.Message}");
             }
-
-            // COGS Account
-            if (!string.IsNullOrEmpty(sourceData.COGSAcctCD))
-            {
-                Account targetAcct = PXSelectReadonly<Account,
-                    Where<Account.accountCD, Equal<Required<Account.accountCD>>>>.Select(targetGraph, sourceData.COGSAcctCD);
-                if (targetAcct != null)
-                {
-                    targetItem.COGSAcctID = targetAcct.AccountID;
-                }
-            }
-
-            // COGS Sub
-            if (!string.IsNullOrEmpty(sourceData.COGSSubCD))
-            {
-                Sub targetSub = PXSelectReadonly<Sub,
-                    Where<Sub.subCD, Equal<Required<Sub.subCD>>>>.Select(targetGraph, sourceData.COGSSubCD);
-                if (targetSub != null)
-                {
-                    targetItem.COGSSubID = targetSub.SubID;
-                }
-            }
-
-            targetItem = targetGraph.Item.Update(targetItem);
-
-            // Base Price and Physical Properties
-            if (sourceData.BasePrice != null)
-                targetItem.BasePrice = sourceData.BasePrice;
-
-            if (targetSiteID != null)
-                targetItem.DfltSiteID = targetSiteID;
-            targetItem.BaseWeight = sourceData.BaseWeight;
-            targetItem.BaseVolume = sourceData.BaseVolume;
-            targetItem.WeightUOM = sourceData.WeightUOM;
-            targetItem.VolumeUOM = sourceData.VolumeUOM;
-
-            // Additional Properties
-            targetItem.TaxCategoryID = sourceData.TaxCategoryID;
-            targetItem.Visibility = sourceData.Visibility;
-
-            targetItem = targetGraph.Item.Update(targetItem);
-            
-            PXTrace.WriteInformation($"[Non-Stock Sync] Completed applying data for item: {sourceData.InventoryCD}");
         }
     }
 }
