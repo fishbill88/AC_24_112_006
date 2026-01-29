@@ -82,6 +82,9 @@
     <Compile Include="Ameer\MultiTenantUpdate\Inventory\QLINSetupExt.cs" />
     <Compile Include="Ameer\MultiTenantUpdate\Inventory\QLInventoryItemMaintExt.cs" />
     <Compile Include="Ameer\MultiTenantUpdate\Inventory\QLNonStockItemMaintExt.cs" />
+    <Compile Include="Ameer\RestrictInvoice\APInvoiceEntryExt.cs" />
+    <Compile Include="Ameer\RestrictInvoice\APSetupExt.cs" />
+    <Compile Include="Ameer\RestrictInvoice\APSetupMaintExt.cs" />
     <Compile Include="DACExt\ARInvoiceExt.cs" />
     <Compile Include="DACExt\CROpportunityExt.cs" />
     <Compile Include="DACExt\CROpportunityProductsExt.cs" />
@@ -157,8 +160,13 @@
       <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
-
+  <ItemGroup>
+    <None Include="Ameer\RestrictInvoice\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ameer\RestrictInvoice\DatabaseScripts.sql" />
+    <Content Include="Ameer\RestrictInvoice\DatabaseScripts_Rollback.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
