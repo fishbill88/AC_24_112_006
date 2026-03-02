@@ -294,7 +294,7 @@ namespace CompiledVersion.DAC
         #endregion
 
         #region Seasonality1
-        [PXDBString(20, IsUnicode = true)]
+        [PXDBString(10, IsUnicode = true)]
         [PXDefault("NONE")]
         [PXSelector(typeof(Search<INReplenishmentPolicy.replenishmentPolicyID>), DescriptionField = typeof(INReplenishmentPolicy.descr))]
         [PXUIField(DisplayName = "Seasonality 1", Enabled = false)]
